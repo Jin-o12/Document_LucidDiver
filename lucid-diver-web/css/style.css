@@ -542,6 +542,61 @@ h1, h2, h3, h4 {
 .info-table tr:last-child th,
 .info-table tr:last-child td { border-bottom: none; }
 
+/* ── Spec Compare Table ────────────────────────────────────── */
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.spec-table th, .spec-table td {
+  padding: 13px 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.88rem;
+}
+
+.spec-table thead th {
+  background: var(--bg-panel-soft);
+  color: var(--text-dim);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.spec-table tbody th {
+  background: rgba(255, 255, 255, 0.01);
+  color: var(--text-dim);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  width: 120px;
+  border-right: 1px solid var(--line);
+}
+
+.spec-table td {
+  color: var(--text-sub);
+}
+
+.spec-table tbody tr:hover td {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.spec-table tr:last-child th,
+.spec-table tr:last-child td {
+  border-bottom: none;
+}
+
+.spec-table td:nth-child(3) {
+  color: var(--text-main);
+}
+
 /* ── 9. Two-column layout ────────────────────────────────────── */
 .two-col {
   display: grid;
@@ -1325,7 +1380,7 @@ h1, h2, h3, h4 {
 /* ── 17. P0 Scope Sections ───────────────────────────────────── */
 .scope-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 12px;
 }
 
@@ -2934,7 +2989,10 @@ a.download-card:hover .download-status.ready {
   overflow: hidden;
   transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1);
 }
-.scenario-accordion-body.open { max-height: 800px; }
+.scenario-accordion-body.open {
+  max-height: 450px;
+  overflow-y: auto;
+}
 
 .scenario-accordion-body .log-block {
   border-radius: 0 0 var(--radius-sm) var(--radius-sm);
@@ -3044,7 +3102,6 @@ a.download-card:hover .download-status.ready {
   margin: 0 8px;
   color: var(--line);
 }
-
 @media (max-width: 768px) {
   .site-footer {
     padding: 48px 20px 80px;
@@ -3053,4 +3110,177 @@ a.download-card:hover .download-status.ready {
     flex-direction: column;
     text-align: center;
   }
+}
+
+/* ── 추가: 다이버 상태 배지 & PC 사양 아코디언 & 개발 현황 섹션 ── */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  color: #dfe6ff;
+  line-height: 1;
+}
+
+.badge-p0 {
+  border-color: rgba(56, 215, 255, 0.45);
+  background: rgba(56, 215, 255, 0.12);
+  color: #83e8ff;
+}
+
+.badge-future {
+  border-color: rgba(185, 140, 255, 0.45);
+  background: rgba(155, 108, 255, 0.14);
+  color: #d8c4ff;
+}
+
+.badge-out-of-p0 {
+  border-color: rgba(255, 196, 87, 0.45);
+  background: rgba(255, 196, 87, 0.12);
+  color: #ffd989;
+}
+
+.project-status-pill {
+  display: inline-flex;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(56, 215, 255, 0.32);
+  background: rgba(56, 215, 255, 0.08);
+  color: #9eefff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* PC 사양 아코디언 */
+.spec-accordion {
+  border: 1px solid rgba(155, 108, 255, 0.28);
+  border-radius: 18px;
+  background: rgba(16, 18, 32, 0.72);
+  overflow: hidden;
+  margin-top: 16px;
+  text-align: left;
+}
+
+.spec-accordion summary {
+  cursor: pointer;
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #f3f5ff;
+  font-weight: 800;
+  list-style: none;
+}
+
+.spec-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.spec-accordion summary small {
+  color: #aeb3c8;
+  font-weight: 500;
+}
+
+.spec-content {
+  padding: 0 22px 22px;
+  border-top: 1px solid rgba(155, 108, 255, 0.2);
+}
+
+/* 개발 현황 (P0 구현 상태) */
+.dev-status {
+  text-align: left;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.status-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  position: relative;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.status-card:hover {
+  transform: translateY(-4px);
+}
+
+.status-card.done {
+  border-color: rgba(56, 215, 255, 0.25);
+}
+
+.status-card.done:hover {
+  border-color: var(--secondary);
+  box-shadow: 0 4px 20px rgba(56, 215, 255, 0.1);
+}
+
+.status-card.progress {
+  border-color: rgba(155, 108, 255, 0.35);
+}
+
+.status-card.progress:hover {
+  border-color: var(--primary);
+  box-shadow: 0 4px 20px rgba(155, 108, 255, 0.15);
+}
+
+.status-card.planned {
+  border-color: var(--line);
+}
+
+.status-card.planned:hover {
+  border-color: var(--text-dim);
+}
+
+.status-badge-static {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  line-height: 1;
+}
+
+.badge-done {
+  background: rgba(56, 215, 255, 0.15);
+  color: #83e8ff;
+  border: 1px solid rgba(56, 215, 255, 0.3);
+}
+
+.badge-progress {
+  background: rgba(155, 108, 255, 0.15);
+  color: #d8c4ff;
+  border: 1px solid rgba(155, 108, 255, 0.3);
+}
+
+.badge-planned {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-dim);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.status-card h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.status-card p {
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  line-height: 1.5;
 }

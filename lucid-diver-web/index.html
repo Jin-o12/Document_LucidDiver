@@ -74,10 +74,10 @@
   <div class="nav-group">
     <span class="nav-group-label">P0</span>
     <a class="nav-link" href="#p0-goal">P0 목표</a>
-    <a class="nav-link" href="#p0-scope">구현 범위</a>
-    <a class="nav-link" href="#p0-exclude">제외 범위</a>
+    <a class="nav-link" href="#p0-scope-exclude">구현/제외범위</a>
     <a class="nav-link" href="#risk">리스크 통제</a>
     <a class="nav-link" href="#milestone">개발 계획</a>
+    <a class="nav-link" href="#dev-status">구현 상태</a>
   </div>
 
   <div class="nav-group">
@@ -103,6 +103,9 @@
     <div class="hero-rift"></div>
 
     <div class="hero-content">
+      <div style="margin-bottom: 14px;">
+        <span class="project-status-pill">P0 개발 진행형 포트폴리오 · 지속 업데이트 중</span>
+      </div>
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
         서브컬처 PvE 익스트랙션 액션 RPG
@@ -121,6 +124,10 @@
       <div class="hero-copy">
         <p>다이버는 잊는다.<br>관제사는 기록한다.<br>그리고 다시, 구하러 들어간다.</p>
       </div>
+
+      <p style="font-size: 0.88rem; color: var(--text-dim); margin-bottom: 24px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+        ※ 본 페이지는 기획서, 시스템 명세, UI 레퍼런스, 구현 결과물을 순차적으로 갱신하는 개발 진행형 포트폴리오입니다.
+      </p>
 
       <div class="hero-cta">
         <a class="btn btn-primary" href="./assets/downloads/lucid_diver_proposal_v2.1.pptx" download>
@@ -143,7 +150,7 @@
     <p class="section-label">Project Overview</p>
     <h2 class="section-title">프로젝트 개요</h2>
     <p class="section-subtitle">
-      Team REMnants가 제작 중인 Unity 2022.x (URP) 기반 프로토타입 프로젝트.
+      Team REMnants가 제작 중인 Unity 2022.3.62f3 (URP) 기반 프로토타입 프로젝트.
       PvE 익스트랙션 장르와 서브컬처 캐릭터 서사가 결합된 액션 RPG의 핵심 루프를 검증한다.
     </p>
 
@@ -172,7 +179,7 @@
           </tr>
           <tr>
             <th>엔진</th>
-             <td>Unity 2022.x (URP)</td>
+             <td>Unity 2022.3.62f3 (URP)</td>
           </tr>
           <tr>
             <th>플랫폼</th>
@@ -184,7 +191,7 @@
           </tr>
           <tr>
             <th>핵심 검증</th>
-            <td>익스트랙션 보상이 캐릭터 구원 보상으로 전환되는가</td>
+            <td>인게임의 PvE 익스트랙션 플레이가 기억 회수형 애착 보상을 통해 캐릭터 구원 서사로 연결되는 루프가 구현되었는가</td>
           </tr>
           <tr>
             <th>메인 다이버</th>
@@ -209,52 +216,6 @@
       </div>
     </div>
 
-    <!-- ── 시스템 사양 ── -->
-    <div style="margin-top:40px;">
-      <p class="section-label" style="margin-bottom:8px;">System Requirements</p>
-      <h3 style="font-size:1.02rem; font-weight:700; color:var(--text-main); margin-bottom:20px;">시스템 최소 / 권장 사양</h3>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-
-        <!-- 최소 사양 -->
-        <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;">
-          <div style="background:var(--bg-panel-soft); padding:10px 18px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:10px;">
-            <span style="font-size:0.68rem; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-dim);">MINIMUM</span>
-            <span style="font-size:0.78rem; color:var(--text-dim);">최소 사양</span>
-          </div>
-          <table class="info-table">
-            <tr><th>OS</th><td>Windows 10 (64비트)</td></tr>
-            <tr><th>프로세서</th><td>Intel Core i3-540 3.06 GHz</td></tr>
-            <tr><th>메모리</th><td>4 GB RAM</td></tr>
-            <tr><th>그래픽</th><td>NVIDIA GeForce GTX 650 Ti</td></tr>
-            <tr><th>DirectX</th><td>버전 11</td></tr>
-            <tr><th>저장 공간</th><td>19 GB 이상</td></tr>
-            <tr><th>사운드카드</th><td>Windows 호환 오디오 장치</td></tr>
-          </table>
-        </div>
-
-        <!-- 권장 사양 -->
-        <div style="background:var(--bg-card); border:1px solid var(--primary); border-radius:var(--radius); overflow:hidden; box-shadow:0 4px 20px var(--primary-glow);">
-          <div style="background:var(--primary-glow); padding:10px 18px; border-bottom:1px solid rgba(155,108,255,0.3); display:flex; align-items:center; gap:10px;">
-            <span style="font-size:0.68rem; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--primary-strong);">RECOMMENDED</span>
-            <span style="font-size:0.78rem; color:var(--primary);">권장 사양</span>
-          </div>
-          <table class="info-table">
-            <tr><th>OS</th><td>Windows 11 (64비트)</td></tr>
-            <tr><th>프로세서</th><td>Intel Core i5 이상 (멀티코어 권장)</td></tr>
-            <tr><th>메모리</th><td>8 GB RAM 이상</td></tr>
-            <tr><th>그래픽</th><td>NVIDIA GeForce GTX 1060 이상</td></tr>
-            <tr><th>DirectX</th><td>버전 11 이상</td></tr>
-            <tr><th>저장 공간</th><td>19 GB 이상 (SSD 권장)</td></tr>
-            <tr><th>사운드카드</th><td>Windows 호환 오디오 장치</td></tr>
-          </table>
-        </div>
-
-      </div>
-      <p class="note" style="margin-top:12px;">
-        <span class="note-icon">⚠️</span>
-        <span>64비트 프로세서 및 운영 체제가 필수입니다. P0 프로토타입 기준 사양이며, 정식 출시 시 변경될 수 있습니다.</span>
-      </p>
-    </div>
   </section>
 
   <!-- ══════════════════════════════════════════
@@ -406,7 +367,7 @@
           </div>
 
           <div class="log-step" style="margin-bottom: 24px;">
-            <div class="log-line-system" style="font-weight: 700; margin-bottom: 8px;">🖥️ Step 02: 몽유물을 쫓는 자들 (심연을 향하는 발걸음)</div>
+            <div class="log-line-system" style="font-weight: 700; margin-bottom: 8px;">🖥️ Step 02: 다이버 — 꿈에 들어갈 수 있는 사람들</div>
             <p style="color:var(--text-sub); line-height:2; font-size:0.9rem; white-space: pre-wrap;"><strong>[나레이션 / 관제사]</strong>
 현실의 총은 침몽도시의 괴이를 멈추지 못했다.
 그곳의 적들은 꿈과 같은 매질로 이루어져 있었고, 현실의 탄환은 그 몸을 안개처럼 통과했다.
@@ -754,26 +715,41 @@
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:20px;">
         <div class="card" data-modal-target="diver-chaerin" style="cursor: pointer; text-align: center; transition: transform 0.2s; border: 1px solid rgba(155, 108, 255, 0.2);" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
           <div style="font-size: 2.2rem; margin-bottom: 8px;">👓</div>
+          <div style="margin-bottom: 10px;">
+            <span class="status-badge badge-p0">P0 메인 다이버</span>
+          </div>
           <h3 class="card-title" style="margin-bottom:6px;">채린 (Chaerin)</h3>
-          <p class="card-desc" style="font-size:0.8rem; color:var(--text-dim);">방어적 불신 · 메인 다이버 (P0)</p>
+          <p class="card-desc" style="font-size:0.8rem; color:var(--text-dim); line-height: 1.5;">P0에서 실제 구현되는 메인 다이버. 기억 파편, 동조율 Lv.1, 개인 심상 기록 01, 귀환 대사 변화 검증의 중심 캐릭터입니다.</p>
         </div>
         
         <div class="card" data-modal-target="diver-ethan" style="cursor: pointer; text-align: center; transition: transform 0.2s; border: 1px solid rgba(155, 108, 255, 0.2);" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
           <div style="font-size: 2.2rem; margin-bottom: 8px;">⚡</div>
+          <div style="margin-bottom: 10px; display: flex; justify-content: center; gap: 6px; flex-wrap: wrap;">
+            <span class="status-badge badge-future">향후 확장</span>
+            <span class="status-badge badge-out-of-p0">P0 미구현</span>
+          </div>
           <h3 class="card-title" style="margin-bottom:6px;">에단 (Ethan)</h3>
-          <p class="card-desc" style="font-size:0.8rem; color:var(--text-dim);">귀차니즘 딜러 · 전술 해머 특화</p>
+          <p class="card-desc" style="font-size:0.8rem; color:var(--text-dim); line-height: 1.5;">본 캐릭터는 장기 확장 후보입니다. P0 버티컬 슬라이스에서는 채린 1명만 구현 대상으로 사용합니다.</p>
         </div>
         
         <div class="card" data-modal-target="diver-haseon" style="cursor: pointer; text-align: center; transition: transform 0.2s; border: 1px solid rgba(155, 108, 255, 0.2);" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
           <div style="font-size: 2.2rem; margin-bottom: 8px;">🎯</div>
+          <div style="margin-bottom: 10px; display: flex; justify-content: center; gap: 6px; flex-wrap: wrap;">
+            <span class="status-badge badge-future">향후 확장</span>
+            <span class="status-badge badge-out-of-p0">P0 미구현</span>
+          </div>
           <h3 class="card-title" style="margin-bottom:6px;">하선 (Haseon)</h3>
-          <p class="card-desc" style="font-size:0.8rem; color:var(--text-dim);">원거리 정밀 사격 · 마나 제어</p>
+          <p class="card-desc" style="font-size:0.8rem; color:var(--text-dim); line-height: 1.5;">본 캐릭터는 장기 확장 후보입니다. P0 버티컬 슬라이스에서는 채린 1명만 구현 대상으로 사용합니다.</p>
         </div>
         
         <div class="card" data-modal-target="diver-helena" style="cursor: pointer; text-align: center; transition: transform 0.2s; border: 1px solid rgba(155, 108, 255, 0.2);" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
           <div style="font-size: 2.2rem; margin-bottom: 8px;">🩺</div>
+          <div style="margin-bottom: 10px; display: flex; justify-content: center; gap: 6px; flex-wrap: wrap;">
+            <span class="status-badge badge-future">향후 확장</span>
+            <span class="status-badge badge-out-of-p0">P0 미구현</span>
+          </div>
           <h3 class="card-title" style="margin-bottom:6px;">헬레나 (Helena)</h3>
-          <p class="card-desc" style="font-size:0.8rem; color:var(--text-dim);">해부 매니아 맑눈광 · 후방 지원</p>
+          <p class="card-desc" style="font-size:0.8rem; color:var(--text-dim); line-height: 1.5;">본 캐릭터는 장기 확장 후보입니다. P0 버티컬 슬라이스에서는 채린 1명만 구현 대상으로 사용합니다.</p>
         </div>
       </div>
     </div>
@@ -916,7 +892,7 @@
             보상 보존<br>다음 출격 준비
           </div>
           <div class="flow-branch-item fail">
-            <div class="flow-branch-title">💀 실패 각성</div>
+            <div class="flow-branch-title">💀 탈출 실패</div>
             획득품 유실<br>처음부터
           </div>
         </div>
@@ -1107,7 +1083,7 @@
           <div class="flow-num">1</div>
           <div>
             <div class="flow-text">적 감지</div>
-            <div class="flow-sub">적이 플레이어를 감지 범경 내 추적 시작</div>
+            <div class="flow-sub">적이 플레이어를 감지 반경 내 추적 시작</div>
           </div>
         </div>
         <div class="flow-step">
@@ -1229,66 +1205,69 @@
   </section>
 
   <!-- ══════════════════════════════════════════
-       12. P0 SCOPE
+       12. P0 SCOPE & EXCLUDE (구현/제외범위 통합)
   ════════════════════════════════════════════ -->
-  <section id="p0-scope" class="section">
-    <p class="section-label">P0 Scope</p>
-    <h2 class="section-title">P0-Core 구현 범위</h2>
+  <section id="p0-scope-exclude" class="section">
+    <p class="section-label">P0 Scope & Out of Scope</p>
+    <h2 class="section-title">P0 구현/제외 범위</h2>
     <p class="section-subtitle">
-      채린 1명으로 "전투 → 회수 → 탈출 → 정산 → 기록 해금 → 로비 변화"가 연결되는지 확인한다.
+      채린 1명으로 "전투 → 회수 → 탈출 → 정산 → 기록 해금 → 로비 변화"가 연결되는 핵심 범위와 리스크 통제를 위해 제외된 기능 목록입니다.
     </p>
 
-    <div class="scope-grid">
-      <div class="scope-item included"><span class="scope-item-icon">✅</span> 로비 / 관제실 UI</div>
-      <div class="scope-item included"><span class="scope-item-icon">✅</span> 출격 준비 UI</div>
-      <div class="scope-item included"><span class="scope-item-icon">✅</span> 인게임 세션</div>
-      <div class="scope-item included"><span class="scope-item-icon">✅</span> 기억 파편 획득</div>
-      <div class="scope-item included"><span class="scope-item-icon">✅</span> 마나석 파밍</div>
-      <div class="scope-item included"><span class="scope-item-icon">✅</span> 회복약 파밍</div>
-      <div class="scope-item included"><span class="scope-item-icon">✅</span> 적 1종 (추적/공격 AI)</div>
-      <div class="scope-item included"><span class="scope-item-icon">✅</span> 전화부스 탈출</div>
-      <div class="scope-item included"><span class="scope-item-icon">✅</span> 강제 각성 (HP 소진)</div>
-      <div class="scope-item included"><span class="scope-item-icon">✅</span> 결과창 정산 UI</div>
-      <div class="scope-item included"><span class="scope-item-icon">✅</span> 동조율 상승 (Lv.1)</div>
-      <div class="scope-item included"><span class="scope-item-icon">✅</span> 개인 심상 기록 01 해금</div>
-      <div class="scope-item included"><span class="scope-item-icon">✅</span> 귀환 대사 변화</div>
-      <div class="scope-item included"><span class="scope-item-icon">✅</span> 창고 / 인벤토리 UI</div>
-      <div class="scope-item included"><span class="scope-item-icon">✅</span> 다이버 / 기록 화면</div>
-      <div class="scope-item included"><span class="scope-item-icon">✅</span> 소지품 슬롯 장착</div>
-    </div>
-  </section>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 30px;">
+      <!-- 좌측: P0-Core 구현 범위 -->
+      <div>
+        <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--secondary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+          <span>✅ P0-Core 구현 범위</span>
+        </h3>
+        <div class="scope-grid">
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 로비 / 관제실 UI</div>
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 출격 준비 UI</div>
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 인게임 세션</div>
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 기억 파편 획득</div>
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 마나석 파밍</div>
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 회복약 파밍</div>
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 적 1종 (추적/공격 AI)</div>
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 전화부스 탈출</div>
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 강제 각성 (HP 소진)</div>
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 결과창 정산 UI</div>
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 동조율 상승 (Lv.1)</div>
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 개인 심상 기록 01 해금</div>
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 귀환 대사 변화</div>
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 창고 / 인벤토리 UI</div>
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 다이버 / 기록 화면</div>
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 소지품 슬롯 장착</div>
+        </div>
+      </div>
 
-  <!-- ══════════════════════════════════════════
-       13. P0 EXCLUDE
-  ════════════════════════════════════════════ -->
-  <section id="p0-exclude" class="section">
-    <p class="section-label">Out of P0 Scope</p>
-    <h2 class="section-title">P0에서 구현하지 않는 것</h2>
-    <p class="section-subtitle">
-      명확한 범위 통제. 루프와 구원 서사는 P0에서 대사, 기록, 결과창 문구로만 표현한다.
-    </p>
-
-    <div class="scope-grid">
-      <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 실제 시간 루프 시스템</div>
-      <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 여러 다이버 구원</div>
-      <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 괴이 변질 캐릭터 전투</div>
-      <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 캐릭터 영입 / 가챠</div>
-      <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 다이버 교체 편성</div>
-      <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 선택지 기반 스토리</div>
-      <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 프롤로그 10단계</div>
-      <div class="scope-item excluded"><span class="scope-item-icon">✗</span> Live2D / 풀보이스</div>
-      <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 복잡한 장비 성장</div>
-      <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 멀티플레이</div>
-      <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 보스전</div>
-      <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 인벤토리 그리드/드래그</div>
-      <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 상점 / 크래프팅</div>
-      <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 세션 시간 제한</div>
-      <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 몽막-심상핵 2단계 기믹</div>
+      <!-- 우측: P0에서 구현하지 않는 것 (제외 범위) -->
+      <div>
+        <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--primary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+          <span>❌ P0 제외 범위 (향후 확장)</span>
+        </h3>
+        <div class="scope-grid">
+          <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 실제 시간 루프 시스템</div>
+          <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 여러 다이버 구원</div>
+          <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 괴이 변질 캐릭터 전투</div>
+          <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 캐릭터 영입 / 가챠</div>
+          <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 다이버 교체 편성</div>
+          <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 선택지 기반 스토리</div>
+          <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 프롤로그 10단계</div>
+          <div class="scope-item excluded"><span class="scope-item-icon">✗</span> Live2D / 풀보이스</div>
+          <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 복잡한 장비 성장</div>
+          <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 멀티플레이</div>
+          <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 보스전</div>
+          <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 인벤토리 그리드/드래그</div>
+          <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 상점 / 크래프팅</div>
+          <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 세션 시간 제한</div>
+          <div class="scope-item excluded"><span class="scope-item-icon">✗</span> 몽막-심상핵 2단계 기믹</div>
+        </div>
+      </div>
     </div>
 
     <div class="callout" style="margin-top:32px;">
-      <strong>별도의 회차 시스템은 P0에서 구현하지 않는다.</strong><br>
-      루프와 구원 서사는 P0에서 대사, 기록, 결과창 문구로만 표현한다.
+      <strong>별도의 회차 시스템은 P0에서 구현하지 않습니다.</strong><br>
+      루프와 구원 서사는 P0에서 대사, 기록, 결과창 문구로만 표현하며, 기타 확장 기획 요소들은 안정 빌드 검증 이후 순차적으로 개발할 계획입니다.
     </div>
   </section>
 
@@ -1428,6 +1407,120 @@
     <div class="note" style="margin-top:24px;">
       <span class="note-icon">📌</span>
       <span>일정은 팀 실개발 속도에 따라 조정될 수 있으며, P0 범위 이내에서만 조율한다.</span>
+    </div>
+
+    <!-- ── 시스템 사양 (이동 및 아코디언 형태로 변경) ── -->
+    <div style="margin-top:40px;">
+      <details class="spec-accordion">
+        <summary style="outline: none;">
+          <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
+            <span style="font-size: 1.05rem; font-weight: 800; color: #f3f5ff;">⚙️ 개발 기준 사양 / 테스트 환경 보기</span>
+            <small style="color: #aeb3c8; font-size: 0.8rem; font-weight: 500;">P0 프로토타입 기준, 변경 가능</small>
+          </div>
+          <span class="accordion-arrow" style="font-size: 1.2rem; color: var(--primary); margin-right: 8px;">▼</span>
+        </summary>
+
+        <div class="spec-content" style="padding-top: 20px;">
+          <p style="color:var(--text-sub); line-height:1.6; font-size:0.88rem; margin-bottom: 20px;">
+            현재 사양 정보는 P0 프로토타입 개발 및 테스트 기준으로 작성된 참고 항목입니다. 최종 빌드 사양은 개발 진행에 따라 변경될 수 있습니다.
+          </p>
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th>구분</th>
+                <th>최소 사양 (Minimum)</th>
+                <th>권장 사양 (Recommended)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>OS</th>
+                <td>Windows 10 (64비트)</td>
+                <td>Windows 11 (64비트)</td>
+              </tr>
+              <tr>
+                <th>프로세서</th>
+                <td>Intel Core i3-540 3.06 GHz</td>
+                <td>Intel Core i5 이상 (멀티코어 권장)</td>
+              </tr>
+              <tr>
+                <th>메모리</th>
+                <td>4 GB RAM</td>
+                <td>8 GB RAM 이상</td>
+              </tr>
+              <tr>
+                <th>그래픽</th>
+                <td>NVIDIA GeForce GTX 650 Ti</td>
+                <td>NVIDIA GeForce GTX 1060 이상</td>
+              </tr>
+              <tr>
+                <th>DirectX</th>
+                <td>버전 11</td>
+                <td>버전 11 이상</td>
+              </tr>
+              <tr>
+                <th>저장 공간</th>
+                <td>19 GB 이상</td>
+                <td>19 GB 이상 (SSD 권장)</td>
+              </tr>
+              <tr>
+                <th>사운드카드</th>
+                <td>Windows 호환 오디오 장치</td>
+                <td>Windows 호환 오디오 장치</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="note" style="margin-top:16px; text-align: left;">
+            <span class="note-icon">⚠️</span>
+            <span>64비트 프로세서 및 운영 체제가 필수입니다. P0 프로토타입 기준 사양이며, 정식 출시 시 변경될 수 있습니다.</span>
+          </p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       13-C. DEVELOPMENT STATUS
+  ════════════════════════════════════════════ -->
+  <section id="dev-status" class="section dev-status">
+    <div class="section-header">
+      <p class="eyebrow">Development Status</p>
+      <h2>P0 구현 상태</h2>
+      <p>
+        본 페이지는 P0 버티컬 슬라이스 제작 과정을 정리하는 포트폴리오형 기획 페이지입니다. 현재는 기획서, 시스템 명세, UI 레퍼런스, 발표 자료를 중심으로 정리되어 있으며, 실제 플레이 영상과 빌드 링크는 핵심 루프 구현 후 지속적으로 추가될 예정입니다.
+      </p>
+    </div>
+
+    <div class="status-grid">
+      <article class="status-card done">
+        <span class="status-badge-static badge-done">완료</span>
+        <h3>기획 기준 정리</h3>
+        <p>P0 정의서, 시스템 명세서, 시나리오 기준 문서, PPT 제안서 정리 완료.</p>
+      </article>
+
+      <article class="status-card progress">
+        <span class="status-badge-static badge-progress">지속 업데이트 중</span>
+        <h3>포트폴리오 페이지</h3>
+        <p>웹 포트폴리오 기본 구조, 세계관, 핵심 루프, 주요 화면, 문서 링크 구성.</p>
+      </article>
+
+      <article class="status-card progress">
+        <span class="status-badge-static badge-progress">진행 중</span>
+        <h3>P0 핵심 루프 구현</h3>
+        <p>로비, 출격 준비, 인게임 세션, 아이템 회수, 탈출/실패, 결과 정산 연결 예정.</p>
+      </article>
+
+      <article class="status-card planned">
+        <span class="status-badge-static badge-planned">예정</span>
+        <h3>플레이 영상 추가</h3>
+        <p>핵심 루프가 플레이 가능한 상태가 되면 30~60초 플레이 클립을 추가할 예정.</p>
+      </article>
+
+      <article class="status-card planned">
+        <span class="status-badge-static badge-planned">예정</span>
+        <h3>빌드 링크 추가</h3>
+        <p>검토 가능한 안정 빌드가 준비되면 다운로드 또는 WebGL 링크를 연결할 예정.</p>
+      </article>
     </div>
   </section>
 
@@ -1845,6 +1938,10 @@
     <p class="section-subtitle">
       팀 내부 기준 문서와 발표 자료 링크. 파일이 없는 항목은 준비 중으로 표시한다.
     </p>
+
+    <div style="text-align: center; margin-bottom: 24px;">
+      <span class="project-status-pill" style="font-size: 0.8rem;">본 페이지는 P0 버티컬 슬라이스 개발 진행에 따라 지속 업데이트됩니다.</span>
+    </div>
 
     <div class="download-grid">
       <a class="download-card" href="./assets/downloads/lucid_diver_proposal_v2.1.pptx" download>
