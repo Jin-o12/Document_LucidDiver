@@ -374,7 +374,7 @@ const detailModalData = {
           오직 꿈의 에너지와 정신적으로 공명할 수 있는 다이버만이 심상무장(Mind Armament)을 실체화하여 사용할 수 있습니다.
         </p>
         <ul class="modal-bullets">
-          <li><strong>심상무장 구현 범위 (에너지 권총):</strong> 다이버 채린이 기본 탑재하는 에너지 권총(Pistol) 1종만 최종 구현하여 루프를 검증합니다.</li>
+          <li><strong>심상무장 구현 범위 (에너지 권총):</strong> 다이버 유안이 기본 탑재하는 에너지 권총(Pistol) 1종만 최종 구현하여 루프를 검증합니다.</li>
           <li><strong>추가 무기 구현 계획 없음:</strong> 현재 돌격소총(AR)을 포함한 추가 무장의 구현 계획은 존재하지 않으며, 이번 P0 빌드에서는 기본 에너지 권총만 구현하고 추후 개발 로드맵에 따라 추가 무장 구현을 검토할 예정입니다.</li>
         </ul>
       </div>
@@ -440,12 +440,12 @@ const detailModalData = {
       </div>
     `
   },
-  "diver-chaerin": {
+  "diver-yuan": {
     layout: "split",
     category: "Diver Profile",
-    title: "다이버 - 채린 (Chaerin)",
+    title: "다이버 - 유안 (Yuan)",
     images: [
-      { src: "./assets/images/Chaerin_ConceptArt.png", alt: "채린 캐릭터 컨셉 아트 원화" }
+      { src: "./assets/images/Yuan_ConceptArt.png", alt: "유안 캐릭터 컨셉 아트 원화" }
     ],
     content: `
       <div class="modal-section">
@@ -818,7 +818,7 @@ function initVNTerminal() {
     {
       bg: "./assets/images/vn_scene_06.png",
       linkRate: 100, linkClass: "full", linkStatusText: "DIVE INITIATED",
-      sysTag: "[SYSTEM: STARTING LINK WITH SUBJECT 'CHAERIN'...]",
+      sysTag: "[SYSTEM: STARTING LINK WITH SUBJECT 'YUAN'...]",
       speakerText: "나레이션 — 관제사",
       isSystem: false,
       effects: ["flash"],

@@ -53,7 +53,7 @@ lucid-diver-web/
 | 3 | World | 침몽도시 세계관 |
 | 4 | Controller | 플레이어 역할: 관제사 |
 | 5 | Diver | 다이버 캐릭터 개념 + 비교표 |
-| 6 | Chaerin | 메인 다이버 채린 프로필 + 감정 변화 |
+| 6 | Yuan | 메인 다이버 유안 프로필 + 감정 변화 |
 | 7 | Extraction | 익스트랙션 장르 설명 |
 | 8 | Lucid Variation | 루시드 다이버식 변형 + 이중 보상 루프 |
 | 9 | Core Loop | 전체 게임 흐름도 |
@@ -85,7 +85,7 @@ lucid-diver-web/
 | hero_main.png | Hero 배경 |
 | world_city.png | 세계관 / 프로젝트 개요 |
 | control_room.png | 관제실 섹션 |
-| chaerin_standing.png | 채린 캐릭터 프로필 |
+| yuan_standing.png | 유안 캐릭터 프로필 |
 | extraction_diagram.png | 익스트랙션 개념 / 다이버 섹션 |
 | salvation_concept.png | P0 목표 섹션 |
 | return_log.png | (추가 참고용) |

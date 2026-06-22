@@ -1067,24 +1067,24 @@ h1, h2, h3, h4 {
   }
 }
 
-/* ── 13. Chaerin Profile ─────────────────────────────────────── */
+/* ── 13. Yuan Profile ─────────────────────────────────────── */
 
-.chaerin-section {
+.yuan-section {
   background: linear-gradient(135deg, var(--bg-main) 0%, rgba(20, 12, 40, 0.95) 100%);
 }
 
-.chaerin-profile {
+.yuan-profile {
   display: grid;
   grid-template-columns: 340px 1fr;
   gap: 48px;
   align-items: start;
 }
 
-.chaerin-img-wrap {
+.yuan-img-wrap {
   position: relative;
 }
 
-.chaerin-img-wrap::before {
+.yuan-img-wrap::before {
   content: "";
   position: absolute;
   inset: -2px;
@@ -1101,7 +1101,7 @@ h1, h2, h3, h4 {
   100% { background-position: 0% 50%; }
 }
 
-.chaerin-img-wrap img {
+.yuan-img-wrap img {
   position: relative;
   z-index: 1;
   border-radius: var(--radius);
@@ -1111,9 +1111,9 @@ h1, h2, h3, h4 {
   object-position: top center;
 }
 
-.chaerin-info { padding-top: 8px; }
+.yuan-info { padding-top: 8px; }
 
-.chaerin-name {
+.yuan-name {
   font-size: 2.4rem;
   font-weight: 900;
   background: linear-gradient(135deg, var(--text-main) 0%, var(--primary-strong) 100%);
@@ -1123,7 +1123,7 @@ h1, h2, h3, h4 {
   margin-bottom: 6px;
 }
 
-.chaerin-tagline {
+.yuan-tagline {
   font-size: 0.95rem;
   color: var(--secondary);
   font-weight: 600;
@@ -1131,7 +1131,7 @@ h1, h2, h3, h4 {
   letter-spacing: 0.04em;
 }
 
-.chaerin-tags {
+.yuan-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -1734,7 +1734,7 @@ h1, h2, h3, h4 {
 @media (max-width: 1100px) {
   .section { padding: 64px 40px; }
   .hero-content { padding: 60px 48px; }
-  .chaerin-profile { grid-template-columns: 280px 1fr; }
+  .yuan-profile { grid-template-columns: 280px 1fr; }
 }
 
 @media (max-width: 768px) {
@@ -1755,10 +1755,10 @@ h1, h2, h3, h4 {
 
   .side-nav.open { transform: translateX(0); }
 
-  .chaerin-profile {
+  .yuan-profile {
     grid-template-columns: 1fr;
   }
-  .chaerin-img-wrap img { height: 360px; }
+  .yuan-img-wrap img { height: 360px; }
 
   .card-grid,
   .dual-reward,
@@ -2482,7 +2482,7 @@ a.download-card:hover .download-status.ready {
 .sc-img-placeholder-icon { font-size: 2.2rem; opacity: 0.4; }
 .sc-img-placeholder-text { font-size: 0.76rem; color: var(--text-dim); line-height: 1.5; }
 
-.chaerin-log-card {
+.yuan-log-card {
   background: linear-gradient(135deg, rgba(16,10,30,0.95) 0%, rgba(20,14,40,0.95) 100%);
   border: 1px solid rgba(155, 108, 255, 0.4);
   border-radius: var(--radius);
@@ -2491,7 +2491,7 @@ a.download-card:hover .download-status.ready {
   overflow: hidden;
 }
 
-.chaerin-log-card::before {
+.yuan-log-card::before {
   content: "";
   position: absolute;
   top: -60px; right: -60px;
@@ -2501,16 +2501,16 @@ a.download-card:hover .download-status.ready {
   pointer-events: none;
 }
 
-.chaerin-log-title {
+.yuan-log-title {
   font-size: 0.67rem; font-weight: 700;
   letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--primary); margin-bottom: 16px;
   display: flex; align-items: center; gap: 8px;
 }
 
-.chaerin-log-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.yuan-log-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
 
-.chaerin-log-stat {
+.yuan-log-stat {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
@@ -2537,7 +2537,7 @@ a.download-card:hover .download-status.ready {
 
 .log-stat-label { font-size: 0.67rem; color: var(--text-dim); font-weight: 600; letter-spacing: 0.06em; }
 
-.chaerin-log-quote {
+.yuan-log-quote {
   border-left: 3px solid var(--primary);
   padding: 12px 16px;
   background: rgba(155,108,255,0.06);
