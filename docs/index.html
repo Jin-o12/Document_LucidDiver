@@ -14,7 +14,7 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="침몽도시: 루시드 다이버">
   <meta property="og:description" content="꿈에 삼켜진 다이버의 기억을 회수해 그들이 괴이로 변질되기 전에 구원하는 서브컬처 PvE 익스트랙션 액션 RPG">
-  <meta property="og:image" content="./assets/images/hero_main.png">
+  <meta property="og:image" content="./assets/images/hero_main.jpg">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -57,6 +57,7 @@
 
   <div class="nav-group">
     <span class="nav-group-label">세계관</span>
+    <a class="nav-link" href="#scenario">시나리오</a>
     <a class="nav-link" href="#world">침몽도시</a>
     <a class="nav-link" href="#controller">관제사</a>
     <a class="nav-link" href="#diver">다이버</a>
@@ -65,8 +66,7 @@
 
   <div class="nav-group">
     <span class="nav-group-label">핵심 루프</span>
-    <a class="nav-link" href="#extraction">익스트랙션</a>
-    <a class="nav-link" href="#lucid-variation">루시드 다이버 변형</a>
+    <a class="nav-link" href="#extraction">익스트랙션 × 변형</a>
     <a class="nav-link" href="#core-loop">전체 흐름도</a>
     <a class="nav-link" href="#combat">전투 순서도</a>
   </div>
@@ -129,8 +129,8 @@
         <a class="btn btn-outline" href="#p0-goal">
           🎯 P0 기획서 보기
         </a>
-        <a class="btn btn-ghost btn-disabled" href="#">
-          🔗 Git Repository (준비 중)
+        <a class="btn btn-ghost" href="https://github.com/Jin-o12/Document_LucidDiver" target="_blank" rel="noopener">
+          🔗 Git Repository
         </a>
       </div>
     </div>
@@ -143,7 +143,7 @@
     <p class="section-label">Project Overview</p>
     <h2 class="section-title">프로젝트 개요</h2>
     <p class="section-subtitle">
-      Team REMnants가 제작 중인 Unity 기반 프로토타입 프로젝트.
+      Team REMnants가 제작 중인 Unity 2022.x (URP) 기반 프로토타입 프로젝트.
       PvE 익스트랙션 장르와 서브컬처 캐릭터 서사가 결합된 액션 RPG의 핵심 루프를 검증한다.
     </p>
 
@@ -172,7 +172,7 @@
           </tr>
           <tr>
             <th>엔진</th>
-            <td>Unity</td>
+             <td>Unity 2022.x (URP)</td>
           </tr>
           <tr>
             <th>플랫폼</th>
@@ -208,6 +208,53 @@
         </div>
       </div>
     </div>
+
+    <!-- ── 시스템 사양 ── -->
+    <div style="margin-top:40px;">
+      <p class="section-label" style="margin-bottom:8px;">System Requirements</p>
+      <h3 style="font-size:1.02rem; font-weight:700; color:var(--text-main); margin-bottom:20px;">시스템 최소 / 권장 사양</h3>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+
+        <!-- 최소 사양 -->
+        <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;">
+          <div style="background:var(--bg-panel-soft); padding:10px 18px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:10px;">
+            <span style="font-size:0.68rem; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-dim);">MINIMUM</span>
+            <span style="font-size:0.78rem; color:var(--text-dim);">최소 사양</span>
+          </div>
+          <table class="info-table">
+            <tr><th>OS</th><td>Windows 10 (64비트)</td></tr>
+            <tr><th>프로세서</th><td>Intel Core i3-540 3.06 GHz</td></tr>
+            <tr><th>메모리</th><td>4 GB RAM</td></tr>
+            <tr><th>그래픽</th><td>NVIDIA GeForce GTX 650 Ti</td></tr>
+            <tr><th>DirectX</th><td>버전 11</td></tr>
+            <tr><th>저장 공간</th><td>19 GB 이상</td></tr>
+            <tr><th>사운드카드</th><td>Windows 호환 오디오 장치</td></tr>
+          </table>
+        </div>
+
+        <!-- 권장 사양 -->
+        <div style="background:var(--bg-card); border:1px solid var(--primary); border-radius:var(--radius); overflow:hidden; box-shadow:0 4px 20px var(--primary-glow);">
+          <div style="background:var(--primary-glow); padding:10px 18px; border-bottom:1px solid rgba(155,108,255,0.3); display:flex; align-items:center; gap:10px;">
+            <span style="font-size:0.68rem; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--primary-strong);">RECOMMENDED</span>
+            <span style="font-size:0.78rem; color:var(--primary);">권장 사양</span>
+          </div>
+          <table class="info-table">
+            <tr><th>OS</th><td>Windows 11 (64비트)</td></tr>
+            <tr><th>프로세서</th><td>Intel Core i5 이상 (멀티코어 권장)</td></tr>
+            <tr><th>메모리</th><td>8 GB RAM 이상</td></tr>
+            <tr><th>그래픽</th><td>NVIDIA GeForce GTX 1060 이상</td></tr>
+            <tr><th>DirectX</th><td>버전 11 이상</td></tr>
+            <tr><th>저장 공간</th><td>19 GB 이상 (SSD 권장)</td></tr>
+            <tr><th>사운드카드</th><td>Windows 호환 오디오 장치</td></tr>
+          </table>
+        </div>
+
+      </div>
+      <p class="note" style="margin-top:12px;">
+        <span class="note-icon">⚠️</span>
+        <span>64비트 프로세서 및 운영 체제가 필수입니다. P0 프로토타입 기준 사양이며, 정식 출시 시 변경될 수 있습니다.</span>
+      </p>
+    </div>
   </section>
 
   <!-- ══════════════════════════════════════════
@@ -221,18 +268,17 @@
     </p>
 
     <div class="card-grid">
-      <div class="card">
+      <div class="card" data-modal-target="extraction" style="cursor: pointer;">
         <span class="card-icon">⚔️</span>
         <h3 class="card-title">PvE 익스트랙션</h3>
         <p class="card-desc">
-          위험 구역에 진입해 전투와 탐색을 수행하고, 탈출에 성공하면 보상을 보존한다.
-          실패하면 세션에서 획득한 모든 것을 잃는다.
+          위험 구역에 진입해 전투·탐색·파밍을 수행하고, 살아서 탈출해야만 전리품이 보존된다. 실패하면 세션에서 얻은 모든 것을 잃는다.
           <br><br>
-          성공/실패의 긴장감이 모든 판단을 의미 있게 만든다.
+          '더 파밍할 것인가, 지금 탈출할 것인가.' 이 선택이 모든 긴장감의 핵심이다.
         </p>
       </div>
 
-      <div class="card">
+      <div class="card" data-modal-target="salvation" style="cursor: pointer;">
         <span class="card-icon">💜</span>
         <h3 class="card-title">캐릭터 구원 서사</h3>
         <p class="card-desc">
@@ -243,7 +289,7 @@
         </p>
       </div>
 
-      <div class="card">
+      <div class="card" data-modal-target="affinity" style="cursor: pointer;">
         <span class="card-icon">🔮</span>
         <h3 class="card-title">기억 회수형 애착 보상</h3>
         <p class="card-desc">
@@ -257,6 +303,192 @@
   </section>
 
   <!-- ══════════════════════════════════════════
+       2.5 SCENARIO — 시나리오
+  ════════════════════════════════════════════ -->
+  <section id="scenario" class="section">
+    <p class="section-label">Scenario Synopsis</p>
+    <h2 class="section-title">침몽도시: 루시드 다이버 — 시나리오</h2>
+    <p class="section-subtitle">
+      다이버는 잊는다. 관제사는 기록한다. 그리고 다시, 구하러 들어간다.
+    </p>
+
+    <!-- ── 터미널 VN 플레이어 ── -->
+    <div class="vn-terminal-wrapper" id="vnTerminal">
+
+      <!-- 스캔라인 오버레이 -->
+      <div class="vn-scanlines" aria-hidden="true"></div>
+      <!-- 글리치 노이즈 오버레이 -->
+      <div class="vn-noise-overlay" aria-hidden="true"></div>
+      <!-- 경보 오버레이 -->
+      <div class="vn-alarm-overlay" id="vnAlarm" aria-hidden="true"></div>
+      <!-- 플래시 오버레이 -->
+      <div class="vn-flash-overlay" id="vnFlash" aria-hidden="true"></div>
+
+      <!-- 배경 이미지 레이어 -->
+      <div class="vn-bg-layer" id="vnBg">
+        <img class="vn-bg-img" id="vnBgImg" src="./assets/images/dreampocalypse_city_bg.png" alt="" aria-hidden="true">
+      </div>
+
+      <!-- 헤더: 시스템 상태 -->
+      <div class="vn-header">
+        <div class="vn-header-left">
+          <span class="vn-sys-tag" id="vnSysTag">[SYSTEM: ACCESSING NDMA ARCHIVE...]</span>
+        </div>
+        <div class="vn-header-right">
+          <span class="vn-link-label">LINK RATE</span>
+          <div class="vn-link-bar">
+            <div class="vn-link-fill" id="vnLinkFill"></div>
+          </div>
+          <span class="vn-link-pct" id="vnLinkPct">--</span>
+          <span class="vn-link-status" id="vnLinkStatus"></span>
+        </div>
+        <button class="vn-skip-btn" id="vnSkipBtn" title="시놉시스 전체 건너뛰기">SKIP ▶▶</button>
+      </div>
+
+      <!-- 콘텐츠 뷰포트 -->
+      <div class="vn-viewport">
+        <!-- 스텝 카운터 -->
+        <div class="vn-step-indicator" id="vnStepIndicator">
+          <span class="vn-step-dot active" data-step="0"></span>
+          <span class="vn-step-dot" data-step="1"></span>
+          <span class="vn-step-dot" data-step="2"></span>
+          <span class="vn-step-dot" data-step="3"></span>
+          <span class="vn-step-dot" data-step="4"></span>
+          <span class="vn-step-dot" data-step="5"></span>
+        </div>
+
+        <!-- 텍스트 박스 -->
+        <div class="vn-textbox">
+          <div class="vn-textbox-inner">
+            <div class="vn-speaker" id="vnSpeaker">나레이션</div>
+            <div class="vn-text" id="vnText"></div>
+            <div class="vn-cursor" id="vnCursor">▌</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 푸터: 조작 버튼 -->
+      <div class="vn-footer">
+        <button class="vn-nav-btn" id="vnPrevBtn" disabled>◀ PREV</button>
+        <div class="vn-progress-info">
+          <span id="vnStepNum">01</span> / <span id="vnStepTotal">06</span>
+        </div>
+        <button class="vn-nav-btn primary" id="vnNextBtn">NEXT ▶</button>
+      </div>
+
+    </div><!-- /.vn-terminal-wrapper -->
+
+    <!-- ── 시나리오 전체 줄거리 아코디언 ── -->
+    <div class="scenario-accordion-wrapper">
+      <button class="scenario-accordion-toggle" id="scenarioAccordionBtn" aria-expanded="false">
+        <span>시나리오 전체 줄거리 텍스트 보기</span>
+        <span class="accordion-arrow">▼</span>
+      </button>
+      <div class="scenario-accordion-body" id="scenarioAccordionBody">
+        <div class="log-block" style="margin-top: 0;">
+          <div class="log-line-system">[NDMA ARCHIVE // CHAERIN // LINK LOG]</div>
+          <div class="log-line-warn">[RECORDED ATTEMPTS: 17] [FORCED AWAKENING: 16] [EXTRACTION: 1]</div>
+          <br>
+          
+          <div class="log-step" style="margin-bottom: 24px;">
+            <div class="log-line-system" style="font-weight: 700; margin-bottom: 8px;">🖥️ Step 01: 부팅 및 세계관 (침몽도시의 탄생)</div>
+            <p style="color:var(--text-sub); line-height:2; font-size:0.9rem; white-space: pre-wrap;"><strong>[나레이션 / 관제사]</strong>
+인간의 꿈을 물리적인 형상으로 투사하는 입자, 루시드.
+그 기술은 처음엔 기적이라 불렸다.
+잠든 사람이 본 풍경을 현실 위에 펼쳐 보이는, 새로운 오락 산업의 시작이라고 믿었다.
+
+하지만 루시드 캡슐이 정식 출시된 날, 동시에 수면에 빠진 1,000명의 꿈은 하나의 대기층에서 공명했다.
+기억, 공포, 욕망, 후회. 서로 다른 무의식이 하나의 거대한 악몽 네트워크로 얽혔다.
+
+그날 이후, 도시의 일부는 더 이상 현실도, 꿈도 아닌 구역이 되었다.
+침몽도시.
+실패한 귀환과 잃어버린 기억을 재료로 매번 다시 재구성되는 꿈의 재난 구역.</p>
+          </div>
+
+          <div class="log-step" style="margin-bottom: 24px;">
+            <div class="log-line-system" style="font-weight: 700; margin-bottom: 8px;">🖥️ Step 02: 몽유물을 쫓는 자들 (심연을 향하는 발걸음)</div>
+            <p style="color:var(--text-sub); line-height:2; font-size:0.9rem; white-space: pre-wrap;"><strong>[나레이션 / 관제사]</strong>
+현실의 총은 침몽도시의 괴이를 멈추지 못했다.
+그곳의 적들은 꿈과 같은 매질로 이루어져 있었고, 현실의 탄환은 그 몸을 안개처럼 통과했다.
+
+살아남기 위해서는 꿈속에서 태어난 무장, 드림 포지드가 필요했다.
+그리고 그 무장을 다룰 수 있는 사람들만이 침몽도시 안으로 들어갈 수 있었다.
+우리는 그들을 다이버라 불렀다.
+
+하지만 다이버는 선택받은 전투원이 아니다.
+그들은 이미 침몽도시와 깊게 연결된 사람들.
+꿈에 들어갈 수 있다는 것은, 그만큼 꿈에게 잡아먹히기 쉽다는 뜻이기도 했다.</p>
+          </div>
+
+          <div class="log-step" style="margin-bottom: 24px;">
+            <div class="log-line-system" style="font-weight: 700; margin-bottom: 8px;">🖥️ Step 03: 실패의 대가 (기억의 상실)</div>
+            <p style="color:var(--text-sub); line-height:2; font-size:0.9rem; white-space: pre-wrap;"><strong>[나레이션 / 관제사]</strong>
+침몽도시의 진짜 잔인함은 죽음이 아니다.
+다이버는 쓰러질 때마다 현실로 강제로 끌어올려진다.
+
+육체는 돌아온다. 호흡도 돌아온다.
+하지만 기억은 돌아오지 않는다.
+그들이 어디서 무너졌는지, 무엇을 붙잡으려 했는지, 마지막 순간 누구의 목소리를 들었는지.
+대부분은 꿈속에 남는다.
+
+그리고 그 잃어버린 기억은 다음 세션의 어딘가에서 작은 파편이 되어 떠돈다.
+기억 파편. 다이버가 잃어버린 자아의 조각.
+관제 로그만이 그것이 누구의 것인지 기록한다.</p>
+          </div>
+
+          <div class="log-step" style="margin-bottom: 24px;">
+            <div class="log-line-system" style="font-weight: 700; margin-bottom: 8px;">🖥️ Step 04: 파국 (자아 붕괴와 괴이화)</div>
+            <p style="color:var(--text-sub); line-height:2; font-size:0.9rem; white-space: pre-wrap;"><strong>[나레이션 / 관제사]</strong>
+실패가 반복되면, 침몽도시는 다이버의 이름을 지운다.
+처음엔 기억이 사라진다. 다음엔 감정이 흐려진다.
+마지막엔 자신이 누구였는지조차 잊는다.
+
+그 순간, 다이버는 더 이상 현실로 돌아올 길을 찾지 못한다.
+꿈은 그 사람의 형태만 남긴다.
+어제까지 함께 싸우던 동료가, 오늘은 침몽도시의 괴이가 되어 나타난다.
+
+그들은 우리를 기억하지 못한다.
+하지만 관제 로그에는 남아 있다.
+그들이 몇 번 실패했는지. 어디서 무너졌는지. 마지막으로 누구의 목소리에 반응했는지.</p>
+          </div>
+
+          <div class="log-step" style="margin-bottom: 24px;">
+            <div class="log-line-system" style="font-weight: 700; margin-bottom: 8px;">🖥️ Step 05: 관제사의 의지 (유일한 기록)</div>
+            <p style="color:var(--text-sub); line-height:2; font-size:0.9rem; white-space: pre-wrap;"><strong>[나레이션 / 관제사]</strong> 
+나의 뇌파가 다이버들과 엮일 때마다, 안개 너머의 공포와 고통이 내 신경망으로 역류한다. 
+그들은 실패를 잊는다. 하지만 관제 로그는 남는다. 
+
+누가 어디서 무너졌는지. 마지막 순간, 누구의 목소리에 반응했는지. 
+
+직접 총을 들고 그 꿈속을 걸을 수는 없다. 
+
+하지만 나는 안과 밖을 동시에 잇고, 끊어지는 귀환 신호를 붙잡는 관제사.
+내 목소리를 따라 사선을 헤매는 다이버들을, 단 한 명도 그 악몽 속에 홀로 버려두지 않을 것이다.</p>
+          </div>
+
+          <div class="log-step" style="margin-bottom: 12px;">
+            <div class="log-line-system" style="font-weight: 700; margin-bottom: 8px;">🖥️ Step 06: 선언 (루프의 시작)</div>
+            <p style="color:var(--text-sub); line-height:2; font-size:0.9rem; white-space: pre-wrap;">다이버는 잊는다. 관제사는 기록한다.
+
+
+침몽도시에 남겨진 귀환 신호를 추적한다.
+잃어버린 기억 파편을 회수한다.
+그들이 괴이로 변질되기 전에, 다시 현실로 되돌린다.
+
+모두가 나를 기억하지 못하더라도, 나는 절망과 실패들을 기억한다.
+그리고 같은 운명에 놓인 다른 다이버들이 아직 그 안에 남아 있다.
+
+그러니 다시 링크를 연다. 다시 기록한다.
+
+<span class="vn-highlight-final">다시, 구하러 들어간다.</span></p>
+          </div>
+        </div>
+      </div>
+    </div><!-- /.scenario-accordion-wrapper -->
+
+  </section><!-- /#scenario -->
+
+    <!-- ══════════════════════════════════════════
        3. WORLD — 침몽도시
   ════════════════════════════════════════════ -->
   <section id="world" class="section">
@@ -269,7 +501,7 @@
     <div class="two-col">
       <div>
         <img
-          src="./assets/images/world_city.png"
+          src="./assets/images/dreampocalypse_city_bg.png"
           alt="침몽도시 배경 이미지"
           loading="lazy"
           data-lightbox
@@ -283,17 +515,17 @@
         </div>
 
         <div style="margin-top:20px; display:flex; flex-direction:column; gap:12px;">
-          <div class="card">
+          <div class="card" data-modal-target="world-erosion" style="cursor: pointer;">
             <span class="card-icon">🌀</span>
             <h3 class="card-title">꿈의 침식</h3>
             <p class="card-desc">현실과 꿈이 겹쳐진 도시 구역. 현실의 무기는 침몽도시의 괴이에게 통하지 않는다. 오직 꿈의 무장, 심상무장만이 길을 열 수 있다.</p>
           </div>
-          <div class="card">
+          <div class="card" data-modal-target="world-loss" style="cursor: pointer;">
             <span class="card-icon">⚠️</span>
             <h3 class="card-title">반복과 유실</h3>
             <p class="card-desc">탈출 실패 시 강제 각성, 반복 실패 시 기억과 자아 손상. 구조받지 못한 다이버는 끝내 괴이로 변질된다.</p>
           </div>
-          <div class="card">
+          <div class="card" data-modal-target="world-signal" style="cursor: pointer;">
             <span class="card-icon">📡</span>
             <h3 class="card-title">귀환 신호</h3>
             <p class="card-desc">침몽도시에서 발신되는 귀환 신호만이 다이버의 위치를 알린다. 관제사만이 이 신호를 포착하고 연결을 유지할 수 있다.</p>
@@ -374,8 +606,9 @@
       침몽도시와 공명하여 심상무장을 사용할 수 있는 생존자. 동시에 가장 큰 위험에 처한 사람들.
     </p>
 
-    <div class="two-col">
-      <div>
+    <div class="diver-hero-grid">
+      <!-- 좌측: world-card + 미니 스펙 카드 3종 -->
+      <div class="diver-left-col">
         <div class="world-card">
           <img
             src="./assets/images/extraction_diagram.png"
@@ -392,33 +625,82 @@
             </p>
           </div>
         </div>
+
+        <!-- 미니 스펙 카드 3종 -->
+        <div class="mini-spec-grid">
+          <div class="mini-spec-card">
+            <span class="mini-spec-icon">⚡</span>
+            <div class="mini-spec-body">
+              <div class="mini-spec-title">심상무장 사용자</div>
+              <p class="mini-spec-desc">꿈과 공명하는 자만이 심상무장을 사용한다. 이는 축복이 아닌, 이미 침몽도시와 연결되었다는 증거.</p>
+            </div>
+          </div>
+          <div class="mini-spec-card">
+            <span class="mini-spec-icon">🧩</span>
+            <div class="mini-spec-body">
+              <div class="mini-spec-title">기억 소실 위험군</div>
+              <p class="mini-spec-desc">반복 실패마다 기억이 침몽도시에 흡수된다. 구조 시한이 지나면 다이버는 돌아올 수 없다.</p>
+            </div>
+          </div>
+          <div class="mini-spec-card mini-spec-danger">
+            <span class="mini-spec-icon">👁️‍🗨️</span>
+            <div class="mini-spec-body">
+              <div class="mini-spec-title">괴이 변질</div>
+              <p class="mini-spec-desc">자아를 모두 잃은 다이버는 침몽도시를 떠도는 괴이로 변질된다.</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div>
-        <div style="display:flex; flex-direction:column; gap:16px;">
-          <div class="card">
-            <span class="card-icon">⚡</span>
-            <h3 class="card-title">심상무장 사용자</h3>
-            <p class="card-desc">
-              꿈의 에너지와 공명하는 적합자만이 사용할 수 있는 무장.
-              이는 축복이 아니라, 이미 침몽도시와 깊이 연결되어 있다는 의미다.
-            </p>
+
+      <!-- 우측: 채린 Live2D 플로팅 비디오 -->
+      <div class="diver-live2d-col">
+        <div class="diver-live2d-container" id="diverLive2D">
+          <!-- HUD 상단 데코 -->
+          <div class="live2d-hud-top">
+            <span class="live2d-hud-tag">DIVER LINK</span>
+            <span class="live2d-hud-name">CHAERIN</span>
+            <span class="live2d-hud-status blink-dot">● ACTIVE</span>
           </div>
-          <div class="card">
-            <span class="card-icon">🧩</span>
-            <h3 class="card-title">기억 소실 위험군</h3>
-            <p class="card-desc">
-              반복 실패 시 기억이 침몽도시에 흡수되어 자아가 무너진다.
-              구조 시한이 지나면 다이버는 다시는 인간으로 돌아올 수 없다.
-            </p>
+
+          <!-- 스캔라인 오버레이 -->
+          <div class="live2d-scanlines" aria-hidden="true"></div>
+
+          <!-- 비디오 -->
+          <video
+            class="live2d-video"
+            src="./assets/Live2D/Scene1.webm"
+            autoplay
+            loop
+            muted
+            playsinline
+            data-lightbox
+            aria-label="채린 캐릭터 Live2D 애니메이션"
+          ></video>
+
+          <!-- HUD 하단 데코 -->
+          <div class="live2d-hud-bottom">
+            <div class="live2d-hud-row">
+              <span class="live2d-hud-label">SYNC RATE</span>
+              <div class="live2d-sync-bar">
+                <div class="live2d-sync-fill" style="width: 82%;"></div>
+              </div>
+              <span class="live2d-hud-val">82%</span>
+            </div>
+            <div class="live2d-hud-row">
+              <span class="live2d-hud-label">STATUS</span>
+              <span class="live2d-hud-val" style="color: var(--success);">DIVING</span>
+            </div>
+            <div class="live2d-hud-row">
+              <span class="live2d-hud-label">ATTEMPT</span>
+              <span class="live2d-hud-val">17 / 17</span>
+            </div>
           </div>
-          <div class="card">
-            <span class="card-icon">👁️‍🗨️</span>
-            <h3 class="card-title">괴이 변질</h3>
-            <p class="card-desc">
-              구조받지 못한 다이버는 기억과 자아를 잃고,
-              침몽도시 안에서 플레이어를 위협하는 괴이로 변질된다.
-            </p>
-          </div>
+
+          <!-- 코너 데코라인 -->
+          <div class="live2d-corner live2d-corner-tl" aria-hidden="true"></div>
+          <div class="live2d-corner live2d-corner-tr" aria-hidden="true"></div>
+          <div class="live2d-corner live2d-corner-bl" aria-hidden="true"></div>
+          <div class="live2d-corner live2d-corner-br" aria-hidden="true"></div>
         </div>
       </div>
     </div>
@@ -458,6 +740,43 @@
         </tbody>
       </table>
     </div>
+
+    <div class="divider"></div>
+
+    <div style="margin-top: 40px;">
+      <p style="font-size:0.88rem; color:var(--text-dim); font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:16px; text-align:center;">
+        👥 REMnants 소속 적합 다이버 프로필
+      </p>
+      <p style="font-size:0.85rem; color:var(--text-sub); text-align:center; margin-bottom:24px;">
+        각 다이버 카드를 클릭하면 상세 컨셉 아트 및 캐릭터 설정을 확인할 수 있습니다.
+      </p>
+      
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:20px;">
+        <div class="card" data-modal-target="diver-chaerin" style="cursor: pointer; text-align: center; transition: transform 0.2s; border: 1px solid rgba(155, 108, 255, 0.2);" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div style="font-size: 2.2rem; margin-bottom: 8px;">👓</div>
+          <h3 class="card-title" style="margin-bottom:6px;">채린 (Chaerin)</h3>
+          <p class="card-desc" style="font-size:0.8rem; color:var(--text-dim);">방어적 불신 · 메인 다이버 (P0)</p>
+        </div>
+        
+        <div class="card" data-modal-target="diver-ethan" style="cursor: pointer; text-align: center; transition: transform 0.2s; border: 1px solid rgba(155, 108, 255, 0.2);" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div style="font-size: 2.2rem; margin-bottom: 8px;">⚡</div>
+          <h3 class="card-title" style="margin-bottom:6px;">에단 (Ethan)</h3>
+          <p class="card-desc" style="font-size:0.8rem; color:var(--text-dim);">귀차니즘 딜러 · 전술 해머 특화</p>
+        </div>
+        
+        <div class="card" data-modal-target="diver-haseon" style="cursor: pointer; text-align: center; transition: transform 0.2s; border: 1px solid rgba(155, 108, 255, 0.2);" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div style="font-size: 2.2rem; margin-bottom: 8px;">🎯</div>
+          <h3 class="card-title" style="margin-bottom:6px;">하선 (Haseon)</h3>
+          <p class="card-desc" style="font-size:0.8rem; color:var(--text-dim);">원거리 정밀 사격 · 마나 제어</p>
+        </div>
+        
+        <div class="card" data-modal-target="diver-helena" style="cursor: pointer; text-align: center; transition: transform 0.2s; border: 1px solid rgba(155, 108, 255, 0.2);" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div style="font-size: 2.2rem; margin-bottom: 8px;">🩺</div>
+          <h3 class="card-title" style="margin-bottom:6px;">헬레나 (Helena)</h3>
+          <p class="card-desc" style="font-size:0.8rem; color:var(--text-dim);">해부 매니아 맑눈광 · 후방 지원</p>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ══════════════════════════════════════════
@@ -473,7 +792,7 @@
     <div class="chaerin-profile">
       <div class="chaerin-img-wrap">
         <img
-          src="./assets/images/chaerin_standing.png"
+          src="./assets/images/chaerin_standing.jpg"
           alt="채린 캐릭터 전신 스탠딩 이미지"
           loading="lazy"
           data-lightbox
@@ -555,31 +874,28 @@
   </section>
 
   <!-- ══════════════════════════════════════════
-       7. EXTRACTION GENRE
+       7. EXTRACTION × LUCID DIVER
   ════════════════════════════════════════════ -->
   <section id="extraction" class="section">
-    <p class="section-label">Genre Explained</p>
-    <h2 class="section-title">익스트랙션 장르란 무엇인가</h2>
+    <p class="section-label">Genre × Lucid Diver</p>
+    <h2 class="section-title">익스트랙션 × 루시드 다이버</h2>
     <p class="section-subtitle">
-      위험 구역에 진입해 자원을 회수하고, 탈출에 성공하면 보존하며 실패하면 잃는 구조.
-      처음 접하는 사람도 이해할 수 있게 설명한다.
+      위험 구역에서 살아서 탈출해야만 보상이 보존되는 장르.<br>
+      루시드 다이버는 그 긴장감의 목적을 '강해지기'에서 '캐릭터 구원'으로 전환했다.
     </p>
 
+    <!-- ── Part 1: 장르 구조 ── -->
+    <p style="font-size:0.7rem; font-weight:800; letter-spacing:0.14em; color:var(--text-dim); text-transform:uppercase; margin-bottom:20px;">장르 구조 — 일반 익스트랙션</p>
     <div class="two-col">
       <div>
-        <p style="font-size:0.88rem; color:var(--text-dim); font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:16px;">일반 익스트랙션 구조</p>
         <div class="flow-diagram">
           <div class="flow-step">
             <div class="flow-num">1</div>
-            <div>
-              <div class="flow-text">위험 구역 진입</div>
-            </div>
+            <div><div class="flow-text">위험 구역 진입</div></div>
           </div>
           <div class="flow-step">
             <div class="flow-num">2</div>
-            <div>
-              <div class="flow-text">전투 / 탐색 / 파밍</div>
-            </div>
+            <div><div class="flow-text">전투 / 탐색 / 파밍</div></div>
           </div>
           <div class="flow-step">
             <div class="flow-num">3</div>
@@ -590,9 +906,7 @@
           </div>
           <div class="flow-step">
             <div class="flow-num">4</div>
-            <div>
-              <div class="flow-text">결과</div>
-            </div>
+            <div><div class="flow-text">결과</div></div>
           </div>
         </div>
 
@@ -622,17 +936,12 @@
         >
       </div>
     </div>
-  </section>
 
-  <!-- ══════════════════════════════════════════
-       8. LUCID DIVER VARIATION
-  ════════════════════════════════════════════ -->
-  <section id="lucid-variation" class="section">
-    <p class="section-label">Lucid Diver Variation</p>
-    <h2 class="section-title">루시드 다이버식 변형</h2>
-    <p class="section-subtitle">
-      하나는 캐릭터를 구하고, 하나는 다음 출격을 준비한다.
-    </p>
+    <div class="divider" style="margin:48px 0;"></div>
+
+    <!-- ── Part 2: 루시드 다이버식 변형 ── -->
+    <p style="font-size:0.7rem; font-weight:800; letter-spacing:0.14em; color:var(--primary); text-transform:uppercase; margin-bottom:8px;">루시드 다이버식 변형</p>
+    <p style="font-size:1rem; color:var(--text-sub); margin-bottom:32px;">하나는 캐릭터를 구하고, 하나는 다음 출격을 준비한다.</p>
 
     <div style="overflow-x:auto; margin-bottom:40px;">
       <table class="compare-table">
@@ -840,7 +1149,7 @@
 
       <div>
         <img
-          src="./assets/images/combat_flowchart.png"
+          src="./assets/images/UI_InGameHUD_Reference_v0.1b.png"
           alt="전투 순서도 이미지"
           loading="lazy"
           data-lightbox
@@ -1132,9 +1441,26 @@
       P0에서 구현되는 7개 주요 UI 화면. 이미지를 클릭하면 크게 볼 수 있다.
     </p>
 
-    <div class="note" style="margin-bottom:32px;">
-      <span class="note-icon">⚠️</span>
-      <span>UI 이미지는 목표 비주얼 레퍼런스이며, 실제 구현 범위는 P0 시스템 명세서를 우선한다.</span>
+    <!-- 레퍼런스 경고 배너 -->
+    <div style="
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: rgba(245, 166, 35, 0.08);
+      border: 1px solid rgba(245, 166, 35, 0.4);
+      border-left: 4px solid #f5a623;
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 32px;
+    ">
+      <span style="font-size: 1.5rem; flex-shrink: 0; line-height: 1;">⚠️</span>
+      <div>
+        <div style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.14em; color: #f5a623; text-transform: uppercase; margin-bottom: 5px;">REFERENCE IMAGES — NOT FINAL VISUALS</div>
+        <p style="font-size: 0.88rem; color: var(--text-sub); line-height: 1.65; margin: 0;">
+          아래 UI 이미지는 <strong style="color: var(--text-main);">목표 비주얼 레퍼런스</strong>이며, 실제 구현 화면과 다를 수 있습니다.<br>
+          최종 구현 범위 및 UI 사양은 <strong style="color: var(--text-main);">P0 시스템 명세서</strong>를 우선합니다.
+        </p>
+      </div>
     </div>
 
     <div class="screen-grid">
@@ -1240,63 +1566,68 @@
     <div class="team-accordion">
 
       <!-- ── 장수영 (CP) ─ HIGHLIGHTED ── -->
-      <details class="member-item member-highlight" id="member-jangsuyoung" open>
+      <details class="member-item" id="member-jangsuyoung">
         <summary class="member-summary">
           <div class="member-header">
             <div class="member-badge-wrap">
               <span class="member-role-badge badge-cp">CP</span>
-              <span class="member-name">장수영</span>
+              <span class="member-name name-cp">장수영</span>
               <span class="member-note">Chief Producer · 본 포트폴리오 제작자</span>
             </div>
             <span class="member-chevron">▾</span>
           </div>
         </summary>
         <div class="member-body">
-          <div class="portfolio-grid">
-            <div class="portfolio-card">
-              <div class="portfolio-num">01</div>
-              <h3 class="portfolio-title">P0 기획 총괄 및 범위 정의</h3>
-              <ul class="portfolio-list">
-                <li>PvE 익스트랙션 × 서브컬처 애착 루프 결합 콘셉트 확립</li>
-                <li>P0-Core / P0.5 / 제외 3단계 범위 구분 및 SSOT 정의서 작성</li>
-                <li>코치 피드백 내용 정리·팀 전파 및 스프린트 로드맵 2~7주차 확정</li>
-              </ul>
+          <div class="member-profile-wrap">
+            <div class="member-id-card">
+              <img src="./assets/images/CP_장수영.png" alt="장수영 관제사 신분증" class="member-id-img" data-lightbox onclick="if(window.openLightbox) window.openLightbox(this.src, this.alt)">
             </div>
-            <div class="portfolio-card">
-              <div class="portfolio-num">02</div>
-              <h3 class="portfolio-title">발표 자료 제작</h3>
-              <ul class="portfolio-list">
-                <li>퍼블리셔·코치 제출용 PPT 제안서 v1.1~v2.1 전 버전 제작</li>
-                <li>14개 섹션 기획서 (DOCX/PDF) 구성 및 UI 이미지 7종 삽입</li>
-                <li>흐름도·다이어그램 중심 재구조화, 코치 피드백 즉시 반영</li>
-              </ul>
-            </div>
-            <div class="portfolio-card">
-              <div class="portfolio-num">03</div>
-              <h3 class="portfolio-title">문서 체계화 (SSOT)</h3>
-              <ul class="portfolio-list">
-                <li>SSOT / 개발 전달용 / 기획 참고용 / 아카이브 폴더 체계 신설</li>
-                <li>문서 버전 관리 규칙 및 전 팀원 적용 가이드 작성</li>
-                <li>이미지 절대경로 → 상대경로 전환으로 렌더링 깨짐 해결</li>
-              </ul>
-            </div>
-            <div class="portfolio-card">
-              <div class="portfolio-num">04</div>
-              <h3 class="portfolio-title">PM 업무 — 일정 관리</h3>
-              <ul class="portfolio-list">
-                <li>전체 팀 일정 회의 주도 및 스프린트 로드맵 합의 이끌어냄</li>
-                <li>비현실적 일정 문제 원인 분석 후 '기능 우선 / 에셋 분리' 방침 확정</li>
-                <li>매일 스크럼 일지 작성 및 팀 작업 상태 추적</li>
-              </ul>
-            </div>
-            <div class="portfolio-card">
-              <div class="portfolio-num">05</div>
-              <h3 class="portfolio-title">HTML 포트폴리오 기획서 제작</h3>
-              <ul class="portfolio-list">
-                <li>침몽도시: 루시드 다이버 게임 소개 웹 페이지 설계 및 구현</li>
-                <li>17개 섹션, scroll-spy 내비게이션, 라이트박스, 반응형 레이아웃</li>
-                <li>GitHub 문서 링크 연동 및 팀원 역할 아코디언 UI 제작 (본 페이지)</li>
-              </ul>
+            <div class="portfolio-grid">
+              <div class="portfolio-card">
+                <div class="portfolio-num">01</div>
+                <h3 class="portfolio-title">P0 기획 총괄 및 범위 정의</h3>
+                <ul class="portfolio-list">
+                  <li>PvE 익스트랙션 × 서브컬처 애착 루프 결합 콘셉트 확립</li>
+                  <li>P0-Core / P0.5 / 제외 3단계 범위 구분 및 SSOT 정의서 작성</li>
+                  <li>코치 피드백 내용 정리·팀 전파 및 스프린트 로드맵 2~7주차 확정</li>
+                </ul>
+              </div>
+              <div class="portfolio-card">
+                <div class="portfolio-num">02</div>
+                <h3 class="portfolio-title">발표 자료 제작</h3>
+                <ul class="portfolio-list">
+                  <li>퍼블리셔·코치 제출용 PPT 제안서 v1.1~v2.1 전 버전 제작</li>
+                  <li>14개 섹션 기획서 (DOCX/PDF) 구성 및 UI 이미지 7종 삽입</li>
+                  <li>흐름도·다이어그램 중심 재구조화, 코치 피드백 즉시 반영</li>
+                </ul>
+              </div>
+              <div class="portfolio-card">
+                <div class="portfolio-num">03</div>
+                <h3 class="portfolio-title">문서 체계화 (SSOT)</h3>
+                <ul class="portfolio-list">
+                  <li>SSOT / 개발 전달용 / 기획 참고용 / 아카이브 폴더 체계 신설</li>
+                  <li>문서 버전 관리 규칙 및 전 팀원 적용 가이드 작성</li>
+                  <li>이미지 절대경로 → 상대경로 전환으로 렌더링 깨짐 해결</li>
+                </ul>
+              </div>
+              <div class="portfolio-card">
+                <div class="portfolio-num">04</div>
+                <h3 class="portfolio-title">PM 업무 — 일정 관리</h3>
+                <ul class="portfolio-list">
+                  <li>전체 팀 일정 회의 주도 및 스프린트 로드맵 합의 이끌어냄</li>
+                  <li>비현실적 일정 문제 원인 분석 후 '기능 우선 / 에셋 분리' 방침 확정</li>
+                  <li>매일 스크럼 일지 작성 및 팀 작업 상태 추적</li>
+                </ul>
+              </div>
+              <div class="portfolio-card">
+                <div class="portfolio-num">05</div>
+                <h3 class="portfolio-title">HTML 포트폴리오 기획서 제작</h3>
+                <ul class="portfolio-list">
+                  <li>침몽도시: 루시드 다이버 게임 소개 웹 페이지 설계 및 구현</li>
+                  <li>17개 섹션, scroll-spy 내비게이션, 라이트박스, 반응형 레이아웃</li>
+                  <li>GitHub 문서 링크 연동 및 팀원 역할 아코디언 UI 제작 (본 페이지)</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -1308,40 +1639,45 @@
           <div class="member-header">
             <div class="member-badge-wrap">
               <span class="member-role-badge badge-dev">TD</span>
-              <span class="member-name">강다영</span>
+              <span class="member-name name-td">강다영</span>
               <span class="member-note">Technical Director · 개발 총괄</span>
             </div>
             <span class="member-chevron">▾</span>
           </div>
         </summary>
         <div class="member-body">
-          <div class="portfolio-grid">
-            <div class="portfolio-card">
-              <div class="portfolio-num">01</div>
-              <h3 class="portfolio-title">전투 시스템 구현</h3>
-              <ul class="portfolio-list">
-                <li>적 추적 · 공격 AI 및 플레이어 피격 로직 구현</li>
-                <li>무장 발사 시 마나 소비 / 초당 마나 자동 회복 시스템</li>
-                <li>적 추적 애니메이션 싱크 버그 분석 및 해결</li>
-              </ul>
+          <div class="member-profile-wrap">
+            <div class="member-id-card">
+              <img src="./assets/images/TD_강다영.png" alt="강다영 관제사 신분증" class="member-id-img" data-lightbox onclick="if(window.openLightbox) window.openLightbox(this.src, this.alt)">
             </div>
-            <div class="portfolio-card">
-              <div class="portfolio-num">02</div>
-              <h3 class="portfolio-title">인벤토리 / UI 시스템</h3>
-              <ul class="portfolio-list">
-                <li>UIManager 타입 기반 일원화 리팩토링 (프리팹 구조 개선)</li>
-                <li>아이템 드래그 앤 드롭 · 더블클릭 창고-인벤토리 연동</li>
-                <li>퀵슬롯 UI · 소모품 아이템 사용 및 효과 적용 로직</li>
-              </ul>
-            </div>
-            <div class="portfolio-card">
-              <div class="portfolio-num">03</div>
-              <h3 class="portfolio-title">서사 보상 루프 구현</h3>
-              <ul class="portfolio-list">
-                <li>기억 파편 회수 → 정산 소모 → 동조율 상승 로직</li>
-                <li>심상 기록 해금 조건 처리 및 1차 통합 빌드 검수</li>
-                <li>멀티플레이어 확장 대비 플레이어 ID 기반 상호작용 리팩토링</li>
-              </ul>
+            <div class="portfolio-grid">
+              <div class="portfolio-card">
+                <div class="portfolio-num">01</div>
+                <h3 class="portfolio-title">전투 시스템 구현</h3>
+                <ul class="portfolio-list">
+                  <li>적 추적 · 공격 AI 및 플레이어 피격 로직 구현</li>
+                  <li>무장 발사 시 마나 소비 / 초당 마나 자동 회복 시스템</li>
+                  <li>적 추적 애니메이션 싱크 버그 분석 및 해결</li>
+                </ul>
+              </div>
+              <div class="portfolio-card">
+                <div class="portfolio-num">02</div>
+                <h3 class="portfolio-title">인벤토리 / UI 시스템</h3>
+                <ul class="portfolio-list">
+                  <li>UIManager 타입 기반 일원화 리팩토링 (프리팹 구조 개선)</li>
+                  <li>아이템 드래그 앤 드롭 · 더블클릭 창고-인벤토리 연동</li>
+                  <li>퀵슬롯 UI · 소모품 아이템 사용 및 효과 적용 로직</li>
+                </ul>
+              </div>
+              <div class="portfolio-card">
+                <div class="portfolio-num">03</div>
+                <h3 class="portfolio-title">서사 보상 루프 구현</h3>
+                <ul class="portfolio-list">
+                  <li>기억 파편 회수 → 정산 소모 → 동조율 상승 로직</li>
+                  <li>심상 기록 해금 조건 처리 및 1차 통합 빌드 검수</li>
+                  <li>멀티플레이어 확장 대비 플레이어 ID 기반 상호작용 리팩토링</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -1353,40 +1689,45 @@
           <div class="member-header">
             <div class="member-badge-wrap">
               <span class="member-role-badge badge-cd">CD</span>
-              <span class="member-name">우성혁</span>
+              <span class="member-name name-cd">우성혁</span>
               <span class="member-note">Creative Director · 시스템 기획</span>
             </div>
             <span class="member-chevron">▾</span>
           </div>
         </summary>
         <div class="member-body">
-          <div class="portfolio-grid">
-            <div class="portfolio-card">
-              <div class="portfolio-num">01</div>
-              <h3 class="portfolio-title">P0 시스템 명세서 작성</h3>
-              <ul class="portfolio-list">
-                <li>핵심 플레이 루프 구현을 위한 P0 시스템 명세서 초안 및 완성본 작성</li>
-                <li>P0에서 제외할 확장 명세(빈사 상태, 각성 보존 슬롯 등) 정리 및 제거</li>
-                <li>extractionResult enum 타입 명시, 기억 파편 카운터 UI 추가 등 세부 명세 보완</li>
-              </ul>
+          <div class="member-profile-wrap">
+            <div class="member-id-card">
+              <img src="./assets/images/CD_우성혁.png" alt="우성혁 관제사 신분증" class="member-id-img" data-lightbox onclick="if(window.openLightbox) window.openLightbox(this.src, this.alt)">
             </div>
-            <div class="portfolio-card">
-              <div class="portfolio-num">02</div>
-              <h3 class="portfolio-title">세계관-시스템 정합성 관리</h3>
-              <ul class="portfolio-list">
-                <li>동조율 / 호감도 용어 통일 및 SSOT 문서 교차 동기화</li>
-                <li>퀵슬롯 장착 사양 · 결과 정산창 기억 파편 소모 규칙 명세 반영</li>
-                <li>시나리오·캐릭터·시스템 간 최종 결합 정합성 점검</li>
-              </ul>
-            </div>
-            <div class="portfolio-card">
-              <div class="portfolio-num">03</div>
-              <h3 class="portfolio-title">서브컬처 서사 기획 보조</h3>
-              <ul class="portfolio-list">
-                <li>플레이어 서사 원동력("왜 다시 출격하는가?") 보강 방향 초안 정리</li>
-                <li>익스트랙션 × 서브컬처 호감도 보상 메리트 설계 참여</li>
-                <li>코치 피드백 기반 시스템 예외 처리(Edge Case) 누락 교차 점검</li>
-              </ul>
+            <div class="portfolio-grid">
+              <div class="portfolio-card">
+                <div class="portfolio-num">01</div>
+                <h3 class="portfolio-title">P0 시스템 명세서 작성</h3>
+                <ul class="portfolio-list">
+                  <li>핵심 플레이 루프 구현을 위한 P0 시스템 명세서 초안 및 완성본 작성</li>
+                  <li>P0에서 제외할 확장 명세(빈사 상태, 각성 보존 슬롯 등) 정리 및 제거</li>
+                  <li>extractionResult enum 타입 명시, 기억 파편 카운터 UI 추가 등 세부 명세 보완</li>
+                </ul>
+              </div>
+              <div class="portfolio-card">
+                <div class="portfolio-num">02</div>
+                <h3 class="portfolio-title">세계관-시스템 정합성 관리</h3>
+                <ul class="portfolio-list">
+                  <li>동조율 / 호감도 용어 통일 및 SSOT 문서 교차 동기화</li>
+                  <li>퀵슬롯 장착 사양 · 결과 정산창 기억 파편 소모 규칙 명세 반영</li>
+                  <li>시나리오·캐릭터·시스템 간 최종 결합 정합성 점검</li>
+                </ul>
+              </div>
+              <div class="portfolio-card">
+                <div class="portfolio-num">03</div>
+                <h3 class="portfolio-title">서브컬처 서사 기획 보조</h3>
+                <ul class="portfolio-list">
+                  <li>플레이어 서사 원동력("왜 다시 출격하는가?") 보강 방향 초안 정리</li>
+                  <li>익스트랙션 × 서브컬처 호감도 보상 메리트 설계 참여</li>
+                  <li>코치 피드백 기반 시스템 예외 처리(Edge Case) 누락 교차 점검</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -1398,40 +1739,45 @@
           <div class="member-header">
             <div class="member-badge-wrap">
               <span class="member-role-badge badge-pm">PM</span>
-              <span class="member-name">송예찬</span>
+              <span class="member-name name-pm">송예찬</span>
               <span class="member-note">Project Manager · 시나리오 기획</span>
             </div>
             <span class="member-chevron">▾</span>
           </div>
         </summary>
         <div class="member-body">
-          <div class="portfolio-grid">
-            <div class="portfolio-card">
-              <div class="portfolio-num">01</div>
-              <h3 class="portfolio-title">시나리오 / 캐릭터 기획</h3>
-              <ul class="portfolio-list">
-                <li>채린 캐릭터 심층 기획서 V1.14 작성 (대사 / 스킬 / 성격-능력 연계)</li>
-                <li>세계관 설정 기획서 V1.11 신규 작성 (침몽도시 탄생, 다수 관제사 풀, 소대 편성)</li>
-                <li>메인 시나리오 · 프롤로그 기획서 V1.13 작성 (튜토리얼 10단계 대사 스크립트)</li>
-              </ul>
+          <div class="member-profile-wrap">
+            <div class="member-id-card">
+              <img src="./assets/images/PM_송예찬.png" alt="송예찬 관제사 신분증" class="member-id-img" data-lightbox onclick="if(window.openLightbox) window.openLightbox(this.src, this.alt)">
             </div>
-            <div class="portfolio-card">
-              <div class="portfolio-num">02</div>
-              <h3 class="portfolio-title">서브컬처 애착 시스템 기획</h3>
-              <ul class="portfolio-list">
-                <li>캐릭터 수집 · 해금 · 감상 루프 설계 및 기획서 문서화</li>
-                <li>동조 반응 / 몽흔 반응 / 관제자 전용 반응 용어 체계 정립</li>
-                <li>채린 사이드 스토리 4단계 시나리오 스크립트 초안 작성</li>
-              </ul>
-            </div>
-            <div class="portfolio-card">
-              <div class="portfolio-num">03</div>
-              <h3 class="portfolio-title">문서 정합성 관리</h3>
-              <ul class="portfolio-list">
-                <li>전 기획서 줄바꿈(CRLF 혼용) 일괄 정리 및 45개 문서 최신화</li>
-                <li>Notion 캘린더 스프린트 로드맵 정리 및 일정 관리 체계 수립</li>
-                <li>버전 관리 · 문서 작성 템플릿 규칙 공식 가이드화</li>
-              </ul>
+            <div class="portfolio-grid">
+              <div class="portfolio-card">
+                <div class="portfolio-num">01</div>
+                <h3 class="portfolio-title">시나리오 / 캐릭터 기획</h3>
+                <ul class="portfolio-list">
+                  <li>채린 캐릭터 심층 기획서 V1.14 작성 (대사 / 스킬 / 성격-능력 연계)</li>
+                  <li>세계관 설정 기획서 V1.11 신규 작성 (침몽도시 탄생, 다수 관제사 풀, 소대 편성)</li>
+                  <li>메인 시나리오 · 프롤로그 기획서 V1.13 작성 (튜토리얼 10단계 대사 스크립트)</li>
+                </ul>
+              </div>
+              <div class="portfolio-card">
+                <div class="portfolio-num">02</div>
+                <h3 class="portfolio-title">서브컬처 애착 시스템 기획</h3>
+                <ul class="portfolio-list">
+                  <li>캐릭터 수집 · 해금 · 감상 루프 설계 및 기획서 문서화</li>
+                  <li>동조 반응 / 몽흔 반응 / 관제사 전용 반응 용어 체계 정립</li>
+                  <li>채린 사이드 스토리 4단계 시나리오 스크립트 초안 작성</li>
+                </ul>
+              </div>
+              <div class="portfolio-card">
+                <div class="portfolio-num">03</div>
+                <h3 class="portfolio-title">문서 정합성 관리</h3>
+                <ul class="portfolio-list">
+                  <li>전 기획서 줄바꿈(CRLF 혼용) 일괄 정리 및 45개 문서 최신화</li>
+                  <li>Notion 캘린더 스프린트 로드맵 정리 및 일정 관리 체계 수립</li>
+                  <li>버전 관리 · 문서 작성 템플릿 규칙 공식 가이드화</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -1443,40 +1789,45 @@
           <div class="member-header">
             <div class="member-badge-wrap">
               <span class="member-role-badge badge-pd">PD</span>
-              <span class="member-name">김남해</span>
+              <span class="member-name name-pd">김남해</span>
               <span class="member-note">Project Director · 레벨 디자인 / 에셋</span>
             </div>
             <span class="member-chevron">▾</span>
           </div>
         </summary>
         <div class="member-body">
-          <div class="portfolio-grid">
-            <div class="portfolio-card">
-              <div class="portfolio-num">01</div>
-              <h3 class="portfolio-title">레벨 디자인</h3>
-              <ul class="portfolio-list">
-                <li>침몽도시(루시드 월드 / 심연 공간) 인게임 맵 화이트박싱 설계</li>
-                <li>맵 기초 레이아웃 및 공간 배치 레벨 디자인 제작</li>
-                <li>씬 배치용 에셋 패키징 및 테스트 씬 구성</li>
-              </ul>
+          <div class="member-profile-wrap">
+            <div class="member-id-card">
+              <img src="./assets/images/PD_김남해.png" alt="김남해 관제사 신분증" class="member-id-img" data-lightbox onclick="if(window.openLightbox) window.openLightbox(this.src, this.alt)">
             </div>
-            <div class="portfolio-card">
-              <div class="portfolio-num">02</div>
-              <h3 class="portfolio-title">에셋 리서치 및 발굴</h3>
-              <ul class="portfolio-list">
-                <li>환경 / 텍스처 / 프롭 / SFX / VFX 에셋 후보군 발굴 및 리스트업</li>
-                <li>로우폴리 3D 에셋의 픽셀아트 스타일 Shader 기법 연구</li>
-                <li>에셋 구매 요청서 고도화 — 무료 에셋 배제 기술·아트 사유 명문화</li>
-              </ul>
-            </div>
-            <div class="portfolio-card">
-              <div class="portfolio-num">03</div>
-              <h3 class="portfolio-title">문서 정합성 검수</h3>
-              <ul class="portfolio-list">
-                <li>시나리오-시스템 기획서-레벨 디자인 간 설정·용어 최종 교차 검증</li>
-                <li>리소스 발주 명세와 P0 시스템 명세 정합성 확인</li>
-                <li>성우 녹음 대본 검수 일정 조율 및 내부 공유</li>
-              </ul>
+            <div class="portfolio-grid">
+              <div class="portfolio-card">
+                <div class="portfolio-num">01</div>
+                <h3 class="portfolio-title">레벨 디자인</h3>
+                <ul class="portfolio-list">
+                  <li>침몽도시(루시드 월드 / 심연 공간) 인게임 맵 화이트박싱 설계</li>
+                  <li>맵 기초 레이아웃 및 공간 배치 레벨 디자인 제작</li>
+                  <li>씬 배치용 에셋 패키징 및 테스트 씬 구성</li>
+                </ul>
+              </div>
+              <div class="portfolio-card">
+                <div class="portfolio-num">02</div>
+                <h3 class="portfolio-title">에셋 리서치 및 발굴</h3>
+                <ul class="portfolio-list">
+                  <li>환경 / 텍스처 / 프롭 / SFX / VFX 에셋 후보군 발굴 및 리스트업</li>
+                  <li>로우폴리 3D 에셋의 픽셀아트 스타일 Shader 기법 연구</li>
+                  <li>에셋 구매 요청서 고도화 — 무료 에셋 배제 기술·아트 사유 명문화</li>
+                </ul>
+              </div>
+              <div class="portfolio-card">
+                <div class="portfolio-num">03</div>
+                <h3 class="portfolio-title">문서 정합성 검수</h3>
+                <ul class="portfolio-list">
+                  <li>시나리오-시스템 기획서-레벨 디자인 간 설정·용어 최종 교차 검증</li>
+                  <li>리소스 발주 명세와 P0 시스템 명세 정합성 확인</li>
+                  <li>성우 녹음 대본 검수 일정 조율 및 내부 공유</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -1621,14 +1972,40 @@
     </div>
   </section>
 
+  <!-- ══════════════════════════════════════════
+       FOOTER — 마무리 메시지 및 카피라이트
+  ════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-thank-you">
+        <span class="footer-badge">MESSAGE FROM TEAM REMnants</span>
+        <h3 class="footer-thank-title">기획서를 끝까지 읽어주셔서 대단히 감사합니다.</h3>
+        <p class="footer-thank-desc">
+          저희 Team REMnants는 현실에 타협하지 않고, 꿈의 깊은 구렁텅이에서 다이버들을 구원하는 관제사(플레이어)의 정서적 경험을 완벽히 전달하고자 합니다.<br>
+          기획서와 프로토타입에 대한 피드백은 언제나 환영하며, 코치 및 파트너분들의 소중한 조언을 밑거름 삼아 끊임없이 고민하고 열심히 개발하겠습니다.
+        </p>
+        <p class="footer-slogan">"다이버는 잊어도, 관제사인 당신과 저희 개발진은 그들의 사투를 영원히 기록할 것입니다."</p>
+      </div>
+      <div class="footer-bottom">
+        <p class="copyright">&copy; 2026 Team REMnants & Jang Su-young. All Rights Reserved.</p>
+        <p class="footer-links">
+          <a href="https://github.com/Jin-o12/Document_LucidDiver" target="_blank" rel="noopener">GitHub Repository</a>
+          <span class="sep">|</span>
+          <a href="#hero">Back to Top ↑</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
 </main>
 
 <!-- ═══════════════════════════════════════════════════
      LIGHTBOX
 ════════════════════════════════════════════════════ -->
-<div class="lightbox" id="lightbox" role="dialog" aria-label="이미지 확대 보기">
+<div class="lightbox" id="lightbox" role="dialog" aria-label="미디어 확대 보기">
   <button class="lightbox-close" id="lightbox-close" aria-label="닫기">✕</button>
   <img src="" alt="" id="lightbox-img">
+  <video src="" id="lightbox-video" autoplay loop muted playsinline style="display:none;"></video>
 </div>
 
 <!-- ═══════════════════════════════════════════════════
@@ -1636,6 +2013,20 @@
 ════════════════════════════════════════════════════ -->
 <a class="scroll-top" id="scroll-top" href="#hero" aria-label="맨 위로">↑</a>
 
+<!-- ═══════════════════════════════════════════════════
+     DETAIL MODAL (플로팅 상세 창)
+════════════════════════════════════════════════════ -->
+<div id="detail-modal" class="detail-modal" aria-hidden="true" role="dialog">
+  <div class="modal-backdrop"></div>
+  <div class="modal-content">
+    <button class="modal-close-btn" id="modal-close-btn" aria-label="상세 창 닫기">&times;</button>
+    <div class="modal-body-container" id="modal-body-container">
+      <!-- 내용 동적 주입 -->
+    </div>
+  </div>
+</div>
+
 <script src="./js/main.js"></script>
 </body>
 </html>
+

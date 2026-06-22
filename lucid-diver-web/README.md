@@ -19,6 +19,11 @@ index.html을 브라우저에서 열면 됩니다.
 별도의 서버 설치 없이 정적으로 동작합니다.
 ```
 
+> [!TIP]
+> AI 에이전트나 로컬 자동화 브라우저 테스트 중 파일 접근 보안 정책(Access Blocked)이나 경로 매핑 문제로 로드에 실패할 경우, 다음 주소 형식을 사용하면 정상적으로 동작합니다:
+> - **일반 웹 브라우저 직접 실행 시**: `file://localhost/C$/Project/Document_LucidDiver/docs/index.html`
+> - **자동화 도구 / 보안 우회 필요 시 (Windows UNC)**: `\\localhost\C$\Project\Document_LucidDiver\docs\index.html`
+
 ---
 
 ## 폴더 구조
