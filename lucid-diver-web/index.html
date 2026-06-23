@@ -974,7 +974,7 @@
         <h3 class="reward-col-title">🔵 자원 보상 루프</h3>
         <p style="font-size:0.82rem; color:var(--text-dim); margin-bottom:16px;">다음 출격을 준비하는 루프</p>
         <div class="reward-steps">
-          <div class="reward-step">마나석 / 회복약 획득</div>
+          <div class="reward-step">기묘한 사탕 / 변질된 붕대 획득</div>
           <div class="reward-step">탈출 성공 → 창고 저장</div>
           <div class="reward-step">슬롯 장착</div>
           <div class="reward-step">다음 세션 사용</div>
@@ -1104,7 +1104,7 @@
           <div class="flow-num">4</div>
           <div>
             <div class="flow-text">드랍 생성</div>
-            <div class="flow-sub">기억 파편 / 마나석 / 회복약 중 랜덤 스폰</div>
+            <div class="flow-sub">기억 파편 / 기묘한 사탕 / 변질된 붕대 중 랜덤 스폰</div>
           </div>
         </div>
         <div class="flow-step">
@@ -1162,7 +1162,7 @@
           </div>
           <div class="flow-step">
             <div class="flow-num">2</div>
-            <div><div class="flow-text">기억 파편 · 마나석 · 회복약을 획득한다</div></div>
+            <div><div class="flow-text">기억 파편 · 기묘한 사탕 · 변질된 붕대를 획득한다</div></div>
           </div>
           <div class="flow-step">
             <div class="flow-num">3</div>
@@ -1174,7 +1174,7 @@
           </div>
           <div class="flow-step">
             <div class="flow-num">5</div>
-            <div><div class="flow-text">마나석 · 회복약은 창고에 저장된다</div></div>
+            <div><div class="flow-text">기묘한 사탕 · 변질된 붕대는 창고에 저장된다</div></div>
           </div>
           <div class="flow-step">
             <div class="flow-num">6</div>
@@ -1225,8 +1225,8 @@
           <div class="scope-item included"><span class="scope-item-icon">✅</span> 출격 준비 UI</div>
           <div class="scope-item included"><span class="scope-item-icon">✅</span> 인게임 세션</div>
           <div class="scope-item included"><span class="scope-item-icon">✅</span> 기억 파편 획득</div>
-          <div class="scope-item included"><span class="scope-item-icon">✅</span> 마나석 파밍</div>
-          <div class="scope-item included"><span class="scope-item-icon">✅</span> 회복약 파밍</div>
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 기묘한 사탕 파밍</div>
+          <div class="scope-item included"><span class="scope-item-icon">✅</span> 변질된 붕대 파밍</div>
           <div class="scope-item included"><span class="scope-item-icon">✅</span> 적 1종 (추적/공격 AI)</div>
           <div class="scope-item included"><span class="scope-item-icon">✅</span> 전화부스 탈출</div>
           <div class="scope-item included"><span class="scope-item-icon">✅</span> 강제 각성 (HP 소진)</div>
@@ -1574,9 +1574,9 @@
         <img src="./assets/images/ui_sortie.png" alt="출격 준비 UI" loading="lazy">
         <div class="screen-card-body">
           <h3 class="screen-card-name">출격 준비</h3>
-          <p class="screen-card-desc">다음 세션에 가져갈 소비 기물을 선택하는 화면. 마나석/회복약은 단순 자원이 아니라 다음 구원 시도의 준비물.</p>
+          <p class="screen-card-desc">다음 세션에 가져갈 소비 기물을 선택하는 화면. 기묘한 사탕/변질된 붕대는 단순 자원이 아니라 다음 구원 시도의 준비물.</p>
           <ul class="screen-card-features">
-            <li>소지품 슬롯 2칸 (마나석/회복약)</li>
+            <li>소지품 슬롯 2칸 (기묘한 사탕/변질된 붕대)</li>
             <li>창고에서 변경 / 출격 버튼</li>
           </ul>
         </div>
@@ -1586,9 +1586,9 @@
         <img src="./assets/images/ui_hud.png" alt="인게임 HUD" loading="lazy">
         <div class="screen-card-body">
           <h3 class="screen-card-name">인게임 HUD</h3>
-          <p class="screen-card-desc">전투, 기억 파편 카운터, HP/Mana, 퀵슬롯을 통해 세션 중 위험과 회수 목표를 동시에 전달한다.</p>
+          <p class="screen-card-desc">전투, 기억 파편 카운터, HP/MP, 퀵슬롯을 통해 세션 중 위험과 회수 목표를 동시에 전달한다.</p>
           <ul class="screen-card-features">
-            <li>HP / 마나 게이지</li>
+            <li>HP / MP 게이지</li>
             <li>기억 파편 카운터</li>
             <li>소지품 퀵슬롯</li>
           </ul>
@@ -1603,7 +1603,7 @@
           <ul class="screen-card-features">
             <li>기억 파편 → 동조율 정산</li>
             <li>심상 기록 해금 여부</li>
-            <li>마나석 / 회복약 창고 저장</li>
+            <li>기묘한 사탕 / 변질된 붕대 창고 저장</li>
           </ul>
         </div>
       </div>
@@ -1636,9 +1636,9 @@
         <img src="./assets/images/ui_storage.png" alt="창고 인벤토리 UI" loading="lazy">
         <div class="screen-card-body">
           <h3 class="screen-card-name">창고 / 인벤토리</h3>
-          <p class="screen-card-desc">탈출 성공으로 보존한 마나석/회복약을 확인하고, 다음 출격을 준비하는 화면.</p>
+          <p class="screen-card-desc">탈출 성공으로 보존한 기묘한 사탕/변질된 붕대를 확인하고, 다음 출격을 준비하는 화면.</p>
           <ul class="screen-card-features">
-            <li>마나석 / 회복약 보관 수량</li>
+            <li>기묘한 사탕 / 변질된 붕대 보관 수량</li>
             <li>소지품 슬롯 설정</li>
           </ul>
         </div>
@@ -1749,7 +1749,7 @@
                 <h3 class="portfolio-title">전투 시스템 구현</h3>
                 <ul class="portfolio-list">
                   <li>적 추적 · 공격 AI 및 플레이어 피격 로직 구현</li>
-                  <li>무장 발사 시 마나 소비 / 초당 마나 자동 회복 시스템</li>
+                  <li>무장 발사 시 MP 소비 / 초당 MP 자동 회복 시스템</li>
                   <li>적 추적 애니메이션 싱크 버그 분석 및 해결</li>
                 </ul>
               </div>
