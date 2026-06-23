@@ -380,9 +380,9 @@ const detailModalData = {
       </div>
 
       <div class="modal-section">
-        <h4 class="modal-section-title">3. 자원 연동 (마나)</h4>
+        <h4 class="modal-section-title">3. 자원 연동 (MP)</h4>
         <p class="modal-desc">
-          심상무장은 물리적인 탄환 대신 다이버의 정신력(playerMana)을 소모하여 발사됩니다. 사격당 마나 소모량은 무장 사양에 따르며, 마나석을 활용하여 인게임에서 마나를 즉시 보충할 수 있습니다.
+          심상무장은 물리적인 탄환 대신 다이버의 정신력(playerMP)을 소모하여 발사됩니다. 사격당 MP 소모량은 무장 사양에 따르며, 기묘한 사탕을 활용하여 인게임에서 MP를 즉시 보충할 수 있습니다.
         </p>
       </div>
     `
@@ -394,7 +394,7 @@ const detailModalData = {
       <div class="modal-section">
         <h4 class="modal-section-title">1. 강제 각성 (sessionState = RESULT)</h4>
         <p class="modal-desc">
-          인게임 세션 도중 체력(playerHP)이 0 이하로 떨어지면 사망 판정과 함께 강제 각성(Failed) 처리가 수행됩니다. 이때 플레이어는 해당 세션에서 획득했던 모든 기억 파편과 기물(마나석/회복약)을 잃은 채 빈손으로 관제실로 돌아오게 됩니다.
+          인게임 세션 도중 체력(playerHP)이 0 이하로 떨어지면 사망 판정과 함께 강제 각성(Failed) 처리가 수행됩니다. 이때 플레이어는 해당 세션에서 획득했던 모든 기억 파편과 기물(기묘한 사탕/변질된 붕대)을 잃은 채 빈손으로 관제실로 돌아오게 됩니다.
         </p>
       </div>
 
@@ -428,7 +428,7 @@ const detailModalData = {
       <div class="modal-section">
         <h4 class="modal-section-title">2. 전리품 복구와 보존</h4>
         <p class="modal-desc">
-          성공적으로 귀환할 경우 세션에서 획득한 회수품(마나석/회복약)은 창고 변수(storedManaStoneCount / storedPotionCount)에 누적 귀속되어 다음 출격을 위한 출격 소지품 슬롯 장착 용도로 안전하게 저장됩니다.
+          성공적으로 귀환할 경우 세션에서 획득한 회수품(기묘한 사탕/변질된 붕대)은 창고 변수(storedManaStoneCount / storedPotionCount)에 누적 귀속되어 다음 출격을 위한 출격 소지품 슬롯 장착 용도로 안전하게 저장됩니다.
         </p>
       </div>
 
@@ -517,7 +517,7 @@ const detailModalData = {
           성격 태그: <strong>침착함, 정밀함, 차분함</strong>
         </p>
         <p class="modal-desc">
-          매사 침착하고 감정의 기복이 적은 다이버로, 전투 상황 속에서도 뇌파의 캘리브레이션 안정성이 극도로 높습니다. 관제사의 지시를 최우선으로 따르며, 마나 소모 효율을 극한으로 계산하여 아군 다이버 중에서 가장 적은 자원 소모율로 임무를 완수해 냅니다.
+          매사 침착하고 감정의 기복이 적은 다이버로, 전투 상황 속에서도 뇌파의 캘리브레이션 안정성이 극도로 높습니다. 관제사의 지시를 최우선으로 따르며, MP 소모 효율을 극한으로 계산하여 아군 다이버 중에서 가장 적은 자원 소모율로 임무를 완수해 냅니다.
         </p>
       </div>
 
@@ -555,7 +555,7 @@ const detailModalData = {
         <h4 class="modal-section-title">2. 전투 스타일 및 심상무장</h4>
         <ul class="modal-bullets">
           <li><strong>심상무장:</strong> 드림 메스 (의료 광선 및 렌즈형 무장)</li>
-          <li><strong>설명:</strong> 특화 소총 및 치료 광선 방출 장치입니다. 아군 호출 지원 공격(20 마나 소모) 시, 침식체들을 타격함과 동시에 아군 다이버의 체력(Hp)을 15% 복구하는 동조 케어 광선을 투사합니다.</li>
+          <li><strong>설명:</strong> 특화 소총 및 치료 광선 방출 장치입니다. 아군 호출 지원 공격(20 MP 소모) 시, 침식체들을 타격함과 동시에 아군 다이버의 체력(HP)을 15% 복구하는 동조 케어 광선을 투사합니다.</li>
         </ul>
       </div>
     `
