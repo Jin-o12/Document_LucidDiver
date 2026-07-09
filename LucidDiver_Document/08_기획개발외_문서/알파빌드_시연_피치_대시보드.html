@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>침몽도시 : 루시드 다이버 - 알파 빌드(P0.5) 시연 및 로드맵</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Noto+Sans+KR:wght@300;400;700;900&display=swap');
+
+        :root {
+            --bg-color: #08080c;
+            --card-bg: rgba(20, 20, 30, 0.6);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-main: #f5f5f7;
+            --text-sub: #8e8e93;
+            --accent-purple: #a335ee;
+            --accent-green: #64f064;
+            --accent-pink: #ff453a;
+            --accent-blue: #0a84ff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* Gradient Nebulas */
+        .nebula {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(163, 53, 238, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            top: -300px;
+            right: -200px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .nebula-left {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(10, 132, 255, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+            bottom: -200px;
+            left: -200px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Slide Container */
+        .slides-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Individual Slide */
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            padding: 60px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        /* Slide Header */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .slide-title-area h2 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 40%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .slide-title-area p {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            margin-top: 4px;
+        }
+
+        .slide-number {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--accent-purple);
+        }
+
+        /* Slide Body Layouts */
+        .slide-body {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+        }
+
+        .slide-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+        }
+
+        /* Navigation Controls */
+        .controls {
+            position: fixed;
+            bottom: 45px;
+            right: 80px;
+            display: flex;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        .ctrl-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            transition: all 0.25s;
+        }
+
+        .ctrl-btn:hover {
+            background: var(--accent-purple);
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 15px rgba(163, 53, 238, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Comparison Layout */
+        .comparison-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .compare-pane {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(20px);
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .compare-pane:hover {
+            transform: translateY(-5px);
+        }
+
+        .compare-pane.after {
+            border-color: rgba(163, 53, 238, 0.3);
+            box-shadow: 0 0 30px rgba(163, 53, 238, 0.05);
+        }
+
+        .pane-tag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .compare-pane.before .pane-tag {
+            background: rgba(255, 69, 58, 0.1);
+            color: var(--accent-pink);
+            border: 1px solid rgba(255, 69, 58, 0.3);
+        }
+
+        .compare-pane.after .pane-tag {
+            background: rgba(100, 240, 100, 0.1);
+            color: var(--accent-green);
+            border: 1px solid rgba(100, 240, 100, 0.3);
+        }
+
+        .pane-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .compare-pane.after .pane-title {
+            color: #d197ff;
+        }
+
+        .pane-visual {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .pane-visual img {
+            max-width: 100%;
+            max-height: 380px;
+            object-fit: contain;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .pane-visual img:hover {
+            transform: scale(1.05);
+        }
+
+        .pane-bullets {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            padding-left: 15px;
+        }
+
+        .pane-bullets li {
+            margin-bottom: 8px;
+        }
+
+        .pane-bullets strong {
+            color: var(--text-main);
+        }
+
+        /* Title Slide Layout */
+        .title-slide-body {
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .title-slide-body h1 {
+            font-size: 4.2rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 40%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .title-slide-body p {
+            font-size: 1.3rem;
+            color: var(--text-sub);
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .badge-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .big-badge {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .big-badge.highlight {
+            background: rgba(163, 53, 238, 0.1);
+            border-color: var(--accent-purple);
+            color: #d197ff;
+        }
+
+        /* Roadmap Grid */
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            width: 100%;
+        }
+
+        .roadmap-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 35px;
+            backdrop-filter: blur(20px);
+            border-top: 4px solid var(--accent-purple);
+        }
+
+        .roadmap-card.visuals {
+            border-top-color: var(--accent-blue);
+        }
+
+        .roadmap-card h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .roadmap-card.visuals h3 {
+            color: #ffffff;
+        }
+
+        .roadmap-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .roadmap-list li {
+            position: relative;
+            padding-left: 20px;
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .roadmap-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-purple);
+            font-weight: 700;
+        }
+
+        .roadmap-card.visuals .roadmap-list li::before {
+            color: var(--accent-blue);
+        }
+
+        .roadmap-list li strong {
+            color: var(--text-main);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nebula"></div>
+    <div class="nebula-left"></div>
+
+    <div class="slides-container" id="slidesContainer">
+
+        <!-- SLIDE 1: TITLE SLIDE -->
+        <div class="slide">
+            <div class="slide-header">
+                <span
+                    style="font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--text-sub);">ALPHA
+                    BUILD PROGRESS & ROADMAP</span>
+                <span class="slide-number">01</span>
+            </div>
+            <div class="slide-body">
+                <div class="title-slide-body">
+                    <h1>침몽도시 : 루시드 다이버<br>P0.5 알파 빌드 & 로드맵</h1>
+                    <p>실제 런타임 구현 피처 분석 및 P0.5 이후 핵심 개발 이정표</p>
+                    <div class="badge-grid">
+                        <span class="big-badge">빌드 페이즈: Alpha 0.1</span>
+                        <span class="big-badge highlight">다중 씬 중첩 로드</span>
+                        <span class="big-badge">아티팩트 세이브 보존 완료</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>© 2026 Lucid Diver Team</span>
+                <span>방향키 (←, →) 또는 하단 버튼으로 슬라이드를 넘깁니다.</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: SCENE & LEVEL/VISUAL EVOLUTION -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-area">
+                    <h2>01. 공간 및 플레이 기물의 시각적 변화</h2>
+                    <p>단순 실린더/박스 기물에서 AnyPortrait 애니메이션 및 마트 레벨 구축 완료</p>
+                </div>
+                <span class="slide-number">02</span>
+            </div>
+            <div class="slide-body">
+                <div class="comparison-layout">
+                    <div class="compare-pane before">
+                        <span class="pane-tag">기존 P0 체계</span>
+                        <h3 class="pane-title">개발용 더미 리소스 & 임시 테스트 필드</h3>
+                        <div class="pane-visual">
+                            <img src="../07_기획서_이미지_자료/P0.5_UI_P0_더미캐릭터_몬스터.png" alt="더미 캐릭터 실린더 및 몬스터 큐브">
+                        </div>
+                        <ul class="pane-bullets">
+                            <li>플레이어는 <strong>단순 실린더(Cylinder)</strong>, 몬스터는 <strong>단순 큐브 박스(Box)</strong> 더미 리소스로 작동
+                            </li>
+                            <li>레벨 디자인 기획 부재로 기믹 배치가 전무한 <strong>임시 박스형 테스트 필드(testField)</strong>만 사용</li>
+                            <li>배경 데이터와 조작 매니저가 한 씬에 속해 <strong>메모리 병목 및 충돌</strong> 발생</li>
+                            <li>지형 수정 시 매번 스폰 좌표 코드를 수정하는 <strong>정적 바인딩</strong></li>
+                        </ul>
+                    </div>
+                    <div class="compare-pane after">
+                        <span class="pane-tag">P0.5 구현 성과</span>
+                        <h3 class="pane-title">AnyPortrait 애니메이션 & 3중 레이어 마트</h3>
+                        <div class="pane-visual" style="display: flex; gap: 10px; background: transparent;">
+                            <img src="../07_기획서_이미지_자료/P0.5_UI_P0.5_애니포트레이트_캐릭터_몬스터.png" alt="정식 AnyPortrait 플레이어와 몬스터"
+                                style="width: 48%; height: 100%; object-fit: contain;">
+                            <img src="../07_기획서_이미지_자료/P0.5_UI_P0.5_마트_레벨디자인.png" alt="정식 마트 레벨 디자인"
+                                style="width: 48%; height: 100%; object-fit: contain;">
+                        </div>
+                        <ul class="pane-bullets">
+                            <li><strong>AnyPortrait 애니메이션 적용</strong>: 2D 본(Bone) 스키닝 기술 기반의 생동감 넘치는 정식 플레이어 및 몬스터 모델링
+                                연동 완료.</li>
+                            <li><strong>3중 레이어 마트 레벨 구축</strong>: 파밍과 조우가 설계된 2.5D 마트 지형(LevelDesignScene) 실제 구축 및 안개 연출
+                                적용.</li>
+                            <li><strong>Additive 중첩 씬 및 동적 스폰</strong>: 배경(LevelDesign)과 조작(Demo) 씬 분리 및 Tag 기반 동적 스폰
+                                바인딩.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>침몽도시: 루시드 다이버 알파 빌드</span>
+                <span>02 / 06</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: UI/UX SMART TOOLTIP EVOLUTION -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-area">
+                    <h2>02. 정보 인지(UI/UX) 시스템의 신설</h2>
+                    <p>기물 정보 툴팁 시스템 신규 구축 및 조작 가림 방지 오프셋 설계</p>
+                </div>
+                <span class="slide-number">03</span>
+            </div>
+            <div class="slide-body">
+                <div class="comparison-layout">
+                    <div class="compare-pane before">
+                        <span class="pane-tag">기존 P0 체계</span>
+                        <h3 class="pane-title">아이템 상세 정보 툴팁 시스템 부재</h3>
+                        <div class="pane-visual">
+                            <img src="../07_기획서_이미지_자료/P0.5_UI_P0_인벤토리_툴팁_부재.png" alt="인게임 툴팁 부재 상태">
+                        </div>
+                        <ul class="pane-bullets">
+                            <li>인게임 툴팁 기능 자체가 아예 구현되어 있지 않아 <strong>아이템 획득 시 인게임에서 기물 상세 설명 열람 불가</strong></li>
+                            <li>장비 아티팩트의 이름, 효과, 플레이버 텍스트 등을 유저가 <strong>시각적으로 식별할 시스템이 전혀 존재하지 않음</strong></li>
+                            <li>퀵슬롯 이동 및 더블클릭 정산 등과 UI 연동이 없는 <strong>정적 슬롯 목록 수준</strong></li>
+                        </ul>
+                    </div>
+                    <div class="compare-pane after">
+                        <span class="pane-tag">P0.5 구현 성과</span>
+                        <h3 class="pane-title">지능형 툴팁 시스템 신설 & 오프셋 배치</h3>
+                        <div class="pane-visual">
+                            <img src="../07_기획서_이미지_자료/P0.5_UI_상자루팅_툴팁_예시.png" alt="상자 루팅 스마트 툴팁">
+                        </div>
+                        <ul class="pane-bullets">
+                            <li><strong>동적 툴팁 시스템 신설</strong>: JSON 데이터를 파싱하여 등급 컬러, 효과, 설정 텍스트를 실시간 바인딩하는 툴팁 패널 구현.
+                            </li>
+                            <li><strong>패널 기준 스마트 오프셋</strong>: 상자 루팅 시 툴팁을 상자 영역 바깥(좌측)으로 밀어서 <strong>상자 슬롯 가림 현상 원천
+                                    방지</strong>.</li>
+                            <li><strong>더블클릭/드래그 연동 및 Clamp</strong>: 퀵 이동 및 장착 해제를 더블클릭으로 통일하고, 드래그 중 출력 차단 및 이탈 방지
+                                Clamp 탑재.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>침몽도시: 루시드 다이버 알파 빌드</span>
+                <span>03 / 06</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: SYSTEM & DATA INTEGRATION -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-area">
+                    <h2>03. 아티팩트 세이브 연동 및 데이터 파이프라인</h2>
+                    <p>Excel-JSON 관리 체계 및 세션 종료 시의 데이터 보존 기능</p>
+                </div>
+                <span class="slide-number">04</span>
+            </div>
+            <div class="slide-body">
+                <div class="roadmap-grid">
+                    <div class="roadmap-card">
+                        <h3>아티팩트 장착 세이브 연동</h3>
+                        <ul class="roadmap-list" style="font-size: 1.05rem;">
+                            <li><strong>영속적 세이브 구현</strong>: <code>PlayerSaveData.artifactSlots</code> 데이터 모델링을 확장하여 인게임
+                                세이브 디스크 아키텍처에 기물 정보 탑재.</li>
+                            <li><strong>탈출 정산 동기화</strong>: 씬을 이탈하거나 탈출 포인트를 통과하여 정산할 때, <code>InventorySync()</code>를
+                                통해 장착 상태가 온전히 영속 보존되도록 연계 완료.</li>
+                            <li><strong>휘발성 유실 원천 차단</strong>: 매 판 초기화되던 수동 기생/장착 정보가 세션 종료 및 재시작 시에도 영속적으로 유지되도록 로직 구축.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="roadmap-card">
+                        <h3>Excel-JSON 데이터 파이프라인</h3>
+                        <ul class="roadmap-list" style="font-size: 1.05rem;">
+                            <li><strong>엑셀 기반 자동화 파싱</strong>: 수작업으로 Scriptable Object를 하나씩 관리하던 P0의 비효율성을 극대화하여 Excel
+                                시트에서 바로 JSON을 자동 빌드하는 파이프라인 전환.</li>
+                            <li><strong>Addressable 동적 로딩</strong>: JSON 파일 내부의 기물 수치 데이터를 런타임에 읽어 들여
+                                <code>AddressableLoader</code>를 통해 메모리에 동적으로 바인딩.</li>
+                            <li><strong>기획/밸런싱 생산성 도약</strong>: 프로그래머의 코드 수정 없이 기획자가 데이터 테이블만 갱신하여 밸런스 수치 즉시 빌드 반영 가능.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>침몽도시: 루시드 다이버 알파 빌드</span>
+                <span>04 / 06</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: ROADMAP 1 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-area">
+                    <h2>04. [P0.5 이후 로드맵] 1단계: 리소스 완전화 (사운드 & 그래픽)</h2>
+                    <p>FMOD 실 빌드 연동 및 2D 일러스트/정식 UI 에셋 탑재 계획</p>
+                </div>
+                <span class="slide-number">05</span>
+            </div>
+            <div class="slide-body">
+                <div class="roadmap-grid">
+                    <div class="roadmap-card">
+                        <h3>BGM & SFX 오디오 엔진 탑재</h3>
+                        <ul class="roadmap-list">
+                            <li><strong>사운드 자산 인게임 삽입</strong>: ElevenLabs/Splice로 선제 구축된 58종 SFX 리소스의 FMOD Studio 빌드 연동
+                                및 인게임 삽입.</li>
+                            <li><strong>3단계 동적 BGM 가동</strong>: 탐색-긴장-위험 단계에 따라 BPM과 음량이 자동 교차 전환되는 실주행 오디오 적용.</li>
+                        </ul>
+                    </div>
+                    <div class="roadmap-card">
+                        <h3>로비/인게임 그래픽 및 UI 일러스트 완성</h3>
+                        <ul class="roadmap-list">
+                            <li><strong>서브컬쳐 루틴 강화</strong>: 로비 시스템을 대폭 고도화하여 캐릭터 상호작용(터치 리액션, 감성적 표정 변화, 비주얼 노벨 컷신 연출)
+                                및 장르 고유의 코어 교감 루틴 극대화.</li>
+                            <li><strong>캐릭터 2D 원화/일러스트 적용</strong>: 로비 스탠딩 일러스트 및 대화창 전용 캐릭터 일러스트레이션 그래픽 리소스 정식 연동.</li>
+                            <li><strong>정식 UI 프레임워크 구축</strong>: 가인쇄 임시 UI 에셋을 확정 사양(등급별 슬롯 배경, 투명도 보정 등)으로 교체하여 아트 퀄리티
+                                극대화.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>침몽도시: 루시드 다이버 알파 빌드</span>
+                <span>05 / 06</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: ROADMAP 2 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title-area">
+                    <h2>05. [P0.5 이후 로드맵] 2단계: 수치 밸런싱 & UX 디버깅</h2>
+                    <p>능력치 가산 튜닝, 예외 처리 디버깅을 통한 조작감/사용성 고도화</p>
+                </div>
+                <span class="slide-number">06</span>
+            </div>
+            <div class="slide-body">
+                <div class="roadmap-grid">
+                    <div class="roadmap-card visuals">
+                        <h3>게임플레이 핵심 밸런싱 설계</h3>
+                        <ul class="roadmap-list">
+                            <li><strong>에너미 스폰 및 이동 경로 밸런싱</strong>: 몬스터의 순찰(Patrol) 경로 최적화 및 레벨별 스폰 웨이브 밀도 조율.</li>
+                            <li><strong>전투 수치 밸런싱</strong>: 플레이어 공격 대미지, 공격 속도, 투사체 속도 튜닝 및 MP(마나) 수급/소모량 계수 조율.</li>
+                            <li><strong>아티팩트 획득 밸런싱</strong>: 상자 내 아이템 드롭 가중치 정밀 튜닝 및 등급별 스펙 증가율 수치 미세 조정.</li>
+                        </ul>
+                    </div>
+                    <div class="roadmap-card visuals">
+                        <h3>지속적 디버깅 및 UX 사용성 고도화</h3>
+                        <ul class="roadmap-list">
+                            <li><strong>조작 꼬임 예외 처리</strong>: 테스트 씬 내 드래그, 드롭, 더블클릭 과정에서 발생 가능한 오작동 예외 케이스 집중 디버깅.</li>
+                            <li><strong>UX 밀도 고도화</strong>: 정교한 충돌 처리(카메라, 마우스 고정 문제)를 개선하고, 실제 피드백을 반영해 툴팁 및 인벤토리 반응성
+                                향상.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>침몽도시: 루시드 다이버 알파 빌드</span>
+                <span>06 / 06</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation controls -->
+    <div class="controls">
+        <button class="ctrl-btn" onclick="prevSlide()">←</button>
+        <button class="ctrl-btn" onclick="nextSlide()">→</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const container = document.getElementById('slidesContainer');
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function updateSlide() {
+            container.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        // Key bindings
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'ArrowRight') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+    </script>
+</body>
+
+</html>
