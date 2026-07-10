@@ -374,10 +374,27 @@ def render_table(doc, rows_data):
                 add_markdown_runs(p, cell_text, size_pt=9.5)
 
 if __name__ == "__main__":
-    md_file = r"C:\Users\jang9\OneDrive\Desktop\작업\3차 프로젝트\00.메인_기획서\3차_프로젝트_기획_제안서_Notion.md"
-    docx_file = r"C:\Users\jang9\OneDrive\Desktop\작업\3차 프로젝트\00.메인_기획서\3차_프로젝트_기획_제안서.docx"
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--md', type=str, help='Input markdown file path')
+    parser.add_argument('--docx', type=str, help='Output docx file path')
+    args = parser.parse_args()
     
-    if os.path.exists(md_file):
-        parse_markdown_to_docx(md_file, docx_file)
+    if args.md and args.docx:
+        parse_markdown_to_docx(args.md, args.docx)
     else:
-        print(f"Error: Markdown file not found at {md_file}")
+        # Fallback to local bug report markdown compilation
+        md_file = r"c:\Project\Document_LucidDiver\LucidDiver_Document\검수\20260710_P0.5 알파_버그 리포트_v1.1.0\20260710_P0.5 알파_버그 리포트_v1.1.0.md"
+        docx_file = r"c:\Project\Document_LucidDiver\LucidDiver_Document\검수\20260710_P0.5 알파_버그 리포트_v1.1.0\20260710_P0.5 알파_버그 리포트_v1.1.0.docx"
+        
+        if os.path.exists(md_file):
+            parse_markdown_to_docx(md_file, docx_file)
+        else:
+            # Fallback to default absolute path from original script if it exists
+            old_md = r"C:\Users\jang9\OneDrive\Desktop\작업\3차 프로젝트\00.메인_기획서\3차_프로젝트_기획_제안서_Notion.md"
+            old_docx = r"C:\Users\jang9\OneDrive\Desktop\작업\3차 프로젝트\00.메인_기획서\3차_프로젝트_기획_제안서.docx"
+            if os.path.exists(old_md):
+                parse_markdown_to_docx(old_md, old_docx)
+            else:
+                print(f"Error: Default markdown file not found. Please provide arguments or create the bug report markdown file.")
+
