@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>《침몽도시: 루시드 다이버》 대화형 UI 목업</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Orbit&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;user-select:none}
+body{background:#050508;color:#c5c6c7;font-family:'Noto Sans KR',sans-serif;overflow:hidden;display:flex;align-items:center;justify-content:center;height:100vh;width:100vw}
+
+/* ─── 네비 바 ─── */
+#nav{position:absolute;top:8px;z-index:9999;background:rgba(8,9,13,.92);padding:5px 14px;border-radius:6px;border:1px solid #1a1e28;display:flex;gap:8px;align-items:center;opacity:.75;transition:opacity .2s}
+#nav:hover{opacity:1}
+#nav button{background:#141822;color:#45f3ff;border:1px solid #2a3040;padding:3px 10px;font-size:12px;font-weight:700;cursor:pointer;border-radius:3px;font-family:inherit}
+#nav button.on{background:#45f3ff;color:#0b0c10}
+
+/* ─── 뷰포트 ─── */
+#vp{position:relative;width:1920px;height:1080px;background:#000;overflow:hidden;box-shadow:0 0 60px rgba(0,0,0,.9);border:2px solid #1a1e28}
+.scr{position:absolute;inset:0;display:none}
+.scr.on{display:block}
+
+/* ─── 공통 ─── */
+.neon-b{color:#45f3ff;text-shadow:0 0 6px rgba(69,243,255,.7)}
+.neon-r{color:#ff3344;text-shadow:0 0 6px rgba(255,51,68,.7)}
+.neon-g{color:#10b981;text-shadow:0 0 6px rgba(16,185,129,.7)}
+.neon-p{color:#a855f7;text-shadow:0 0 6px rgba(168,85,247,.7)}
+.mono{font-family:'Orbit',monospace}
+.btn{cursor:pointer;transition:filter .15s,transform .15s;border:none}
+.btn:hover{filter:brightness(1.25);transform:scale(1.02)}
+
+/* 이미지 배경 헬퍼 */
+.bg-box5{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/UI_BoxSet_5.png') no-repeat center/100% 100%}
+.bg-box4{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/UI_BoxSet_4.png') no-repeat center/100% 100%}
+.bg-extra{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/UI_ExtraUIBox.png') no-repeat center/100% 100%}
+.bg-alpha{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/UI_AlphaBox.png') no-repeat center/100% 100%}
+.bg-list{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/UI_ListBox.png') no-repeat center/100% 100%}
+.bg-textbox{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/UI_TextBox.png') no-repeat center/100% 100%}
+.bg-box8{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/UI_BoxSet._8.png') no-repeat center/100% 100%}
+.bg-btn{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/UI_Button.png') no-repeat center/100% 100%}
+.bg-novel{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/UI_NovelBox.png') no-repeat center/100% 100%}
+.bg-lobby{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/Lobby_Controller_Concept_v2.1.png') no-repeat center/cover}
+.bg-igbox{background:url('../../LucidDiver_Document/06_이미지_작업물/05_인게임_HUD/UI_InGameBoxSet.png') no-repeat center/100% 100%}
+.bg-qslot{background:url('../../LucidDiver_Document/06_이미지_작업물/05_인게임_HUD/UI_QuickSlot.png') no-repeat center/100% 100%}
+.bg-sliderbg{background:url('../../LucidDiver_Document/06_이미지_작업물/05_인게임_HUD/UI_SliderBG_2.png') no-repeat center/100% 100%}
+.bg-sliderbar{background:url('../../LucidDiver_Document/06_이미지_작업물/05_인게임_HUD/UI_SliderBar_2.png') no-repeat left center/auto 100%}
+
+/* 아이템 슬롯 */
+.slot{position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.slot.empty{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/UI_Empty_Item_Slot.png') no-repeat center/100% 100%}
+.slot.normal{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/UI_Normal_Item_Slot.png') no-repeat center/100% 100%}
+.slot.uncommon{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/UI_Uncommon_Item_Slot.png') no-repeat center/100% 100%}
+.slot.rare{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/UI_Rare_Item_Slot.png') no-repeat center/100% 100%}
+.slot.epic{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/UI_Epic_Item_Slot.png') no-repeat center/100% 100%}
+.slot.legend{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/UI_Legend_Item_Slot.png') no-repeat center/100% 100%}
+.slot .ico{width:55%;height:55%}
+.slot .qty{position:absolute;bottom:4px;right:6px;font-size:11px;font-weight:700;color:#fff;text-shadow:1px 1px 2px #000}
+
+/* 진행 바 */
+.bar-wrap{width:100%;position:relative}
+.bar-bg{width:100%;height:14px;background:url('../../LucidDiver_Document/06_이미지_작업물/05_인게임_HUD/UI_SliderBG_2.png') no-repeat center/100% 100%;border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px}
+
+/* ═══════════════════════════════════════════
+   [1] 로비 메인  (gpt_ref_1.png)
+   ═══════════════════════════════════════════ */
+#s1{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/Lobby_Controller_Concept_v2.1.png') no-repeat center/cover}
+
+/* 좌상단 로고+타이틀 */
+.L-logo{position:absolute;top:35px;left:45px;display:flex;align-items:center;gap:14px}
+.L-logo img{width:50px;height:50px}
+.L-logo .t1{font-size:18px;font-weight:900;color:#fff;letter-spacing:1px}
+.L-logo .t2{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:2px}
+.L-logo .pipe{color:rgba(255,255,255,.2);font-size:22px;margin:0 14px}
+.L-logo .hub{font-size:16px;color:rgba(255,255,255,.6);font-weight:700}
+
+/* 상단 재화 */
+.L-cur{position:absolute;top:35px;right:45px;display:flex;gap:12px;align-items:center}
+.L-cur .c{padding:7px 18px;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#fff;border-left:2px solid #45f3ff}
+.L-cur .ib{width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer}
+
+/* 좌측 관제사 */
+.L-op{position:absolute;top:155px;left:45px;width:200px;height:820px;padding:24px 16px;box-sizing:border-box}
+.L-op .lbl{font-size:12px;color:#8b9bb4;letter-spacing:2px}
+.L-op .ring{width:110px;height:110px;border-radius:50%;background:radial-gradient(closest-side,#0a0c10 74%,transparent 75% 100%),conic-gradient(#45f3ff 42%,#1f2833 0);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;box-shadow:0 0 15px rgba(69,243,255,0.15);flex-shrink:0}
+
+/* 캐릭터 */
+.L-char{position:absolute;bottom:-180px;left:280px;height:1200px;z-index:10}
+
+/* 다이버 카드 */
+.L-dcard{position:absolute;bottom:400px;right:70px;width:420px;padding:22px;z-index:15}
+.L-dcard .nm{display:flex;align-items:center;gap:10px}
+.L-dcard .nm img{width:26px;height:26px}
+.L-dcard .nm span{font-size:28px;font-weight:900;color:#fff}
+.L-dcard .sub{font-size:13px;color:#8b9bb4;margin-top:2px}
+.L-dcard .sync{margin-top:14px}
+.L-dcard .sync .lbl{font-size:12px;color:#8b9bb4;display:flex;justify-content:space-between;margin-bottom:4px}
+.L-dcard .state{margin-top:8px;font-size:13px}
+
+/* 우상단 알림 */
+.L-alarm{position:absolute;top:110px;right:45px;width:320px;padding:16px 18px;cursor:pointer;z-index:20;border-right:3px solid #a855f7}
+.L-alarm:hover{filter:brightness(1.15)}
+.L-alarm .hd{display:flex;justify-content:space-between;align-items:center}
+.L-alarm .new{background:#ff3344;color:#fff;padding:1px 6px;font-size:9px;font-weight:900;border-radius:2px}
+
+/* 우측 메뉴 */
+.L-menu{position:absolute;bottom:70px;right:70px;display:flex;flex-direction:column;gap:18px;z-index:20}
+.L-mbtn{width:420px;height:92px;display:flex;align-items:center;padding:0 30px;font-size:20px;font-weight:900;color:#fff;gap:18px}
+.L-mbtn .arrow{margin-left:auto;font-size:22px;opacity:.6}
+.L-mbtn .icon{font-size:34px;width:50px;text-align:center}
+.L-mbtn .sub{font-size:10px;opacity:.5;margin-top:2px;letter-spacing:1px}
+.L-mbtn.red{filter:hue-rotate(320deg) saturate(1.8) brightness(1.15)}
+
+/* 하단 대사창 */
+.L-chat{position:absolute;bottom:60px;left:360px;width:760px;height:115px;padding:18px 28px;display:flex;align-items:center;gap:20px;z-index:15}
+.L-chat .sp{font-size:18px;font-weight:900;color:#fff;min-width:60px;text-align:center}
+.L-chat .div{width:2px;height:70%;background:rgba(255,255,255,.12)}
+.L-chat .txt{font-size:16px;color:#c5c6c7;line-height:1.5}
+
+/* ═══════════════════════════════════════════
+   [2] 다이버/기록 (gpt_ref_2.png)
+   ═══════════════════════════════════════════ */
+#s2{background:#08090d}
+
+.R-hdr{position:absolute;top:38px;left:45px;display:flex;align-items:center;gap:18px;z-index:50}
+.R-back{width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#45f3ff}
+.R-title{font-size:30px;font-weight:900;color:#fff;letter-spacing:1px}
+.R-sub{font-size:13px;color:rgba(255,255,255,.3);margin-left:12px;letter-spacing:1px}
+
+.R-body{position:absolute;top:125px;left:240px;display:flex;gap:30px;width:1635px;height:820px}
+
+/* 좌측 다이버 카드 */
+.R-left{width:440px;padding:28px;display:flex;flex-direction:column;align-items:flex-start}
+.R-left .nm, .O-left .nm{display:flex;align-items:center;gap:8px}
+.R-left .nm .mark, .O-left .nm .mark{color:#ff3344;font-size:20px;font-weight:900}
+.R-left .nm span, .O-left .nm span{font-size:22px;font-weight:900;color:#fff}
+.R-left .role, .O-left .role{font-size:13px;color:#8b9bb4;margin-top:4px}
+.R-left .standing, .O-left .standing{height:520px;margin:auto 0;object-fit:contain}
+.R-left .sync, .O-left .sync{width:100%;margin-top:auto}
+.R-left .sync .lbl, .O-left .sync .lbl{font-size:12px;color:#8b9bb4;display:flex;justify-content:space-between;margin-bottom:4px}
+
+/* 우측 기록 리스트 */
+.R-right{flex:1;padding:36px;display:flex;flex-direction:column}
+.R-right .hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:28px}
+.R-right .hd h2{font-size:28px;font-weight:900;color:#fff}
+.R-right .hd .cnt{font-size:22px;font-weight:900}
+.R-right .desc{font-size:13px;color:#8b9bb4;margin-top:4px}
+.R-item{padding:24px 30px;display:flex;align-items:center;border-left:4px solid #45f3ff;gap:24px;margin-bottom:20px;min-height:170px}
+.R-item.locked{filter:brightness(.35);border-left-color:#1f2833}
+.R-thumb{width:200px;height:120px;background:linear-gradient(135deg,#0d0e16,#1a1028 50%,#0d0e16);border:1px solid #1f2833;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.R-thumb.lit{background:linear-gradient(135deg,#0d0e16,#2a1830 30%,#151020 60%,#0d0e16);border-color:#45f3ff33}
+.R-info{flex:1}
+.R-info h3{font-size:20px;font-weight:900;color:#fff;margin-bottom:8px}
+.R-info p{font-size:14px;color:#8b9bb4;line-height:1.5}
+.R-vbtn{width:100px;height:46px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;flex-shrink:0}
+.R-lock{font-size:28px;flex-shrink:0;opacity:.5}
+
+.R-backbtn{position:absolute;bottom:50px;right:70px;width:340px;height:76px;display:flex;align-items:center;justify-content:center;gap:12px;font-size:18px;font-weight:900;color:#fff;filter:hue-rotate(320deg) saturate(1.8);z-index:50}
+
+/* ═══════════════════════════════════════════
+   [3] 창고/인벤토리 (gpt_ref_3.png)
+   ═══════════════════════════════════════════ */
+#s3{background:#08090d}
+
+.S-side{position:absolute;top:140px;left:45px;width:175px;display:flex;flex-direction:column;gap:14px}
+.S-sbtn{height:58px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:15px;font-weight:700;color:#8b9bb4}
+.S-sbtn.on{color:#fff;filter:hue-rotate(320deg) saturate(1.8) brightness(1.2)}
+.S-sbtn .si{font-size:18px;width:28px;text-align:center}
+
+/* 창고 그리드 */
+.S-stash{position:absolute;top:140px;left:240px;width:440px;height:620px;padding:24px;border:2px solid rgba(255,51,68,.3)}
+.S-stash .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.S-stash .hd .ic{font-size:18px;margin-right:8px}
+.S-stash .hd h3{font-size:18px;font-weight:900;color:#fff}
+.S-stash .S-grid{display:grid;grid-template-columns:repeat(4,78px);gap:12px;justify-content:center}
+.S-stash .slot{width:78px;height:78px}
+
+/* 인벤토리 */
+.S-inv{position:absolute;top:140px;left:800px;width:440px;height:620px;padding:24px}
+.S-inv .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.S-inv .hd .ic{font-size:18px;margin-right:8px}
+.S-inv .hd h3{font-size:18px;font-weight:900;color:#fff}
+.S-inv .S-grid{display:grid;grid-template-columns:repeat(4,78px);gap:12px;justify-content:center}
+.S-inv .slot{width:78px;height:78px}
+
+/* 전환 화살표 */
+.S-arrows{position:absolute;top:420px;left:725px;font-size:32px;display:flex;flex-direction:column;gap:8px;z-index:5}
+
+/* 우측 상세 */
+.S-detail{position:absolute;top:140px;right:45px;width:360px;height:225px;padding:20px 24px;box-sizing:border-box}
+.S-detail .item-hd{display:flex;gap:16px;align-items:center;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px;margin-bottom:12px}
+.S-detail .item-hd .slot{width:64px;height:64px;flex-shrink:0}
+.S-detail .item-nm{font-size:18px;font-weight:900}
+.S-detail .item-cat{font-size:11px;color:#8b9bb4;margin-top:3px}
+.S-detail .item-desc{font-size:13px;color:#c5c6c7;line-height:1.5;margin-bottom:10px}
+.S-detail .item-meta{border-top:1px dashed rgba(255,255,255,.08);padding-top:10px;font-size:11px;color:#8b9bb4;line-height:1.6}
+.S-detail .item-meta b{color:#fff}
+
+/* 아티팩트 슬롯 */
+.S-artifact{position:absolute;top:385px;right:45px;width:360px;height:140px;padding:15px 20px;box-sizing:border-box}
+.S-artifact h4{font-size:14px;font-weight:700;border-bottom:1px solid rgba(168,85,247,.2);padding-bottom:6px;margin-bottom:14px}
+.S-artifact .row{display:flex;gap:14px}
+
+/* 퀵슬롯 */
+.S-qs{position:absolute;top:545px;right:45px;width:360px;height:140px;padding:15px 20px;box-sizing:border-box}
+.S-qs h4{font-size:14px;font-weight:700;border-bottom:1px solid rgba(69,243,255,.15);padding-bottom:6px;margin-bottom:14px}
+.S-qs .row{display:flex;gap:14px}
+
+.S-qs .q, .H-inv-panel .q, .S-artifact .slot, .H-inv-panel .slot{width:78px;height:78px;position:relative;display:flex;align-items:center;justify-content:center}
+.S-qs .q .ico, .H-inv-panel .q .ico{width:50%;height:50%;object-fit:contain}
+.S-qs .q .qty, .H-inv-panel .q .qty{position:absolute;bottom:8px;right:10px;font-size:11px;font-weight:700;color:#fff;text-shadow:1px 1px 2px #000;z-index:2}
+.S-qs .q .num, .H-inv-panel .q .num, .S-artifact .slot .num, .H-inv-panel .slot .num{position:absolute;top:6px;left:9px;font-size:10px;font-weight:900;z-index:5}
+
+/* 출격 준비 슬롯 크기 조정 */
+.O-items .O-slot-box{width:140px;height:140px}
+
+/* 하단 기억파편 시스템 */
+.S-sys{position:absolute;bottom:45px;left:240px;width:1130px;height:128px;padding:20px 30px;display:flex;align-items:center;justify-content:space-between}
+.S-sys .steps{display:flex;gap:30px;align-items:center}
+.S-sys .step{display:flex;align-items:center;gap:10px;font-size:14px;color:#c5c6c7}
+.S-sys .sn{width:26px;height:26px;border-radius:50%;border:1px solid #45f3ff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px}
+.S-sys .arrow{color:rgba(255,255,255,.15);font-size:18px}
+.S-sys .cur{text-align:right;border-left:1px solid rgba(255,255,255,.08);padding-left:30px}
+.S-sys .cur .pct{font-size:28px;font-weight:900;margin-bottom:4px}
+
+/* ═══════════════════════════════════════════
+   [4] 출격 준비 (gpt_ref_4.png)
+   ═══════════════════════════════════════════ */
+#s4{background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/Lobby_Controller_Concept_v2.1.png') no-repeat center/cover}
+#s4::before{content:'';position:absolute;inset:0;background:rgba(5,5,8,.55)}
+
+.S-tuto{position:absolute;top:140px;left:1275px;width:130px;height:620px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 10px;box-sizing:border-box;border-left:1px dashed rgba(255,255,255,0.1);border-right:1px dashed rgba(255,255,255,0.1);background:rgba(255,255,255,0.01)}
+.S-tuto img.mico{width:38px;height:auto;margin-bottom:30px;filter:drop-shadow(0 0 4px rgba(69,243,255,0.3))}
+.S-tuto .t-item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;margin-bottom:28px}
+.S-tuto .t-item:last-child{margin-bottom:0}
+.S-tuto .t-item .act{font-size:10px;font-weight:900;color:#45f3ff;border:1px solid rgba(69,243,255,0.3);padding:2px 6px;border-radius:3px;background:rgba(69,243,255,0.05);letter-spacing:1px}
+.S-tuto .t-item .desc{font-size:11px;color:#8b9bb4;line-height:1.4}
+
+.O-left{position:absolute;top:140px;left:240px;width:440px;height:820px;padding:28px;display:flex;flex-direction:column;align-items:flex-start;z-index:2}
+
+.O-right{position:absolute;top:140px;left:710px;right:45px;height:800px;display:flex;flex-direction:column;justify-content:space-between;z-index:2}
+
+.O-items{height:520px;padding:35px;box-sizing:border-box}
+.O-items h2{font-size:26px;font-weight:900;color:#fff;margin-bottom:6px;border-left:3px solid #ff3344;padding-left:10px}
+.O-items .desc{font-size:13px;color:#8b9bb4;margin-bottom:35px;padding-left:13px}
+.O-slots{display:flex;gap:30px;padding-left:13px}
+.O-slot-col{display:flex;flex-direction:column;align-items:center;gap:12px}
+.O-slot-col .slot-title{font-size:14px;font-weight:700;color:#8b9bb4}
+.O-slot-box{width:160px;height:160px;background:rgba(255,255,255,0.03);border:1.5px solid rgba(255,255,255,0.08);border-radius:6px;position:relative;display:flex;align-items:center;justify-content:center;transition:border-color 0.2s, background 0.2s;cursor:pointer}
+.O-slot-box:hover{border-color:#45f3ff;background:rgba(69,243,255,0.02)}
+.O-slot-box .ico{width:55%;height:55%;object-fit:contain}
+.O-slot-box .qty{position:absolute;bottom:8px;right:10px;font-size:12px;font-weight:700;color:#fff;text-shadow:1px 1px 2px #000}
+.O-slot-box .empty-txt{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);font-size:12px;color:rgba(255,255,255,0.3);font-weight:700;width:100%;text-align:center}
+
+.O-btns{display:flex;gap:24px;justify-content:flex-start}
+.O-action-btn{width:570px;height:145px;border-radius:6px;display:flex;align-items:center;padding:0 48px;gap:32px;cursor:pointer;box-sizing:border-box}
+.O-action-btn.change{border:2px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.02);transition:all 0.2s}
+.O-action-btn.change:hover{border-color:#45f3ff;background:rgba(69,243,255,0.02)}
+.O-action-btn.start{border:2px solid #ff3344;background:rgba(255,51,68,0.06);box-shadow:0 0 15px rgba(255,51,68,0.2);transition:all 0.2s}
+.O-action-btn.start:hover{box-shadow:0 0 25px rgba(255,51,68,0.45);filter:brightness(1.15)}
+
+.O-action-btn .btn-icon{width:76px;height:76px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.O-action-btn .btn-icon img{max-width:100%;max-height:100%;object-fit:contain}
+.O-action-btn .btn-txts{display:flex;flex-direction:column;gap:6px}
+.O-action-btn .btn-title{font-size:28px;font-weight:900;color:#fff}
+.O-action-btn .btn-sub{font-size:15px;color:#8b9bb4;letter-spacing:1px}
+.O-action-btn .btn-arrow{margin-left:auto;font-size:40px;color:#ff3344;font-weight:bold}
+
+/* ═══════════════════════════════════════════
+   [5] 인게임 HUD (gpt_ref_5.png)
+   ═══════════════════════════════════════════ */
+#s5{background:#06050a}
+#s5 .world{position:absolute;inset:0;background:url('../../LucidDiver_Document/06_이미지_작업물/03_UI_프레임_배경/Lobby_Controller_Concept_v2.1.png') no-repeat center/cover;filter:brightness(.15) saturate(.5) hue-rotate(220deg);opacity:.7}
+
+/* 좌상단 프로필 */
+.H-prof{position:absolute;top:35px;left:40px;display:flex;gap:14px;align-items:flex-start;z-index:10}
+.H-portrait{width:80px;height:80px;border-radius:50%;border:2px solid #45f3ff;overflow:hidden;box-shadow:0 0 12px rgba(69,243,255,.4)}
+.H-portrait img{width:100%;height:100%;object-fit:cover;object-position:38% 30%;transform:scale(1.15)}
+.H-bars{display:flex;flex-direction:column;gap:6px;padding-top:4px}
+.H-bars .name{font-size:15px;font-weight:900;color:#fff}
+.H-bars .name .lv{font-size:11px;color:#8b9bb4;margin-left:12px;font-weight:400}
+.H-hpbar{width:220px;height:16px;border-radius:3px;overflow:hidden;position:relative}
+.H-hpbar .fill{height:100%;border-radius:3px}
+.H-hpbar .fill.hp{background:#ff3344;width:100%}
+.H-hpbar .fill.mp{background:#2563eb;width:85%}
+.H-hpbar .label{position:absolute;top:50%;right:6px;transform:translateY(-50%);font-size:9px;color:#fff;font-weight:700}
+.H-sync-sm{font-size:10px;color:#45f3ff;margin-top:2px}
+
+/* 타이머 */
+.H-timer{position:absolute;top:145px;left:40px;padding:8px 18px;display:flex;align-items:center;gap:8px;font-size:24px;font-weight:900;color:#fff;z-index:10}
+
+/* 보스 HP */
+.H-boss{position:absolute;top:35px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:4px;z-index:10}
+.H-boss .nm{font-size:14px;font-weight:900;letter-spacing:2px}
+.H-boss .bbar{width:500px;height:22px;border:1px solid #ff3344;border-radius:3px;overflow:hidden}
+.H-boss .bbar .fill{width:100%;height:100%;background:#ff3344;box-shadow:0 0 10px #ff3344}
+.H-boss .hp-txt{font-size:11px;color:#fff}
+
+/* 미니맵 */
+.H-map{position:absolute;top:35px;right:40px;width:175px;height:175px;border-radius:50%;border:2px solid #1f2833;display:flex;align-items:center;justify-content:center;z-index:10;overflow:hidden}
+.H-map .bg{position:absolute;inset:0;background:radial-gradient(circle,#0f1420 60%,#060810);border-radius:50%}
+.H-map .n{position:absolute;top:8px;left:50%;transform:translateX(-50%);font-size:12px;font-weight:900;color:#fff}
+.H-map .m{position:absolute;top:6px;right:14px;font-size:10px;color:#8b9bb4;font-weight:700}
+.H-map .cross{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;color:#45f3ff}
+.H-map .dot{position:absolute;width:6px;height:6px;border-radius:50%}
+.H-map .dot.enemy{background:#ff3344}
+
+/* 미션 */
+.H-mission{position:absolute;top:230px;right:40px;width:260px;padding:14px 18px;z-index:10;border-left:3px solid #45f3ff}
+.H-mission h4{font-size:14px;font-weight:900;margin-bottom:8px}
+.H-mission p{font-size:12px;color:#c5c6c7;line-height:1.6}
+.H-mission .cnt{float:right;font-size:14px;font-weight:900}
+
+/* 경고 */
+.H-warn{position:absolute;bottom:160px;left:40px;width:300px;padding:16px 20px;z-index:10}
+.H-warn h4{font-size:14px;font-weight:900;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.H-warn p{font-size:12px;color:#c5c6c7;line-height:1.5}
+
+/* 하단 액션바 */
+.H-action{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;align-items:flex-end;gap:16px;z-index:10}
+.H-askill{display:flex;gap:10px;align-items:flex-end}
+.H-aslot{width:68px;height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.H-aslot .lbl{font-size:10px;font-weight:700;color:#fff;margin-top:2px}
+.H-aslot .emoji{font-size:22px}
+.H-weapon{width:100px;height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid #45f3ff;box-shadow:0 0 12px rgba(69,243,255,.3)}
+.H-weapon img{width:60%;opacity:.8}
+.H-weapon .ammo{font-size:12px;font-weight:700;color:#45f3ff;margin-top:4px}
+.H-qslots{display:flex;gap:10px;align-items:flex-end;margin-left:20px}
+.H-qslot{width:68px;height:68px;position:relative;display:flex;align-items:center;justify-content:center}
+.H-qslot .kn{position:absolute;top:5px;left:8px;font-size:10px;color:#45f3ff;font-weight:900;z-index:5}
+.H-qslot .ico{width:50%;height:50%;object-fit:contain}
+.H-qslot .qty{position:absolute;bottom:8px;right:10px;font-size:10px;font-weight:700;color:#fff;text-shadow:1px 1px 2px #000;z-index:2}
+
+/* 전화부스 */
+.H-booth{position:absolute;bottom:260px;right:420px;width:80px;height:120px;border:2px dashed rgba(255,51,68,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;z-index:5;transition:all .2s;background:rgba(255,51,68,.05)}
+.H-booth:hover{background:rgba(255,51,68,.2);box-shadow:0 0 20px rgba(255,51,68,.4)}
+.H-booth span{font-size:10px;font-weight:700}
+
+/* 십자선 */
+.H-crosshair{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:5}
+.H-crosshair img{width:50px;opacity:.6}
+
+/* 인게임 인벤토리 & 루팅 오버레이 */
+.H-controls{position:absolute;top:280px;left:45px;display:flex;flex-direction:column;gap:12px;z-index:20}
+.H-controls .ctrl-btn{padding:12px 20px;font-size:13px;font-weight:900;border-radius:4px;width:180px;text-align:center;box-sizing:border-box;box-shadow:0 0 10px rgba(0,0,0,0.5)}
+
+/* 좌측 인벤토리 패널 (GPT 실기 레퍼런스 기준) */
+.H-inv-panel{position:absolute;top:140px;left:450px;width:420px;height:820px;padding:20px 24px;box-sizing:border-box;z-index:50;display:none;flex-direction:column;box-shadow:0 10px 30px rgba(0,0,0,0.85);border:2px solid rgba(255,255,255,0.08);border-radius:8px}
+.H-inv-panel.active{display:flex}
+.H-inv-panel .hd{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;margin-bottom:14px}
+.H-inv-panel .hd h2{font-size:18px;font-weight:900;color:#fff;display:flex;align-items:center;gap:8px;margin:0}
+.H-inv-panel .hd .close{font-size:18px;color:#8b9bb4;cursor:pointer;transition:color 0.2s}
+.H-inv-panel .hd .close:hover{color:#ff3344}
+
+/* 인벤토리 세부 구역 */
+.H-inv-sec{margin-bottom:16px}
+.H-inv-sec h3{font-size:12px;font-weight:700;color:#8b9bb4;margin:0 0 8px 0;letter-spacing:0.5px}
+.H-inv-sec .row{display:flex;gap:12px}
+.H-inv-sec .grid{display:grid;grid-template-columns:repeat(4, 1fr);gap:12px}
+.H-inv-sec .slot, .H-inv-sec .q{width:78px;height:78px;box-sizing:border-box;position:relative}
+
+/* 안전금고 전용 네온 블루 보더 */
+.H-inv-sec .slot.safe-box{border:2px solid #45f3ff;box-shadow:0 0 10px rgba(69,243,255,0.45);background:rgba(69,243,255,0.03)}
+
+/* 우측 아이템 상자 패널 */
+.H-box-panel{position:absolute;top:140px;left:1030px;width:440px;height:450px;padding:20px 24px;box-sizing:border-box;z-index:50;display:none;flex-direction:column;justify-content:space-between;box-shadow:0 10px 30px rgba(0,0,0,0.85);border:2px solid rgba(255,255,255,0.08);border-radius:8px}
+.H-box-panel.active{display:flex}
+.H-box-panel .hd{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;margin-bottom:14px}
+.H-box-panel .hd h2{font-size:18px;font-weight:900;color:#ff3344;display:flex;align-items:center;gap:8px;margin:0}
+.H-box-panel .hd .close{font-size:18px;color:#8b9bb4;cursor:pointer;transition:color 0.2s}
+.H-box-panel .hd .close:hover{color:#ff3344}
+
+/* 인게임 조작 가이드 패널 (중앙 배치) */
+.H-tuto{position:absolute;top:140px;left:880px;width:140px;height:450px;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px 10px;box-sizing:border-box;border-left:1px dashed rgba(255,255,255,0.1);border-right:1px dashed rgba(255,255,255,0.1);background:rgba(255,255,255,0.01);z-index:50}
+.H-tuto.active{display:flex}
+.H-tuto img.mico{width:38px;height:auto;margin-bottom:24px;filter:drop-shadow(0 0 4px rgba(69,243,255,0.3))}
+.H-tuto .t-item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;margin-bottom:24px}
+.H-tuto .t-item:last-child{margin-bottom:0}
+.H-tuto .t-item .act{font-size:10px;font-weight:900;color:#45f3ff;border:1px solid rgba(69,243,255,0.3);padding:2px 6px;border-radius:3px;background:rgba(69,243,255,0.05);letter-spacing:1px}
+.H-tuto .t-item .desc{font-size:11px;color:#8b9bb4;line-height:1.4}
+
+.H-box-panel .grid{display:grid;grid-template-columns:repeat(4, 1fr);gap:12px;margin-bottom:15px}
+.H-box-panel .slot{width:78px;height:78px;box-sizing:border-box;position:relative}
+
+.H-box-actions{display:flex;gap:12px;justify-content:flex-end;border-top:1px solid rgba(255,255,255,0.08);padding-top:12px}
+.H-box-actions .btn{padding:8px 18px;font-size:12px;font-weight:900;border-radius:4px;cursor:pointer}
+.H-box-actions .btn.take-all{background:rgba(255,51,68,0.15);border:1.5px solid #ff3344;color:#fff;transition:all 0.2s}
+.H-box-actions .btn.take-all:hover{background:rgba(255,51,68,0.3);box-shadow:0 0 10px rgba(255,51,68,0.3)}
+.H-box-actions .btn.close-box{background:rgba(255,255,255,0.02);border:1.5px solid rgba(255,255,255,0.1);color:#8b9bb4;transition:all 0.2s}
+.H-box-actions .btn.close-box:hover{border-color:#45f3ff;color:#fff}
+
+/* 아이템 버리기 드래그앤드롭 드롭존 패널 */
+.H-trash-panel{position:absolute;top:610px;left:1030px;width:440px;height:150px;padding:20px;box-sizing:border-box;z-index:50;display:none;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,0.85);border:2px dashed rgba(255,51,68,0.25);border-radius:8px;background:rgba(255,51,68,0.02);transition:all 0.2s;cursor:pointer}
+.H-trash-panel:hover{background:rgba(255,51,68,0.06);border-color:#ff3344;box-shadow:0 0 15px rgba(255,51,68,0.2)}
+.H-trash-panel.active{display:flex}
+.H-trash-panel .ticon{font-size:28px;margin-bottom:8px;opacity:0.6;transition:all 0.2s}
+.H-trash-panel:hover .ticon{opacity:1;transform:scale(1.1)}
+.H-trash-panel .title{font-size:14px;font-weight:900;color:#ff3344;letter-spacing:1px;margin-bottom:4px}
+.H-trash-panel .sub{font-size:11px;color:#8b9bb4}
+
+/* ═══════════════════════════════════════════
+   [6] 결과 정산 (gpt_ref_6.png)
+   ═══════════════════════════════════════════ */
+#s6{background:#050508;background-image:radial-gradient(circle at 40% 50%,rgba(16,185,129,.04) 0%,transparent 60%)}
+
+.RS-top{position:absolute;top:30px;left:50%;transform:translateX(-50%);width:700px;text-align:center;z-index:50}
+.RS-top .gametitle{font-size:12px;color:rgba(255,255,255,.5);letter-spacing:2px;margin-bottom:6px}
+.RS-top h1{font-size:48px;font-weight:900;letter-spacing:6px;margin-bottom:4px}
+.RS-top .msub{font-size:13px;color:rgba(255,255,255,.4);letter-spacing:4px}
+.RS-top .line{width:100%;height:2px;background:linear-gradient(90deg,transparent,#10b981,transparent);margin-top:12px}
+
+.RS-body{position:absolute;top:200px;left:60px;right:60px;bottom:140px;display:flex;gap:30px}
+
+/* 좌측 캐릭터 */
+.RS-char{width:440px;position:relative;flex-shrink:0;z-index:10}
+.RS-char img, .RS-char video{position:absolute;bottom:-80px;left:-20px;height:900px}
+
+/* 중앙 기록복구 */
+.RS-center{width:440px;padding:30px;display:flex;flex-direction:column;gap:18px;flex-shrink:0;position:relative;z-index:25}
+.RS-center h2{font-size:20px;font-weight:900;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px}
+.RS-row{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.RS-row .slot{width:60px;height:60px;flex-shrink:0;cursor:default}
+.RS-row .slot .ico{width:60%;height:60%}
+.RS-row .info h3{font-size:15px;font-weight:700;color:#fff;margin-bottom:2px}
+.RS-row .info p{font-size:13px}
+.RS-lvup{padding:14px 0}
+.RS-lvup .lbl{font-size:14px;color:#fff;font-weight:700;margin-bottom:4px}
+.RS-lvup .trans{font-size:22px;font-weight:900;color:#fff;display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.RS-lvup .trans .arr{color:#45f3ff;font-size:16px}
+.RS-newmem{background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.25);padding:14px 18px;border-radius:4px;display:flex;align-items:center;gap:14px;margin-top:auto}
+.RS-newmem .badge{background:#10b981;color:#fff;padding:1px 6px;font-size:9px;font-weight:900;border-radius:2px;margin-bottom:4px;display:inline-block}
+
+/* 우측 회수품 */
+.RS-right{flex:1;padding:30px;display:flex;flex-direction:column;position:relative;z-index:25}
+.RS-right h2{font-size:20px;font-weight:900;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px;margin-bottom:6px}
+.RS-right .saved{font-size:12px;margin-bottom:18px;display:flex;align-items:center;gap:6px}
+.RS-loot{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.RS-loot .lcol{display:flex;flex-direction:column;align-items:center;gap:4px}
+.RS-loot .lcol .slot{width:90px;height:90px}
+.RS-loot .lcol .slot .ico{width:55%;height:55%}
+.RS-loot .lcol .lnm{font-size:11px;color:#c5c6c7;text-align:center}
+.RS-loot .lcol .lqty{font-size:12px;font-weight:700;color:#fff}
+
+.RS-returnbtn{position:absolute;bottom:50px;right:70px;width:340px;height:76px;display:flex;align-items:center;justify-content:center;gap:14px;font-size:20px;font-weight:900;color:#fff;z-index:50}
+
+/* 하단 대사창 */
+.RS-chat{position:absolute;bottom:40px;left:60px;width:700px;height:100px;padding:14px 24px;display:flex;align-items:center;gap:18px;z-index:30}
+.RS-chat .sp{display:flex;flex-direction:column;align-items:center;min-width:80px}
+.RS-chat .sp .nm{font-size:18px;font-weight:900;color:#fff}
+.RS-chat .sp .tag{font-size:10px;color:#45f3ff}
+.RS-chat .div{width:2px;height:60%;background:rgba(255,255,255,.1)}
+.RS-chat .txt{font-size:15px;color:#c5c6c7;line-height:1.4}
+
+.RS-stat{position:absolute;bottom:12px;left:60px;font-size:11px;color:rgba(255,255,255,.3);z-index:10;display:flex;gap:20px}
+.RS-id{position:absolute;bottom:12px;right:60px;font-size:11px;color:rgba(255,255,255,.3);z-index:10}
+
+/* 채널링 오버레이 */
+#ch{position:absolute;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500}
+#ch .box{width:480px;background:rgba(11,12,16,.96);border:2px solid #ffa500;border-radius:8px;padding:28px;text-align:center;box-shadow:0 0 30px rgba(255,165,0,.3)}
+#ch .box h3{color:#ffa500;font-size:22px;font-weight:900;letter-spacing:2px;margin-bottom:18px}
+#ch .box .bg{width:100%;height:22px;background:#1f2833;border-radius:11px;overflow:hidden;border:1px solid #ffa500}
+#ch .box .bg .f{width:0%;height:100%;background:#ffa500;transition:width .05s linear}
+#ch .box .warn{font-size:13px;color:#ff3344;font-weight:700;margin-top:14px}
+</style>
+</head>
+<body>
+
+<div id="nav">
+  <span style="font-size:11px;font-weight:700;color:#45f3ff;margin-right:6px">MOCKUP</span>
+  <button class="on" onclick="go('s1')">로비</button>
+  <button onclick="go('s2')">기록</button>
+  <button onclick="go('s3')">창고</button>
+  <button onclick="go('s4')">출격</button>
+  <button onclick="go('s5')">전투</button>
+  <button onclick="go('s6')">정산</button>
+</div>
+
+<div id="vp">
+
+<!-- ═══ [1] 로비 메인 ═══ -->
+<div id="s1" class="scr on">
+  <!-- 로고 -->
+  <div class="L-logo">
+    <img src="../../LucidDiver_Document/06_이미지_작업물/04_엠블럼_배너/UI_Logo.png" alt="">
+    <div><div class="t1">침몽도시 : 루시드 다이버</div><div class="t2 mono">LUCID DIVERS</div></div>
+    <span class="pipe">|</span>
+    <span class="hub">관제실</span>
+  </div>
+
+  <!-- 재화 -->
+  <div class="L-cur">
+    <div class="c bg-box5"><span>💎</span><span class="neon-b">12,450</span><span style="opacity:.4;cursor:pointer">+</span></div>
+    <div class="c bg-box5"><span>🔮</span><span class="neon-p">3,680</span><span style="opacity:.4;cursor:pointer">+</span></div>
+    <div class="c bg-box5"><span>🪙</span><span class="neon-g">1,256,890</span></div>
+    <div class="ib bg-btn btn">✉</div>
+    <div class="ib bg-btn btn">🔔</div>
+    <div class="ib bg-btn btn">⚙</div>
+  </div>
+
+  <!-- 관제사 -->
+  <div class="L-op bg-list">
+    <div class="lbl mono" style="text-align:center;margin-bottom:20px;border-bottom:1px solid rgba(69,243,255,0.15);padding-bottom:8px">OPERATOR PANEL</div>
+    
+    <div style="display:flex;flex-direction:column;align-items:center;gap:24px">
+      <!-- 링 게이지 -->
+      <div class="ring neon-b">42%</div>
+      
+      <!-- 오퍼레이터 정보 -->
+      <div style="width:100%;display:flex;flex-direction:column;align-items:center;text-align:center">
+        <div style="font-size:18px;font-weight:900;color:#fff;letter-spacing:1px">관제사 Lv.27</div>
+        <div style="margin-top:12px;width:100%;display:flex;justify-content:center">
+          <div class="bar-bg" style="width:150px;height:12px"><div class="bar-fill neon-b" style="width:42%;background:#45f3ff;box-shadow:0 0 8px #45f3ff"></div></div>
+        </div>
+        <div style="font-size:11px;color:#8b9bb4;margin-top:10px">다음 레벨까지 58% 필요</div>
+      </div>
+      
+      <!-- 상세 스탯 목록 -->
+      <div style="width:100%;border-top:1px dashed rgba(255,255,255,0.08);padding-top:20px;display:flex;flex-direction:column;gap:12px;font-size:11px;color:#8b9bb4">
+        <div style="display:flex;justify-content:space-between"><span>탐사 구역</span><span style="color:#fff;font-weight:700">CHAP.03</span></div>
+        <div style="display:flex;justify-content:space-between"><span>탐사 진행도</span><span style="color:#45f3ff;font-weight:700">42%</span></div>
+        <div style="display:flex;justify-content:space-between"><span>통신 링크</span><span style="color:#10b981;font-weight:700">SECURE</span></div>
+        <div style="display:flex;justify-content:space-between"><span>연결 상태</span><span style="color:#fff">유안 (Main)</span></div>
+      </div>
+
+      <!-- 시스템 로그 -->
+      <div style="width:100%;border-top:1px dashed rgba(255,255,255,0.08);padding-top:20px;display:flex;flex-direction:column;gap:8px;font-size:10px;color:rgba(139,155,180,0.6);font-family:monospace;text-align:left">
+        <div style="color:#45f3ff;font-weight:700;margin-bottom:4px;font-size:11px">SYSTEM LOGS</div>
+        <div>[14:15:32] LINK ESTABLISHED</div>
+        <div>[14:15:35] DEVIATION: 0.02%</div>
+        <div>[14:16:01] SYNC SUCCESSFUL</div>
+        <div>[14:16:12] SIGNAL STRENGTH: 99%</div>
+        <div class="neon-g">[14:16:30] SYSTEM NORMAL</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 캐릭터 -->
+  <video class="L-char" autoplay loop muted playsinline>
+    <source src="../../LucidDiver_Document/06_이미지_작업물/01_캐릭터_일러스트/Yuan_Live2D_VP8_1.webm" type="video/webm">
+  </video>
+
+  <!-- 다이버 카드 -->
+  <div class="L-dcard bg-extra">
+    <div style="text-align:center;margin-bottom:8px"><img src="../../LucidDiver_Document/06_이미지_작업물/04_엠블럼_배너/UI_Diver.png" style="width:28px;opacity:.6"></div>
+    <div class="nm"><img src="../../LucidDiver_Document/06_이미지_작업물/04_엠블럼_배너/UI_Diver.png"><span>유안</span></div>
+    <div class="sub">Main Diver</div>
+    <div class="sync">
+      <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:6px">동조율 Lv.1</div>
+      <div class="lbl"><span></span><span>300 / 1,000</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:30%;background:#45f3ff;box-shadow:0 0 8px #45f3ff"></div></div>
+    </div>
+    <div class="state neon-g">● 상태: 링크 안정</div>
+  </div>
+
+  <!-- 알림 -->
+  <div class="L-alarm bg-box5" onclick="go('s2')">
+    <div class="hd"><span class="neon-p" style="font-size:15px;font-weight:900">기록 복구 완료</span><span class="new">NEW</span></div>
+    <p style="font-size:12px;color:#8b9bb4;margin-top:6px;line-height:1.4">새로운 기억 기록이 복구되었습니다.</p>
+    <p style="font-size:11px;color:#45f3ff;margin-top:6px;text-align:right">기록 확인 &gt;</p>
+  </div>
+
+  <!-- 메뉴 -->
+  <div class="L-menu">
+    <div class="L-mbtn bg-btn btn red" onclick="go('s4')"><span class="icon">🎯</span><div><div>출격</div><div class="sub mono">OPERATION</div></div><span class="arrow">&gt;&gt;</span></div>
+    <div class="L-mbtn bg-btn btn" onclick="go('s2')"><span class="icon"><img src="../../LucidDiver_Document/06_이미지_작업물/04_엠블럼_배너/UI_Diver.png" style="width:32px"></span><div><div>다이버 / 기록</div><div class="sub mono">DIVER</div></div><span class="arrow">&gt;&gt;</span></div>
+    <div class="L-mbtn bg-btn btn" onclick="go('s3')"><span class="icon">📦</span><div><div>창고</div><div class="sub mono">STORAGE</div></div><span class="arrow">&gt;&gt;</span></div>
+  </div>
+
+  <!-- 대사 -->
+  <div class="L-chat bg-box4">
+    <div class="sp">유안</div>
+    <div class="div"></div>
+    <div class="txt">...기록이 하나 복구된 것 같아. 관제사, 확인해볼래?</div>
+  </div>
+</div>
+
+<!-- ═══ [2] 다이버/기록 ═══ -->
+<div id="s2" class="scr">
+  <div class="R-hdr">
+    <div class="R-back bg-btn btn" onclick="go('s1')">≪</div>
+    <span class="R-title">다이버 / 기록</span>
+    <span class="R-sub mono">DIVER / RECORD</span>
+  </div>
+
+  <!-- 사이드바 -->
+  <div class="S-side">
+    <div class="S-sbtn bg-btn btn" onclick="go('s4')"><span class="si">🏠</span>출격</div>
+    <div class="S-sbtn bg-btn btn on" onclick="go('s2')"><span class="si">👥</span>다이버</div>
+    <div class="S-sbtn bg-btn btn" onclick="go('s3')"><span class="si">📦</span>창고/인벤</div>
+    <div class="S-sbtn bg-btn btn" onclick="go('s1')"><span class="si">💻</span>로비</div>
+  </div>
+
+  <div class="R-body">
+    <div class="R-left bg-extra">
+      <div class="nm"><span class="mark neon-r">▲</span><span>유안</span></div>
+      <div class="role">메인 다이버</div>
+      <video class="standing" autoplay loop muted playsinline>
+        <source src="../../LucidDiver_Document/06_이미지_작업물/01_캐릭터_일러스트/Yuan_Live2D_VP8_1.webm" type="video/webm">
+      </video>
+      <div class="sync">
+        <div class="lbl"><span>동조율 Lv.0</span><span class="neon-r">0%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:0%;background:#ff3344"></div></div>
+      </div>
+    </div>
+
+    <div class="R-right bg-alpha">
+      <div class="hd">
+        <div>
+          <h2>개인 심상기록</h2>
+          <p class="desc">다이버의 심상기록을 확인할 수 있다.</p>
+        </div>
+        <span class="cnt neon-b">0 / 2</span>
+      </div>
+
+      <div class="R-item bg-box4">
+        <div class="R-thumb lit"><div style="font-size:13px;color:rgba(255,255,255,.5);text-align:center;line-height:1.4">🌃<br>복도 이미지</div></div>
+        <div class="R-info">
+          <h3>희미한 복도</h3>
+          <p>끝이 보이지 않는 복도.<br>어딘가 익숙하지만, 기억이 선명하지 않다.</p>
+        </div>
+        <div class="R-vbtn bg-btn btn">감상</div>
+      </div>
+
+      <div class="R-item bg-box4 locked">
+        <div class="R-thumb"><div style="font-size:13px;color:rgba(255,255,255,.2);text-align:center">???</div></div>
+        <div class="R-info">
+          <h3 style="color:rgba(255,255,255,.3)">???</h3>
+          <p style="color:rgba(139,155,180,.3)">유안의 대외 경계 태도와 초기 면담 기록이 남아있다.</p>
+        </div>
+        <div class="R-lock">🔒</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="R-backbtn bg-btn btn" onclick="go('s1')">≪ &nbsp; 뒤로 <span class="mono" style="font-size:12px;opacity:.5;margin-left:6px">BACK</span></div>
+</div>
+
+<!-- ═══ [3] 창고/인벤토리 ═══ -->
+<div id="s3" class="scr">
+  <div class="R-hdr">
+    <div class="R-back bg-btn btn" onclick="go('s1')">≪</div>
+    <span class="R-title">창고 / 인벤토리</span>
+    <span class="R-sub mono">STORAGE / INVENTORY</span>
+  </div>
+
+  <!-- 사이드바 -->
+  <div class="S-side">
+    <div class="S-sbtn bg-btn btn" onclick="go('s4')"><span class="si">🏠</span>출격</div>
+    <div class="S-sbtn bg-btn btn" onclick="go('s2')"><span class="si">👥</span>다이버</div>
+    <div class="S-sbtn bg-btn btn on"><span class="si">📦</span>창고/인벤</div>
+    <div class="S-sbtn bg-btn btn" onclick="go('s1')"><span class="si">💻</span>로비</div>
+  </div>
+
+  <!-- 창고 -->
+  <div class="S-stash bg-alpha">
+    <div class="hd"><h3><span class="ic">📦</span>창고</h3><span class="neon-b" style="font-weight:900">63 / 120</span></div>
+    <div class="S-grid">
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_1.png"><span class="qty">x25</span></div>
+      <div class="slot epic" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_2.png"><span class="qty">x18</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_3.png"><span class="qty">x12</span></div>
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_4.png"><span class="qty">x8</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_5.png"><span class="qty">x15</span></div>
+      <div class="slot legend" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_6.png"><span class="qty">x230</span></div>
+      <div class="slot uncommon" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_7.png"><span class="qty">x32</span></div>
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_8.png"><span class="qty">x9</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_9.png"><span class="qty">x6</span></div>
+      <div class="slot epic" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_10.png"><span class="qty">x14</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_19.png"><span class="qty">x5</span></div>
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_20.png"><span class="qty">x20</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_21.png"><span class="qty">x7</span></div>
+      <div class="slot uncommon" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_22.png"><span class="qty">x11</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_23.png"><span class="qty">x9</span></div>
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_24.png"><span class="qty">x4</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_25.png"><span class="qty">x3</span></div>
+      <div class="slot epic" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_26.png"><span class="qty">x10</span></div>
+      <div class="slot uncommon" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_27.png"><span class="qty">x76</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_28.png"><span class="qty">x2</span></div>
+    </div>
+  </div>
+
+  <!-- 화살표 -->
+  <div class="S-arrows"><span class="neon-b">≫</span><span class="neon-b">≪</span></div>
+
+  <!-- 인벤 -->
+  <div class="S-inv bg-alpha">
+    <div class="hd"><h3><span class="ic">🎒</span>인벤토리</h3><span class="neon-b" style="font-weight:900">21 / 60</span></div>
+    <div class="S-grid">
+      <div class="slot epic" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_11.png"><span class="qty">x8</span></div>
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_12.png"><span class="qty">x4</span></div>
+      <div class="slot legend" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_13.png"><span class="qty">x120</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_14.png"><span class="qty">x6</span></div>
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_15.png"><span class="qty">x6</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_16.png"><span class="qty">x3</span></div>
+      <div class="slot uncommon" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_17.png"><span class="qty">x2</span></div>
+      <div class="slot epic" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_18.png"><span class="qty">x3</span></div>
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_29.png"><span class="qty">x25</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_30.png"><span class="qty">x1</span></div>
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_31.png"><span class="qty">x1</span></div>
+      <div class="slot empty" style="width:100%;aspect-ratio:1"></div>
+      <div class="slot empty" style="width:100%;aspect-ratio:1"></div>
+      <div class="slot empty" style="width:100%;aspect-ratio:1"></div>
+      <div class="slot empty" style="width:100%;aspect-ratio:1"></div>
+      <div class="slot empty" style="width:100%;aspect-ratio:1"></div>
+    </div>
+  </div>
+
+  <!-- 조작 튜토리얼 -->
+  <div class="S-tuto">
+    <img class="mico" src="../../LucidDiver_Document/06_이미지_작업물/04_엠블럼_배너/UI_LeftClick.png" alt="Mouse Click">
+    
+    <div class="t-item">
+      <span class="act mono">CLICK</span>
+      <span class="desc">아이템 정보 보기</span>
+    </div>
+    
+    <div class="t-item">
+      <span class="act mono" style="color:#ff3344;border-color:rgba(255,51,68,0.3);background:rgba(255,51,68,0.05)">DBL CLICK</span>
+      <span class="desc">해당 아이템<br>전부 이동</span>
+    </div>
+    
+    <div class="t-item">
+      <span class="act mono" style="color:#a855f7;border-color:rgba(168,85,247,0.3);background:rgba(168,85,247,0.05)">DRAG</span>
+      <span class="desc">아이템<br>끌어다 놓기</span>
+    </div>
+  </div>
+
+  <!-- 상세 -->
+  <div class="S-detail bg-box5">
+    <div class="item-hd">
+      <div class="slot epic" style="width:64px;height:64px"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_1.png"></div>
+      <div><div class="item-nm neon-p">기억 파편</div><div class="item-cat">일반 재료 &nbsp;|&nbsp; 보유 수량 <b style="color:#fff">x8</b></div></div>
+    </div>
+    <p class="item-desc">오염된 데이터 조각.<br>동조율 상승에 사용된다.</p>
+    <div class="item-meta">
+      <b>획득처</b>: 오염 구역, 정예 개체 처치<br>
+      <b>사용처</b>: 동조율 상승, 데이터 거래
+    </div>
+  </div>
+
+  <!-- 아티팩트 장착부 -->
+  <div class="S-artifact bg-extra">
+    <h4 class="neon-p">장착 아티팩트 <span style="font-size:11px;color:#8b9bb4;font-weight:400;margin-left:6px">출격 전 미리 장착할 공간</span></h4>
+    <div class="row">
+      <div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_4.png"><span class="qty">x1</span><span class="num" style="color:#a855f7">A</span></div>
+      <div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_8.png"><span class="qty">x1</span><span class="num" style="color:#a855f7">B</span></div>
+      <div class="slot empty"><span class="empty-txt" style="position:absolute;font-size:10px;color:rgba(255,255,255,0.25);font-weight:700">[비어있음]</span><span class="num" style="color:#a855f7">C</span></div>
+    </div>
+  </div>
+
+  <!-- 퀵슬롯 -->
+  <div class="S-qs bg-extra">
+    <h4 class="neon-b">퀵슬롯 <span style="font-size:11px;color:#8b9bb4;font-weight:400;margin-left:6px">전투 중 빠른 사용</span></h4>
+    <div class="row">
+      <div class="q bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_1.png"><span class="qty">x3</span><span class="num">1</span></div>
+      <div class="q bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_2.png"><span class="qty">x2</span><span class="num">2</span></div>
+      <div class="q bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_3.png"><span class="qty">x1</span><span class="num">3</span></div>
+    </div>
+  </div>
+
+  <!-- 시스템 -->
+  <div class="S-sys bg-extra">
+    <div class="steps">
+      <span style="font-size:15px;font-weight:900;color:#fff">기억 파편 시스템 ⓘ</span>
+      <div class="step"><span class="sn neon-b">1</span>파편 획득</div>
+      <span class="arrow">➔</span>
+      <div class="step"><span class="sn neon-b">2</span>탈출 성공 시 자동 소모</div>
+      <span class="arrow">➔</span>
+      <div class="step"><span class="sn neon-b">3</span>동조율 상승</div>
+    </div>
+    <div class="cur">
+      <div style="font-size:12px;color:#8b9bb4">현재 동조율</div>
+      <div class="pct neon-b">47.3%</div>
+      <div class="bar-bg" style="width:200px;height:10px"><div class="bar-fill" style="width:47.3%;background:#45f3ff;box-shadow:0 0 6px #45f3ff"></div></div>
+      <div style="font-size:10px;color:#8b9bb4;margin-top:4px">다음 단계까지 52.7% 필요</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ [4] 출격 준비 ═══ -->
+<div id="s4" class="scr">
+  <div class="R-hdr" style="z-index:5">
+    <div class="R-back bg-btn btn" onclick="go('s1')">≪</div>
+    <span class="R-title">출격 준비</span>
+    <span class="R-sub mono">SORTIE PREPARATION ////</span>
+  </div>
+
+  <!-- 사이드바 -->
+  <div class="S-side">
+    <div class="S-sbtn bg-btn btn on" onclick="go('s4')"><span class="si">🏠</span>출격</div>
+    <div class="S-sbtn bg-btn btn" onclick="go('s2')"><span class="si">👥</span>다이버</div>
+    <div class="S-sbtn bg-btn btn" onclick="go('s3')"><span class="si">📦</span>창고/인벤</div>
+    <div class="S-sbtn bg-btn btn" onclick="go('s1')"><span class="si">💻</span>로비</div>
+  </div>
+
+  <div class="O-left bg-extra">
+    <div class="nm"><span class="mark neon-r">▲</span><span>유안</span></div>
+    <div class="role">메인 다이버</div>
+    <video class="standing" autoplay loop muted playsinline>
+      <source src="../../LucidDiver_Document/06_이미지_작업물/01_캐릭터_일러스트/Yuan_Live2D_VP8_1.webm" type="video/webm">
+    </video>
+    <div class="sync">
+      <div class="lbl"><span>동조율 Lv.0</span><span class="neon-r">0%</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:0%;background:#ff3344"></div></div>
+    </div>
+  </div>
+
+  <div class="O-right">
+    <div class="O-items bg-box8">
+      <h2>출격 소지품</h2>
+      <p class="desc">출격 시 장착하여 사용할 소모품과 아티팩트입니다.</p>
+      
+      <div style="display:flex; justify-content:center; gap:80px; margin-top:20px">
+        <!-- 소비 기물 -->
+        <div>
+          <h3 class="neon-b" style="font-size:15px; font-weight:700; margin-bottom:12px; border-left:3px solid #45f3ff; padding-left:8px">소비 기물 (Quick Slots)</h3>
+          <div class="O-slots" style="padding-left:0; gap:20px">
+            <div class="O-slot-col">
+              <span class="slot-title">슬롯 1</span>
+              <div class="O-slot-box" onclick="go('s3')">
+                <img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_1.png">
+                <span class="qty">x3</span>
+              </div>
+            </div>
+            <div class="O-slot-col">
+              <span class="slot-title">슬롯 2</span>
+              <div class="O-slot-box" onclick="go('s3')">
+                <img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_2.png">
+                <span class="qty">x2</span>
+              </div>
+            </div>
+            <div class="O-slot-col">
+              <span class="slot-title">슬롯 3</span>
+              <div class="O-slot-box" onclick="go('s3')">
+                <img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_3.png">
+                <span class="qty">x1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 세로 분리선 -->
+        <div style="width:1px; background:rgba(255,255,255,0.08); height:190px; align-self:center"></div>
+
+        <!-- 아티팩트 -->
+        <div>
+          <h3 class="neon-p" style="font-size:15px; font-weight:700; margin-bottom:12px; border-left:3px solid #a855f7; padding-left:8px">장착 아티팩트 (Artifacts)</h3>
+          <div class="O-slots" style="padding-left:0; gap:20px">
+            <div class="O-slot-col">
+              <span class="slot-title">아티팩트 A</span>
+              <div class="O-slot-box" onclick="go('s3')" style="border-color:rgba(168,85,247,0.25)">
+                <img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_4.png">
+                <span class="qty">x1</span>
+              </div>
+            </div>
+            <div class="O-slot-col">
+              <span class="slot-title">아티팩트 B</span>
+              <div class="O-slot-box" onclick="go('s3')" style="border-color:rgba(168,85,247,0.25)">
+                <img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_8.png">
+                <span class="qty">x1</span>
+              </div>
+            </div>
+            <div class="O-slot-col">
+              <span class="slot-title">아티팩트 C</span>
+              <div class="O-slot-box" onclick="go('s3')" style="border-color:rgba(255,255,255,0.05)">
+                <span class="empty-txt" style="color:rgba(255,255,255,0.15)">[비어있음]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="O-btns">
+      <div class="O-action-btn change" onclick="go('s3')">
+        <div class="btn-icon">
+          <img src="../../LucidDiver_Document/06_이미지_작업물/04_엠블럼_배너/UI_Stash.png">
+        </div>
+        <div class="btn-txts">
+          <div class="btn-title">창고에서 변경</div>
+          <div class="btn-sub mono">CHANGE FROM STORAGE</div>
+        </div>
+      </div>
+
+      <div class="O-action-btn start" onclick="enterGame()">
+        <div class="btn-icon" style="filter: drop-shadow(0 0 4px #ff3344) sepia(1) hue-rotate(-50deg) saturate(10) brightness(1.2)">
+          <img src="../../LucidDiver_Document/06_이미지_작업물/05_인게임_HUD/UI_InGameCrossHair2.png">
+        </div>
+        <div class="btn-txts">
+          <div class="btn-title">출격</div>
+          <div class="btn-sub mono">SORTIE START</div>
+        </div>
+        <div class="btn-arrow">»</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ [5] 인게임 HUD ═══ -->
+<div id="s5" class="scr">
+  <div class="world"></div>
+
+  <div class="H-prof">
+    <div class="H-portrait"><img src="../../LucidDiver_Document/06_이미지_작업물/01_캐릭터_일러스트/UI_YuanCircleProfile.png"></div>
+    <div class="H-bars">
+      <div class="name">루시드 <span class="lv">Lv.12</span></div>
+      <div class="H-hpbar bg-sliderbg"><div class="fill hp"></div><span class="label">❤ 100/100</span></div>
+      <div class="H-hpbar bg-sliderbg"><div class="fill mp"></div><span class="label">💎 100/100</span></div>
+      <div class="H-sync-sm">동기화율 23%</div>
+    </div>
+  </div>
+
+  <div class="H-timer bg-igbox"><span>⏱</span> 09:41</div>
+
+  <div class="H-boss">
+    <div class="nm neon-r">⚠ — 악몽의 잔영 — ⚠</div>
+    <div class="bbar bg-sliderbg"><div class="fill"></div></div>
+    <div class="hp-txt">4500 / 4500</div>
+  </div>
+
+  <div class="H-map">
+    <div class="bg"></div>
+    <span class="n">N</span>
+    <span class="m">M</span>
+    <span class="cross">✦</span>
+    <div class="dot enemy" style="top:30%;left:25%"></div>
+    <div class="dot enemy" style="top:60%;left:70%"></div>
+  </div>
+
+  <div class="H-mission bg-igbox">
+    <h4 class="neon-b">⚠ 목적: 남은 잔영 제거</h4>
+    <p>· 잔영의 근원을 추적하세요.</p>
+    <span class="cnt neon-b">0/1</span>
+  </div>
+
+  <div class="H-warn bg-igbox">
+    <h4 class="neon-r">⚠ 몽계 동요 감지</h4>
+    <p>주변의 왜곡이 강해지고 있습니다.<br>주의하세요.</p>
+  </div>
+
+  <div class="H-crosshair"><img src="../../LucidDiver_Document/06_이미지_작업물/05_인게임_HUD/UI_InGameCrossHair2.png"></div>
+
+  <div class="H-booth" onclick="startCh()">
+    <span class="neon-r">전화부스</span>
+    <span style="color:#fff;margin-top:4px">F 탈출</span>
+  </div>
+
+  <div class="H-action">
+    <div class="H-askill">
+      <div class="H-aslot bg-qslot"><span class="emoji">🏃</span><span class="lbl">Shift</span></div>
+      <div class="H-weapon bg-igbox"><img src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_CrossHair.png"><span class="ammo">∞</span></div>
+      <div class="H-aslot bg-qslot"><span class="emoji">⚡</span><span class="lbl">Space</span></div>
+    </div>
+    <div class="H-qslots">
+      <div class="H-qslot bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_1.png"><span class="qty">0</span><span class="kn">1</span></div>
+      <div class="H-qslot bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_2.png"><span class="qty">0</span><span class="kn">2</span></div>
+      <div class="H-qslot bg-qslot" style="opacity:.3"><span class="kn">3</span></div>
+    </div>
+  </div>
+
+  <!-- HUD 테스트 오버레이 제어 버튼 -->
+  <div class="H-controls">
+    <div class="ctrl-btn bg-btn btn neon-b" onclick="toggleIngameInv()">🎒 인벤토리 [I]</div>
+    <div class="ctrl-btn bg-btn btn neon-p" onclick="toggleItemBox()">🎁 아이템 박스 [G]</div>
+  </div>
+
+  <!-- 인게임 세션 인벤토리 패널 (좌측 플로팅) -->
+  <div id="H-inv-panel" class="H-inv-panel bg-box5">
+    <div class="hd">
+      <h2><span class="ic">🎒</span> 세션 인벤토리 <span style="font-size:11px;color:#8b9bb4;font-weight:400;margin-left:6px">(용량: 6 / 16)</span></h2>
+      <div class="close" onclick="toggleIngameInv()">×</div>
+    </div>
+    
+    <!-- 1. 아티팩트 장착부 (1x3) -->
+    <div class="H-inv-sec">
+      <h3>장착 아티팩트 (Artifacts)</h3>
+      <div class="row">
+        <div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_4.png"><span class="qty">x1</span><span class="num" style="color:#a855f7">A</span></div>
+        <div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_8.png"><span class="qty">x1</span><span class="num" style="color:#a855f7">B</span></div>
+        <div class="slot empty"><span class="num" style="color:#a855f7">C</span></div>
+      </div>
+    </div>
+
+    <!-- 2. 인게임 퀵슬롯 장착부 (1x3) -->
+    <div class="H-inv-sec">
+      <h3>인게임 퀵슬롯 (Quickslots)</h3>
+      <div class="row">
+        <div class="q bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_1.png"><span class="qty">x3</span><span class="num">1</span></div>
+        <div class="q bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_2.png"><span class="qty">x2</span><span class="num">2</span></div>
+        <div class="q bg-qslot" style="opacity:.3"><span class="num">3</span></div>
+      </div>
+    </div>
+
+    <!-- 3. 일반 소지품 칸 (4x4) -->
+    <div class="H-inv-sec">
+      <h3>일반 소지품 (Inventory Grid)</h3>
+      <div class="grid">
+        <div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_1.png"><span class="qty">x5</span></div>
+        <div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_2.png"><span class="qty">x2</span></div>
+        <div class="slot normal"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_3.png"><span class="qty">x3</span></div>
+        <div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_5.png"><span class="qty">x1</span></div>
+        <div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_6.png"><span class="qty">x1</span></div>
+        <div class="slot legend"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_10.png"><span class="qty">x4</span></div>
+        <div class="slot empty"></div>
+        <div class="slot empty"></div>
+        <div class="slot empty"></div>
+        <div class="slot empty"></div>
+        <div class="slot empty"></div>
+        <div class="slot empty"></div>
+        <div class="slot empty"></div>
+        <div class="slot empty"></div>
+        <div class="slot empty"></div>
+        <div class="slot empty"></div>
+      </div>
+    </div>
+
+    <!-- 4. 안전 금고 칸 (1x4) -->
+    <div class="H-inv-sec" style="margin-bottom:0">
+      <h3>안전 금고 (Secure Container)</h3>
+      <div class="row">
+        <div class="slot empty safe-box"></div>
+        <div class="slot empty safe-box"></div>
+        <div class="slot empty safe-box"></div>
+        <div class="slot empty safe-box"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 인게임 조작 가이드 패널 (중앙 배치) -->
+  <div id="H-tuto" class="H-tuto">
+    <img class="mico" src="../../LucidDiver_Document/06_이미지_작업물/04_엠블럼_배너/UI_LeftClick.png" alt="Mouse Click">
+    
+    <div class="t-item">
+      <span class="act mono">HOVER</span>
+      <span class="desc">hover시<br>아이템 정보 보기</span>
+    </div>
+    
+    <div class="t-item">
+      <span class="act mono" style="color:#ff3344;border-color:rgba(255,51,68,0.3);background:rgba(255,51,68,0.05)">DBL CLICK</span>
+      <span class="desc">더블클릭 시<br>전부 옮기기</span>
+    </div>
+    
+    <div class="t-item">
+      <span class="act mono" style="color:#a855f7;border-color:rgba(168,85,247,0.3);background:rgba(168,85,247,0.05)">DRAG</span>
+      <span class="desc">드래그하여<br>아이템 이동</span>
+    </div>
+  </div>
+
+  <!-- 우측 아이템 상자 패널 (루팅 상호작용 시에만 표시) -->
+  <div id="H-box-panel" class="H-box-panel bg-extra">
+    <div class="hd">
+      <h2><span class="ic">🎁</span> 보물 상자 (Item Box)</h2>
+      <div class="close" onclick="toggleItemBox()">×</div>
+    </div>
+
+    <!-- 상자 아이템 리스트 (4x2) -->
+    <div class="grid">
+      <div class="slot legend"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_13.png"><span class="qty">x3</span></div>
+      <div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_22.png"><span class="qty">x1</span></div>
+      <div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_26.png"><span class="qty">x1</span></div>
+      <div class="slot empty"></div>
+      <div class="slot empty"></div>
+      <div class="slot empty"></div>
+      <div class="slot empty"></div>
+      <div class="slot empty"></div>
+    </div>
+
+    <div class="H-box-actions">
+      <div class="btn close-box" onclick="toggleItemBox()">닫기 (Close)</div>
+    </div>
+  </div>
+
+  <!-- 아이템 버리기 드롭존 (상자 하단 배치) -->
+  <div id="H-trash-panel" class="H-trash-panel" onclick="alert('이곳에 아이템을 드래그 앤 드롭하면 파괴되어 영구 유실됩니다.')">
+    <div class="ticon">🗑️</div>
+    <div class="title mono">DISCARD ZONE</div>
+    <div class="sub">드래그 앤 드롭으로 아이템 파기</div>
+  </div>
+</div>
+
+<!-- ═══ [6] 결과 정산 ═══ -->
+<div id="s6" class="scr">
+  <div class="RS-top">
+    <div class="gametitle mono">침몽도시: 루시드 다이버</div>
+    <h1 class="neon-g">탈출 성공</h1>
+    <div class="msub mono">— MISSION COMPLETE —</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="RS-body">
+    <div class="RS-char">
+      <video autoplay loop muted playsinline>
+        <source src="../../LucidDiver_Document/06_이미지_작업물/01_캐릭터_일러스트/Yuan_Live2D_VP8_1.webm" type="video/webm">
+      </video>
+    </div>
+
+    <div class="RS-center bg-textbox">
+      <h2 class="neon-b">📋 기록 복구</h2>
+      <div class="RS-row">
+        <div class="slot epic" style="width:60px;height:60px"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_3.png"></div>
+        <div class="info"><h3>기억 파편 소모</h3><p class="neon-p">× 36</p></div>
+      </div>
+      <div class="RS-lvup">
+        <div class="lbl">동조율 동기화</div>
+        <div class="trans">Lv. 1 <span class="arr">≫</span> <span class="neon-b">Lv. 2</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:58%;background:#45f3ff;box-shadow:0 0 8px #45f3ff"></div></div>
+        <div style="font-size:11px;color:#8b9bb4;text-align:right;margin-top:4px">520 / 900</div>
+      </div>
+      <div class="RS-newmem">
+        <span style="font-size:28px">📓</span>
+        <div><span class="badge">NEW</span><div style="font-size:14px;color:#fff;margin-top:4px">신규 해금된 기억</div><div style="font-size:13px;color:#a855f7;margin-top:2px">개인 심상 기록 01</div></div>
+      </div>
+      <div style="font-size:13px;color:#8b9bb4;margin-top:12px;text-align:center">동조율이 <span class="neon-b">Lv.2</span>로 상승했습니다.</div>
+    </div>
+
+    <div class="RS-right bg-alpha">
+      <h2>📦 회수품 정산</h2>
+      <div class="saved neon-g">✔ 모든 회수품이 창고에 저장되었습니다.</div>
+      <div class="RS-loot">
+        <div class="lcol"><div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_1.png"></div><div class="lnm">기묘한 사탕</div><div class="lqty">× 12</div></div>
+        <div class="lcol"><div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_2.png"></div><div class="lnm">변질된 봉대</div><div class="lqty">× 3</div></div>
+        <div class="lcol"><div class="slot legend"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_3.png"></div><div class="lnm">기억 파편</div><div class="lqty">× 36</div></div>
+        <div class="lcol"><div class="slot normal"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_4.png"></div><div class="lnm">신용 칩</div><div class="lqty">× 4,250</div></div>
+        <div class="lcol"><div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_5.png"></div><div class="lnm">침몽 코어</div><div class="lqty">× 2</div></div>
+        <div class="lcol"><div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_6.png"></div><div class="lnm">오버클럭 모듈</div><div class="lqty">× 1</div></div>
+        <div class="lcol"><div class="slot uncommon"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_7.png"></div><div class="lnm">훼손된 데이터</div><div class="lqty">× 5</div></div>
+        <div class="lcol"><div class="slot empty" style="display:flex;align-items:center;justify-content:center;font-size:11px;color:rgba(255,255,255,.2);text-align:center;line-height:1.3">추가 슬롯<br>Lv.3 해금</div><div class="lnm"></div><div class="lqty"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="RS-chat bg-box4">
+    <div class="sp"><div class="nm">유안</div><div class="tag mono">Lucid Diver</div></div>
+    <div class="div"></div>
+    <div class="txt">무사히 돌아왔어. 회수한 기록도 정리해둘게.</div>
+  </div>
+
+  <div class="RS-returnbtn bg-btn btn" onclick="go('s1')">로비로 복귀 <span>≫</span></div>
+
+  <div class="RS-stat mono"><span>PLAY TIME 00:36</span><span>|</span><span>KILLS 0</span></div>
+  <div class="RS-id mono">ID: LUCID-240527-0936</div>
+</div>
+
+<!-- 채널링 오버레이 -->
+<div id="ch">
+  <div class="box">
+    <h3>탈출 시도 중... (ESCAPING)</h3>
+    <div class="bg"><div id="chf" class="f"></div></div>
+    <div class="warn">⚠ 피격 시 탈출이 취소됩니다.</div>
+  </div>
+</div>
+
+</div><!-- /vp -->
+
+<script>
+const P=new URLSearchParams(location.search);
+if(P.get('hideSelector')==='true'){document.getElementById('nav').style.display='none';document.getElementById('vp').style.border='none';document.body.style.background='#000'}
+
+function go(id){
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  document.querySelectorAll('#nav button').forEach(b=>{b.classList.remove('on');if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(id))b.classList.add('on')});
+  // 화면 이동 시 열려있던 인게임 오버레이 자동 차단
+  document.querySelectorAll('.H-inv-panel, .H-box-panel, .H-tuto, .H-trash-panel').forEach(o=>o.classList.remove('active'));
+}
+window.switchScreen=go;
+function enterGame(){go('s5')}
+function startCh(){
+  const o=document.getElementById('ch'),f=document.getElementById('chf');
+  o.style.display='flex';f.style.width='0%';
+  let p=0;const iv=setInterval(()=>{p+=3.33;f.style.width=p+'%';if(p>=100){clearInterval(iv);o.style.display='none';go('s6')}},100);
+}
+
+// 인게임 인벤토리 및 아이템 박스 오버레이 제어 함수
+function toggleIngameInv() {
+  const inv = document.getElementById('H-inv-panel');
+  const box = document.getElementById('H-box-panel');
+  const tuto = document.getElementById('H-tuto');
+  const trash = document.getElementById('H-trash-panel');
+  if(box) box.classList.remove('active');
+  if(inv) {
+    inv.classList.toggle('active');
+    const isActive = inv.classList.contains('active');
+    if(tuto) tuto.classList.toggle('active', isActive);
+    if(trash) trash.classList.toggle('active', isActive);
+  }
+}
+function toggleItemBox() {
+  const inv = document.getElementById('H-inv-panel');
+  const box = document.getElementById('H-box-panel');
+  const tuto = document.getElementById('H-tuto');
+  const trash = document.getElementById('H-trash-panel');
+  if (box && box.classList.contains('active')) {
+    box.classList.remove('active');
+    if(inv) inv.classList.remove('active');
+    if(tuto) tuto.classList.remove('active');
+    if(trash) trash.classList.remove('active');
+  } else {
+    if(inv) inv.classList.add('active'); // 상자 개방 시 좌측 인벤토리도 함께 병렬 노출
+    if(box) box.classList.add('active');
+    if(tuto) tuto.classList.add('active'); // 가운데 튜토리얼 영역 활성화
+    if(trash) trash.classList.add('active'); // 우측 하단 쓰레기통 활성화
+  }
+}
+
+// 키보드 단축키 연동 (I: 인벤토리 토글, G: 아이템 박스 토글)
+document.addEventListener('keydown', function(e) {
+  const s5 = document.getElementById('s5');
+  if (s5 && s5.classList.contains('on')) {
+    if (e.key === 'i' || e.key === 'I') {
+      toggleIngameInv();
+    }
+    if (e.key === 'g' || e.key === 'G') {
+      toggleItemBox();
+    }
+  }
+});
+</script>
+</body>
+</html>
