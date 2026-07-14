@@ -281,10 +281,10 @@ UI_YuanCircleProfile.png → 유안 원형 프로필
 │ [배터리]                     [하단 중앙 - 액션 바]          [퀵슬롯] │
 │  58%    [HP 수치] 287+19/580                                        │
 │         [MP 수치] 17/180     ┌─────────────────────────┐  ┌──┐┌──┐ │
-│                              │ ⊘  »» 🔫  ⊕  ⊗        │  │1 ││2 │ │
-│                              │Space Q   E   R          │  │x30│x25│ │
+│                              │   🏃      🎯      ⚡    │  │1 ││2 │ │
+│                              │ Shift     Q     Space   │  │x30│x25│ │
 │                              └─────────────────────────┘  └──┘└──┘ │
-│                              [무기 아이콘] 24/120                    │
+│                              [Q 스킬 아이콘 (투척형)]               │
 └──────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -298,6 +298,8 @@ UI_YuanCircleProfile.png → 유안 원형 프로필
 | **MP 바** | `MpBar` (Slider) | BG: [`UI_SliderBG_2.png`](../06_이미지_작업물/05_인게임_HUD/UI_SliderBG_2.png)<br>Fill: `#4080FF` 그라데이션 | HP 아래, W: 200, H: 12 | - |
 | **퀵슬롯 1-3** | `Consumable/Image-Background` | [`UI_QuickSlot.png`](../06_이미지_작업물/05_인게임_HUD/UI_QuickSlot.png) | Bottom-Right, 64×64 ×3 | **퀵슬롯 번호 정렬**: 각 슬롯 박스 좌측 상단의 핫키 번호 1, 2, 3의 좌표를 우측으로 `3px` 조정하여 사각형 인디케이터 중앙에 정렬 |
 | **퀵슬롯 아이템 아이콘** | `Image-Consumable` | 아이템 DB iconSprite | 퀵슬롯 내부, 48×48 | - |
+| **이동/유틸 스킬 슬롯** | `H-aslot` | [`Skill_Run.png`](../06_이미지_작업물/07_스킬_아이콘/Skill_Run.png), [`Skill_Dodge.png`](../06_이미지_작업물/07_스킬_아이콘/Skill_Dodge.png) | 하단 중앙, 80×80 ×2 | **Shift (달리기/구르기)** 및 **Space (각성/대시)** 스킬 맵핑 슬롯 (Q 슬롯과 동일한 `bg-igbox` 프레임 적용 및 비율 확대) |
+| **Q 스킬 슬롯 (투척형)** | `H-skill` | [`Skill_Decoy.png`](../06_이미지_작업물/07_스킬_아이콘/Skill_Decoy.png) | 하단 중앙, 110×110 (강조) | **Q 단축키 투척 스킬**: 네온 블루 테두리(`border: 2px solid #45f3ff`) 및 외부 광채 효과 적용 (비율 확대) |
 
 > [!NOTE]
 > 현재 LevelDesignScene 내 Canvas는 **`Canvas-timer`** (전화부스 탈출 타이머)만 존재합니다. 인게임 HUD Canvas(`Canvas-GameUI`)는 **프리팹**에서 런타임 로드되므로, 프리팹 편집기에서 작업해야 합니다.

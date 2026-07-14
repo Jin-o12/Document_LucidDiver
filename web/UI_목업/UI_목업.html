@@ -319,12 +319,12 @@ body{background:#050508;color:#c5c6c7;font-family:'Noto Sans KR',sans-serif;over
 /* 하단 액션바 */
 .H-action{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;align-items:flex-end;gap:16px;z-index:10}
 .H-askill{display:flex;gap:10px;align-items:flex-end}
-.H-aslot{width:68px;height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-.H-aslot .lbl{font-size:10px;font-weight:700;color:#fff;margin-top:2px}
+.H-aslot{width:80px;height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.H-aslot .lbl{font-size:11px;font-weight:700;color:#fff;margin-top:4px}
 .H-aslot .emoji{font-size:22px}
-.H-weapon{width:100px;height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid #45f3ff;box-shadow:0 0 12px rgba(69,243,255,.3)}
-.H-weapon img{width:60%;opacity:.8}
-.H-weapon .ammo{font-size:12px;font-weight:700;color:#45f3ff;margin-top:4px}
+.H-skill{width:110px;height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid #45f3ff;box-shadow:0 0 12px rgba(69,243,255,.3)}
+.H-skill img{width:60%;opacity:.8}
+.H-skill .ammo{font-size:13px;font-weight:700;color:#45f3ff;margin-top:4px}
 .H-qslots{display:flex;gap:10px;align-items:flex-end;margin-left:20px}
 .H-qslot{width:68px;height:68px;position:relative;display:flex;align-items:center;justify-content:center}
 .H-qslot .kn{position:absolute;top:5px;left:8px;font-size:10px;color:#45f3ff;font-weight:900;z-index:5}
@@ -559,11 +559,10 @@ body{background:#050508;color:#c5c6c7;font-family:'Noto Sans KR',sans-serif;over
     <p style="font-size:11px;color:#45f3ff;margin-top:6px;text-align:right">기록 확인 &gt;</p>
   </div>
 
-  <!-- 메뉴 -->
   <div class="L-menu">
-    <div class="L-mbtn bg-btn btn red" onclick="go('s4')"><span class="icon">🎯</span><div><div>출격</div><div class="sub mono">OPERATION</div></div><span class="arrow">&gt;&gt;</span></div>
+    <div class="L-mbtn bg-btn btn red" onclick="go('s4')"><span class="icon"><img src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_CrossHair.png" style="width:32px;height:32px;object-fit:contain"></span><div><div>출격</div><div class="sub mono">OPERATION</div></div><span class="arrow">&gt;&gt;</span></div>
     <div class="L-mbtn bg-btn btn" onclick="go('s2')"><span class="icon"><img src="../../LucidDiver_Document/06_이미지_작업물/04_엠블럼_배너/UI_Diver.png" style="width:32px"></span><div><div>다이버 / 기록</div><div class="sub mono">DIVER</div></div><span class="arrow">&gt;&gt;</span></div>
-    <div class="L-mbtn bg-btn btn" onclick="go('s3')"><span class="icon">📦</span><div><div>창고</div><div class="sub mono">STORAGE</div></div><span class="arrow">&gt;&gt;</span></div>
+    <div class="L-mbtn bg-btn btn" onclick="go('s3')"><span class="icon"><img src="../../LucidDiver_Document/06_이미지_작업물/04_엠블럼_배너/UI_Stash.png" style="width:32px;height:32px;object-fit:contain"></span><div><div>창고</div><div class="sub mono">STORAGE</div></div><span class="arrow">&gt;&gt;</span></div>
   </div>
 
   <!-- 대사 -->
@@ -655,26 +654,26 @@ body{background:#050508;color:#c5c6c7;font-family:'Noto Sans KR',sans-serif;over
   <div class="S-stash bg-alpha">
     <div class="hd"><h3><span class="ic">📦</span>창고</h3><span class="neon-b" style="font-weight:900">63 / 120</span></div>
     <div class="S-grid">
-      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_1.png"><span class="qty">x25</span></div>
-      <div class="slot epic" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_2.png"><span class="qty">x18</span></div>
-      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_3.png"><span class="qty">x12</span></div>
-      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_4.png"><span class="qty">x8</span></div>
-      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_5.png"><span class="qty">x15</span></div>
-      <div class="slot legend" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_6.png"><span class="qty">x230</span></div>
-      <div class="slot uncommon" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_7.png"><span class="qty">x32</span></div>
-      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_8.png"><span class="qty">x9</span></div>
-      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_9.png"><span class="qty">x6</span></div>
-      <div class="slot epic" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_10.png"><span class="qty">x14</span></div>
-      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_19.png"><span class="qty">x5</span></div>
-      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_20.png"><span class="qty">x20</span></div>
-      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_21.png"><span class="qty">x7</span></div>
-      <div class="slot uncommon" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_22.png"><span class="qty">x11</span></div>
-      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_23.png"><span class="qty">x9</span></div>
-      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_24.png"><span class="qty">x4</span></div>
-      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_25.png"><span class="qty">x3</span></div>
-      <div class="slot epic" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_26.png"><span class="qty">x10</span></div>
-      <div class="slot uncommon" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_27.png"><span class="qty">x76</span></div>
-      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_28.png"><span class="qty">x2</span></div>
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_StrangeCandy.png"><span class="qty">x25</span></div>
+      <div class="slot epic" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_RottedBandage.png"><span class="qty">x18</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_LucidHourglass.png"><span class="qty">x12</span></div>
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_DelayedClockwork.png"><span class="qty">x8</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_HardenedMedPouch.png"><span class="qty">x15</span></div>
+      <div class="slot legend" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Misc_MemoryFragment.png"><span class="qty">x230</span></div>
+      <div class="slot uncommon" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Misc_DampCashBundle.png"><span class="qty">x32</span></div>
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_EverRollingCartWheel.png"><span class="qty">x9</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Misc_DreamCrystal.png"><span class="qty">x6</span></div>
+      <div class="slot epic" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_CorruptedSecurityBaton.png"><span class="qty">x14</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_RottedBandage.png"><span class="qty">x5</span></div>
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_StrangeCandy.png"><span class="qty">x20</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Misc_MemoryFragment.png"><span class="qty">x7</span></div>
+      <div class="slot uncommon" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Misc_DreamCrystal.png"><span class="qty">x11</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_HardenedMedPouch.png"><span class="qty">x9</span></div>
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_BackflowTonic.png"><span class="qty">x4</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Misc_MemoryFragment.png"><span class="qty">x3</span></div>
+      <div class="slot epic" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_DelayedClockwork.png"><span class="qty">x10</span></div>
+      <div class="slot uncommon" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Misc_DampCashBundle.png"><span class="qty">x76</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_EverRollingCartWheel.png"><span class="qty">x2</span></div>
     </div>
   </div>
 
@@ -685,17 +684,17 @@ body{background:#050508;color:#c5c6c7;font-family:'Noto Sans KR',sans-serif;over
   <div class="S-inv bg-alpha">
     <div class="hd"><h3><span class="ic">🎒</span>인벤토리</h3><span class="neon-b" style="font-weight:900">21 / 60</span></div>
     <div class="S-grid">
-      <div class="slot epic" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_11.png"><span class="qty">x8</span></div>
-      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_12.png"><span class="qty">x4</span></div>
-      <div class="slot legend" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_13.png"><span class="qty">x120</span></div>
-      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_14.png"><span class="qty">x6</span></div>
-      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_15.png"><span class="qty">x6</span></div>
-      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_16.png"><span class="qty">x3</span></div>
-      <div class="slot uncommon" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_17.png"><span class="qty">x2</span></div>
-      <div class="slot epic" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_18.png"><span class="qty">x3</span></div>
-      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_29.png"><span class="qty">x25</span></div>
-      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_30.png"><span class="qty">x1</span></div>
-      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_31.png"><span class="qty">x1</span></div>
+      <div class="slot epic" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_DelayedClockwork.png"><span class="qty">x8</span></div>
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_EverRollingCartWheel.png"><span class="qty">x4</span></div>
+      <div class="slot legend" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_BackflowTonic.png"><span class="qty">x120</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_RottedBandage.png"><span class="qty">x6</span></div>
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_LucidHourglass.png"><span class="qty">x6</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Misc_MemoryFragment.png"><span class="qty">x3</span></div>
+      <div class="slot uncommon" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Misc_DampCashBundle.png"><span class="qty">x2</span></div>
+      <div class="slot epic" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_DelayedClockwork.png"><span class="qty">x3</span></div>
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Misc_DreamCrystal.png"><span class="qty">x25</span></div>
+      <div class="slot normal" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_HardenedMedPouch.png"><span class="qty">x1</span></div>
+      <div class="slot rare" style="width:100%;aspect-ratio:1"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_BackflowTonic.png"><span class="qty">x1</span></div>
       <div class="slot empty" style="width:100%;aspect-ratio:1"></div>
       <div class="slot empty" style="width:100%;aspect-ratio:1"></div>
       <div class="slot empty" style="width:100%;aspect-ratio:1"></div>
@@ -727,7 +726,7 @@ body{background:#050508;color:#c5c6c7;font-family:'Noto Sans KR',sans-serif;over
   <!-- 상세 -->
   <div class="S-detail bg-box5">
     <div class="item-hd">
-      <div class="slot epic" style="width:64px;height:64px"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_1.png"></div>
+      <div class="slot epic" style="width:64px;height:64px"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_StrangeCandy.png"></div>
       <div><div class="item-nm neon-p">기억 파편</div><div class="item-cat">일반 재료 &nbsp;|&nbsp; 보유 수량 <b style="color:#fff">x8</b></div></div>
     </div>
     <p class="item-desc">오염된 데이터 조각.<br>동조율 상승에 사용된다.</p>
@@ -741,8 +740,8 @@ body{background:#050508;color:#c5c6c7;font-family:'Noto Sans KR',sans-serif;over
   <div class="S-artifact bg-extra">
     <h4 class="neon-p">장착 아티팩트 <span style="font-size:11px;color:#8b9bb4;font-weight:400;margin-left:6px">출격 전 미리 장착할 공간</span></h4>
     <div class="row">
-      <div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_4.png"><span class="qty">x1</span><span class="num" style="color:#a855f7">A</span></div>
-      <div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_8.png"><span class="qty">x1</span><span class="num" style="color:#a855f7">B</span></div>
+      <div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_DelayedClockwork.png"><span class="qty">x1</span><span class="num" style="color:#a855f7">A</span></div>
+      <div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_EverRollingCartWheel.png"><span class="qty">x1</span><span class="num" style="color:#a855f7">B</span></div>
       <div class="slot empty"><span class="empty-txt" style="position:absolute;font-size:10px;color:rgba(255,255,255,0.25);font-weight:700">[비어있음]</span><span class="num" style="color:#a855f7">C</span></div>
     </div>
   </div>
@@ -751,9 +750,9 @@ body{background:#050508;color:#c5c6c7;font-family:'Noto Sans KR',sans-serif;over
   <div class="S-qs bg-extra">
     <h4 class="neon-b">퀵슬롯 <span style="font-size:11px;color:#8b9bb4;font-weight:400;margin-left:6px">전투 중 빠른 사용</span></h4>
     <div class="row">
-      <div class="q bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_1.png"><span class="qty">x3</span><span class="num">1</span></div>
-      <div class="q bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_2.png"><span class="qty">x2</span><span class="num">2</span></div>
-      <div class="q bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_3.png"><span class="qty">x1</span><span class="num">3</span></div>
+      <div class="q bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_StrangeCandy.png"><span class="qty">x3</span><span class="num">1</span></div>
+      <div class="q bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_RottedBandage.png"><span class="qty">x2</span><span class="num">2</span></div>
+      <div class="q bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_LucidHourglass.png"><span class="qty">x1</span><span class="num">3</span></div>
     </div>
   </div>
 
@@ -817,21 +816,21 @@ body{background:#050508;color:#c5c6c7;font-family:'Noto Sans KR',sans-serif;over
             <div class="O-slot-col">
               <span class="slot-title">슬롯 1</span>
               <div class="O-slot-box" onclick="go('s3')">
-                <img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_1.png">
+                <img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_StrangeCandy.png">
                 <span class="qty">x3</span>
               </div>
             </div>
             <div class="O-slot-col">
               <span class="slot-title">슬롯 2</span>
               <div class="O-slot-box" onclick="go('s3')">
-                <img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_2.png">
+                <img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_RottedBandage.png">
                 <span class="qty">x2</span>
               </div>
             </div>
             <div class="O-slot-col">
               <span class="slot-title">슬롯 3</span>
               <div class="O-slot-box" onclick="go('s3')">
-                <img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_3.png">
+                <img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_LucidHourglass.png">
                 <span class="qty">x1</span>
               </div>
             </div>
@@ -848,14 +847,14 @@ body{background:#050508;color:#c5c6c7;font-family:'Noto Sans KR',sans-serif;over
             <div class="O-slot-col">
               <span class="slot-title">아티팩트 A</span>
               <div class="O-slot-box" onclick="go('s3')" style="border-color:rgba(168,85,247,0.25)">
-                <img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_4.png">
+                <img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_DelayedClockwork.png">
                 <span class="qty">x1</span>
               </div>
             </div>
             <div class="O-slot-col">
               <span class="slot-title">아티팩트 B</span>
               <div class="O-slot-box" onclick="go('s3')" style="border-color:rgba(168,85,247,0.25)">
-                <img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_8.png">
+                <img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_EverRollingCartWheel.png">
                 <span class="qty">x1</span>
               </div>
             </div>
@@ -946,13 +945,13 @@ body{background:#050508;color:#c5c6c7;font-family:'Noto Sans KR',sans-serif;over
 
   <div class="H-action">
     <div class="H-askill">
-      <div class="H-aslot bg-qslot"><span class="emoji">🏃</span><span class="lbl">Shift</span></div>
-      <div class="H-weapon bg-igbox"><img src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_CrossHair.png"><span class="ammo">∞</span></div>
-      <div class="H-aslot bg-qslot"><span class="emoji">⚡</span><span class="lbl">Space</span></div>
+      <div class="H-aslot bg-igbox"><img src="../../LucidDiver_Document/06_이미지_작업물/07_스킬_아이콘/Skill_Run.png" style="width:40px;height:40px;object-fit:contain;opacity:0.9;margin-top:6px"><span class="lbl">Shift</span></div>
+      <div class="H-skill bg-igbox"><img src="../../LucidDiver_Document/06_이미지_작업물/07_스킬_아이콘/Skill_Decoy.png"><span class="ammo">Q</span></div>
+      <div class="H-aslot bg-igbox"><img src="../../LucidDiver_Document/06_이미지_작업물/07_스킬_아이콘/Skill_Dodge.png" style="width:40px;height:40px;object-fit:contain;opacity:0.9;margin-top:6px"><span class="lbl">Space</span></div>
     </div>
     <div class="H-qslots">
-      <div class="H-qslot bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_1.png"><span class="qty">0</span><span class="kn">1</span></div>
-      <div class="H-qslot bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_2.png"><span class="qty">0</span><span class="kn">2</span></div>
+      <div class="H-qslot bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_StrangeCandy.png"><span class="qty">0</span><span class="kn">1</span></div>
+      <div class="H-qslot bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_RottedBandage.png"><span class="qty">0</span><span class="kn">2</span></div>
       <div class="H-qslot bg-qslot" style="opacity:.3"><span class="kn">3</span></div>
     </div>
   </div>
@@ -974,8 +973,8 @@ body{background:#050508;color:#c5c6c7;font-family:'Noto Sans KR',sans-serif;over
     <div class="H-inv-sec">
       <h3>장착 아티팩트 (Artifacts)</h3>
       <div class="row">
-        <div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_4.png"><span class="qty">x1</span><span class="num" style="color:#a855f7">A</span></div>
-        <div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_8.png"><span class="qty">x1</span><span class="num" style="color:#a855f7">B</span></div>
+        <div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_DelayedClockwork.png"><span class="qty">x1</span><span class="num" style="color:#a855f7">A</span></div>
+        <div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_EverRollingCartWheel.png"><span class="qty">x1</span><span class="num" style="color:#a855f7">B</span></div>
         <div class="slot empty"><span class="num" style="color:#a855f7">C</span></div>
       </div>
     </div>
@@ -984,8 +983,8 @@ body{background:#050508;color:#c5c6c7;font-family:'Noto Sans KR',sans-serif;over
     <div class="H-inv-sec">
       <h3>인게임 퀵슬롯 (Quickslots)</h3>
       <div class="row">
-        <div class="q bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_1.png"><span class="qty">x3</span><span class="num">1</span></div>
-        <div class="q bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_2.png"><span class="qty">x2</span><span class="num">2</span></div>
+        <div class="q bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_StrangeCandy.png"><span class="qty">x3</span><span class="num">1</span></div>
+        <div class="q bg-qslot"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_RottedBandage.png"><span class="qty">x2</span><span class="num">2</span></div>
         <div class="q bg-qslot" style="opacity:.3"><span class="num">3</span></div>
       </div>
     </div>
@@ -994,12 +993,12 @@ body{background:#050508;color:#c5c6c7;font-family:'Noto Sans KR',sans-serif;over
     <div class="H-inv-sec">
       <h3>일반 소지품 (Inventory Grid)</h3>
       <div class="grid">
-        <div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_1.png"><span class="qty">x5</span></div>
-        <div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_2.png"><span class="qty">x2</span></div>
-        <div class="slot normal"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_3.png"><span class="qty">x3</span></div>
-        <div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_5.png"><span class="qty">x1</span></div>
-        <div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_6.png"><span class="qty">x1</span></div>
-        <div class="slot legend"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_10.png"><span class="qty">x4</span></div>
+        <div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_StrangeCandy.png"><span class="qty">x5</span></div>
+        <div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_RottedBandage.png"><span class="qty">x2</span></div>
+        <div class="slot normal"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_LucidHourglass.png"><span class="qty">x3</span></div>
+        <div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_HardenedMedPouch.png"><span class="qty">x1</span></div>
+        <div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Misc_MemoryFragment.png"><span class="qty">x1</span></div>
+        <div class="slot legend"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_CorruptedSecurityBaton.png"><span class="qty">x4</span></div>
         <div class="slot empty"></div>
         <div class="slot empty"></div>
         <div class="slot empty"></div>
@@ -1054,9 +1053,9 @@ body{background:#050508;color:#c5c6c7;font-family:'Noto Sans KR',sans-serif;over
 
     <!-- 상자 아이템 리스트 (4x2) -->
     <div class="grid">
-      <div class="slot legend"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_13.png"><span class="qty">x3</span></div>
-      <div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_22.png"><span class="qty">x1</span></div>
-      <div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_26.png"><span class="qty">x1</span></div>
+      <div class="slot legend"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_BackflowTonic.png"><span class="qty">x3</span></div>
+      <div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Misc_DreamCrystal.png"><span class="qty">x1</span></div>
+      <div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_DelayedClockwork.png"><span class="qty">x1</span></div>
       <div class="slot empty"></div>
       <div class="slot empty"></div>
       <div class="slot empty"></div>
@@ -1096,7 +1095,7 @@ body{background:#050508;color:#c5c6c7;font-family:'Noto Sans KR',sans-serif;over
     <div class="RS-center bg-textbox">
       <h2 class="neon-b">📋 기록 복구</h2>
       <div class="RS-row">
-        <div class="slot epic" style="width:60px;height:60px"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_3.png"></div>
+        <div class="slot epic" style="width:60px;height:60px"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_LucidHourglass.png"></div>
         <div class="info"><h3>기억 파편 소모</h3><p class="neon-p">× 36</p></div>
       </div>
       <div class="RS-lvup">
@@ -1116,13 +1115,13 @@ body{background:#050508;color:#c5c6c7;font-family:'Noto Sans KR',sans-serif;over
       <h2>📦 회수품 정산</h2>
       <div class="saved neon-g">✔ 모든 회수품이 창고에 저장되었습니다.</div>
       <div class="RS-loot">
-        <div class="lcol"><div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_1.png"></div><div class="lnm">기묘한 사탕</div><div class="lqty">× 12</div></div>
-        <div class="lcol"><div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_2.png"></div><div class="lnm">변질된 봉대</div><div class="lqty">× 3</div></div>
-        <div class="lcol"><div class="slot legend"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_3.png"></div><div class="lnm">기억 파편</div><div class="lqty">× 36</div></div>
-        <div class="lcol"><div class="slot normal"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_4.png"></div><div class="lnm">신용 칩</div><div class="lqty">× 4,250</div></div>
-        <div class="lcol"><div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_5.png"></div><div class="lnm">침몽 코어</div><div class="lqty">× 2</div></div>
-        <div class="lcol"><div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_6.png"></div><div class="lnm">오버클럭 모듈</div><div class="lqty">× 1</div></div>
-        <div class="lcol"><div class="slot uncommon"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/02_아이템_아이콘/UI_Icon_7.png"></div><div class="lnm">훼손된 데이터</div><div class="lqty">× 5</div></div>
+        <div class="lcol"><div class="slot uncommon"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_StrangeCandy.png"></div><div class="lnm">기묘한 사탕</div><div class="lqty">× 12</div></div>
+        <div class="lcol"><div class="slot normal"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Consumable_RottedBandage.png"></div><div class="lnm">변질된 붕대</div><div class="lqty">× 3</div></div>
+        <div class="lcol"><div class="slot normal"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Misc_MemoryFragment.png"></div><div class="lnm">기억 파편</div><div class="lqty">× 36</div></div>
+        <div class="lcol"><div class="slot uncommon"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Misc_DampCashBundle.png"></div><div class="lnm">눅눅한 지폐 뭉치</div><div class="lqty">× 4,250</div></div>
+        <div class="lcol"><div class="slot rare"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Misc_DreamCrystal.png"></div><div class="lnm">응집된 꿈의 결정</div><div class="lqty">× 2</div></div>
+        <div class="lcol"><div class="slot epic"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_DelayedClockwork.png"></div><div class="lnm">지연된 시계 태엽</div><div class="lqty">× 1</div></div>
+        <div class="lcol"><div class="slot uncommon"><img class="ico" src="../../LucidDiver_Document/06_이미지_작업물/06_기물_아이콘/Item_Artifact_BackflowTonic.png"></div><div class="lnm">역류하는 자양강장제</div><div class="lqty">× 5</div></div>
         <div class="lcol"><div class="slot empty" style="display:flex;align-items:center;justify-content:center;font-size:11px;color:rgba(255,255,255,.2);text-align:center;line-height:1.3">추가 슬롯<br>Lv.3 해금</div><div class="lnm"></div><div class="lqty"></div></div>
       </div>
     </div>
