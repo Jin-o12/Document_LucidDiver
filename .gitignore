@@ -1,0 +1,4 @@
+# Notion Sync Tool & Private Configs (located outside git root)
+../notion_sync.py
+../.env
+.env
