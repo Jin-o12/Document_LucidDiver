@@ -567,21 +567,28 @@
     </article>
   </div>
 
+  <div class="image-viewer" id="image-viewer" aria-hidden="true">
+    <div class="image-viewer-frame" role="dialog" aria-modal="true" aria-label="이미지 확대 보기">
+      <button class="image-viewer-close" id="image-viewer-close" type="button" aria-label="확대 이미지 닫기">×</button>
+      <img class="image-viewer-image" id="image-viewer-image" src="" alt="">
+    </div>
+  </div>
+
   <template id="content-pm">
     <p class="detail-intro">PM 역할의 핵심 결과물은 팀 REMnants의 Notion 운영 허브입니다. 전체 일정이 주별 목표와 하루 업무로 구체화되고, 팀원들의 실행 기록이 다시 주간 판단과 다음 일정으로 반영되는 하나의 업무지도를 목표로 정보 구조를 직접 설계하고 운영했습니다.</p>
 
     <div class="evidence-hero">
-      <a class="evidence-link" href="../images/PM_Notion_WorkMap.png" target="_blank" rel="noopener noreferrer">
+      <a class="evidence-link" href="../images/PM_Notion_WorkMap.png" data-image-viewer>
         <img src="../images/PM_Notion_WorkMap.png" alt="전체 일정표부터 일일 개발일지와 주간 개발일지, 다음 일정 조정으로 이어지는 팀 업무지도">
         <span class="evidence-caption"><span>Notion으로 구축한 순환형 팀 업무지도</span><span>이미지 확대 ↗</span></span>
       </a>
     </div>
     <div class="evidence-pair">
-      <a class="evidence-link" href="../images/PM_Project_Timeline.png" target="_blank" rel="noopener noreferrer">
+      <a class="evidence-link" href="../images/PM_Project_Timeline.png" data-image-viewer>
         <img src="../images/PM_Project_Timeline.png" alt="기획부터 최종 발표까지의 팀 전체 일정">
         <span class="evidence-caption"><span>전체 일정 타임라인</span><span>확대 ↗</span></span>
       </a>
-      <a class="evidence-link" href="../images/PM_Weekly_Milestones.png" target="_blank" rel="noopener noreferrer">
+      <a class="evidence-link" href="../images/PM_Weekly_Milestones.png" data-image-viewer>
         <img src="../images/PM_Weekly_Milestones.png" alt="주차별 목표와 완료 조건을 정리한 마일스톤">
         <span class="evidence-caption"><span>주별 마일스톤·판정 기준</span><span>확대 ↗</span></span>
       </a>
@@ -646,6 +653,9 @@
       const title = document.getElementById('detail-title');
       const kicker = document.getElementById('detail-kicker');
       const closeButton = document.getElementById('close');
+      const imageViewer = document.getElementById('image-viewer');
+      const imageViewerImage = document.getElementById('image-viewer-image');
+      const imageViewerClose = document.getElementById('image-viewer-close');
       const order = ['pm', 'planning', 'development'];
       const labels = {
         pm: ['01 · PROJECT MANAGEMENT', 'PM 업무'],
@@ -654,6 +664,25 @@
       };
       let activeRole = null;
       let returnFocus = null;
+      let imageReturnFocus = null;
+
+      function openImageViewer(link) {
+        const preview = link.querySelector('img');
+        imageReturnFocus = link;
+        imageViewerImage.src = link.href;
+        imageViewerImage.alt = preview ? preview.alt : '확대 이미지';
+        imageViewer.classList.add('open');
+        imageViewer.setAttribute('aria-hidden', 'false');
+        imageViewerClose.focus();
+      }
+
+      function closeImageViewer() {
+        imageViewer.classList.remove('open');
+        imageViewer.setAttribute('aria-hidden', 'true');
+        imageViewerImage.removeAttribute('src');
+        if (imageReturnFocus) imageReturnFocus.focus();
+        imageReturnFocus = null;
+      }
 
       function openRole(role) {
         const template = document.getElementById(`content-${role}`);
@@ -689,11 +718,26 @@
       });
 
       scroll.addEventListener('click', event => {
+        const imageLink = event.target.closest('[data-image-viewer]');
+        if (imageLink) {
+          event.preventDefault();
+          openImageViewer(imageLink);
+          return;
+        }
         const button = event.target.closest('[data-nav]');
         if (button) openRole(button.dataset.nav);
       });
 
+      imageViewerClose.addEventListener('click', closeImageViewer);
+      imageViewer.addEventListener('click', event => {
+        if (event.target === imageViewer) closeImageViewer();
+      });
+
       document.addEventListener('keydown', event => {
+        if (imageViewer.classList.contains('open')) {
+          if (event.key === 'Escape') closeImageViewer();
+          return;
+        }
         if (!activeRole) return;
         if (event.key === 'Escape') closeRole();
         if (event.key === 'Tab') {
