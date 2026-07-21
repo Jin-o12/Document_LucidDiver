@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>송예찬 — 역할과 전체 기여</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #03050c;
+      --panel: rgba(10, 15, 31, 0.94);
+      --panel-2: #0d1428;
+      --text: #f5f7ff;
+      --muted: #aab4ca;
+      --cyan: #6ce7f2;
+      --violet: #ad77ff;
+      --gold: #f0bb73;
+      --line: rgba(122, 226, 239, 0.24);
+    }
+
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Pretendard, "Noto Sans KR", "Malgun Gothic", sans-serif;
+    }
+
+    button, a { font: inherit; }
+    button { color: inherit; }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 16% 18%, rgba(94, 60, 173, 0.18), transparent 31%),
+        radial-gradient(circle at 82% 72%, rgba(27, 147, 168, 0.14), transparent 32%),
+        linear-gradient(rgba(106, 231, 242, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(106, 231, 242, 0.025) 1px, transparent 1px);
+      background-size: auto, auto, 48px 48px, 48px 48px;
+    }
+
+    .page {
+      position: relative;
+      min-height: 100%;
+      padding: clamp(28px, 4.6vh, 58px) clamp(28px, 6vw, 112px) 32px;
+      isolation: isolate;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--cyan);
+      font-size: clamp(0.65rem, 0.8vw, 0.82rem);
+      font-weight: 800;
+      letter-spacing: 0.23em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 1100px;
+      margin: 0;
+      font-size: clamp(2.05rem, 4.2vw, 4.7rem);
+      line-height: 1.06;
+      letter-spacing: -0.045em;
+    }
+
+    .lead {
+      max-width: 840px;
+      margin: 15px 0 0;
+      color: #c2cada;
+      font-size: clamp(0.88rem, 1.15vw, 1.08rem);
+      line-height: 1.68;
+    }
+
+    .role-board {
+      position: relative;
+      width: min(1360px, 100%);
+      height: min(58vh, 570px);
+      min-height: 390px;
+      margin: clamp(22px, 4vh, 44px) auto 0;
+    }
+
+    .role-board::before {
+      content: "";
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: 50%;
+      height: 1px;
+      transform: rotate(14deg);
+      transform-origin: center;
+      background: linear-gradient(90deg, transparent, rgba(108, 231, 242, 0.38), rgba(173, 119, 255, 0.32), transparent);
+      box-shadow: 0 0 18px rgba(108, 231, 242, 0.18);
+    }
+
+    .role-card {
+      --accent: var(--cyan);
+      position: absolute;
+      width: min(37vw, 470px);
+      min-width: 320px;
+      height: clamp(180px, 23vh, 236px);
+      padding: clamp(22px, 2.2vw, 34px);
+      overflow: hidden;
+      text-align: left;
+      border: 1px solid color-mix(in srgb, var(--accent) 36%, transparent);
+      border-radius: 22px;
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, transparent), transparent 48%),
+        rgba(8, 13, 28, 0.9);
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.4), inset 0 1px rgba(255,255,255,0.035);
+      cursor: pointer;
+      transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+    }
+
+    .role-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -25% -55% 35%;
+      height: 170px;
+      border-radius: 50%;
+      background: var(--accent);
+      filter: blur(75px);
+      opacity: 0.13;
+      pointer-events: none;
+    }
+
+    .role-card:hover,
+    .role-card:focus-visible {
+      transform: translateY(-8px) scale(1.025);
+      border-color: color-mix(in srgb, var(--accent) 78%, transparent);
+      box-shadow: 0 28px 64px rgba(0,0,0,0.5), 0 0 35px color-mix(in srgb, var(--accent) 23%, transparent);
+      outline: none;
+      filter: brightness(1.08);
+    }
+
+    .role-card.pm { --accent: var(--cyan); left: 1%; top: 0; }
+    .role-card.planning { --accent: var(--violet); left: 31.5%; top: 30%; }
+    .role-card.development { --accent: var(--gold); right: 1%; bottom: 0; }
+
+    .card-index {
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+    }
+
+    .role-card h2 {
+      margin: 12px 0 10px;
+      font-size: clamp(1.35rem, 2.1vw, 2.05rem);
+      letter-spacing: -0.035em;
+    }
+
+    .role-card p {
+      max-width: 390px;
+      margin: 0;
+      color: #b6bfd2;
+      font-size: clamp(0.78rem, 0.92vw, 0.93rem);
+      line-height: 1.58;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 16px;
+    }
+
+    .chip {
+      padding: 6px 10px;
+      border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.028);
+      color: #dce2ef;
+      font-size: clamp(0.64rem, 0.72vw, 0.74rem);
+      white-space: nowrap;
+    }
+
+    .open-label {
+      position: absolute;
+      right: 24px;
+      bottom: 20px;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 800;
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .role-card:hover .open-label,
+    .role-card:focus-visible .open-label { opacity: 1; transform: translateX(0); }
+
+    .page-foot {
+      position: fixed;
+      left: clamp(28px, 6vw, 112px);
+      right: clamp(28px, 6vw, 112px);
+      bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #7e8aa5;
+      font-size: 0.72rem;
+      pointer-events: none;
+    }
+
+    .page-count { color: var(--cyan); font-weight: 800; letter-spacing: 0.15em; }
+
+    .modal-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: grid;
+      place-items: center;
+      padding: clamp(12px, 2.5vw, 38px);
+      background: rgba(0, 2, 9, 0.78);
+      backdrop-filter: blur(10px) saturate(0.72);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 190ms ease;
+    }
+
+    .modal-layer.open { opacity: 1; pointer-events: auto; }
+
+    .detail {
+      --accent: var(--cyan);
+      position: relative;
+      width: min(1180px, 96vw);
+      height: min(820px, 92vh);
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+      border-radius: 24px;
+      background: rgba(7, 11, 24, 0.985);
+      box-shadow: 0 40px 110px rgba(0,0,0,0.72), 0 0 55px color-mix(in srgb, var(--accent) 13%, transparent);
+      transform: translateY(24px) scale(0.965);
+      transition: transform 220ms cubic-bezier(.2,.75,.2,1);
+    }
+
+    .modal-layer.open .detail { transform: translateY(0) scale(1); }
+    .detail[data-kind="planning"] { --accent: var(--violet); }
+    .detail[data-kind="development"] { --accent: var(--gold); }
+
+    .detail-head {
+      position: absolute;
+      inset: 0 0 auto;
+      z-index: 3;
+      min-height: 116px;
+      padding: 23px 82px 20px 34px;
+      border-bottom: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
+      background: rgba(8, 13, 28, 0.96);
+      backdrop-filter: blur(12px);
+    }
+
+    .detail-kicker {
+      margin: 0 0 6px;
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+    }
+
+    .detail-title {
+      margin: 0;
+      font-size: clamp(1.65rem, 2.7vw, 2.65rem);
+      letter-spacing: -0.04em;
+    }
+
+    .close {
+      position: absolute;
+      top: 26px;
+      right: 27px;
+      z-index: 5;
+      width: 46px;
+      height: 46px;
+      padding: 0;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 50%;
+      background: rgba(255,255,255,0.035);
+      color: #f5f7ff;
+      font-size: 1.35rem;
+      cursor: pointer;
+      transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+    }
+
+    .close:hover, .close:focus-visible {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 13%, transparent);
+      transform: rotate(5deg) scale(1.06);
+      outline: none;
+    }
+
+    .detail-scroll {
+      height: 100%;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 145px clamp(24px, 4vw, 58px) 40px;
+      scrollbar-color: color-mix(in srgb, var(--accent) 58%, transparent) rgba(255,255,255,0.04);
+      scrollbar-width: thin;
+    }
+
+    .detail-intro {
+      max-width: 880px;
+      margin: 0 0 28px;
+      color: #c3cbdb;
+      font-size: clamp(0.9rem, 1.1vw, 1.04rem);
+      line-height: 1.75;
+    }
+
+    .section-label {
+      margin: 30px 0 14px;
+      color: var(--accent);
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .work-item {
+      padding: 19px 20px;
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 15px;
+      background: rgba(255,255,255,0.027);
+    }
+
+    .work-item h3 {
+      margin: 0 0 8px;
+      color: #f4f6ff;
+      font-size: 1rem;
+    }
+
+    .work-item p {
+      margin: 0;
+      color: #aeb8cd;
+      font-size: 0.84rem;
+      line-height: 1.65;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 5px 9px;
+      border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 0.65rem;
+      font-weight: 850;
+      letter-spacing: 0.05em;
+    }
+
+    .notice {
+      margin-top: 17px;
+      padding: 16px 18px;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      background: color-mix(in srgb, var(--accent) 7%, transparent);
+      color: #c5cede;
+      font-size: 0.82rem;
+      line-height: 1.65;
+    }
+
+    .evidence-hero { margin: 0 0 16px; }
+    .evidence-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-bottom: 28px; }
+    .evidence-link { display: block; position: relative; overflow: hidden; border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent); border-radius: 16px; background: #050711; color: #e7edf7; text-decoration: none; }
+    .evidence-link img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; transition: transform 220ms ease, filter 220ms ease; }
+    .evidence-link:hover img, .evidence-link:focus-visible img { transform: scale(1.015); filter: brightness(1.08); }
+    .evidence-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .evidence-caption { display: flex; justify-content: space-between; gap: 12px; padding: 12px 15px; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(8,13,28,0.94); font-size: 0.76rem; font-weight: 750; }
+    .evidence-caption span:last-child { color: var(--accent); white-space: nowrap; }
+    .image-viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: clamp(14px, 3vw, 42px);
+      background: rgba(0, 2, 9, 0.94);
+      backdrop-filter: blur(14px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms ease;
+    }
+
+    .image-viewer.open { opacity: 1; pointer-events: auto; }
+
+    .image-viewer-frame {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: min(1600px, 96vw);
+      height: min(900px, 92vh);
+      overflow: hidden;
+      border: 1px solid rgba(86, 231, 255, 0.38);
+      border-radius: 20px;
+      background: #050711;
+      box-shadow: 0 36px 100px rgba(0,0,0,0.78), 0 0 45px rgba(86,231,255,0.1);
+      transform: scale(0.96);
+      transition: transform 200ms cubic-bezier(.2,.75,.2,1);
+    }
+
+    .image-viewer.open .image-viewer-frame { transform: scale(1); }
+
+    .image-viewer-image {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .image-viewer-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 2;
+      width: 46px;
+      height: 46px;
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 50%;
+      background: rgba(5,7,17,0.82);
+      color: #fff;
+      font-size: 1.35rem;
+      cursor: pointer;
+    }
+
+    .image-viewer-close:hover, .image-viewer-close:focus-visible {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      outline: none;
+      transform: scale(1.06);
+    }
+    .impact {
+      margin-top: 26px;
+      padding: 23px 24px;
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      border-radius: 17px;
+      background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, transparent), transparent 65%);
+    }
+
+    .impact strong { display: block; margin-bottom: 8px; color: var(--accent); font-size: 0.75rem; letter-spacing: 0.12em; }
+    .impact p { margin: 0; color: #e0e5f0; line-height: 1.7; }
+
+    .detail-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 28px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-button, .deep-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 16px;
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.035);
+      color: #dce2ee;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .nav-button:hover, .nav-button:focus-visible, .deep-link:hover, .deep-link:focus-visible {
+      border-color: var(--accent);
+      color: var(--accent);
+      outline: none;
+    }
+
+    .deep-link {
+      border-color: color-mix(in srgb, var(--accent) 42%, transparent);
+      background: color-mix(in srgb, var(--accent) 9%, transparent);
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    @media (max-width: 930px), (max-height: 720px) {
+      html, body { overflow: auto; }
+      .page { min-height: 100vh; padding-bottom: 70px; }
+      .role-board { height: auto; min-height: 0; display: grid; gap: 14px; }
+      .role-board::before { display: none; }
+      .role-card.pm, .role-card.planning, .role-card.development {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        min-width: 0;
+        height: auto;
+        min-height: 174px;
+      }
+      .page-foot { position: relative; left: auto; right: auto; bottom: auto; margin-top: 24px; }
+    }
+
+    @media (max-width: 720px) {
+      .work-grid { grid-template-columns: 1fr; }
+      .evidence-pair { grid-template-columns: 1fr; }
+      .detail-head { min-height: 104px; padding: 20px 68px 17px 22px; }
+      .detail-scroll { padding: 128px 20px 28px; }
+      .close { top: 20px; right: 18px; width: 42px; height: 42px; }
+      .detail-actions { align-items: stretch; flex-direction: column; }
+      .nav-button, .deep-link { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page" aria-labelledby="page-title">
+    <p class="eyebrow">SONG YECHAN · ROLE & CONTRIBUTION MAP</p>
+    <h1 id="page-title">PM 업무와 기획·개발을<br>병행해서 수행했습니다.</h1>
+    <p class="lead">세 역할은 상하 관계가 아닌 병행한 업무 축입니다. 각 카드를 선택하면 맡은 범위와 팀에 기여한 결과를 확인할 수 있습니다.</p>
+
+    <section class="role-board" aria-label="송예찬의 역할별 업무">
+      <button class="role-card pm" type="button" data-role="pm" aria-haspopup="dialog">
+        <span class="card-index">01 · PROJECT MANAGEMENT</span>
+        <h2>PM 업무</h2>
+        <p>일정·회의·개발 기록·문서와 빌드를 한곳에서 관리하는 Notion 팀 운영 허브를 직접 설계하고 운영했습니다.</p>
+        <span class="chips" aria-hidden="true"><span class="chip">Notion 운영 허브</span><span class="chip">업무지도</span><span class="chip">스크럼·개발일지</span></span>
+        <span class="open-label">세부 내용 보기 →</span>
+      </button>
+
+      <button class="role-card planning" type="button" data-role="planning" aria-haspopup="dialog">
+        <span class="card-index">02 · PLANNING</span>
+        <h2>기획 업무</h2>
+        <p>초기 컨셉 문서를 제안하고, 꿈식자는 세계관과 행동 구조를 직접 설계했습니다.</p>
+        <span class="chips" aria-hidden="true"><span class="chip">컨셉 초안</span><span class="chip">후속 초안</span><span class="chip">꿈식자 직접 기획</span></span>
+        <span class="open-label">세부 내용 보기 →</span>
+      </button>
+
+      <button class="role-card development" type="button" data-role="development" aria-haspopup="dialog">
+        <span class="card-index">03 · DEVELOPMENT</span>
+        <h2>개발 업무</h2>
+        <p>AI부터 튜토리얼, 입력·UI 피드백까지 실제 플레이에 필요한 기능을 구현하고 안정화했습니다.</p>
+        <span class="chips" aria-hidden="true"><span class="chip">Enemy AI</span><span class="chip">Tutorial</span><span class="chip">UI·VFX</span></span>
+        <span class="open-label">세부 내용 보기 →</span>
+      </button>
+    </section>
+
+    <footer class="page-foot"><span>카드를 클릭해 상세 업무를 확인하세요</span><span class="page-count">01 / 03 · OVERVIEW</span></footer>
+  </main>
+
+  <div class="modal-layer" id="modal-layer" aria-hidden="true">
+    <article class="detail" id="detail" role="dialog" aria-modal="true" aria-labelledby="detail-title" data-kind="pm">
+      <header class="detail-head">
+        <p class="detail-kicker" id="detail-kicker"></p>
+        <h2 class="detail-title" id="detail-title"></h2>
+      </header>
+      <button class="close" id="close" type="button" aria-label="상세 내용 닫기">×</button>
+      <div class="detail-scroll" id="detail-scroll"></div>
+    </article>
+  </div>
+
+  <template id="content-pm">
+    <p class="detail-intro">PM 역할의 핵심 결과물은 팀 REMnants의 Notion 운영 허브입니다. 전체 일정이 주별 목표와 하루 업무로 구체화되고, 팀원들의 실행 기록이 다시 주간 판단과 다음 일정으로 반영되는 하나의 업무지도를 목표로 정보 구조를 직접 설계하고 운영했습니다.</p>
+
+    <div class="evidence-hero">
+      <a class="evidence-link" href="../images/PM_Notion_WorkMap.png" target="_blank" rel="noopener noreferrer">
+        <img src="../images/PM_Notion_WorkMap.png" alt="전체 일정표부터 일일 개발일지와 주간 개발일지, 다음 일정 조정으로 이어지는 팀 업무지도">
+        <span class="evidence-caption"><span>Notion으로 구축한 순환형 팀 업무지도</span><span>이미지 확대 ↗</span></span>
+      </a>
+    </div>
+    <div class="evidence-pair">
+      <a class="evidence-link" href="../images/PM_Project_Timeline.png" target="_blank" rel="noopener noreferrer">
+        <img src="../images/PM_Project_Timeline.png" alt="기획부터 최종 발표까지의 팀 전체 일정">
+        <span class="evidence-caption"><span>전체 일정 타임라인</span><span>확대 ↗</span></span>
+      </a>
+      <a class="evidence-link" href="../images/PM_Weekly_Milestones.png" target="_blank" rel="noopener noreferrer">
+        <img src="../images/PM_Weekly_Milestones.png" alt="주차별 목표와 완료 조건을 정리한 마일스톤">
+        <span class="evidence-caption"><span>주별 마일스톤·판정 기준</span><span>확대 ↗</span></span>
+      </a>
+    </div>
+
+    <p class="section-label">직접 설계·구축한 운영 구조</p>
+    <div class="work-grid">
+      <section class="work-item"><span class="badge">계획 구조</span><h3>전체 일정 → 주별 → 일별</h3><p>프로젝트 전체 단계를 주별 목표와 완료 조건으로 나누고, 다시 팀원이 수행할 하루 단위 작업까지 연결했습니다.</p></section>
+      <section class="work-item"><span class="badge">실행 기록</span><h3>팀원별 일일 개발일지</h3><p>완료 작업, 발생 이슈와 다음 작업이 매일 축적되어 다른 팀원의 실제 진행 상태를 확인할 수 있도록 구성했습니다.</p></section>
+      <section class="work-item"><span class="badge">주간 취합</span><h3>PM 주간 개발일지</h3><p>팀원들의 일일 기록을 취합해 주간 성과, 완료·이월 항목과 다음 주 우선순위를 정리했습니다.</p></section>
+      <section class="work-item"><span class="badge">정보 통합</span><h3>문서·회의·빌드 중앙화</h3><p>스크럼과 미팅로그, 기획·개발 문서 보드, 저장소와 P0·알파·베타 빌드 링크를 하나의 운영 허브에 통합했습니다.</p></section>
+    </div>
+    <div class="notice"><strong>기여 구분:</strong> 팀원들의 개별 산출물을 모두 작성했다는 의미가 아니라, 각자의 작업이 계획·실행·기록·공유·다음 판단으로 연결되도록 Notion 페이지의 정보 구조와 운영 체계를 직접 만든 업무입니다.</div>
+    <div class="impact"><strong>TEAM CONTRIBUTION</strong><p>큰 일정에서 오늘의 작업까지 같은 흐름으로 내려오고, 실제 개발 기록이 다시 다음 주 일정으로 올라가도록 만들어 팀원 간 업무 공유와 우선순위 조정을 원활하게 했습니다.</p></div>
+    <div class="detail-actions"><button class="nav-button" type="button" data-nav="development">← 개발 업무</button><a class="deep-link" href="https://app.notion.com/p/elice-track/1-REMnants-05a2bb98425783ec8446013fb847e712" target="_blank" rel="noopener noreferrer">실제 Notion 운영 허브 보기 ↗</a><button class="nav-button" type="button" data-nav="planning">기획 업무 →</button></div>
+  </template>
+
+  <template id="content-planning">
+    <p class="detail-intro">기획 업무는 결과의 성격을 구분해 표시했습니다. 캐릭터와 일부 초기 컨셉은 방향 검토를 위한 초안이며, 기존 시나리오 작업은 김남해 PD의 기획을 이어받은 후속 보완입니다. 꿈식자는 컨셉부터 행동 구조까지 직접 담당했습니다.</p>
+
+    <p class="section-label">직접 기획·설계</p>
+    <div class="work-grid">
+      <section class="work-item"><span class="badge">직접 기획</span><h3>꿈식자 세계관 컨셉</h3><p>단순한 적 몬스터가 아니라 악몽을 돌아다니며 사람의 꿈과 기억을 먹는 포식자로 정의했습니다.</p></section>
+      <section class="work-item"><span class="badge">직접 설계</span><h3>무리형 기본 적과 행동 명세</h3><p>기본 적이므로 2~3마리가 배회하며 이동 경로를 압박하도록 설계하고, 순찰·소리 조사·인지·추격·공격·어그로·복귀 흐름으로 구체화했습니다.</p></section>
+    </div>
+
+    <p class="section-label">초안 제안 · 정식 채택 여부와 구분</p>
+    <div class="work-grid">
+      <section class="work-item"><span class="badge">초안 작성</span><h3>프로토타입·컨셉 기획</h3><p>초기 기획 의도, 핵심 플레이 루프, 몬스터·캐릭터·무장·아이템·오브젝트의 연결 방향을 검토하기 위한 초안을 작성했습니다.</p></section>
+      <section class="work-item"><span class="badge">초안 작성</span><h3>캐릭터 컨셉과 원화 가이드</h3><p>캐릭터 성격·능력·대사·무장 연계와 비주얼 키워드, 색상·복식·장신구 방향을 담은 컨셉 및 원화 기획 초안을 작성했습니다.</p></section>
+      <section class="work-item"><span class="badge">후속 초안</span><h3>시나리오·프롤로그·인트로 보완</h3><p>김남해 PD의 기존 메인 시나리오와 프롤로그·인트로 기획을 이어받아 후속 초안을 보완했습니다.</p></section>
+      <section class="work-item"><span class="badge">초안 제안</span><h3>세계관과 무장 연결 방향</h3><p>꿈속 무기와 캐릭터 컨셉이 세계관 안에서 자연스럽게 연결되는 방향을 검토하고 초기 제안으로 문서화했습니다.</p></section>
+    </div>
+    <div class="notice"><strong>범위 안내:</strong> 위 초안들은 초기 방향 검토를 위해 작성된 제안이며 모두 정식 채택된 결과로 주장하지 않습니다. 꿈식자 컨셉과 행동 설계만 직접 기획하여 실제 구현까지 연결한 대표 사례로 구분합니다.</div>
+    <div class="impact"><strong>TEAM CONTRIBUTION</strong><p>추상적인 컨셉을 비교·검토할 수 있는 문서로 구체화하고, 꿈식자는 세계관의 설정을 실제 플레이 행동으로 번역했습니다.</p></div>
+    <div class="detail-actions"><button class="nav-button" type="button" data-nav="pm">← PM 업무</button><button class="nav-button" type="button" data-nav="development">개발 업무 →</button></div>
+  </template>
+
+  <template id="content-development">
+    <p class="detail-intro">기획 의도를 실제 플레이 가능한 기능으로 옮기고, 통합 과정에서 발생한 입력·상태·피드백 문제를 안정화했습니다. 에너미 AI는 대표 작업이며, 나머지는 프로젝트 전반에서 수행한 개발 기여입니다.</p>
+    <p class="section-label">주요 구현과 안정화</p>
+    <div class="work-grid">
+      <section class="work-item"><span class="badge">대표 작업</span><h3>꿈식자 에너미 AI</h3><p>랜덤 스폰과 NavMesh 순찰, 소리 조사, 인지·추격·공격, 어그로 감소, 탐색·개별 루트 복귀까지 설계·구현하고 반복 테스트로 안정화했습니다.</p></section>
+      <section class="work-item"><span class="badge">구현 담당</span><h3>튜토리얼 런타임</h3><p>CD·CP가 마련한 기획을 기반으로 JSON 단계 데이터, 안내 UI, 입력 잠금, 전투 게이트, 적 처치·상자·탈출 이벤트를 실제 진행 흐름으로 구현했습니다.</p></section>
+      <section class="work-item"><span class="badge">사용성</span><h3>튜토리얼 조작 가이드 하이라이트</h3><p>UI·월드 대상을 단계별로 강조하고, 가이드 시작·종료와 강제 종료 시 강조 상태가 함께 정리되도록 생명주기를 연결했습니다.</p></section>
+      <section class="work-item"><span class="badge">인벤토리</span><h3>장착 가능 슬롯 하이라이트</h3><p>소비 아이템과 아티팩트의 유효 장착 위치를 구분해 표시하고, 드래그 취소·UI 종료 시 강조가 남지 않도록 처리했습니다.</p></section>
+      <section class="work-item"><span class="badge">입력 안정화</span><h3>입력 누수와 병합 유실 복구</h3><p>튜토리얼·인벤토리 UI 중 공격·이동·스킬·퀵슬롯 입력을 차단하고, 팝업 종료 클릭이 총 발사로 이어지는 문제와 병합 후 입력 참조를 복구했습니다.</p></section>
+      <section class="work-item"><span class="badge">전투 피드백</span><h3>머즐 플래시·HDR VFX 보강</h3><p>발사 순간의 짧은 Light와 전용 HDR 머즐 프리팹을 연결하고, 공유 원본을 훼손하지 않는 방식으로 시각 피드백을 강화했습니다.</p></section>
+      <section class="work-item"><span class="badge">상태 안정화</span><h3>VFX 풀과 종료 상태 처리</h3><p>VFX 중복 반환을 방지하고, 게임 종료 이후 피격·시간 감소·인벤토리 입력이 계속 처리되지 않도록 상태 흐름을 보강했습니다.</p></section>
+      <section class="work-item"><span class="badge">플레이 흐름</span><h3>인트로·상자·보상 연동</h3><p>인트로 영상 재생 흐름을 검증하고, 튜토리얼의 상자 열림과 적 처치·보상 상자 이벤트를 진행 조건에 연결했습니다.</p></section>
+    </div>
+    <div class="notice"><strong>기여 구분:</strong> 튜토리얼의 원 기획은 CD·CP의 작업이며, 여기서는 송예찬이 맡은 런타임 구현과 연동 범위만 설명합니다. 총기 항목 역시 전체 발사 시스템이 아니라 머즐 발광·입력 안정화 등 실제 수정 범위로 한정합니다.</div>
+    <div class="impact"><strong>TEAM CONTRIBUTION</strong><p>하나의 기능만 개발한 것이 아니라 AI, 튜토리얼, 입력, UI와 VFX 사이의 연결 지점을 보완해 실제 시연 가능한 플레이 흐름을 만드는 데 기여했습니다.</p></div>
+    <div class="detail-actions"><button class="nav-button" type="button" data-nav="planning">← 기획 업무</button><a class="deep-link" href="[PM]송예찬_02_에너미AI_인터랙티브.html">대표 결과물 · 꿈식자 AI 보기 →</a></div>
+  </template>
+
+  <script>
+    (() => {
+      const layer = document.getElementById('modal-layer');
+      const detail = document.getElementById('detail');
+      const scroll = document.getElementById('detail-scroll');
+      const title = document.getElementById('detail-title');
+      const kicker = document.getElementById('detail-kicker');
+      const closeButton = document.getElementById('close');
+      const order = ['pm', 'planning', 'development'];
+      const labels = {
+        pm: ['01 · PROJECT MANAGEMENT', 'PM 업무'],
+        planning: ['02 · PLANNING', '기획 업무'],
+        development: ['03 · DEVELOPMENT', '개발 업무']
+      };
+      let activeRole = null;
+      let returnFocus = null;
+
+      function openRole(role) {
+        const template = document.getElementById(`content-${role}`);
+        if (!template) return;
+        activeRole = role;
+        returnFocus = document.activeElement;
+        detail.dataset.kind = role;
+        kicker.textContent = labels[role][0];
+        title.textContent = labels[role][1];
+        scroll.replaceChildren(template.content.cloneNode(true));
+        scroll.scrollTop = 0;
+        layer.classList.add('open');
+        layer.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        closeButton.focus();
+      }
+
+      function closeRole() {
+        layer.classList.remove('open');
+        layer.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        activeRole = null;
+        if (returnFocus && typeof returnFocus.focus === 'function') returnFocus.focus();
+      }
+
+      document.querySelectorAll('.role-card').forEach(card => {
+        card.addEventListener('click', () => openRole(card.dataset.role));
+      });
+
+      closeButton.addEventListener('click', closeRole);
+      layer.addEventListener('click', event => {
+        if (event.target === layer) closeRole();
+      });
+
+      scroll.addEventListener('click', event => {
+        const button = event.target.closest('[data-nav]');
+        if (button) openRole(button.dataset.nav);
+      });
+
+      document.addEventListener('keydown', event => {
+        if (!activeRole) return;
+        if (event.key === 'Escape') closeRole();
+        if (event.key === 'Tab') {
+          const focusables = detail.querySelectorAll('button, a[href]');
+          if (!focusables.length) return;
+          const first = focusables[0];
+          const last = focusables[focusables.length - 1];
+          if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+          else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+        }
+      });
+
+      // 휠은 상세 본문 스크롤에만 사용하며 카드·페이지 전환에는 사용하지 않습니다.
+      void order;
+    })();
+  </script>
+</body>
+</html>
