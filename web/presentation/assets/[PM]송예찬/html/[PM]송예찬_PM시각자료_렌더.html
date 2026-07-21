@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>송예찬 PM 운영 시각자료</title>
+  <style>
+    :root { color-scheme: dark; --bg:#050711; --panel:#0b1123; --text:#f6f7ff; --muted:#aeb8ce; --cyan:#67e7f2; --violet:#ad7cff; --gold:#f0bd78; --line:rgba(112,225,239,.22); }
+    * { box-sizing:border-box; }
+    html,body { width:100%; height:100%; margin:0; overflow:hidden; background:var(--bg); color:var(--text); font-family:Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif; }
+    body { background:radial-gradient(circle at 15% 10%,rgba(116,72,210,.16),transparent 34%),radial-gradient(circle at 88% 78%,rgba(30,166,183,.13),transparent 35%),var(--bg); }
+    .slide { position:absolute; inset:0; display:none; padding:5.2vh 5.4vw 4.6vh; }
+    .slide.active { display:block; }
+    .eyebrow { margin:0 0 1vh; color:var(--cyan); font-size:clamp(11px,1vw,16px); font-weight:800; letter-spacing:.18em; }
+    h1 { margin:0; font-size:clamp(34px,4.2vw,66px); line-height:1.08; letter-spacing:-.045em; }
+    .subtitle { margin:1.5vh 0 0; color:var(--muted); font-size:clamp(14px,1.35vw,21px); }
+    .range { color:var(--gold); font-weight:800; }
+    .timeline { position:relative; display:grid; grid-template-columns:repeat(7,1fr); gap:1vw; margin-top:8.4vh; }
+    .timeline::before { content:""; position:absolute; left:3%; right:3%; top:34px; height:2px; background:linear-gradient(90deg,var(--violet),var(--cyan),var(--gold)); box-shadow:0 0 16px rgba(103,231,242,.45); }
+    .phase { position:relative; padding-top:72px; min-width:0; }
+    .dot { position:absolute; z-index:2; top:18px; left:50%; width:32px; height:32px; transform:translateX(-50%); border:3px solid var(--cyan); border-radius:50%; background:#07121e; box-shadow:0 0 0 7px rgba(103,231,242,.08),0 0 22px rgba(103,231,242,.55); }
+    .phase.major .dot { border-color:var(--gold); box-shadow:0 0 0 7px rgba(240,189,120,.09),0 0 24px rgba(240,189,120,.55); }
+    .phase-card { height:37vh; padding:2.2vh 1.2vw; border:1px solid var(--line); border-radius:16px; background:linear-gradient(150deg,rgba(103,231,242,.065),rgba(10,16,34,.88) 45%); }
+    .phase.major .phase-card { border-color:rgba(240,189,120,.32); background:linear-gradient(150deg,rgba(240,189,120,.08),rgba(10,16,34,.9) 48%); }
+    .week { color:var(--cyan); font-size:clamp(11px,.9vw,15px); font-weight:850; letter-spacing:.09em; }
+    .phase.major .week { color:var(--gold); }
+    .phase h2 { margin:1vh 0 .7vh; font-size:clamp(17px,1.55vw,25px); line-height:1.22; letter-spacing:-.035em; }
+    .date { color:#d9e1ef; font-size:clamp(11px,.9vw,15px); font-weight:700; }
+    .phase ul { margin:1.8vh 0 0; padding-left:1.1em; color:var(--muted); font-size:clamp(11px,.92vw,15px); line-height:1.65; }
+    .foot { position:absolute; left:5.4vw; right:5.4vw; bottom:2.5vh; display:flex; justify-content:space-between; color:#75819b; font-size:clamp(10px,.8vw,13px); }
+    .foot strong { color:var(--cyan); letter-spacing:.12em; }
+
+    .week-grid { display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(2,1fr); gap:1.3vw; height:61vh; margin-top:4vh; }
+    .week-card { position:relative; overflow:hidden; padding:2.5vh 1.6vw; border:1px solid var(--line); border-radius:17px; background:rgba(10,16,34,.86); }
+    .week-card::after { content:""; position:absolute; right:-45px; bottom:-65px; width:150px; height:150px; border-radius:50%; background:var(--accent,var(--cyan)); filter:blur(58px); opacity:.14; }
+    .week-card.freeze { --accent:var(--gold); border-color:rgba(240,189,120,.36); }
+    .week-card.final { --accent:var(--violet); border-color:rgba(173,124,255,.42); }
+    .week-top { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    .week-no { color:var(--accent,var(--cyan)); font-size:clamp(12px,1vw,16px); font-weight:850; letter-spacing:.12em; }
+    .week-date { color:#8995ac; font-size:clamp(10px,.82vw,13px); font-weight:700; white-space:nowrap; }
+    .week-card h2 { margin:1.5vh 0 1vh; font-size:clamp(20px,2vw,31px); letter-spacing:-.04em; }
+    .week-card ul { margin:0; padding-left:1.15em; color:var(--muted); font-size:clamp(12px,1vw,16px); line-height:1.72; }
+    .week-card .tag { display:inline-block; margin-top:1.8vh; padding:.55vh .65vw; border:1px solid color-mix(in srgb,var(--accent,var(--cyan)) 40%,transparent); border-radius:999px; color:var(--accent,var(--cyan)); font-size:clamp(10px,.78vw,12px); font-weight:800; }
+  </style>
+</head>
+<body>
+  <section class="slide" id="timeline">
+    <p class="eyebrow">PM DELIVERABLE · PROJECT OPERATIONS TIMELINE</p>
+    <h1>팀 REMnants 전체 일정</h1>
+    <p class="subtitle"><span class="range">2026.06.11 — 07.28</span> · 기획부터 최종 발표까지 한 흐름으로 관리</p>
+    <div class="timeline">
+      <article class="phase"><span class="dot"></span><div class="phase-card"><span class="week">01 · 기획</span><h2>기획 확정</h2><span class="date">06.11 — 06.19</span><ul><li>P0 정의서 확정</li><li>기본 프로토타입</li></ul></div></article>
+      <article class="phase"><span class="dot"></span><div class="phase-card"><span class="week">02 · 구현</span><h2>코어 루프</h2><span class="date">06.22 — 06.30</span><ul><li>로비 → 인게임</li><li>결과 → 창고</li></ul></div></article>
+      <article class="phase"><span class="dot"></span><div class="phase-card"><span class="week">03 · 리소스</span><h2>제작·적용</h2><span class="date">07.01 — 07.18</span><ul><li>캐릭터·아이템·UI</li><li>맵 레벨 1차 완성</li></ul></div></article>
+      <article class="phase"><span class="dot"></span><div class="phase-card"><span class="week">04 · 안정화</span><h2>P0.5·QA</h2><span class="date">07.06 — 07.10</span><ul><li>P0 QA 진행</li><li>P0.5 명세 작성</li></ul></div></article>
+      <article class="phase major"><span class="dot"></span><div class="phase-card"><span class="week">05 · 동결</span><h2>회귀 수정</h2><span class="date">07.13 — 07.18</span><ul><li>P0.5 빌드</li><li>신규 기능 동결</li></ul></div></article>
+      <article class="phase"><span class="dot"></span><div class="phase-card"><span class="week">06 · 발표</span><h2>발표 준비</h2><span class="date">07.20 — 07.24</span><ul><li>PPT·대본·영상</li><li>백업 빌드</li></ul></div></article>
+      <article class="phase major"><span class="dot"></span><div class="phase-card"><span class="week">07 · 완료</span><h2>리허설·발표</h2><span class="date">07.27 — 07.28</span><ul><li>발표 동선·Q&amp;A</li><li>최종 발표·시연</li></ul></div></article>
+    </div>
+    <div class="foot"><span>Notion 팀 운영 허브 기반</span><strong>SONG YECHAN · PM</strong></div>
+  </section>
+
+  <section class="slide" id="weekly">
+    <p class="eyebrow">PM DELIVERABLE · WEEKLY MILESTONES</p>
+    <h1>주별 마일스톤과 판정 기준</h1>
+    <p class="subtitle">각 주차를 <span class="range">목표 · 완료 조건 · 다음 단계</span>로 연결</p>
+    <div class="week-grid">
+      <article class="week-card"><div class="week-top"><span class="week-no">1주차</span><span class="week-date">06.11—06.19</span></div><h2>기획 확정</h2><ul><li>P0 정의서와 범위 확정</li><li>기본 프로토타입 구현</li></ul><span class="tag">범위 기준 수립</span></article>
+      <article class="week-card"><div class="week-top"><span class="week-no">2—3주차</span><span class="week-date">06.22—06.30</span></div><h2>1차 구현</h2><ul><li>핵심 플레이 루프 연결</li><li>개발 티켓 배정·추적</li></ul><span class="tag">P0 코어 루프</span></article>
+      <article class="week-card"><div class="week-top"><span class="week-no">3—5주차</span><span class="week-date">07.01—07.18</span></div><h2>리소스 적용</h2><ul><li>캐릭터·아이템·UI 적용</li><li>맵 레벨 1차 완성</li></ul><span class="tag">통합 빌드 점검</span></article>
+      <article class="week-card"><div class="week-top"><span class="week-no">4주차</span><span class="week-date">07.06—07.10</span></div><h2>안정화·QA</h2><ul><li>P0 QA와 치명 버그 분류</li><li>P0.5 개발 명세 작성</li></ul><span class="tag">P0.5 판정</span></article>
+      <article class="week-card freeze"><div class="week-top"><span class="week-no">5주차</span><span class="week-date">07.13—07.18</span></div><h2>P0.5 마무리</h2><ul><li>빌드 생성·회귀 버그 수정</li><li>7월 18일 기능 동결</li></ul><span class="tag">버그 수정 중심 전환</span></article>
+      <article class="week-card"><div class="week-top"><span class="week-no">6주차</span><span class="week-date">07.20—07.24</span></div><h2>발표 준비</h2><ul><li>PPT·대본·시연 영상</li><li>최종·백업 빌드 준비</li></ul><span class="tag">시연 리스크 관리</span></article>
+      <article class="week-card final"><div class="week-top"><span class="week-no">7주차</span><span class="week-date">07.27</span></div><h2>리허설</h2><ul><li>발표 동선과 장비 점검</li><li>Q&amp;A 역할 분배</li></ul><span class="tag">실전 검증</span></article>
+      <article class="week-card final"><div class="week-top"><span class="week-no">FINAL</span><span class="week-date">07.28</span></div><h2>최종 발표</h2><ul><li>최종 발표와 게임 시연</li><li>피드백 기록</li></ul><span class="tag">프로젝트 완료</span></article>
+    </div>
+    <div class="foot"><span>일정·스크럼·개발일지·빌드를 하나의 운영 흐름으로 관리</span><strong>SONG YECHAN · PM</strong></div>
+  </section>
+  <script>
+    const selected = location.hash === '#weekly' ? 'weekly' : 'timeline';
+    document.getElementById(selected).classList.add('active');
+  </script>
+</body>
+</html>
