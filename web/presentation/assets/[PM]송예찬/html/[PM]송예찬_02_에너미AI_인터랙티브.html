@@ -351,6 +351,12 @@
       object-fit: cover;
     }
 
+    .media-frame img.diagram-asset {
+      padding: 10px;
+      object-fit: contain;
+      background: #070b16;
+    }
+
     .media-fallback {
       position: absolute;
       inset: 0;
@@ -557,7 +563,7 @@
     <p class="hover-index" id="hoverIndex"></p>
     <h2 class="hover-title" id="hoverTitle"></h2>
     <p class="hover-summary" id="hoverSummary"></p>
-    <span class="hover-action">클릭해서 상세 로직과 GIF 보기</span>
+    <span class="hover-action">클릭해서 상세 로직과 시각자료 보기</span>
   </aside>
 
   <div class="modal-layer" id="modalLayer" aria-hidden="true">
@@ -574,7 +580,7 @@
             <div class="media-fallback" id="mediaFallback">
               <div>
                 <div class="media-pulse"></div>
-                <strong>GIF 연결 대기</strong>
+                <strong>미디어 연결 대기</strong>
                 <span id="gifPath"></span>
               </div>
             </div>
@@ -591,7 +597,7 @@
         </div>
 
         <nav class="state-nav" id="stateNav" aria-label="다른 AI 상태 보기"></nav>
-        <p class="asset-note">안내된 경로에 GIF를 넣으면 새로고침 후 자동 표시됩니다. 바깥 영역이나 × 버튼을 클릭하거나 Esc를 누르면 창이 닫힙니다.</p>
+        <p class="asset-note">안내된 경로에 이미지나 GIF를 넣으면 새로고침 후 자동 표시됩니다. 바깥 영역이나 × 버튼을 클릭하거나 Esc를 누르면 창이 닫힙니다.</p>
       </div>
     </article>
   </div>
@@ -607,11 +613,12 @@
         gif: "../gifs/PM_EnemyAI_SpawnPatrol.gif"
       }, patrol: {
         index: "02 / 08 · PATROL", label: "순찰", title: "통제된 랜덤 순찰",
-        hover: "패트롤 루트로 구역을 지키면서 NavMesh 목적지와 다음 포인트를 무작위화합니다.",
-        summary: "배정된 패트롤 루트 안에서 NavMesh 목적지와 다음 포인트를 무작위화해 같은 길을 기계적으로 반복하지 않도록 설계했습니다.",
-        logic: ["배정된 루트의 현재 포인트를 순찰 기준으로 사용합니다.", "포인트 반경에서 도달 가능한 NavMesh 목적지를 무작위로 생성합니다.", "배회 횟수와 대기 시간을 무작위로 선택합니다.", "다음 인접 포인트를 무작위로 고르고 순찰을 이어갑니다."],
-        implementation: "<code>Random.insideUnitCircle</code>로 후보를 만들고 <code>NavMesh.SamplePosition</code>과 <code>NavMeshPathStatus.PathComplete</code>를 통과한 좌표만 사용합니다.",
-        gif: "../gifs/PM_EnemyAI_Patrol.gif"
+        hover: "패트롤 포인트 반경 안에서 도달 가능한 목적지를 뽑아 같은 루트에서도 매번 다른 궤적으로 순찰합니다.",
+        summary: "패트롤 포인트는 정확히 밟아야 하는 고정 좌표가 아니라 랜덤 목적지를 생성하는 기준점입니다. 루트로 활동 범위를 통제하면서 각 포인트 반경의 NavMesh에서 도달 가능한 목적지를 선택해, 같은 루트에서도 실제 순찰 궤적이 반복되지 않도록 설계했습니다.",
+        logic: ["배정된 루트의 현재 패트롤 포인트를 랜덤 순찰의 기준점으로 사용합니다.", "포인트 반경 안에서 임의 좌표를 만들고 NavMesh 위의 이동 가능한 지점으로 보정합니다.", "완전한 경로를 계산할 수 있는 후보만 목적지로 채택하고, 실패한 후보는 다시 추첨합니다.", "정해진 횟수만큼 배회한 뒤 가까운 다음 포인트 중 하나를 무작위로 골라 순찰을 이어갑니다."],
+        implementation: "<code>Random.insideUnitCircle</code>로 반경 안의 후보를 만들고 <code>NavMesh.SamplePosition</code>과 <code>NavMeshPathStatus.PathComplete</code>를 모두 통과한 좌표만 사용합니다. 그래서 루트는 통제되지만 실제 이동선은 매번 달라집니다.",
+        gif: "../images/PM_EnemyAI_RandomPatrolDiagram.png",
+        mediaType: "diagram"
       },
       detect: {
         index: "03 / 08 · PERCEPTION", label: "감지", title: "시야·소리 감지",
@@ -736,7 +743,10 @@
       detailGif.hidden = true;
       mediaFallback.hidden = false;
       gifPath.textContent = state.gif;
-      detailGif.alt = `${state.title} 게임 플레이 GIF`;
+      detailGif.classList.toggle("diagram-asset", state.mediaType === "diagram");
+      detailGif.alt = state.mediaType === "diagram"
+        ? `${state.title} 구조 다이어그램`
+        : `${state.title} 게임 플레이 GIF`;
       detailGif.onload = () => { detailGif.hidden = false; mediaFallback.hidden = true; };
       detailGif.onerror = () => { detailGif.hidden = true; mediaFallback.hidden = false; };
       detailGif.src = `${state.gif}?state=${encodeURIComponent(key)}`;
