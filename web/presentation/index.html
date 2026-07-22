@@ -1,2612 +1,681 @@
 <!DOCTYPE html>
-
 <html lang="ko">
-
 <head>
-
+<script>
+  /* 이미지 로드 실패 시 안전 처리 (인라인 onerror에서 호출) */
+  function handleImageError(img) {
+    if (img) img.style.display = 'none';
+  }
+</script>
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>침몽도시: 루시드 다이버 — 최종 발표</title>
-
-  <style>
-
-    /* ══════════════════════════════════════════════════════════
-
-     *  1. BASIC VARIABLES (디자인 토큰)
-
-     * ══════════════════════════════════════════════════════════ */
-
-    :root {
-
-      --bg-primary: #04040a;
-
-      --bg-secondary: #0a0a16;
-
-      --bg-card: rgba(14, 14, 28, 0.65);
-
-      --bg-overlay: rgba(4, 4, 10, 0.95);
-
-      
-
-      --accent-purple: #c084fc;
-
-      --accent-purple-dim: rgba(192, 132, 252, 0.15);
-
-      --accent-purple-glow: rgba(192, 132, 252, 0.4);
-
-      
-
-      --accent-teal: #2dd4bf;
-
-      --accent-teal-dim: rgba(45, 212, 191, 0.15);
-
-      --accent-teal-glow: rgba(45, 212, 191, 0.4);
-
-      
-
-      --accent-red: #f87171;
-
-      --accent-red-dim: rgba(248, 113, 113, 0.15);
-
-      
-
-      --text-primary: #f3f4f6;
-
-      --text-secondary: #9ca3af;
-
-      --text-muted: #4b5563;
-
-      
-
-      --border-subtle: rgba(255, 255, 255, 0.08);
-
-      --border-glow-teal: rgba(45, 212, 191, 0.3);
-
-      --border-glow-purple: rgba(192, 132, 252, 0.3);
-
-      
-
-      --font-stack: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-
-    }
-
-    /* ══════════════════════════════════════════════════════════
-
-     *  2. RESET & COMMON ELEMENTS (기본 초기화)
-
-     * ══════════════════════════════════════════════════════════ */
-
-    * {
-
-      box-sizing: border-box;
-
-      margin: 0;
-
-      padding: 0;
-
-      user-select: none;
-
-    }
-
-    html, body {
-
-      width: 100%;
-
-      height: 100%;
-
-      background-color: #000;
-
-      font-family: var(--font-stack);
-
-      color: var(--text-primary);
-
-      overflow: hidden;
-
-    }
-
-    /* ══════════════════════════════════════════════════════════
-
-     *  3. PRESENTATION LAYOUT (16:9 뷰포트 스케일링)
-
-     * ══════════════════════════════════════════════════════════ */
-
-    #viewport {
-
-      position: absolute;
-
-      width: 1920px;
-
-      height: 1080px;
-
-      background-color: var(--bg-primary);
-
-      background-image: 
-
-        radial-gradient(at 10% 10%, rgba(192, 132, 252, 0.08) 0px, transparent 50%),
-
-        radial-gradient(at 90% 90%, rgba(45, 212, 191, 0.05) 0px, transparent 50%);
-
-      overflow: hidden;
-
-      transform-origin: top left;
-
-      box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
-
-      border: 1px solid rgba(255, 255, 255, 0.03);
-
-    }
-
-    /* 슬라이드 래퍼 */
-
-    .scene-container {
-
-      width: 100%;
-
-      height: 100%;
-
-      position: relative;
-
-    }
-
-    .scene {
-
-      position: absolute;
-
-      top: 0;
-
-      left: 0;
-
-      width: 100%;
-
-      height: 100%;
-
-      opacity: 0;
-
-      pointer-events: none;
-
-      transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-
-      display: flex;
-
-      flex-direction: column;
-
-      padding: 80px 100px 120px 100px;
-
-      box-sizing: border-box;
-
-    }
-
-    .scene.active {
-
-      opacity: 1;
-
-      pointer-events: auto;
-
-    }
-
-    /* 마우스 좌우 이전/다음 클릭 핫스팟 */
-
-    .nav-hotspot {
-
-      position: absolute;
-
-      top: 100px;
-
-      bottom: 100px;
-
-      width: 80px;
-
-      z-index: 10;
-
-      cursor: pointer;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      opacity: 0;
-
-      transition: opacity 0.3s;
-
-      color: rgba(255, 255, 255, 0.3);
-
-      font-size: 2rem;
-
-    }
-
-    .nav-hotspot:hover {
-
-      opacity: 1;
-
-      background: linear-gradient(to right, rgba(255,255,255,0.02), transparent);
-
-    }
-
-    .nav-hotspot-left {
-
-      left: 0;
-
-    }
-
-    .nav-hotspot-right {
-
-      right: 0;
-
-      background: linear-gradient(to left, rgba(255,255,255,0.02), transparent);
-
-    }
-
-    /* ══════════════════════════════════════════════════════════
-
-     *  4. COMMON COMPONENTS (공통 UI 요소)
-
-     * ══════════════════════════════════════════════════════════ */
-
-    
-
-    /* 챕터 & 장면 제목 헤더 */
-
-    .scene-header {
-
-      margin-bottom: 40px;
-
-      border-left: 4px solid var(--accent-teal);
-
-      padding-left: 20px;
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: flex-end;
-
-    }
-
-    .scene-header h1 {
-
-      font-size: 2.8rem;
-
-      font-weight: 800;
-
-      letter-spacing: -0.03em;
-
-      background: linear-gradient(135deg, #fff 40%, var(--accent-teal) 100%);
-
-      -webkit-background-clip: text;
-
-      -webkit-text-fill-color: transparent;
-
-    }
-
-    .scene-header .subtitle {
-
-      font-size: 1.2rem;
-
-      color: var(--text-secondary);
-
-      margin-top: 5px;
-
-    }
-
-    /* 하단 정보 HUD */
-
-    .presentation-hud {
-
-      position: absolute;
-
-      bottom: 0;
-
-      left: 0;
-
-      width: 100%;
-
-      height: 80px;
-
-      background: rgba(4, 4, 10, 0.85);
-
-      backdrop-filter: blur(10px);
-
-      border-top: 1px solid var(--border-subtle);
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      padding: 0 50px;
-
-      z-index: 50;
-
-    }
-
-    .hud-left {
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 20px;
-
-      font-size: 0.9rem;
-
-      color: var(--text-secondary);
-
-    }
-
-    .hud-left .chapter-tag {
-
-      background: var(--accent-purple-dim);
-
-      color: var(--accent-purple);
-
-      padding: 3px 10px;
-
-      border-radius: 4px;
-
-      font-weight: bold;
-
-      border: 1px solid rgba(192, 132, 252, 0.2);
-
-    }
-
-    .hud-center {
-
-      font-size: 1rem;
-
-      font-weight: 600;
-
-      color: var(--text-primary);
-
-    }
-
-    .hud-right {
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 30px;
-
-    }
-
-    .hud-right .presenter-info {
-
-      font-size: 0.9rem;
-
-      color: var(--accent-teal);
-
-    }
-
-    .hud-right .hud-buttons button {
-
-      background: transparent;
-
-      border: 1px solid var(--border-subtle);
-
-      color: var(--text-secondary);
-
-      padding: 5px 12px;
-
-      border-radius: 4px;
-
-      cursor: pointer;
-
-      font-size: 0.85rem;
-
-      margin-left: 8px;
-
-      transition: all 0.2s;
-
-    }
-
-    .hud-right .hud-buttons button:hover {
-
-      color: #fff;
-
-      border-color: var(--accent-teal);
-
-      background: var(--accent-teal-dim);
-
-    }
-
-    /* 진행률 게이지 바 */
-
-    .progress-bar-container {
-
-      position: absolute;
-
-      top: 0;
-
-      left: 0;
-
-      width: 100%;
-
-      height: 4px;
-
-      background: rgba(255, 255, 255, 0.05);
-
-      z-index: 60;
-
-    }
-
-    .progress-bar-fill {
-
-      height: 100%;
-
-      background: linear-gradient(to right, var(--accent-purple), var(--accent-teal));
-
-      width: 0%;
-
-      transition: width 0.3s ease;
-
-    }
-
-    /* 글래스모피즘 카드 박스 */
-
-    .glass-card {
-
-      background: var(--bg-card);
-
-      border: 1px solid var(--border-subtle);
-
-      border-radius: 12px;
-
-      padding: 30px;
-
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-
-      backdrop-filter: blur(10px);
-
-    }
-
-    /* 미디어 에러 박스 */
-
-    .media-error-box {
-
-      width: 100%;
-
-      height: 100%;
-
-      background: rgba(20, 20, 35, 0.8);
-
-      border: 2px dashed rgba(255, 255, 255, 0.1);
-
-      border-radius: 8px;
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-
-      justify-content: center;
-
-      color: var(--text-secondary);
-
-      font-size: 0.95rem;
-
-      gap: 15px;
-
-      padding: 20px;
-
-      text-align: center;
-
-    }
-
-    .media-error-box svg {
-
-      width: 48px;
-
-      height: 48px;
-
-      stroke: var(--text-muted);
-
-    }
-
-    .media-error-filename {
-
-      font-family: monospace;
-
-      color: var(--accent-red);
-
-      background: rgba(248, 113, 113, 0.1);
-
-      padding: 4px 8px;
-
-      border-radius: 4px;
-
-    }
-
-    /* ══════════════════════════════════════════════════════════
-
-     *  5. CHAPTER SPECIFIC STYLES (장면별 개별 스타일)
-
-     * ══════════════════════════════════════════════════════════ */
-
-    
-
-    /* ── Chapter 00. Opening ── */
-
-    .opening-terminal {
-
-      width: 100%;
-
-      height: 100%;
-
-      background: #020205;
-
-      font-family: monospace;
-
-      color: #00ffcc;
-
-      padding: 50px;
-
-      border: 1px solid rgba(0, 255, 200, 0.15);
-
-      border-radius: 8px;
-
-      display: flex;
-
-      flex-direction: column;
-
-      justify-content: space-between;
-
-      box-shadow: inset 0 0 30px rgba(0,255,200,0.05);
-
-    }
-
-    .terminal-output {
-
-      font-size: 1.2rem;
-
-      line-height: 1.8;
-
-      overflow-y: auto;
-
-    }
-
-    .terminal-cursor {
-
-      display: inline-block;
-
-      width: 10px;
-
-      height: 20px;
-
-      background-color: #00ffcc;
-
-      animation: blink 1s infinite;
-
-      vertical-align: middle;
-
-    }
-
-    .terminal-action {
-
-      text-align: center;
-
-      margin-top: 30px;
-
-      opacity: 0;
-
-      transition: opacity 1s;
-
-    }
-
-    .btn-terminal {
-
-      background: transparent;
-
-      border: 2px solid #00ffcc;
-
-      color: #00ffcc;
-
-      padding: 15px 40px;
-
-      font-size: 1.3rem;
-
-      cursor: pointer;
-
-      font-family: monospace;
-
-      font-weight: bold;
-
-      transition: all 0.3s;
-
-      box-shadow: 0 0 15px rgba(0, 255, 200, 0.2);
-
-    }
-
-    .btn-terminal:hover {
-
-      background: #00ffcc;
-
-      color: #020205;
-
-      box-shadow: 0 0 25px rgba(0, 255, 200, 0.5);
-
-    }
-
-    .opening-title-scene {
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-
-      justify-content: center;
-
-      text-align: center;
-
-      height: 100%;
-
-      position: relative;
-
-    }
-
-    .opening-logo {
-
-      font-size: 5rem;
-
-      font-weight: 900;
-
-      letter-spacing: -0.04em;
-
-      background: linear-gradient(135deg, #fff, var(--accent-purple), var(--accent-teal));
-
-      -webkit-background-clip: text;
-
-      -webkit-text-fill-color: transparent;
-
-      margin-bottom: 20px;
-
-      animation: titleGlow 4s infinite alternate;
-
-    }
-
-    .opening-slogan {
-
-      font-size: 1.8rem;
-
-      color: var(--text-secondary);
-
-      margin-bottom: 50px;
-
-      letter-spacing: 0.1em;
-
-    }
-
-    .opening-team {
-
-      font-size: 1.1rem;
-
-      color: var(--text-muted);
-
-      letter-spacing: 0.2em;
-
-    }
-
-    /* ── Chapter 01. Overview ── */
-
-    .overview-layout {
-
-      display: grid;
-
-      grid-template-columns: 1fr 1.2fr;
-
-      gap: 50px;
-
-      flex: 1;
-
-      align-items: center;
-
-    }
-
-    .log-terminal {
-
-      background: rgba(8, 8, 18, 0.9);
-
-      border: 1px solid var(--border-subtle);
-
-      border-radius: 8px;
-
-      padding: 30px;
-
-      height: 480px;
-
-      font-family: monospace;
-
-      font-size: 1rem;
-
-      color: var(--text-secondary);
-
-      line-height: 2;
-
-      overflow-y: auto;
-
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-
-    }
-
-    .log-line {
-
-      opacity: 0;
-
-      transform: translateY(10px);
-
-      transition: all 0.3s;
-
-    }
-
-    .log-line.show {
-
-      opacity: 1;
-
-      transform: translateY(0);
-
-    }
-
-    .log-line .label {
-
-      color: var(--accent-teal);
-
-      margin-right: 10px;
-
-    }
-
-    .log-line .value {
-
-      color: #fff;
-
-      font-weight: bold;
-
-    }
-
-    .overview-pillars {
-
-      display: flex;
-
-      flex-direction: column;
-
-      gap: 20px;
-
-    }
-
-    .pillar-card {
-
-      padding: 20px 30px;
-
-      background: var(--bg-card);
-
-      border: 1px solid var(--border-subtle);
-
-      border-radius: 8px;
-
-      opacity: 0;
-
-      transform: translateX(30px);
-
-      transition: all 0.5s ease-out;
-
-    }
-
-    .pillar-card.show {
-
-      opacity: 1;
-
-      transform: translateX(0);
-
-    }
-
-    .pillar-card h3 {
-
-      font-size: 1.3rem;
-
-      color: var(--accent-purple);
-
-      margin-bottom: 8px;
-
-    }
-
-    /* ── Chapter 02. Design Challenge ── */
-
-    .challenge-grid {
-
-      display: grid;
-
-      grid-template-columns: 1fr 120px 1fr;
-
-      gap: 20px;
-
-      flex: 1;
-
-      align-items: center;
-
-    }
-
-    .challenge-pane {
-
-      height: 450px;
-
-      display: flex;
-
-      flex-direction: column;
-
-      justify-content: center;
-
-      align-items: center;
-
-      text-align: center;
-
-      padding: 40px;
-
-      position: relative;
-
-    }
-
-    .challenge-pane h2 {
-
-      font-size: 1.8rem;
-
-      margin-bottom: 20px;
-
-    }
-
-    .challenge-pane--subculture {
-
-      border-right: 1px dashed rgba(255,255,255,0.08);
-
-      color: var(--accent-purple);
-
-    }
-
-    .challenge-pane--extraction {
-
-      border-left: 1px dashed rgba(255,255,255,0.08);
-
-      color: var(--accent-teal);
-
-    }
-
-    .challenge-center {
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-
-      justify-content: center;
-
-      position: relative;
-
-    }
-
-    .conflict-node {
-
-      width: 90px;
-
-      height: 90px;
-
-      border-radius: 50%;
-
-      background: var(--bg-secondary);
-
-      border: 2px solid var(--accent-red);
-
-      color: var(--accent-red);
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      font-size: 1.8rem;
-
-      font-weight: 900;
-
-      z-index: 2;
-
-      box-shadow: 0 0 20px var(--accent-red-dim);
-
-      transition: all 0.5s;
-
-    }
-
-    .conflict-node.resolved {
-
-      border-color: var(--accent-teal);
-
-      color: var(--accent-teal);
-
-      box-shadow: 0 0 20px var(--accent-teal-dim);
-
-      transform: scale(1.1);
-
-    }
-
-    .resolution-overlay {
-
-      position: absolute;
-
-      top: 105%;
-
-      width: 480px;
-
-      left: 50%;
-
-      transform: translateX(-50%) translateY(20px);
-
-      text-align: center;
-
-      opacity: 0;
-
-      transition: all 0.5s;
-
-      pointer-events: none;
-
-    }
-
-    .resolution-overlay.show {
-
-      opacity: 1;
-
-      transform: translateX(-50%) translateY(0);
-
-      pointer-events: auto;
-
-    }
-
-    /* ── Chapter 03. Core Gameplay Loop ── */
-
-    .loop-flow-container {
-
-      display: grid;
-
-      grid-template-columns: 1.3fr 1fr;
-
-      gap: 40px;
-
-      flex: 1;
-
-      height: 100%;
-
-    }
-
-    .loop-nodes-grid {
-
-      display: flex;
-
-      flex-direction: column;
-
-      justify-content: space-around;
-
-      position: relative;
-
-      padding-left: 30px;
-
-    }
-
-    .loop-nodes-grid::before {
-
-      content: '';
-
-      position: absolute;
-
-      left: 60px;
-
-      top: 40px;
-
-      bottom: 40px;
-
-      width: 3px;
-
-      background: var(--border-subtle);
-
-      z-index: 1;
-
-    }
-
-    .loop-node-row {
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 30px;
-
-      position: relative;
-
-      z-index: 2;
-
-      cursor: pointer;
-
-    }
-
-    .loop-node-num {
-
-      width: 60px;
-
-      height: 60px;
-
-      border-radius: 50%;
-
-      background: var(--bg-secondary);
-
-      border: 2px solid var(--text-muted);
-
-      color: var(--text-muted);
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      font-weight: 800;
-
-      font-size: 1.2rem;
-
-      transition: all 0.3s;
-
-    }
-
-    .loop-node-row.active .loop-node-num {
-
-      border-color: var(--accent-teal);
-
-      color: var(--accent-teal);
-
-      background: var(--accent-teal-dim);
-
-      box-shadow: 0 0 15px var(--accent-teal-dim);
-
-      transform: scale(1.1);
-
-    }
-
-    .loop-node-text {
-
-      font-size: 1.25rem;
-
-      font-weight: bold;
-
-      color: var(--text-secondary);
-
-      transition: color 0.3s;
-
-    }
-
-    .loop-node-row.active .loop-node-text {
-
-      color: #fff;
-
-    }
-
-    .loop-info-pane {
-
-      display: flex;
-
-      flex-direction: column;
-
-      justify-content: space-between;
-
-      padding: 20px;
-
-    }
-
-    .loop-route-toggle {
-
-      display: flex;
-
-      gap: 15px;
-
-      margin-top: 30px;
-
-    }
-
-    .btn-route {
-
-      flex: 1;
-
-      padding: 12px;
-
-      border: 1px solid var(--border-subtle);
-
-      background: var(--bg-card);
-
-      color: var(--text-secondary);
-
-      font-weight: bold;
-
-      border-radius: 6px;
-
-      cursor: pointer;
-
-      transition: all 0.3s;
-
-    }
-
-    .btn-route--success:hover, .btn-route--success.active {
-
-      border-color: var(--accent-teal);
-
-      color: var(--accent-teal);
-
-      background: var(--accent-teal-dim);
-
-    }
-
-    .btn-route--failure:hover, .btn-route--failure.active {
-
-      border-color: var(--accent-red);
-
-      color: var(--accent-red);
-
-      background: var(--accent-red-dim);
-
-    }
-
-    
-
-    /* Scene 02. Memory fragment animation */
-
-    .sync-playground {
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-
-      justify-content: center;
-
-      height: 100%;
-
-      position: relative;
-
-    }
-
-    .memory-fragments-row {
-
-      display: flex;
-
-      gap: 30px;
-
-      margin-bottom: 80px;
-
-    }
-
-    .memory-fragment-item {
-
-      width: 140px;
-
-      height: 140px;
-
-      background: var(--bg-card);
-
-      border: 1px solid var(--accent-purple-dim);
-
-      border-radius: 8px;
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-
-      justify-content: center;
-
-      cursor: pointer;
-
-      transition: all 0.3s;
-
-      position: relative;
-
-    }
-
-    .memory-fragment-item:hover {
-
-      border-color: var(--accent-purple);
-
-      box-shadow: 0 0 20px var(--accent-purple-dim);
-
-      transform: translateY(-8px);
-
-    }
-
-    .memory-fragment-item svg {
-
-      width: 48px;
-
-      height: 48px;
-
-      stroke: var(--accent-purple);
-
-      margin-bottom: 10px;
-
-    }
-
-    .sync-meter-container {
-
-      width: 500px;
-
-      background: rgba(255,255,255,0.03);
-
-      border: 1px solid var(--border-subtle);
-
-      border-radius: 30px;
-
-      height: 40px;
-
-      padding: 5px;
-
-      position: relative;
-
-      overflow: hidden;
-
-    }
-
-    .sync-meter-fill {
-
-      height: 100%;
-
-      background: linear-gradient(to right, var(--accent-purple), var(--accent-teal));
-
-      width: 15%;
-
-      border-radius: 20px;
-
-      transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-
-    }
-
-    .sync-meter-label {
-
-      position: absolute;
-
-      top: 50%;
-
-      left: 50%;
-
-      transform: translate(-50%, -50%);
-
-      font-size: 0.95rem;
-
-      font-weight: bold;
-
-      color: #fff;
-
-    }
-
-    /* ── Chapter 04. World & Narrative ── */
-
-    .lore-deck {
-
-      display: grid;
-
-      grid-template-columns: repeat(4, 1fr);
-
-      gap: 25px;
-
-      flex: 1;
-
-      align-items: center;
-
-    }
-
-    .lore-card {
-
-      height: 480px;
-
-      cursor: pointer;
-
-      perspective: 1000px;
-
-    }
-
-    .lore-card-inner {
-
-      width: 100%;
-
-      height: 100%;
-
-      position: relative;
-
-      transform-style: preserve-3d;
-
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-
-    }
-
-    .lore-card.flipped .lore-card-inner {
-
-      transform: rotateY(180deg);
-
-    }
-
-    .lore-card-front, .lore-card-back {
-
-      position: absolute;
-
-      width: 100%;
-
-      height: 100%;
-
-      backface-visibility: hidden;
-
-      border-radius: 12px;
-
-      border: 1px solid var(--border-subtle);
-
-      padding: 35px 25px;
-
-      display: flex;
-
-      flex-direction: column;
-
-      justify-content: space-between;
-
-    }
-
-    .lore-card-front {
-
-      background: linear-gradient(to bottom, #111122, #070710);
-
-      color: var(--accent-teal);
-
-    }
-
-    .lore-card-back {
-
-      background: #0c0c1b;
-
-      transform: rotateY(180deg);
-
-      color: var(--text-primary);
-
-    }
-
-    .lore-card h3 {
-
-      font-size: 1.5rem;
-
-      font-weight: 800;
-
-    }
-
-    .lore-card p {
-
-      font-size: 0.95rem;
-
-      line-height: 1.6;
-
-      color: var(--text-secondary);
-
-    }
-
-    /* ── Chapter 05. UI & Direction ── */
-
-    .comparison-container {
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-
-      gap: 30px;
-
-      flex: 1;
-
-      justify-content: center;
-
-    }
-
-    .comparison-frame {
-
-      width: 900px;
-
-      height: 506px;
-
-      position: relative;
-
-      border-radius: 8px;
-
-      overflow: hidden;
-
-      border: 1px solid var(--border-subtle);
-
-    }
-
-    .comparison-img {
-
-      position: absolute;
-
-      width: 100%;
-
-      height: 100%;
-
-      object-fit: cover;
-
-    }
-
-    .comparison-img--after {
-
-      clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
-
-      transition: clip-path 0.1s linear;
-
-    }
-
-    .comparison-slider {
-
-      position: absolute;
-
-      top: 0;
-
-      bottom: 0;
-
-      left: 50%;
-
-      width: 4px;
-
-      background: var(--accent-teal);
-
-      z-index: 5;
-
-      cursor: ew-resize;
-
-      transform: translateX(-50%);
-
-    }
-
-    .comparison-slider::after {
-
-      content: '◀ ▶';
-
-      position: absolute;
-
-      top: 50%;
-
-      left: 50%;
-
-      transform: translate(-50%, -50%);
-
-      background: var(--accent-teal);
-
-      color: #000;
-
-      width: 40px;
-
-      height: 40px;
-
-      border-radius: 50%;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      font-weight: bold;
-
-      font-size: 0.75rem;
-
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-
-    }
-
-    .ui-simulator {
-
-      display: grid;
-
-      grid-template-columns: 200px 1fr;
-
-      gap: 30px;
-
-      flex: 1;
-
-      height: 480px;
-
-    }
-
-    .simulator-nav {
-
-      display: flex;
-
-      flex-direction: column;
-
-      gap: 12px;
-
-    }
-
-    .btn-sim-tab {
-
-      background: var(--bg-card);
-
-      border: 1px solid var(--border-subtle);
-
-      color: var(--text-secondary);
-
-      padding: 15px;
-
-      border-radius: 6px;
-
-      cursor: pointer;
-
-      text-align: left;
-
-      font-weight: bold;
-
-      transition: all 0.3s;
-
-    }
-
-    .btn-sim-tab.active {
-
-      border-color: var(--accent-purple);
-
-      color: var(--accent-purple);
-
-      background: var(--accent-purple-dim);
-
-    }
-
-    .simulator-display {
-
-      background: #020206;
-
-      border: 1px solid var(--border-subtle);
-
-      border-radius: 8px;
-
-      padding: 40px;
-
-      position: relative;
-
-    }
-
-    .sim-panel {
-
-      display: none;
-
-      height: 100%;
-
-      flex-direction: column;
-
-      justify-content: space-between;
-
-    }
-
-    .sim-panel.active {
-
-      display: flex;
-
-    }
-
-    /* ── Chapter 12. Ending ── */
-
-    .ending-layout {
-
-      display: grid;
-
-      grid-template-columns: 1fr 1fr;
-
-      gap: 60px;
-
-      flex: 1;
-
-      align-items: center;
-
-    }
-
-    .ending-links {
-
-      display: flex;
-
-      flex-direction: column;
-
-      gap: 15px;
-
-      margin-top: 30px;
-
-    }
-
-    .ending-link-item {
-
-      padding: 15px 25px;
-
-      background: var(--bg-card);
-
-      border: 1px solid var(--border-subtle);
-
-      border-radius: 8px;
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-      color: var(--text-primary);
-
-      text-decoration: none;
-
-      font-weight: bold;
-
-      transition: all 0.3s;
-
-    }
-
-    .ending-link-item:hover {
-
-      border-color: var(--accent-teal);
-
-      background: var(--accent-teal-dim);
-
-    }
-
-    .ending-qr-box {
-
-      width: 240px;
-
-      height: 240px;
-
-      background: rgba(255,255,255,0.05);
-
-      border: 1px dashed var(--border-subtle);
-
-      border-radius: 8px;
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-
-      justify-content: center;
-
-      margin: 0 auto;
-
-    }
-
-    /* ══════════════════════════════════════════════════════════
-
-     *  6. ANIMATION (핵심 연출용 애니메이션 키프레임)
-
-     * ══════════════════════════════════════════════════════════ */
-
-    @keyframes blink {
-
-      0%, 100% { opacity: 1; }
-
-      50% { opacity: 0; }
-
-    }
-
-    @keyframes titleGlow {
-
-      from { filter: drop-shadow(0 0 10px rgba(192, 132, 252, 0.2)); }
-
-      to { filter: drop-shadow(0 0 25px rgba(45, 212, 191, 0.4)); }
-
-    }
-
-    /* ── 7. RESPONSIVE / DEBUG / PRESENTATION UTILS ── */
-
-    
-
-    /* 챕터 네비게이션 팝업 메뉴 */
-
-    .chapter-menu-overlay {
-
-      position: absolute;
-
-      inset: 0;
-
-      background: var(--bg-overlay);
-
-      z-index: 100;
-
-      opacity: 0;
-
-      pointer-events: none;
-
-      transition: opacity 0.3s;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      padding: 80px 150px;
-
-    }
-
-    .chapter-menu-overlay.active {
-
-      opacity: 1;
-
-      pointer-events: auto;
-
-    }
-
-    .chapter-menu-grid {
-
-      display: grid;
-
-      grid-template-columns: repeat(4, 1fr);
-
-      gap: 30px;
-
-      max-width: 1400px;
-
-      width: 100%;
-
-    }
-
-    .chapter-menu-group h3 {
-
-      font-size: 1.1rem;
-
-      color: var(--accent-purple);
-
-      border-bottom: 1px solid var(--border-subtle);
-
-      padding-bottom: 8px;
-
-      margin-bottom: 12px;
-
-    }
-
-    .chapter-menu-list {
-
-      display: flex;
-
-      flex-direction: column;
-
-      gap: 8px;
-
-    }
-
-    .btn-menu-jump {
-
-      background: transparent;
-
-      border: none;
-
-      color: var(--text-secondary);
-
-      font-size: 0.9rem;
-
-      text-align: left;
-
-      cursor: pointer;
-
-      padding: 4px 8px;
-
-      border-radius: 4px;
-
-      transition: all 0.2s;
-
-      white-space: nowrap;
-
-      overflow: hidden;
-
-      text-overflow: ellipsis;
-
-    }
-
-    .btn-menu-jump:hover {
-
-      color: var(--accent-teal);
-
-      background: rgba(255,255,255,0.03);
-
-    }
-
-    .btn-menu-jump.active {
-
-      color: #fff;
-
-      background: var(--accent-teal-dim);
-
-      font-weight: bold;
-
-    }
-
-    /* 대본 슬라이드 패널 */
-
-    .presenter-notes-panel {
-
-      position: absolute;
-
-      bottom: 80px;
-
-      left: 100px;
-
-      right: 100px;
-
-      background: rgba(10, 10, 22, 0.95);
-
-      border: 1px solid var(--accent-purple-dim);
-
-      border-bottom: none;
-
-      border-radius: 12px 12px 0 0;
-
-      padding: 25px 40px;
-
-      box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
-
-      z-index: 45;
-
-      transform: translateY(105%);
-
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-
-    }
-
-    .presenter-notes-panel.active {
-
-      transform: translateY(0);
-
-    }
-
-    .notes-header {
-
-      font-size: 0.85rem;
-
-      font-weight: bold;
-
-      color: var(--accent-purple);
-
-      margin-bottom: 10px;
-
-      text-transform: uppercase;
-
-      letter-spacing: 0.05em;
-
-    }
-
-    .notes-body {
-
-      font-size: 1.05rem;
-
-      line-height: 1.7;
-
-      color: var(--text-secondary);
-
-    }
-
-    /* 디버그 오버레이 */
-
-    .debug-overlay {
-
-      position: absolute;
-
-      top: 20px;
-
-      left: 20px;
-
-      background: rgba(0, 0, 0, 0.85);
-
-      border: 1px solid var(--accent-red-dim);
-
-      border-radius: 6px;
-
-      padding: 15px;
-
-      z-index: 99;
-
-      font-family: monospace;
-
-      font-size: 0.8rem;
-
-      pointer-events: none;
-
-      display: none;
-
-      color: var(--accent-red);
-
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-
-    }
-
-    .debug-overlay.active {
-
-      display: block;
-
-    }
-
-    .debug-overlay table {
-
-      border-collapse: collapse;
-
-    }
-
-    .debug-overlay td {
-
-      padding: 3px 10px;
-
-    }
-
-    .debug-badge {
-
-      display: inline-block;
-
-      padding: 2px 6px;
-
-      border-radius: 3px;
-
-      font-weight: bold;
-
-      font-size: 0.7rem;
-
-    }
-
-    .debug-badge--core { background: var(--accent-purple-dim); color: var(--accent-purple); }
-
-    .debug-badge--demo { background: var(--accent-teal-dim); color: var(--accent-teal); }
-
-  </style>
-
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
   <!-- 메인 16:9 슬라이드 컨테이너 -->
-
   <div id="viewport">
-
-    
-
     <!-- 진행률 상단 게이지 -->
-
     <div class="progress-bar-container">
-
       <div id="progressBar" class="progress-bar-fill"></div>
-
     </div>
-
     <!-- 이전/다음 핫스팟 클릭 영역 -->
-
     <div class="nav-hotspot nav-hotspot-left" onclick="prevScene()">◀</div>
-
     <div class="nav-hotspot nav-hotspot-right" onclick="nextScene()">▶</div>
-
     <!-- 디버그 정보 패널 -->
-
     <div id="debugOverlay" class="debug-overlay">
-
       <table>
-
         <tr><td>[SCENE INDEX]</td><td id="dbgIndex">0 / 0</td></tr>
-
         <tr><td>[CLASSIFICATION]</td><td><span id="dbgType" class="debug-badge debug-badge--core">CORE</span></td></tr>
-
         <tr><td>[PRESENTER]</td><td id="dbgPresenter">-</td></tr>
-
         <tr><td>[EST. TIME]</td><td id="dbgTime">-</td></tr>
-
         <tr><td>[TODO LIST]</td><td id="dbgTodo" style="color:#ffcc00">-</td></tr>
-
       </table>
-
     </div>
-
     <!-- 슬라이드 덱 -->
-
     <div id="sceneContainer" class="scene-container">
+<!-- ========================================= -->
 
-      
+<!-- CHAPTER 00 / SCENE 01 -->
 
-      <!-- =========================================
-
-           CHAPTER 00 / SCENE 01
-
-           오프닝: 시스템 부팅
-
-      ========================================= -->
-
-      <section class="scene" 
-
-               data-chapter="00" 
-
-               data-scene="01" 
-
-               data-type="CORE" 
-
-               data-presenter="송예찬 PM" 
-
-               data-title="시스템 부팅 시퀀스" 
-
-               data-time="1분 00초"
-
-               data-notes="[CONTENT] 오프닝 부팅 장치입니다. 콘솔 메시지가 순차적으로 표시되면 발표자가 클릭하여 루시드 커넥션을 체결합니다.">
-
-        
-
+      <section class="scene" data-chapter="00" data-scene="01" data-type="CORE" data-presenter="송예찬 PM" data-title="시스템 부팅 시퀀스" data-time="1분 00초" data-notes="[CONTENT] 오프닝 부팅 장치입니다. 콘솔 메시지가 순차적으로 표시되면 발표자가 클릭하여 루시드 커넥션을 체결합니다.">
         <div class="opening-terminal">
-
           <div class="terminal-output" id="bootTerminalOutput">
-
             <!-- JS에서 동적 출력 처리 -->
-
           </div>
-
           <div class="terminal-action" id="bootActionContainer">
-
             <button class="btn-terminal" onclick="nextScene()">[ CONNECT TO DIVER LINK ]</button>
-
           </div>
-
         </div>
 
       </section>
 
-      <!-- =========================================
+<!-- ========================================= -->
 
-           CHAPTER 00 / SCENE 02
+<!-- CHAPTER 00 / SCENE 02 -->
 
-           오프닝: 타이틀 및 슬로건
-
-      ========================================= -->
-
-      <section class="scene" 
-
-               data-chapter="00" 
-
-               data-scene="02" 
-
-               data-type="CORE" 
-
-               data-presenter="송예찬 PM" 
-
-               data-title="게임 타이틀 & 슬로건" 
-
-               data-time="1분 00초"
-
-               data-notes="[CONTENT] 메인 커버입니다. 침몽도시의 기본 서사 정체성을 띠는 슬로건을 소개하고 본 발표를 시작합니다.">
-
-        
-
+      <section class="scene" data-chapter="00" data-scene="02" data-type="CORE" data-presenter="송예찬 PM" data-title="게임 타이틀 & 슬로건" data-time="1분 00초" data-notes="[CONTENT] 메인 커버입니다. 침몽도시의 기본 서사 정체성을 띠는 슬로건을 소개하고 본 발표를 시작합니다.">
         <div class="opening-title-scene">
-
           <div class="opening-logo">침몽도시: 루시드 다이버</div>
-
           <div class="opening-slogan">다이버는 잊는다. 관제사는 기록한다. 그리고 다시, 구하러 들어간다.</div>
-
           <div class="opening-team">TEAM REMNANTS</div>
-
         </div>
 
       </section>
 
-      <!-- =========================================
+<!-- ========================================= -->
 
-           CHAPTER 01 / SCENE 01
+<!-- CHAPTER 00 / SCENE 03 -->
 
-           프로젝트 개요: 기획 프로필
-
-      ========================================= -->
-
-      <section class="scene" 
-
-               data-chapter="01" 
-
-               data-scene="01" 
-
-               data-type="CORE" 
-
-               data-presenter="송예찬 PM" 
-
-               data-title="프로젝트 프로필 개요" 
-
-               data-time="1분 30초"
-
-               data-notes="[CONTENT] 프로젝트 프로필 장치입니다. 장르, 개발 플랫폼, 엔진 등의 개요 로그가 텔레메트리 연출처럼 순차적으로 표시됩니다.">
-
-        
-
+      <section class="scene" data-chapter="00" data-scene="03" data-type="CORE" data-presenter="장수영 CP / 송예찬 PM" data-title="공식 PV 시네마틱 트레일러" data-time="1분 30초" data-notes="[CONTENT] 침몽도시: 루시드 다이버 공식 PV 영상입니다. 세계관, 캐릭터 비주얼, 오디오 및 핵심 플레이 분위기를 시네마틱 뷰어로 소개합니다.">
         <div class="scene-header">
-
           <div>
+            <h1>공식 PV 트레일러</h1>
+            <div class="subtitle">CINEMATIC TRAILER & GAME OVERVIEW</div>
+          </div>
+        </div>
+        <div class="pv-cinematic-layout">
+          <div class="pv-video-container">
+            <div class="pv-video-header">
+              <div class="pv-video-badge">
+                <span class="pv-video-dot"></span>
+                OFFICIAL PV TRAILER — ON AIR
+              </div>
+              <div>1080p | STEREO AUDIO</div>
+            </div>
+            <div class="pv-iframe-wrapper">
+              <iframe src="https://www.youtube.com/embed/UH0oJ1b-EuY?enablejsapi=1&rel=0&autoplay=0" 
+                      title="침몽도시: 루시드 다이버 공식 PV" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                      allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+          <div class="pv-info-panel">
+            <div class="pv-card">
+              <div class="pv-card-title">🎮 GAME IDENTITY</div>
+              <div class="pv-card-desc">Subculture Extraction Action RPG</div>
+            </div>
+            <div class="pv-card">
+              <div class="pv-card-title">💬 MASTER SLOGAN</div>
+              <div class="pv-card-desc">"다이버는 잊는다. 관제사는 기록한다. 그리고 다시, 구하러 들어간다."</div>
+            </div>
+            <div class="pv-highlights">
+              <div class="pv-item">
+                <span class="pv-item-icon">🌌</span>
+                <div class="pv-item-text">
+                  <strong>세계관 & 서사</strong><br>
+                  침몽도시 NDMA 관제소와 다이버 유안의 자아 복구 스토리
+                </div>
+              </div>
+              <div class="pv-item">
+                <span class="pv-item-icon">⚔️</span>
+                <div class="pv-item-text">
+                  <strong>2.5D 하이브리드 공간</strong><br>
+                  레트로 픽셀 아트 x 3D URP 실시간 공간 광원 연출
+                </div>
+              </div>
+              <div class="pv-item">
+                <span class="pv-item-icon">🎵</span>
+                <div class="pv-item-text">
+                  <strong>시청각 프로토타이핑</strong><br>
+                  58종 오디오 사운드 x AnyPortrait 2D 캐릭터 애니메이션
+                </div>
+              </div>
+            </div>
+            <a href="https://youtu.be/UH0oJ1b-EuY" target="_blank" rel="noopener noreferrer" class="pv-external-btn">
+              YOUTUBE 본편 보기 ↗
+            </a>
+          </div>
+        </div>
 
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 01 / SCENE 01 -->
+
+      <section class="scene" data-chapter="01" data-scene="01" data-type="CORE" data-presenter="송예찬 PM" data-title="프로젝트 프로필 개요" data-time="1분 30초" data-notes="[CONTENT] 프로젝트 프로필 장치입니다. 장르, 개발 플랫폼, 엔진 등의 개요 로그가 텔레메트리 연출처럼 순차적으로 표시됩니다.">
+        <div class="scene-header">
+          <div>
             <h1>프로젝트 개요</h1>
-
             <div class="subtitle">PROJECT STATUS & MATRIX</div>
-
           </div>
-
         </div>
-
         <div class="overview-layout">
-
-          <div class="log-terminal" id="overviewLogTerminal">
-
-            <div class="log-line" data-delay="300"><span class="label">> GENRE:</span><span class="value">Subculture Extraction Action RPG</span></div>
-
-            <div class="log-line" data-delay="800"><span class="label">> PLATFORM:</span><span class="value">PC (Steam target)</span></div>
-
-            <div class="log-line" data-delay="1300"><span class="label">> ENGINE:</span><span class="value">Unity 2022.3.62f3 (URP)</span></div>
-
-            <div class="log-line" data-delay="1800"><span class="label">> DEV PERIOD:</span><span class="value">2026.06.11 - 2026.07.28 (approx. 7 Weeks)</span></div>
-
-            <div class="log-line" data-delay="2300"><span class="label">> CREW:</span><span class="value">Team REMnants (5 Crew members)</span></div>
-
-          </div>
-
-          
-
-          <div class="overview-pillars">
-
-            <div class="pillar-card" id="pillar1" style="transition-delay: 0.5s;">
-
-              <h3>01. 비주얼 정체성</h3>
-
-              <p>URP 툰 셰이더 기반의 독창적인 서브컬처 스타일과 꿈 세계의 어두운 비주얼 톤 매칭.</p>
-
+          <div class="overview-left-panel">
+            <!-- 연출 가미 게임 브랜드 로고 박스 -->
+            <div class="overview-logo-box">
+              <div class="overview-logo-shimmer"></div>
+              <img src="assets/공용/images/game_logo.png" alt="침몽도시: 루시드 다이버 로고" class="overview-logo-img" loading="lazy">
             </div>
-
-            <div class="pillar-card" id="pillar2" style="transition-delay: 1s;">
-
-              <h3>02. 이중 연동 시스템</h3>
-
-              <p>필드에서 플레이하는 다이버와, 전술 정보를 지시하는 관제사 간의 독창적인 정보 격차 협동.</p>
-
+            <!-- 스펙 텔레메트리 터미널 -->
+            <div class="log-terminal" id="overviewLogTerminal">
+              <div class="log-line" data-delay="300"><span class="label">> GENRE:</span><span class="value">Subculture Extraction Action RPG</span></div>
+              <div class="log-line" data-delay="800"><span class="label">> PLATFORM:</span><span class="value">PC (Steam target)</span></div>
+              <div class="log-line" data-delay="1300"><span class="label">> ENGINE:</span><span class="value">Unity 2022.3.62f3 (URP)</span></div>
+              <div class="log-line" data-delay="1800"><span class="label">> DEV PERIOD:</span><span class="value">2026.06.11 - 2026.07.28 (approx. 7 Weeks)</span></div>
+              <div class="log-line" data-delay="2300"><span class="label">> CREW:</span><span class="value">Team REMnants (5 Crew members)</span></div>
             </div>
-
           </div>
-
+          <div class="overview-content-box">
+            <!-- 1. P0 원안 기획 의도 -->
+            <div class="overview-intent-card">
+              <div class="overview-intent-title">🎯 ORIGINAL DESIGN INTENT (P0 의도)</div>
+              <div class="overview-intent-desc">
+                익스트랙션 장르의 손실 긴장감과 서브컬처 캐릭터 애착을 결합하여,<br>
+                단순한 전리품 탐색이 아닌 <strong>'다이버의 잃어버린 기억과 자아를 되찾는 서사적 루프'</strong>를 검증하고자 했습니다.
+              </div>
+            </div>
+            <!-- 2. 베타까지의 마일스톤 진화 -->
+            <div class="overview-evolution-card">
+              <div class="overview-evolution-title">🚀 MILESTONE EVOLUTION (프로젝트 진화)</div>
+              <div class="milestone-stepper">
+                <div class="milestone-step-item">
+                  <span class="milestone-badge">P0 PROTOTYPE</span>
+                  <div class="milestone-text">
+                    <strong>핵심 플레이 루프 검증</strong> — 출격·전투·탈출·정산의 기본 루프 및 두 장르의 결합 가능성 최초 증명
+                  </div>
+                </div>
+                <div class="milestone-step-item">
+                  <span class="milestone-badge">P0.5 ALPHA</span>
+                  <div class="milestone-text">
+                    <strong>세션 긴장감 & 기능 고도화</strong> — 제한시간, 탈출 채널링, FSM AI, 공간 오디오 등 핵심 시스템 수납
+                  </div>
+                </div>
+                <div class="milestone-step-item active">
+                  <span class="milestone-badge">P1 BETA</span>
+                  <div class="milestone-text">
+                    <strong>완성형 버티컬 슬라이스</strong> — URP 툰 셰이더, 손전등 시야 연출, 동조율 기반 로비 & 심상기록 컷신 통합
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
       </section>
 
-      <!-- =========================================
+<!-- ========================================= -->
 
-           CHAPTER 02 / SCENE 01
+<!-- CHAPTER 01 / SCENE 02 -->
 
-           디자인 챌린지: 모순된 구조의 융합
-
-      ========================================= -->
-
-      <section class="scene" 
-
-               data-chapter="02" 
-
-               data-scene="01" 
-
-               data-type="CORE" 
-
-               data-presenter="송예찬 PM" 
-
-               data-title="장르 모순과 해결책" 
-
-               data-time="2분 00초"
-
-               data-notes="[CONTENT] 캐릭터 애착을 지녀야 하는 서브컬처 게임의 특성과, 사망 시 손실 위험을 안는 익스트랙션의 상반된 장르 모순을 해결하는 '심상 동조율' 구조를 설명합니다.">
-
-        
-
+      <section class="scene" data-chapter="01" data-scene="02" data-type="CORE" data-presenter="송예찬 PM / Team REMnants" data-title="팀원 관제사 크루 쇼케이스" data-time="1분 30초" data-notes="[CONTENT] 프로젝트를 구축한 5명의 NDMA 관제사 크루를 소개합니다. 카드를 클릭하면 3D로 뒤집어지며 각 직군별 상세 R&R과 대표 기여 요약을 확인할 수 있습니다.">
         <div class="scene-header">
-
           <div>
+            <h1>크루 쇼케이스</h1>
+            <div class="subtitle">TEAM REMNANTS 5 CONTROL OFFICERS</div>
+          </div>
+        </div>
+        <div class="crew-showcase-container">
+          <div class="crew-hint-bar">
+            <div><strong>NDMA CONTROL CENTER:</strong> 5명의 관제사가 각각의 전문 영역을 담당하고 있습니다.</div>
+            <div>💡 <strong>TIP:</strong> 카드를 클릭하면 3D로 뒤집히며 상세 R&R 및 발표 챕터를 확인할 수 있습니다.</div>
+          </div>
+          <div class="crew-deck-grid">
+            <!-- 1. 장수영 CP -->
+            <div class="crew-card-wrapper" onclick="toggleCrewFlip(this)">
+              <div class="crew-card-inner">
+                <div class="crew-card-front">
+                  <div class="crew-card-img-box">
+                    <img src="assets/공용/images/CP_장수영.png" alt="CP 장수영" loading="lazy">
+                  </div>
+                  <div class="crew-card-front-info">
+                    <span class="crew-role-badge">CP — CONTENT PRODUCER</span>
+                    <div class="crew-name">장수영</div>
+                    <div class="crew-flip-btn-hint">↺ Click to View Details</div>
+                  </div>
+                </div>
+                <div class="crew-card-back">
+                  <div class="crew-back-header">
+                    <div class="crew-back-role">CONTENT PRODUCER</div>
+                    <div class="crew-back-name">장수영 (관제사)</div>
+                  </div>
+                  <div class="crew-back-body">
+                    <div class="crew-back-sec-title">🎯 핵심 R&R & 담당 파트</div>
+                    <div class="crew-back-text">
+                      프로젝트 총괄 결정권자 & 서사·세계관·레벨 디자인 원작자. 
+                      AnyPortrait 2D 캐릭터 리깅, 58종 SFX/BGM 오디오 원작 제작.
+                    </div>
+                    <div class="crew-back-sec-title">📌 대표 기여 작업</div>
+                    <div class="crew-back-tags">
+                      <span class="crew-tag">핵심 루프 설계</span>
+                      <span class="crew-tag">동조율/심상기록</span>
+                      <span class="crew-tag">AnyPortrait 리깅</span>
+                      <span class="crew-tag">58종 SFX/BGM</span>
+                      <span class="crew-tag">SSOT 총괄</span>
+                    </div>
+                  </div>
+                  <div class="crew-back-footer">
+                    PRESENTATION: Ch 00, 01, 02 (전담) ↗
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 2. 우성혁 CD -->
+            <div class="crew-card-wrapper" onclick="toggleCrewFlip(this)">
+              <div class="crew-card-inner">
+                <div class="crew-card-front">
+                  <div class="crew-card-img-box">
+                    <img src="assets/공용/images/CD_우성혁.png" alt="CD 우성혁" loading="lazy">
+                  </div>
+                  <div class="crew-card-front-info">
+                    <span class="crew-role-badge">CD — CONTENT DESIGNER</span>
+                    <div class="crew-name">우성혁</div>
+                    <div class="crew-flip-btn-hint">↺ Click to View Details</div>
+                  </div>
+                </div>
+                <div class="crew-card-back">
+                  <div class="crew-back-header">
+                    <div class="crew-back-role">CONTENT DESIGNER</div>
+                    <div class="crew-back-name">우성혁 (관제사)</div>
+                  </div>
+                  <div class="crew-back-body">
+                    <div class="crew-back-sec-title">🎯 핵심 R&R & 담당 파트</div>
+                    <div class="crew-back-text">
+                      시스템 기획 명세화, FSM 기반 에너미 AI 로직 구축, 결과 정산 파이프라인 및 3D 공간 오디오 연동.
+                    </div>
+                    <div class="crew-back-sec-title">📌 대표 기여 작업</div>
+                    <div class="crew-back-tags">
+                      <span class="crew-tag">에너미 FSM AI</span>
+                      <span class="crew-tag">3D 공간 오디오</span>
+                      <span class="crew-tag">결과 정산 시스템</span>
+                      <span class="crew-tag">관제 지시 명세</span>
+                    </div>
+                  </div>
+                  <div class="crew-back-footer">
+                    PRESENTATION: Ch 03 (전담) ↗
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 3. 송예찬 PM -->
+            <div class="crew-card-wrapper" onclick="toggleCrewFlip(this)">
+              <div class="crew-card-inner">
+                <div class="crew-card-front">
+                  <div class="crew-card-img-box">
+                    <img src="assets/공용/images/PM_송예찬.png" alt="PM 송예찬" loading="lazy">
+                  </div>
+                  <div class="crew-card-front-info">
+                    <span class="crew-role-badge">PM — PROJECT MANAGER</span>
+                    <div class="crew-name">송예찬</div>
+                    <div class="crew-flip-btn-hint">↺ Click to View Details</div>
+                  </div>
+                </div>
+                <div class="crew-card-back">
+                  <div class="crew-back-header">
+                    <div class="crew-back-role">PROJECT MANAGER</div>
+                    <div class="crew-back-name">송예찬 (관제사)</div>
+                  </div>
+                  <div class="crew-back-body">
+                    <div class="crew-back-sec-title">🎯 핵심 R&R & 담당 파트</div>
+                    <div class="crew-back-text">
+                      개발 일정 총괄 관리, 튜토리얼 세션 구축, 상자/체스트 기믹 및 사용자 조작 경험 개선.
+                    </div>
+                    <div class="crew-back-sec-title">📌 대표 기여 작업</div>
+                    <div class="crew-back-tags">
+                      <span class="crew-tag">일정 및 마일스톤</span>
+                      <span class="crew-tag">튜토리얼 루프</span>
+                      <span class="crew-tag">상자/체스트 기믹</span>
+                      <span class="crew-tag">UX 가이드라인</span>
+                    </div>
+                  </div>
+                  <div class="crew-back-footer">
+                    PRESENTATION: Ch 04 (전담) ↗
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 4. 김남해 PD -->
+            <div class="crew-card-wrapper" onclick="toggleCrewFlip(this)">
+              <div class="crew-card-inner">
+                <div class="crew-card-front">
+                  <div class="crew-card-img-box">
+                    <img src="assets/공용/images/PD_김남해.png" alt="PD 김남해" loading="lazy">
+                  </div>
+                  <div class="crew-card-front-info">
+                    <span class="crew-role-badge">PD — PROGRAM DIRECTOR</span>
+                    <div class="crew-name">김남해</div>
+                    <div class="crew-flip-btn-hint">↺ Click to View Details</div>
+                  </div>
+                </div>
+                <div class="crew-card-back">
+                  <div class="crew-back-header">
+                    <div class="crew-back-role">PROGRAM DIRECTOR</div>
+                    <div class="crew-back-name">김남해 (관제사)</div>
+                  </div>
+                  <div class="crew-back-body">
+                    <div class="crew-back-sec-title">🎯 핵심 R&R & 담당 파트</div>
+                    <div class="crew-back-text">
+                      침몽도시 3D 마트 공간 레벨 그래픽스, URP 툰 셰이더 & 2.5D 쿼터뷰 투과 라이팅 렌더링.
+                    </div>
+                    <div class="crew-back-sec-title">📌 대표 기여 작업</div>
+                    <div class="crew-back-tags">
+                      <span class="crew-tag">URP 툰 셰이더</span>
+                      <span class="crew-tag">쿼터뷰 시인성</span>
+                      <span class="crew-tag">손전등 라이팅</span>
+                      <span class="crew-tag">마트 레벨 디렉팅</span>
+                    </div>
+                  </div>
+                  <div class="crew-back-footer">
+                    PRESENTATION: Ch 05 (전담) ↗
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 5. 강다영 TD -->
+            <div class="crew-card-wrapper" onclick="toggleCrewFlip(this)">
+              <div class="crew-card-inner">
+                <div class="crew-card-front">
+                  <div class="crew-card-img-box">
+                    <img src="assets/공용/images/TD_강다영.png" alt="TD 강다영" loading="lazy">
+                  </div>
+                  <div class="crew-card-front-info">
+                    <span class="crew-role-badge">TD — TECHNICAL DIRECTOR</span>
+                    <div class="crew-name">강다영</div>
+                    <div class="crew-flip-btn-hint">↺ Click to View Details</div>
+                  </div>
+                </div>
+                <div class="crew-card-back">
+                  <div class="crew-back-header">
+                    <div class="crew-back-role">TECHNICAL DIRECTOR</div>
+                    <div class="crew-back-name">강다영 (관제사)</div>
+                  </div>
+                  <div class="crew-back-body">
+                    <div class="crew-back-sec-title">🎯 핵심 R&R & 담당 파트</div>
+                    <div class="crew-back-text">
+                      클라이언트 코어 인프라 구축, 인벤토리 & 창고 시스템, VFX 오브젝트 풀링 및 QA 안정화.
+                    </div>
+                    <div class="crew-back-sec-title">📌 대표 기여 작업</div>
+                    <div class="crew-back-tags">
+                      <span class="crew-tag">인벤토리/창고</span>
+                      <span class="crew-tag">VFX 오브젝트 풀링</span>
+                      <span class="crew-tag">클라이언트 구조</span>
+                      <span class="crew-tag">QA 버그 트래킹</span>
+                    </div>
+                  </div>
+                  <div class="crew-back-footer">
+                    PRESENTATION: Ch 06 (전담) ↗
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 02 / SCENE 01 -->
+
+      <section class="scene" data-chapter="02" data-scene="01" data-type="CORE" data-presenter="CP 장수영" data-title="장르 모순과 해결책" data-time="2분 00초" data-notes="[CONTENT] 캐릭터 애착을 지녀야 하는 서브컬처 게임의 특성과, 사망 시 손실 위험을 안는 익스트랙션의 상반된 장르 모순을 해결하는 '심상 동조율' 구조를 설명합니다.">
+        <!-- 마우스 위치 반응형 듀얼 배경 -->
+        <div class="challenge-dual-bg" id="challengeDualBg">
+          <div class="challenge-bg-layer challenge-bg--subculture" id="bgSubculture"></div>
+          <div class="challenge-bg-layer challenge-bg--extraction" id="bgExtraction"></div>
+          <div class="challenge-bg-layer challenge-bg--resolved" id="bgResolved"></div>
+          <div class="challenge-bg-vignette"></div>
+        </div>
+        <div class="scene-header" style="position:relative; z-index:2;">
+          <div>
             <h1>디자인 챌린지</h1>
-
             <div class="subtitle">THE GENRE INTEGRATION CONFLICT</div>
-
           </div>
-
         </div>
-
-        <div class="challenge-grid">
-
+        <div class="challenge-quote" style="position:relative; z-index:2; text-align:center; margin-bottom: 10px;">
+          <p style="font-size: 1.15rem; color: rgba(220, 220, 230, 0.95); line-height: 1.8; letter-spacing: 0.02em; text-shadow: 0 1px 8px rgba(0,0,0,0.6);">
+            캐릭터를 수집하고 육성하는 <span style="color: var(--accent-purple);">서브컬처</span>와,
+            실패하면 모든 것을 잃는 <span style="color: var(--accent-teal);">익스트랙션</span>은 물과 기름과 같다.
+          </p>
+          <p style="font-size: 1.3rem; color: var(--text-primary); font-weight: 700; margin-top: 8px;">
+            "잃어야 하는 장르"와 "잃어선 안 되는 장르"를 어떻게 결합할 것인가?
+          </p>
+        </div>
+        <div class="challenge-grid" style="position:relative; z-index:2;">
           <div class="glass-card challenge-pane challenge-pane--subculture">
-
             <h2>서브컬처 수집형</h2>
-
             <p>캐릭터에 깊은 감정적 유대를 가짐.<br>영구 소실이나 사망 패널티에 극도로 취약함.</p>
-
           </div>
-
-          
-
           <div class="challenge-center">
-
             <div id="conflictNode" class="conflict-node">?</div>
-
           </div>
-
           <div class="glass-card challenge-pane challenge-pane--extraction">
-
             <h2>익스트랙션</h2>
-
             <p>탈출 실패 시 아이템/기억 영구 손실.<br>손실의 공포에서 비롯되는 극한의 쾌감.</p>
-
           </div>
-
         </div>
-
-        <div class="resolution-overlay" id="resolutionOverlay">
-
+        <div class="resolution-overlay" id="resolutionOverlay" style="z-index:3;">
           <div class="glass-card" style="border-color: var(--accent-teal);">
-
             <h3 style="color: var(--accent-teal); font-size: 1.4rem; margin-bottom: 10px;">[해결책] 심상 동조 및 억제 시스템</h3>
-
             <p style="font-size: 1rem; line-height: 1.6;">
-
               캐릭터가 사망하더라도 영구 소실되지 않고 <strong>'강제 각성(Forced Awakening)'</strong>으로 귀환합니다.<br>
-
               대신 침몽도시에 남겨진 다이버 본래의 <strong>'기억 파편'</strong>을 회수하지 못해 자아 복구 및 동조율 상승이 지연되는 간접적 패널티를 취합니다.
-
             </p>
-
           </div>
-
         </div>
 
       </section>
 
-      <!-- =========================================
+<!-- ========================================= -->
 
-           CHAPTER 03 / SCENE 01
+<!-- CHAPTER 03 / SCENE 01 -->
 
-           핵심 플레이 루프: 분기 시뮬레이션
-
-      ========================================= -->
-
-      <section class="scene" 
-
-               data-chapter="03" 
-
-               data-scene="01" 
-
-               data-type="CORE" 
-
-               data-presenter="송예찬 PM" 
-
-               data-title="인터랙티브 플레이 루프" 
-
-               data-time="3분 00초"
-
-               data-notes="[CONTENT] 기획의 핵심 플레이 루프를 5단계 단계별 강조와 함께 시연합니다. 성공 루트와 실패 루트 클릭에 따라 분기 연출을 보여줄 수 있습니다.">
-
-        
-
+      <section class="scene" data-chapter="03" data-scene="01" data-type="CORE" data-presenter="송예찬 PM" data-title="인터랙티브 플레이 루프" data-time="3분 00초" data-notes="[CONTENT] 기획의 핵심 플레이 루프를 5단계 단계별 강조와 함께 시연합니다. 성공 루트와 실패 루트 클릭에 따라 분기 연출을 보여줄 수 있습니다.">
         <div class="scene-header">
-
           <div>
-
             <h1>핵심 플레이 루프</h1>
-
             <div class="subtitle">CORE PLAY LOOP & ROUTE BRANCH</div>
-
           </div>
-
         </div>
-
         <div class="loop-flow-container">
-
           <div class="loop-nodes-grid">
-
             <div class="loop-node-row active" onclick="activateLoopStep(0)">
-
               <div class="loop-node-num">01</div>
-
-              <div class="loop-node-text">출격 준비 (현실 스테이지)</div>
-
+              <div class="loop-node-text">출격 준비</div>
             </div>
-
             <div class="loop-node-row" onclick="activateLoopStep(1)">
-
               <div class="loop-node-num">02</div>
-
-              <div class="loop-node-text">침몽도시 세션 진입 (다이브)</div>
-
+              <div class="loop-node-text">세션 진입</div>
             </div>
-
             <div class="loop-node-row" onclick="activateLoopStep(2)">
-
               <div class="loop-node-num">03</div>
-
-              <div class="loop-node-text">기억 파편 탐색 (동조율 수집)</div>
-
+              <div class="loop-node-text">아이템 / 파편 탐색</div>
             </div>
-
             <div class="loop-node-row" onclick="activateLoopStep(3)">
-
               <div class="loop-node-num">04</div>
-
-              <div class="loop-node-text">에너미 전투 및 심상 정화</div>
-
+              <div class="loop-node-text">에너미 전투</div>
             </div>
-
             <div class="loop-node-row" onclick="activateLoopStep(4)">
-
               <div class="loop-node-num">05</div>
-
-              <div class="loop-node-text">전화부스 탈출 / 강제 각성 (분기)</div>
-
+              <div class="loop-node-text">탈출 / 탈출 실패</div>
             </div>
-
+            <div class="loop-node-row" onclick="activateLoopStep(5)">
+              <div class="loop-node-num">06</div>
+              <div class="loop-node-text">서사 보상 확인</div>
+            </div>
           </div>
-
-          <div class="glass-card loop-info-pane">
-
+          <div class="glass-card loop-info-pane" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between; padding: 25px;">
             <div>
-
-              <h3 id="loopStepTitle" style="color: var(--accent-teal); font-size: 1.5rem; margin-bottom: 15px;">01. 출격 준비 (현실 스테이지)</h3>
-
-              <p id="loopStepDesc" style="font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary);">
-
-                현실 로비에서 관제 정보 보드로 탈출 지점을 정비하고, 소모품 및 심상기록 장비를 강화합니다.
-
+              <h3 id="loopStepTitle" style="color: var(--accent-teal); font-size: 1.4rem; margin-bottom: 8px;">01. 출격 준비</h3>
+              <p id="loopStepDesc" style="font-size: 0.95rem; line-height: 1.5; color: var(--text-secondary); margin-bottom: 15px;">
+                소지품 슬롯과 아티팩트를 정비하고 출격을 준비합니다.
               </p>
-
             </div>
-
-            <!-- 성공/실패 분기 기믹 -->
-
-            <div>
-
-              <div class="loop-route-toggle">
-
-                <button class="btn-route btn-route--success" onclick="toggleLoopRoute('success')">성공 루트 시뮬레이션</button>
-
-                <button class="btn-route btn-route--failure" onclick="toggleLoopRoute('failure')">실패 루트 시뮬레이션</button>
-
+            <!-- 이미지 프리뷰 뷰어 디스플레이 -->
+            <div class="loop-preview-box" style="flex: 1; min-height: 420px; background: #000; border: 1px solid var(--border-glow-purple); border-radius: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative;">
+              <img id="loopImageDisplay" src="assets/[CP]장수영/images/CP_UI_Sortie_Preparation.png" alt="핵심 플레이 루프 화면" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+            <!-- 성공/실패 분기 기믹 (5번째 단계에서만 표시) -->
+            <div id="loopRouteToggleContainer" style="display: none; margin-top: 15px;">
+              <div class="loop-route-toggle" style="display: flex; gap: 15px;">
+                <button class="btn-route btn-route--success active" onclick="toggleLoopRoute('success')" style="flex: 1; padding: 10px 15px; font-weight: bold; border-radius: 6px; cursor: pointer;">⭕ 탈출 성공 결과 시연</button>
+                <button class="btn-route btn-route--failure" onclick="toggleLoopRoute('failure')" style="flex: 1; padding: 10px 15px; font-weight: bold; border-radius: 6px; cursor: pointer;">❌ 탈출 실패 결과 시연</button>
               </div>
-
-              <p id="routeResultText" style="margin-top: 15px; font-size: 0.95rem; line-height: 1.5; min-height: 45px; color: var(--text-muted);">
-
-                시뮬레이션 경로를 클릭하세요.
-
+              <p id="routeResultText" style="margin-top: 10px; font-size: 0.9rem; line-height: 1.4; color: var(--accent-teal); font-weight: 500;">
+                <strong>[탈출 성공]</strong> 탈출 성공! 획득한 파편과 아이템 보존 완료.
               </p>
-
             </div>
-
           </div>
-
         </div>
 
       </section>
 
-      <!-- =========================================
+<!-- ========================================= -->
+<!-- ========================================= -->
 
-           CHAPTER 04 / SCENE 01
+<!-- CHAPTER 04 / SCENE 01 -->
+<!-- ========================================= -->
 
-           세계관 및 서사: 침몽도시 설정
+<!-- CHAPTER 04 / SCENE 01 -->
+<!-- 세계관 및 서사: 침몽도시 설정 (관제사 정의서 v2.0.0 원안 기반) -->
 
-      ========================================= -->
-
-      <section class="scene" 
-
-               data-chapter="04" 
-
-               data-scene="01" 
-
-               data-type="CORE" 
-
-               data-presenter="송예찬 PM" 
-
-               data-title="침몽도시 세계관 설정" 
-
-               data-time="2분 00초"
-
-               data-notes="[CONTENT] 세계관 설정 카드 시연입니다. 각 카드를 클릭하면 상세한 설정을 뒤집어서 확인할 수 있습니다.">
-
-        
-
+      <section class="scene" data-chapter="04" data-scene="01" data-type="CORE" data-presenter="장수영 CP / 송예찬 PM" data-title="침몽도시 세계관 & 4대 설정" data-time="2분 30초" data-notes="[CONTENT] 본 프로젝트의 핵심 서사 규칙(관제사 정의서 v2.0.0)에 입각한 4대 핵심 축 설정(침몽도시, 다이버, 링크 관제사, 기억 파편)의 구조와 '다이버는 잊는다. 관제사는 기록한다.' 슬로건의 서사적 진실을 소개합니다.">
         <div class="scene-header">
-
           <div>
-
             <h1>세계관 및 설정</h1>
-
-            <div class="subtitle">LORE DECKS & SETTINGS</div>
-
+            <div class="subtitle">WORLD & LORE DEFINITIONS (OFFICIAL v2.0.0)</div>
           </div>
-
         </div>
-
-        <div class="lore-deck">
-
-          <div class="lore-card" onclick="this.classList.toggle('flipped')">
-
-            <div class="lore-card-inner">
-
-              <div class="lore-card-front">
-
-                <h3>침몽도시</h3>
-
-                <p>수면병에 빠진 인간들의 뒤섞인 꿈이 현실을 왜곡하여 잠식하는 영역.</p>
-
+        <div class="lore-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; flex: 1; height: 100%; align-items: stretch;">
+          <!-- 1. 침몽도시 -->
+          <div class="glass-card lore-card-enhanced" style="background: var(--bg-card); border: 1px solid var(--border-glow-purple); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; position: relative; transition: all 0.35s ease;">
+            <div class="lore-card-visual" style="height: 360px; position: relative; background: #000; overflow: hidden;">
+              <img src="assets/[CP]장수영/images/CP_Lore_City_Bg.png" alt="침몽도시 배경" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7) contrast(1.15);">
+              <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(4,4,10,0.2) 0%, rgba(4,4,10,0.95) 100%);"></div>
+              <div style="position: absolute; top: 16px; left: 16px; background: rgba(192, 132, 252, 0.2); border: 1px solid var(--accent-purple); color: var(--accent-purple); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;">
+                [꿈과 현실의 경계 붕괴]
               </div>
-
-              <div class="lore-card-back">
-
-                <h3>상세 설정</h3>
-
-                <p>왜곡된 꿈이 현실의 마트나 도시 인프라를 뒤틀어 놓아 비주얼적으로 이질적이고 몽환적인 분위기를 연출합니다.</p>
-
+              <div style="position: absolute; bottom: 16px; left: 16px; right: 16px;">
+                <h2 style="font-size: 1.5rem; color: #fff; font-weight: 800; text-shadow: 0 0 10px rgba(192, 132, 252, 0.5);">침몽도시</h2>
+                <p style="font-size: 0.8rem; color: var(--accent-purple); margin-top: 2px;">LUCID CITY</p>
               </div>
-
             </div>
-
-          </div>
-
-          <div class="lore-card" onclick="this.classList.toggle('flipped')">
-
-            <div class="lore-card-inner">
-
-              <div class="lore-card-front">
-
-                <h3>다이버 (Diver)</h3>
-
-                <p>왜곡된 무의식 심층까지 직접 다이브하여 실기 임무를 수행하는 요원.</p>
-
+            <div class="lore-card-body" style="padding: 20px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+              <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text-primary);">
+                수면병에 빠진 인간들의 무의식이 현실 공간을 기형적으로 잠식한 2.5D 심상 영역.<br>
+                <span style="color: var(--accent-red); font-size: 0.85rem; display: block; margin-top: 8px;">⚠️ 관제사의 링크 없이 갇힐 경우 자아가 해체되어 <strong>'꿈식자(Dream Eater)'</strong>로 변질됩니다.</span>
+              </p>
+              <div style="border-top: 1px solid var(--border-subtle); padding-top: 10px; margin-top: 12px; font-size: 0.8rem; color: var(--text-muted);">
+                #꿈과현실의붕괴 #꿈식자변질위험
               </div>
-
-              <div class="lore-card-back">
-
-                <h3>상세 설정</h3>
-
-                <p>꿈속의 시야 제한 패널티를 안고 돌발 위험에 대처해야 하며, 관제사의 정보 전송 없이는 전투 효율이 저하됩니다.</p>
-
-              </div>
-
             </div>
-
           </div>
-
-          <div class="lore-card" onclick="this.classList.toggle('flipped')">
-
-            <div class="lore-card-inner">
-
-              <div class="lore-card-front">
-
-                <h3>관제사 (Linker)</h3>
-
-                <p>현실 통신부스에서 특수 장비로 다이버의 위치와 위협을 안내하는 가이드.</p>
-
+          <!-- 2. 다이버 -->
+          <div class="glass-card lore-card-enhanced" style="background: var(--bg-card); border: 1px solid var(--border-glow-teal); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; position: relative; transition: all 0.35s ease;">
+            <div class="lore-card-visual" style="height: 360px; position: relative; background: #080a14; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+              <img src="assets/[CP]장수영/images/CP_Lore_Diver_Concept.png" alt="다이버 유안 콘셉트" style="height: 100%; width: 100%; object-fit: cover; filter: brightness(0.95);">
+              <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(4,4,10,0.1) 0%, rgba(4,4,10,0.95) 100%);"></div>
+              <div style="position: absolute; top: 16px; left: 16px; background: rgba(45, 212, 191, 0.2); border: 1px solid var(--accent-teal); color: var(--accent-teal); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;">
+                [REMnants 현장 요원]
               </div>
-
-              <div class="lore-card-back">
-
-                <h3>상세 설정</h3>
-
-                <p>레이더와 미니맵 분석, 기믹의 패스워드 추출을 담당하며 다이버에게 음성 및 전술 알림으로 방향을 조율합니다.</p>
-
+              <div style="position: absolute; bottom: 16px; left: 16px; right: 16px;">
+                <h2 style="font-size: 1.5rem; color: #fff; font-weight: 800; text-shadow: 0 0 10px rgba(45, 212, 191, 0.5);">다이버 (Diver)</h2>
+                <p style="font-size: 0.8rem; color: var(--accent-teal); margin-top: 2px;">DIVER AGENT: YUAN</p>
               </div>
-
             </div>
-
-          </div>
-
-          <div class="lore-card" onclick="this.classList.toggle('flipped')">
-
-            <div class="lore-card-inner">
-
-              <div class="lore-card-front">
-
-                <h3>기억 파편</h3>
-
-                <p>침몽도시 내부에서 획득해야 하는 핵심 익스트랙션 리소스.</p>
-
+            <div class="lore-card-body" style="padding: 20px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+              <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text-primary);">
+                침몽도시 심층으로 직접 출격하여 사람을 구하고 기억 파편을 정화하는 요원.<br>
+                <span style="color: var(--text-secondary); font-size: 0.85rem; display: block; margin-top: 8px;">💧 실패 탈출 시 자신의 본래 기억 조각을 침몽도시에 떨구고 오지만, 파편 회수를 통해 자아를 복원합니다.</span>
+              </p>
+              <div style="border-top: 1px solid var(--border-subtle); padding-top: 10px; margin-top: 12px; font-size: 0.8rem; color: var(--text-muted);">
+                #다이버는잊는다 #자아복원여정
               </div>
-
-              <div class="lore-card-back">
-
-                <h3>상세 설정</h3>
-
-                <p>해당 자원을 온전히 수집해 정화한 채로 탈출해야만, 다이버와의 동조율이 상승하며 로비에서 개인 심상 기록이 해금됩니다.</p>
-
-              </div>
-
             </div>
-
           </div>
-
+          <!-- 3. 링크 관제사 -->
+          <div class="glass-card lore-card-enhanced" style="background: var(--bg-card); border: 1px solid var(--border-glow-purple); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; position: relative; transition: all 0.35s ease;">
+            <div class="lore-card-visual" style="height: 360px; position: relative; background: #000; overflow: hidden;">
+              <img src="assets/[CP]장수영/images/CP_Lore_Linker_Vn.png" alt="관제사 통신 패널" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85);">
+              <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(4,4,10,0.2) 0%, rgba(4,4,10,0.95) 100%);"></div>
+              <div style="position: absolute; top: 16px; left: 16px; background: rgba(192, 132, 252, 0.2); border: 1px solid var(--accent-purple); color: var(--accent-purple); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;">
+                [유일한 생명선 & 기록자]
+              </div>
+              <div style="position: absolute; bottom: 16px; left: 16px; right: 16px;">
+                <h2 style="font-size: 1.5rem; color: #fff; font-weight: 800; text-shadow: 0 0 10px rgba(192, 132, 252, 0.5);">관제사 (Linker)</h2>
+                <p style="font-size: 0.8rem; color: var(--accent-purple); margin-top: 2px;">LINK CONTROLLER</p>
+              </div>
+            </div>
+            <div class="lore-card-body" style="padding: 20px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+              <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text-primary);">
+                현실 통신부스에서 다이버의 귀환 좌표를 유지하며 작전 기록을 보존하는 존재.<br>
+                <span style="color: var(--accent-purple); font-size: 0.85rem; font-weight: bold; display: block; margin-top: 8px;">"다이버는 잊는다. 관제사는 기록한다. 그리고 다시, 구하러 들어간다."</span>
+              </p>
+              <div style="border-top: 1px solid var(--border-subtle); padding-top: 10px; margin-top: 12px; font-size: 0.8rem; color: var(--text-muted);">
+                #관제사는기록한다 #귀환좌표보존
+              </div>
+            </div>
+          </div>
+          <!-- 4. 기억 파편 -->
+          <div class="glass-card lore-card-enhanced" style="background: var(--bg-card); border: 1px solid var(--border-glow-teal); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; position: relative; transition: all 0.35s ease;">
+            <div class="lore-card-visual" style="height: 360px; position: relative; background: #050d14; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+              <img src="assets/[CP]장수영/images/CP_Lore_Memory_Fragment.png" alt="기억 파편 복구" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85);">
+              <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(4,4,10,0.2) 0%, rgba(4,4,10,0.95) 100%);"></div>
+              <div style="position: absolute; top: 16px; left: 16px; background: rgba(45, 212, 191, 0.2); border: 1px solid var(--accent-teal); color: var(--accent-teal); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;">
+                [자아 재통합 심상기록]
+              </div>
+              <div style="position: absolute; bottom: 16px; left: 16px; right: 16px;">
+                <h2 style="font-size: 1.5rem; color: #fff; font-weight: 800; text-shadow: 0 0 10px rgba(45, 212, 191, 0.5);">기억 파편</h2>
+                <p style="font-size: 0.8rem; color: var(--accent-teal); margin-top: 2px;">MEMORY FRAGMENT</p>
+              </div>
+            </div>
+            <div class="lore-card-body" style="padding: 20px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+              <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text-primary);">
+                다이버 본인의 정신에서 떨어진 내부 데이터(감정, 자아 인식).<br>
+                <span style="color: var(--accent-teal); font-size: 0.85rem; display: block; margin-top: 8px;">💎 관제사의 <strong>'관제 기록'</strong>과 결합하여 다이버 본인이 자신의 기억으로 수용하게 돕는 핵심 리소스.</span>
+              </p>
+              <div style="border-top: 1px solid var(--border-subtle); padding-top: 10px; margin-top: 12px; font-size: 0.8rem; color: var(--text-muted);">
+                #심상기록복구 #핵심익스트랙션목표
+              </div>
+            </div>
+          </div>
         </div>
 
       </section>
 
-      <!-- =========================================
+<!-- ========================================= -->
 
-           CHAPTER 05 / SCENE 01
+<!-- CHAPTER 05 / SCENE 01 -->
 
-           UI 기획 및 구현 비교 (Before / After 슬라이더)
-
-      ========================================= -->
-
-      <section class="scene" 
-               data-chapter="05"
-               data-scene="01"
-               data-type="CORE"
-               data-presenter="장수영 Art/기획" 
-               data-title="UI 기획 및 실제 구현 비교" 
-               data-time="2분 00초"
-               data-notes="[CONTENT] Before-After 기획/구현 교차 인터랙션입니다. 슬라이더를 마우스로 잡고 양옆으로 밀면 기획 목업과 실제 인게임 구현 화면이 겹쳐서 비교됩니다.">
-
-        
-
+      <section class="scene" data-chapter="05" data-scene="01" data-type="CORE" data-presenter="장수영 Art/기획" data-title="UI 기획 및 실제 구현 비교" data-time="2분 00초" data-notes="[CONTENT] Before-After 기획/구현 교차 인터랙션입니다. 슬라이더를 마우스로 잡고 양옆으로 밀면 기획 목업과 실제 인게임 구현 화면이 겹쳐서 비교됩니다.">
         <div class="scene-header">
-
           <div>
-
             <h1>UI 기획 및 실제 구현</h1>
-
             <div class="subtitle">MOCKUP VS ACTUAL WORK COMPARISON</div>
-
           </div>
-
         </div>
-
         <div class="comparison-container">
-
           <div class="comparison-frame" id="compFrame" onmousemove="handleComparisonMove(event)" ontouchmove="handleComparisonMove(event)">
-
             <!-- Before (기획 목업) -->
-
-            <img class="comparison-img" src="assets/images/ui_mockup.png" alt="Mockup" onerror="handleImageError(this, 'ui_mockup.png')">
-
+            <img class="comparison-img" src="assets/[CP]장수영/images/CP_UI_Mockup_Design.png" alt="UI 와이어프레임 목업 시안" onerror="handleImageError(this, 'CP_UI_Mockup_Design.png')">
             <!-- After (실제 구현 화면 - 클리핑 영역 조절) -->
-
-            <img class="comparison-img comparison-img--after" id="compAfterImg" src="assets/images/ui_actual.png" alt="Actual View" onerror="handleImageError(this, 'ui_actual.png')">
-
+            <img class="comparison-img comparison-img--after" id="compAfterImg" src="assets/[CP]장수영/images/CP_UI_Runtime_Lobby.png" alt="유니티 런타임 로비 UI" onerror="handleImageError(this, 'CP_UI_Runtime_Lobby.png')">
             <!-- 슬라이더 바 -->
-
             <div class="comparison-slider" id="compSlider"></div>
-
           </div>
-
           <p style="color: var(--text-secondary); font-size: 0.95rem;">마우스를 이미지 위에 올리고 움직여서 UI 기획 와이어프레임과 Unity 인게임 화면을 비교해 보세요.</p>
-
         </div>
 
       </section>
 
-      <!-- =========================================
+<!-- ========================================= -->
 
-           CHAPTER 05 / SCENE 02
+<!-- CHAPTER 05 / SCENE 02 -->
 
-           UI 기획 및 시뮬레이터 (탭 전환 시뮬레이션)
-
-      ========================================= -->
-      <section class="scene" 
-               data-chapter="05" 
-               data-scene="02" 
-               data-type="CORE" 
-               data-presenter="장수영 Art/기획" 
-               data-title="인게임/아웃게임 UI 시뮬레이터" 
-               data-time="30초"
-               data-notes="[CONTENT] 로비 및 창고 인벤토리의 연동 흐름을 체험하는 인터랙티브 시뮬레이터입니다.">
-        
+      <section class="scene" data-chapter="05" data-scene="02" data-type="CORE" data-presenter="장수영 Art/기획" data-title="인게임/아웃게임 UI 시뮬레이터" data-time="30초" data-notes="[CONTENT] 로비 및 창고 인벤토리의 연동 흐름을 체험하는 인터랙티브 시뮬레이터입니다.">
         <div class="scene-header">
           <div>
             <h1>인게임/아웃게임 UI 루프</h1>
             <div class="subtitle">INTERACTIVE LOBBY & INVENTORY SIMULATOR</div>
           </div>
         </div>
-
         <div class="ui-simulator">
           <div class="simulator-nav">
             <button class="btn-sim-tab active" onclick="switchSimTab(0)">01. 로비/관제실</button>
             <button class="btn-sim-tab" onclick="switchSimTab(1)">02. 창고/인벤토리</button>
             <button class="btn-sim-tab" onclick="switchSimTab(2)">03. 다이버 기록</button>
           </div>
-
           <div class="simulator-display">
             <!-- 탭 1 -->
             <div class="sim-panel active">
@@ -2643,1700 +712,371 @@
 
       </section>
       
-      <!-- =========================================
+<!-- ========================================= -->
 
-           CHAPTER 06 / SCENE 01
+<!-- CHAPTER 06 / SCENE 01 -->
 
-           플레이어 시스템 (플레이스홀더)
-
-      ========================================= -->
-
-      <section class="scene" 
-
-               data-chapter="06" 
-
-               data-scene="01" 
-
-               data-type="CORE" 
-
-               data-presenter="우성혁 CD / 강다영 TD" 
-
-               data-title="플레이어 조작 및 액션 메커니즘" 
-
-               data-time="25초"
-
-               data-notes="[CONTENT] 플레이어 조작 명세 및 구현 결과입니다. 물리 충돌과 에임 사격, 시야 광원을 포함합니다.">
-
-        
-
+      <section class="scene" data-chapter="06" data-scene="01" data-type="CORE" data-presenter="우성혁 CD / 강다영 TD" data-title="플레이어 조작 및 액션 메커니즘" data-time="25초" data-notes="[CONTENT] 플레이어 조작 명세 및 구현 결과입니다. 물리 충돌과 에임 사격, 시야 광원을 포함합니다.">
         <div class="scene-header">
-
           <div>
-
             <h1>플레이어 제어 시스템</h1>
-
             <div class="subtitle">PLAYER CONTROL & MOVEMENT MATRICES</div>
-
           </div>
-
         </div>
-
         <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; flex: 1; align-items: center; width: 100%;">
-
           <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: space-between;">
-
             <div>
-
               <h2 style="color: var(--accent-teal); margin-bottom: 20px; font-size: 1.4rem;">[구현 완료] 2.5D 탑다운 조작 스펙</h2>
-
               <ul style="color: var(--text-secondary); line-height: 2; font-size: 1.05rem; padding-left: 20px; list-style-type: square;">
-
                 <li><strong>기본 이동:</strong> WASD 이동 키 입력 및 마우스 방향 조향 조준 처리</li>
-
                 <li><strong>물리 충돌 최적화:</strong> CapsuleCollider 기반 이동 및 벽면 슬라이딩 충돌 개선</li>
-
                 <li><strong>광원 연출:</strong> Spot Light 2개 방식의 플레이어 손전등 광원 구현 완료</li>
-
                 <li><strong>소모품 연동:</strong> 단지 내 마나석 사용 시 마나 회복, 회복약 사용 시 HP 회복</li>
-
               </ul>
-
             </div>
-
             <div style="background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 6px; font-size: 0.95rem; border: 1px dashed var(--border-subtle);">
-
               <span style="color: var(--accent-purple);">[P0 범위 고정]</span> 개발 리스크 단축을 위해 다이버 1인 고정 운용, 방어구 스탯 및 회피 무적 시간/스킬 쿨타임 배제
-
             </div>
-
           </div>
-
           <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-
             <div class="media-error-box" style="width: 100%; height: 350px; background: rgba(0,0,0,0.4);">
-
               <!-- 비디오/이미지 캡션 오버레이 적용 예정 -->
-
               <span style="color: var(--accent-teal); font-weight: bold; margin-bottom: 10px;">[실제 Unity 화면 캡처 예정]</span>
-
               <span style="color: var(--text-muted); font-size: 0.9rem;">assets/videos/player_movement.mp4</span>
-
             </div>
-
             <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);">Diver_DemoScene 인게임 액션 실기 플레이 비디오</p>
-
           </div>
-
         </div>
 
       </section>
 
-      <!-- =========================================
+<!-- ========================================= -->
 
-           CHAPTER 07 / SCENE 01
+<!-- CHAPTER 07 / SCENE 01 -->
 
-           에너미 시스템 (플레이스홀더)
-
-      ========================================= -->
-
-      <section class="scene" 
-
-               data-chapter="07" 
-
-               data-scene="01" 
-
-               data-type="CORE" 
-
-               data-presenter="강다영 TD" 
-
-               data-title="에너미 AI 시스템" 
-
-               data-time="2분 00초"
-
-               data-notes="[INTERVIEW] 에너미 AI 담당 크루 협의 후 FSM 전후 감지 기믹 다이어그램 추가">
-
-        
-
+      <section class="scene" data-chapter="07" data-scene="01" data-type="CORE" data-presenter="강다영 TD" data-title="에너미 AI 시스템" data-time="2분 00초" data-notes="[INTERVIEW] 에너미 AI 담당 크루 협의 후 FSM 전후 감지 기믹 다이어그램 추가">
         <div class="scene-header">
-
           <div>
-
             <h1>에너미 AI 메커니즘</h1>
-
             <div class="subtitle">ENEMY FINITE STATE MACHINE & RADAR DETECTION</div>
-
           </div>
-
         </div>
-
         <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex: 1; text-align: center;">
-
           <div class="glass-card" style="max-width: 800px; border-color: var(--accent-purple-dim);">
-
             <h2 style="color: var(--accent-purple); margin-bottom: 20px;">[INTERVIEW] 에너미 담당 크루 피드백 대기</h2>
-
             <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary); margin-bottom: 30px;">
-
               Idle -> Alert -> Chase -> Attack으로 이어지는 적 행동 구조(FSM)와<br>
-
               관제사가 전송하는 적 탐지 범위 오버레이 구현을 설명하는 영역입니다.
-
             </p>
-
             <div class="log-terminal" style="height: 160px; text-align: left; font-size: 0.9rem;">
-
               <span style="color: var(--accent-red)">[ASSET NEEDED]</span><br>
-
               - assets/videos/enemy_ai.mp4 (인공지능 감지 시연 비디오)<br>
-
               - assets/images/enemy_fsm.png (적 유닛 행동 다이어그램)
-
             </div>
-
           </div>
-
         </div>
 
       </section>
 
-      <!-- =========================================
+<!-- ========================================= -->
 
-           CHAPTER 08 / SCENE 01
+<!-- CHAPTER 08 / SCENE 01 -->
 
-           레벨 디자인 및 비주얼 연출
-
-      ========================================= -->
-
-      <section class="scene" 
-
-               data-chapter="08" 
-
-               data-scene="01" 
-
-               data-type="CORE" 
-
-               data-presenter="김남해 PD" 
-
-               data-title="침몽마트 레벨 디자인 및 비주얼 연출" 
-
-               data-time="25초"
-
-               data-notes="[CONTENT] 레벨 디자인 구현 성과 및 최적화 내역입니다. URP 그래픽 및 카메라 셰이더 연출을 포함합니다.">
-
-        
-
+      <section class="scene" data-chapter="08" data-scene="01" data-type="CORE" data-presenter="김남해 PD" data-title="침몽마트 레벨 디자인 및 비주얼 연출" data-time="25초" data-notes="[CONTENT] 레벨 디자인 구현 성과 및 최적화 내역입니다. URP 그래픽 및 카메라 셰이더 연출을 포함합니다.">
         <div class="scene-header">
-
           <div>
-
             <h1>레벨디자인 & 동선</h1>
-
             <div class="subtitle">LEVEL PLAN & DIVER MOVEMENT ROUTES</div>
-
           </div>
-
         </div>
-
         <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; flex: 1; align-items: center; width: 100%;">
-
           <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: space-between;">
-
             <div>
-
               <h2 style="color: var(--accent-teal); margin-bottom: 20px; font-size: 1.4rem;">[구현 완료] 40x40 격전지형 맵 스펙</h2>
-
               <ul style="color: var(--text-secondary); line-height: 2; font-size: 1.05rem; padding-left: 20px; list-style-type: square;">
-
                 <li><strong>레벨 스케일:</strong> 개발 최적화를 위해 원본 데모 씬에서 40m x 40m 마켓 맵으로 축소 설계 및 조립</li>
-
                 <li><strong>비주얼 톤:</strong> FlatKit 툰 셰이더 적용 및 Realistic Fog FX 안개 연출 기포 셋업</li>
-
                 <li><strong>장애물 깊이 투명화:</strong> ShaderGraph 기반 카메라 가림 벽 반투명 동적 교체 머티리얼 개발 완료</li>
-
                 <li><strong>그림자 분리:</strong> PlayerShadow 레이어 분리 및 AniPortrait 전용 그림자 복제본 씬 빌드</li>
-
               </ul>
-
             </div>
-
             <div style="background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 6px; font-size: 0.95rem; border: 1px dashed var(--border-subtle);">
-
               <span style="color: var(--accent-red);">[이월 해결 건]</span> F키 문 상호작용 Canvas 가이드 UI의 World Space 깊이 벽 투사 오류 해결 논의 진행 중 (김남해 PD / 송예찬 PM)
-
             </div>
-
           </div>
-
           <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-
             <div class="media-error-box" style="width: 100%; height: 350px; background: rgba(0,0,0,0.4);">
-
               <span style="color: var(--accent-teal); font-weight: bold; margin-bottom: 10px;">[실제 Unity 화면 캡처 예정]</span>
-
               <span style="color: var(--text-muted); font-size: 0.9rem;">assets/images/level_blueprint.jpg</span>
-
             </div>
-
             <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);">실제 침몽마트 2.5D 탑다운 레벨 동선 스크린샷</p>
-
           </div>
-
         </div>
 
       </section>
 
-      <!-- =========================================
+<!-- ========================================= -->
 
-           CHAPTER 09 / SCENE 01
+<!-- CHAPTER 09 / SCENE 01 -->
 
-           엔지니어링 & 테크 협업
-
-      ========================================= -->
-
-      <section class="scene" 
-               data-chapter="09" 
-               data-scene="01" 
-               data-type="CORE" 
-               data-presenter="강다영 TD" 
-               data-title="시스템 아키텍처 및 연동" 
-               data-time="30초" 
-               data-notes="[CONTENT] 개발 협업 환경과 전역 시스템 설계 결과입니다. 사운드 및 VFX 아키텍처를 다룹니다.">
-
+      <section class="scene" data-chapter="09" data-scene="01" data-type="CORE" data-presenter="강다영 TD" data-title="시스템 아키텍처 및 연동" data-time="30초" data-notes="[CONTENT] 개발 협업 환경과 전역 시스템 설계 결과입니다. 사운드 및 VFX 아키텍처를 다룹니다.">
         <div class="scene-header">
           <div>
             <h1>엔지니어링 & 테크 협업</h1>
             <div class="subtitle">NETWORKING ARCHITECTURE & CLOUD ENGINE</div>
           </div>
         </div>
-
         <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; flex: 1; align-items: center; width: 100%;">
           <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: space-between;">
-
             <div>
-
               <h2 style="color: var(--accent-teal); margin-bottom: 20px; font-size: 1.4rem;">[구현 완료] 테크 아키텍처 및 협업 성과</h2>
-
               <ul style="color: var(--text-secondary); line-height: 2; font-size: 1.05rem; padding-left: 20px; list-style-type: square;">
-
                 <li><strong>개발 프로세스:</strong> Unity Git 레포지토리 구성, Git LFS 및 브랜치 머지 전략 확립</li>
-
                 <li><strong>데이터 기반 VFX 시스템:</strong> 카탈로그 정의를 통한 런타임 풀링 매니저 연동 (송예찬 PM)</li>
-
                 <li><strong>오디오 시스템:</strong> AudioManager 및 IAudioRepository 기반 3D 볼륨 제어 및 수명 관리 (우성혁 CD)</li>
-
                 <li><strong>결과 정산 아웃게임 연동:</strong> 세션 플레이 결과 변수 창고 DB 자동 합산 로직 리팩토링</li>
-
               </ul>
-
             </div>
-
             <div style="background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 6px; font-size: 0.95rem; border: 1px dashed var(--border-subtle);">
-
               <span style="color: var(--accent-purple);">[P0 범위 고정]</span> PUN2 기반 멀티플레이어 대기방/동기화 비용 배제, 로컬 샌드박스로 개발 우선순위 안정화
-
             </div>
-
           </div>
-
           <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-
             <div class="media-error-box" style="width: 100%; height: 350px; background: rgba(0,0,0,0.4);">
-
               <span style="color: var(--accent-teal); font-weight: bold; margin-bottom: 10px;">[실제 Unity 화면 캡처 예정]</span>
-
               <span style="color: var(--text-muted); font-size: 0.9rem;">assets/images/server_structure.png</span>
-
             </div>
-
             <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);">Unity 아키텍처 다이어그램 및 오디오/VFX 에셋 구조도</p>
-
           </div>
-
         </div>
 
       </section>
 
-      <!-- =========================================
+<!-- ========================================= -->
 
-           CHAPTER 10 / SCENE 01
+<!-- CHAPTER 10 / SCENE 01 -->
 
-           QA 및 반복 개선 프로세스
-
-      ========================================= -->
-
-      <section class="scene" 
-
-               data-chapter="10" 
-
-               data-scene="01" 
-
-               data-type="CORE" 
-
-               data-presenter="강다영 TD / 송예찬 PM" 
-
-               data-title="QA 및 반복 테스트 프로세스" 
-
-               data-time="20초"
-
-               data-notes="[CONTENT] 플레이 안정성 확보를 위한 빌드 디버그 결과입니다. 마우스, 오버레이, 충돌 버그 수정 내역을 기술합니다.">
-
-        
-
+      <section class="scene" data-chapter="10" data-scene="01" data-type="CORE" data-presenter="강다영 TD / 송예찬 PM" data-title="QA 및 반복 테스트 프로세스" data-time="20초" data-notes="[CONTENT] 플레이 안정성 확보를 위한 빌드 디버그 결과입니다. 마우스, 오버레이, 충돌 버그 수정 내역을 기술합니다.">
         <div class="scene-header">
-
           <div>
-
             <h1>QA & 개선 프로세스</h1>
-
             <div class="subtitle">QUALITY ASSURANCE & FEEDBACK LOOP</div>
-
           </div>
-
         </div>
-
         <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; flex: 1; align-items: center; width: 100%;">
-
           <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: space-between;">
-
             <div>
-
               <h2 style="color: var(--accent-teal); margin-bottom: 20px; font-size: 1.4rem;">[수정 완료] 주요 크리티컬 이슈 해결</h2>
-
               <ul style="color: var(--text-secondary); line-height: 2; font-size: 1.05rem; padding-left: 20px; list-style-type: square;">
-
                 <li><strong>마우스 이탈 방지:</strong> 플레이 중 마우스 커서가 게임 창을 이탈하여 조작이 불능해지던 오류 수정</li>
-
                 <li><strong>아이템 드래그 & 아티팩트 해제 오류:</strong> 결과창 정산 인벤토리 간 드래그 및 탈장착 연동 오작동 버그 수정</li>
-
                 <li><strong>물리 충돌 개선:</strong> 플레이어 이동 시 오브젝트 끼임 현상 최소화를 위한 NavMesh 및 콜라이더 배치 조정</li>
-
                 <li><strong>튜토리얼 안정 장치:</strong> 튜토리얼 씬 내 플레이어 사망 방지(HP=1 고정) 및 강제 이탈 차단 콜라이더 추가</li>
-
               </ul>
-
             </div>
-
             <div style="background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 6px; font-size: 0.95rem; border: 1px dashed var(--border-subtle);">
-
               <span style="color: var(--accent-teal);">[QA 완료 기준]</span> 플레이 타임 정상 기록, 탈출 및 강제 각성 결과창 정산 변수 100% 보존/유실 정합성 통과
-
             </div>
-
           </div>
-
           <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-
             <div class="media-error-box" style="width: 100%; height: 350px; background: rgba(0,0,0,0.4);">
-
               <span style="color: var(--accent-teal); font-weight: bold; margin-bottom: 10px;">[실제 Unity 화면 캡처 예정]</span>
-
               <span style="color: var(--text-muted); font-size: 0.9rem;">assets/images/qa_bug_tracker.png</span>
-
             </div>
-
             <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);">QA 진행 보드 및 해결 티켓 히스토리</p>
-
           </div>
-
         </div>
 
       </section>
 
-      <!-- =========================================
+<!-- ========================================= -->
 
-           CHAPTER 11 / SCENE 01
+<!-- CHAPTER 11 / SCENE 01 -->
 
-           결과 및 향후 계획
-
-      ========================================= -->
-
-      <section class="scene" 
-
-               data-chapter="11" 
-
-               data-scene="01" 
-
-               data-type="CORE" 
-
-               data-presenter="송예찬 PM" 
-
-               data-title="로드맵 및 향후 확장 계획" 
-
-               data-time="25초"
-
-               data-notes="[CONTENT] 마일스톤 성과와 P1 로드맵 비전을 소개하는 슬라이드입니다.">
-
-        
-
+      <section class="scene" data-chapter="11" data-scene="01" data-type="CORE" data-presenter="송예찬 PM" data-title="로드맵 및 향후 확장 계획" data-time="25초" data-notes="[CONTENT] 마일스톤 성과와 P1 로드맵 비전을 소개하는 슬라이드입니다.">
         <div class="scene-header">
-
           <div>
-
             <h1>결과 및 향후 계획</h1>
-
             <div class="subtitle">PROJECT ROADMAP & P1 MILESTONE PLAN</div>
-
           </div>
-
         </div>
-
         <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; flex: 1; align-items: center; width: 100%;">
-
           <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: space-between;">
-
             <div>
-
               <h2 style="color: var(--accent-teal); margin-bottom: 20px; font-size: 1.4rem;">[차주 과제] 잔여 이월 작업 및 버그 수정</h2>
-
               <ul style="color: var(--text-secondary); line-height: 2; font-size: 1.05rem; padding-left: 20px; list-style-type: square;">
-
                 <li><strong>가이드 UI 투사 해결:</strong> F키 GuideUI World Space Canvas의 worldCamera 누락 해결</li>
-
                 <li><strong>아이템 설명 리스트업:</strong> 임시 차단된 Enum 타입의 한글 매핑 딕셔너리 구축</li>
-
               </ul>
-
             </div>
-
             <div style="background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 6px; font-size: 0.95rem; border: 1px dashed var(--border-subtle);">
-
               <strong style="color: var(--accent-teal);">[P1 로드맵 비전]</strong> 에너미 공통 스탯 구조 세분화 및 멀티플레이어 네트워크 연동을 고려한 전역 이벤트 ID 참조 체계 설계 회의 기획 진행 예정
-
             </div>
-
           </div>
-
           <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-
             <div class="media-error-box" style="width: 100%; height: 350px; background: rgba(0,0,0,0.4);">
-
               <span style="color: var(--accent-teal); font-weight: bold; margin-bottom: 10px;">[로드맵 다이어그램]</span>
-
               <span style="color: var(--text-muted); font-size: 0.9rem;">[최종 발표 범위 미확정]</span>
-
             </div>
-
             <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);">베타 버전 시연 이후의 차기 스프린트 로드맵</p>
-
           </div>
-
         </div>
 
       </section>
 
-      <!-- =========================================
+<!-- ========================================= -->
 
-           CHAPTER 12 / SCENE 01
+<!-- CHAPTER 12 / SCENE 01 -->
+<!-- ========================================= -->
 
-           엔딩: 마무리 및 팀원 링크
+<!-- CHAPTER 12 / SCENE 01 -->
 
-      ========================================= -->
-
-      <section class="scene" 
-
-               data-chapter="12" 
-
-               data-scene="01" 
-
-               data-type="CORE" 
-
-               data-presenter="전원" 
-
-               data-title="발표 마무리 & 질의응답" 
-
-               data-time="2분 00초"
-
-               data-notes="[CONTENT] 발표 종료 커버입니다. 팀 크루와 깃허브 및 빌드 배포 QR 코드를 배치합니다.">
-
-        
-
+      <section class="scene" data-chapter="12" data-scene="01" data-type="CORE" data-presenter="전원 / Team REMnants" data-title="Q&A 및 질의응답" data-time="3분 00초" data-notes="[CONTENT] 발표 본편이 종료되었습니다. 코치진 및 청중분들의 기획, 그래픽스, AI, 코어 시스템 관련 질의응답 및 피드백을 수렴하는 QA 세션입니다.">
         <div class="scene-header">
-
           <div>
-
-            <h1>감사합니다</h1>
-
-            <div class="subtitle">PROJECT WRAPUP & CONTACTS</div>
-
+            <h1>Q&A 세션</h1>
+            <div class="subtitle">QUESTIONS & ANSWERS / DISCUSSION</div>
           </div>
-
+        </div>
+        <div class="qa-session-grid">
+          <div class="qa-card-list">
+            <div class="qa-topic-card">
+              <span class="qa-topic-icon">💬</span>
+              <div class="qa-topic-info">
+                <h3>01. 기획 & 세계관</h3>
+                <p>서브컬처 다이버 자아 회수 서사와 익스트랙션 사망 손실 구조의 융합 지점</p>
+              </div>
+            </div>
+            <div class="qa-topic-card">
+              <span class="qa-topic-icon">🎨</span>
+              <div class="qa-topic-info">
+                <h3>02. URP 그래픽스 & UI/UX</h3>
+                <p>2.5D Cel Shading 외곽선, 세미 픽셀 포스트 프로세싱 & 손전등 부채꼴 시야 마스킹</p>
+              </div>
+            </div>
+            <div class="qa-topic-card">
+              <span class="qa-topic-icon">👾</span>
+              <div class="qa-topic-info">
+                <h3>03. 에너미 AI & 오디오</h3>
+                <p>5단계 모듈형 FSM AI (시야/청각 감지, 차단 이동) & 3D 공간 오디오 연동 수치</p>
+              </div>
+            </div>
+            <div class="qa-topic-card">
+              <span class="qa-topic-icon">⚡</span>
+              <div class="qa-topic-info">
+                <h3>04. 코어 인프라 & 시스템</h3>
+                <p>각성 보존 안전 슬롯, 창고/인벤토리 데이터 파이프라인 & VFX 오브젝트 풀링</p>
+              </div>
+            </div>
+          </div>
+          <div class="qa-prompt-box">
+            <span class="qa-prompt-badge">NDMA CONTROL CENTER</span>
+            <div class="qa-prompt-title">발표 내용에 관해<br>자유롭게 질문해주세요</div>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
+              담당 크루 관제사가 질의 항목에 맞춰<br>
+              기술 및 기획적 판단 사유를 성실히 답변드립니다.
+            </p>
+          </div>
         </div>
 
-        <div class="ending-layout">
+      </section>
 
+<!-- ========================================= -->
+
+<!-- CHAPTER 12 / SCENE 02 -->
+
+      <section class="scene" data-chapter="12" data-scene="02" data-type="CORE" data-presenter="전원 / Team REMnants" data-title="발표 마무리 & 감사인사" data-time="1분 00초" data-notes="[CONTENT] 《침몽도시: 루시드 다이버》 최종 발표가 마쳐졌습니다. 팀원 5명의 성찰과 감사인사를 표하고 Git 및 빌드 링크를 안내합니다.">
+        <div class="ending-hero-header">
+          <img src="assets/공용/images/game_logo.png" alt="침몽도시: 루시드 다이버" class="ending-logo-img">
+          <div class="ending-slogan">" 다이버는 잊는다. 관제사는 기록한다. 그리고 다시, 구하러 들어간다. "</div>
+        </div>
+        <div class="ending-crew-bar">
+          <div class="ending-crew-mini-card">
+            <span class="ending-crew-role">CP (총괄)</span>
+            <div class="ending-crew-name">장수영</div>
+            <span class="ending-crew-sub">기획·아트·오디오</span>
+          </div>
+          <div class="ending-crew-mini-card">
+            <span class="ending-crew-role">CD (시스템)</span>
+            <div class="ending-crew-name">우성혁</div>
+            <span class="ending-crew-sub">명세·AI·오디오</span>
+          </div>
+          <div class="ending-crew-mini-card">
+            <span class="ending-crew-role">PM (일정)</span>
+            <div class="ending-crew-name">송예찬</div>
+            <span class="ending-crew-sub">WBS·튜토리얼</span>
+          </div>
+          <div class="ending-crew-mini-card">
+            <span class="ending-crew-role">PD (디렉팅)</span>
+            <div class="ending-crew-name">김남해</div>
+            <span class="ending-crew-sub">URP 셰이더·레벨</span>
+          </div>
+          <div class="ending-crew-mini-card">
+            <span class="ending-crew-role">TD (기술)</span>
+            <div class="ending-crew-name">강다영</div>
+            <span class="ending-crew-sub">인프라·VFX풀링</span>
+          </div>
+        </div>
+        <div class="ending-layout" style="grid-template-columns: 1.2fr 1fr; align-items: center;">
           <div>
-
-            <h2 style="color: var(--accent-teal); margin-bottom: 15px;">침몽도시: 루시드 다이버</h2>
-
-            <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-
-              질문이나 피드백이 있으신 분은 편하게 문의 바랍니다.<br>
-
-              팀 REMnants 크루원 일동.
-
+            <h3 style="color: var(--accent-teal); font-size: 1.2rem; margin-bottom: 10px;">경청해 주셔서 감사합니다 — Team REMnants</h3>
+            <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary);">
+              본 최종 발표 웹페이지와 P1 프로토타입 빌드 및 문서들은 아래 공개 저장소를 통해 언제든 확인하실 수 있습니다.
             </p>
-
-            
-
-            <div class="ending-links">
-
-              <a href="https://github.com/Jin-o12/Document_LucidDiver" target="_blank" class="ending-link-item">
-
-                <span>GitHub Repository</span>
-
-                <span>LINK ↗</span>
-
+            <div class="ending-links" style="margin-top: 15px;">
+              <a href="https://github.com/Jin-o12/Document_LucidDiver" target="_blank" rel="noopener" class="ending-link-item">
+                <span>🔗 GitHub Repository</span>
+                <span>방문 ↗</span>
               </a>
-
-              <a href="#" class="ending-link-item">
-
-                <span>게임 빌드 다운로드</span>
-
-                <span>LINK ↗</span>
-
+              <a href="assets/downloads/lucid_diver_proposal_v2.1.pptx" download class="ending-link-item">
+                <span>📊 PPT 제안서 다운로드</span>
+                <span>저장 ↗</span>
               </a>
-
             </div>
-
           </div>
-
           <div style="text-align: center;">
-
-            <div class="ending-qr-box">
-
-              <!-- QR 자리 placeholder -->
-
-              <span style="color: var(--text-muted); font-size: 0.9rem;">QR CODE PLACEHOLDER</span>
-
+            <div class="ending-qr-box" style="width: 180px; height: 180px;">
+              <span style="color: var(--accent-teal); font-weight: bold; font-size: 0.85rem; margin-bottom: 4px;">P1 BETA BUILD</span>
+              <span style="color: var(--text-muted); font-size: 0.75rem;">스마트폰 QR 스캔</span>
             </div>
-
-            <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);">스마트폰 카메라로 스캔하여 빌드 직접 확인</p>
-
           </div>
-
         </div>
 
       </section>
 
     </div>
-
     <!-- 발표자 대본 슬라이드 패널 -->
-
     <div id="presenterNotesPanel" class="presenter-notes-panel">
-
       <div class="notes-header">Presenter Script</div>
-
       <div id="notesBody" class="notes-body">대본을 로드하고 있습니다...</div>
-
     </div>
-
     <!-- 챕터 네비게이션 팝업 메뉴 -->
-
     <div id="chapterMenuOverlay" class="chapter-menu-overlay" onclick="closeChapterMenu()">
-
       <div class="chapter-menu-grid" onclick="event.stopPropagation()">
-
         <!-- JS에서 동적으로 메뉴 그리드 추가 -->
-
       </div>
-
     </div>
-
     <!-- 하단 HUD 조작 바 -->
-
     <div class="presentation-hud">
-
       <div class="hud-left">
-
         <span id="hudChapter" class="chapter-tag">CH 00</span>
-
         <span id="hudSceneNum">SCENE 01 / 02</span>
-
         <span style="color: var(--text-muted);">|</span>
-
         <span id="hudSceneTitle">시작</span>
-
       </div>
-
       <div class="hud-center">
-
         침몽도시: 루시드 다이버 최종 발표
-
       </div>
-
       <div class="hud-right">
-
         <span id="hudPresenter" class="presenter-info">발표: 기획 담당자</span>
-
         <div class="hud-buttons">
-
           <button onclick="togglePresenterNotes()">대본 (N)</button>
-
           <button onclick="toggleChapterMenu()">메뉴 (M)</button>
-
           <button onclick="toggleFullscreen()">전체화면 (F)</button>
-
         </div>
-
       </div>
-
     </div>
-
   </div>
-
-  <script>
-
-    // ══════════════════════════════════════════════════════════
-
-    //  VANILLA JAVASCRIPT LOGIC
-
-    // ══════════════════════════════════════════════════════════
-
-    let scenes = [];
-
-    let currentIdx = 0;
-
-    let isNotesOpen = false;
-
-    let isMenuOpen = false;
-
-    let isDebugMode = false;
-
-    // 16:9 반응형 자동 스케일링 함수
-
-    function resizeViewport() {
-
-      const viewport = document.getElementById('viewport');
-
-      const windowWidth = window.innerWidth;
-
-      const windowHeight = window.innerHeight;
-
-      const baseWidth = 1920;
-
-      const baseHeight = 1080;
-
-      
-
-      const scaleX = windowWidth / baseWidth;
-
-      const scaleY = windowHeight / baseHeight;
-
-      const scale = Math.min(scaleX, scaleY);
-
-      
-
-      viewport.style.transform = `scale(${scale})`;
-
-      viewport.style.left = `${(windowWidth - baseWidth * scale) / 2}px`;
-
-      viewport.style.top = `${(windowHeight - baseHeight * scale) / 2}px`;
-
-    }
-
-    // 초기화 함수
-
-    function initPresentation() {
-
-      scenes = Array.from(document.querySelectorAll('.scene'));
-
-      
-
-      // 디버그 파라미터 확인 (?debug=1 or debug)
-
-      const urlParams = new URLSearchParams(window.location.search);
-
-      if (urlParams.has('debug') || window.location.hash === '#debug') {
-
-        toggleDebug(true);
-
-      }
-
-      // 해시값 기준으로 초기 장면 복원
-
-      const hash = window.location.hash;
-
-      let startIdx = 0;
-
-      if (hash && hash.startsWith('#scene-')) {
-
-        const idStr = hash.replace('#scene-', '');
-
-        const targetIdx = scenes.findIndex(s => {
-
-          const ch = s.getAttribute('data-chapter');
-
-          const sc = s.getAttribute('data-scene');
-
-          return `${ch}-${sc}` === idStr;
-
-        });
-
-        if (targetIdx !== -1) {
-
-          startIdx = targetIdx;
-
-        }
-
-      }
-
-      showScene(startIdx);
-
-      buildChapterMenu();
-
-      resizeViewport();
-
-      
-
-      // 오프닝 첫 슬라이드 터미널 타이핑 작동
-
-      startBootTerminal();
-
-    }
-
-    // 특정 장면 표시
-
-    function showScene(index) {
-
-      if (index < 0 || index >= scenes.length) return;
-
-      // 이전 동영상 정지 및 초기화
-
-      const currentActive = scenes[currentIdx];
-
-      if (currentActive) {
-
-        currentActive.querySelectorAll('video').forEach(video => {
-
-          video.pause();
-
-          video.currentTime = 0;
-
-        });
-
-        currentActive.classList.remove('active');
-
-        
-
-        // 인터랙션 복구용 상태 초기화
-
-        resetSceneState(currentIdx);
-
-      }
-
-      currentIdx = index;
-
-      const nextActive = scenes[currentIdx];
-
-      nextActive.classList.add('active');
-
-      // 활성화된 장면에 자동 재생 비디오가 있다면 재생
-
-      nextActive.querySelectorAll('video[autoplay]').forEach(video => {
-
-        video.play().catch(() => {});
-
-      });
-
-      // HUD 업데이트
-
-      updateHUD(nextActive);
-
-      // 대본 업데이트
-
-      const notes = nextActive.getAttribute('data-notes') || '작성된 대본이 없습니다.';
-
-      document.getElementById('notesBody').innerHTML = notes.replace(/\n/g, '<br>');
-
-      // 디버그 정보 업데이트
-
-      if (isDebugMode) {
-
-        updateDebugInfo(nextActive);
-
-      }
-
-      // 슬라이드 체인지 애니메이션 트리거
-
-      triggerSceneAnimation(nextActive);
-
-      // 해시 업데이트 (스크롤 없이 상태 기록)
-
-      const ch = nextActive.getAttribute('data-chapter');
-
-      const sc = nextActive.getAttribute('data-scene');
-
-      history.replaceState(null, '', `#scene-${ch}-${sc}`);
-
-    }
-
-    // 장면 이동
-
-    function nextScene() {
-
-      // 메뉴나 오버레이가 켜져 있으면 닫기만 함
-
-      if (isMenuOpen) {
-
-        closeChapterMenu();
-
-        return;
-
-      }
-
-      if (currentIdx < scenes.length - 1) {
-
-        showScene(currentIdx + 1);
-
-      }
-
-    }
-
-    function prevScene() {
-
-      if (isMenuOpen) {
-
-        closeChapterMenu();
-
-        return;
-
-      }
-
-      if (currentIdx > 0) {
-
-        showScene(currentIdx - 1);
-
-      }
-
-    }
-
-    // HUD 정보 업데이트
-
-    function updateHUD(scene) {
-
-      const ch = scene.getAttribute('data-chapter');
-
-      const sc = scene.getAttribute('data-scene');
-
-      const title = scene.getAttribute('data-title');
-
-      const presenter = scene.getAttribute('data-presenter');
-
-      document.getElementById('hudChapter').textContent = `CH ${ch}`;
-
-      document.getElementById('hudSceneNum').textContent = `SCENE ${sc}`;
-
-      document.getElementById('hudSceneTitle').textContent = title;
-
-      document.getElementById('hudPresenter').textContent = `발표: ${presenter}`;
-
-      // 진행률 퍼센트 계산
-
-      const pct = ((currentIdx + 1) / scenes.length) * 100;
-
-      document.getElementById('progressBar').style.width = `${pct}%`;
-
-    }
-
-    // 대본 노출 토글
-
-    function togglePresenterNotes() {
-
-      const panel = document.getElementById('presenterNotesPanel');
-
-      isNotesOpen = !isNotesOpen;
-
-      if (isNotesOpen) {
-
-        panel.classList.add('active');
-
-      } else {
-
-        panel.classList.remove('active');
-
-      }
-
-    }
-
-    // 챕터 점프 메뉴
-
-    function buildChapterMenu() {
-
-      const grid = document.querySelector('.chapter-menu-grid');
-
-      grid.innerHTML = '';
-
-      // 챕터별 그룹화
-
-      const chapters = {};
-
-      scenes.forEach((s, idx) => {
-
-        const ch = s.getAttribute('data-chapter');
-
-        const title = s.getAttribute('data-title');
-
-        if (!chapters[ch]) {
-
-          chapters[ch] = [];
-
-        }
-
-        chapters[ch].push({ idx, title, sc: s.getAttribute('data-scene') });
-
-      });
-
-      // HTML 빌드
-
-      for (const ch in chapters) {
-
-        const group = document.createElement('div');
-
-        group.className = 'chapter-menu-group';
-
-        
-
-        const chTitle = getChapterName(ch);
-
-        group.innerHTML = `<h3>CH ${ch}. ${chTitle}</h3>`;
-
-        
-
-        const list = document.createElement('div');
-
-        list.className = 'chapter-menu-list';
-
-        
-
-        chapters[ch].forEach(scene => {
-
-          const btn = document.createElement('button');
-
-          btn.className = `btn-menu-jump ${scene.idx === currentIdx ? 'active' : ''}`;
-
-          btn.textContent = `Sc ${scene.sc} - ${scene.title}`;
-
-          btn.onclick = () => {
-
-            showScene(scene.idx);
-
-            closeChapterMenu();
-
-          };
-
-          list.appendChild(btn);
-
-        });
-
-        group.appendChild(list);
-
-        grid.appendChild(group);
-
-      }
-
-    }
-
-    function toggleChapterMenu() {
-
-      if (isMenuOpen) {
-
-        closeChapterMenu();
-
-      } else {
-
-        openChapterMenu();
-
-      }
-
-    }
-
-    function openChapterMenu() {
-
-      const overlay = document.getElementById('chapterMenuOverlay');
-
-      // 활성화된 슬라이드에 active 클래스 갱신 적용
-
-      buildChapterMenu();
-
-      overlay.classList.add('active');
-
-      isMenuOpen = true;
-
-    }
-
-    function closeChapterMenu() {
-
-      const overlay = document.getElementById('chapterMenuOverlay');
-
-      overlay.classList.remove('active');
-
-      isMenuOpen = false;
-
-    }
-
-    function getChapterName(ch) {
-
-      const names = {
-
-        '00': 'Opening',
-
-        '01': 'Project Overview',
-
-        '02': 'Design Challenge',
-
-        '03': 'Core Gameplay Loop',
-
-        '04': 'World & Narrative',
-
-        '05': 'Planning, UI & Direction',
-
-        '06': 'Player System',
-
-        '07': 'Enemy System',
-
-        '08': 'Level Design',
-
-        '09': 'Engineering & Collab',
-
-        '10': 'QA & Iteration',
-
-        '11': 'Future Plan',
-
-        '12': 'Ending'
-
-      };
-
-      return names[ch] || 'Others';
-
-    }
-
-    // 전체 화면 전환
-
-    function toggleFullscreen() {
-
-      if (!document.fullscreenElement) {
-
-        document.documentElement.requestFullscreen().catch(() => {});
-
-      } else {
-
-        document.exitFullscreen();
-
-      }
-
-    }
-
-    // 디버그 모드 작동
-
-    function toggleDebug(force = null) {
-
-      isDebugMode = force !== null ? force : !isDebugMode;
-
-      const overlay = document.getElementById('debugOverlay');
-
-      if (isDebugMode) {
-
-        overlay.classList.add('active');
-
-        const activeScene = scenes[currentIdx];
-
-        if (activeScene) updateDebugInfo(activeScene);
-
-      } else {
-
-        overlay.classList.remove('active');
-
-      }
-
-    }
-
-    function updateDebugInfo(scene) {
-
-      document.getElementById('dbgIndex').textContent = `${currentIdx + 1} / ${scenes.length}`;
-
-      document.getElementById('dbgType').textContent = scene.getAttribute('data-type') || 'CORE';
-
-      document.getElementById('dbgPresenter').textContent = scene.getAttribute('data-presenter') || '-';
-
-      document.getElementById('dbgTime').textContent = scene.getAttribute('data-time') || '2분 00초';
-
-      
-
-      // 마크다운 형태의 TODO 검색 및 경고
-
-      const notes = scene.getAttribute('data-notes') || '';
-
-      const todoMatch = /\[(TODO|INTERVIEW|ASSET)\][^\n]*/g.exec(notes);
-
-      document.getElementById('dbgTodo').textContent = todoMatch ? todoMatch[0] : '대기사항 없음 (CLEAR)';
-
-    }
-
-    // 이미지 로드 실패 처리
-
-    function handleImageError(img, fileName) {
-
-      const parent = img.parentNode;
-
-      img.style.display = 'none';
-
-      
-
-      const errBox = document.createElement('div');
-
-      errBox.className = 'media-error-box';
-
-      errBox.innerHTML = `
-
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-
-          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V6.75zm.375 0a.375 0 11-.75 0 .375 0 01.75 0z" />
-
-        </svg>
-
-        <span>이미지 로드 오류</span>
-
-        <span class="media-error-filename">assets/images/${fileName}</span>
-
-      `;
-
-      parent.appendChild(errBox);
-
-    }
-
-    // 키보드 바인딩 이벤트 리스너
-
-    window.addEventListener('keydown', (e) => {
-
-      // 텍스트 필드를 입력 중이거나 모달 제어 시 조작 잠금 예방
-
-      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
-
-        return;
-
-      }
-
-      switch (e.key) {
-
-        case 'ArrowRight':
-
-        case 'PageDown':
-
-        case ' ':
-
-          e.preventDefault();
-
-          nextScene();
-
-          break;
-
-        case 'ArrowLeft':
-
-        case 'PageUp':
-
-          e.preventDefault();
-
-          prevScene();
-
-          break;
-
-        case 'Home':
-
-          e.preventDefault();
-
-          showScene(0);
-
-          break;
-
-        case 'End':
-
-          e.preventDefault();
-
-          showScene(scenes.length - 1);
-
-          break;
-
-        case 'f':
-
-        case 'F':
-
-          e.preventDefault();
-
-          toggleFullscreen();
-
-          break;
-
-        case 'n':
-
-        case 'N':
-
-          e.preventDefault();
-
-          togglePresenterNotes();
-
-          break;
-
-        case 'm':
-
-        case 'M':
-
-          e.preventDefault();
-
-          toggleChapterMenu();
-
-          break;
-
-        case 'r':
-
-        case 'R':
-
-          e.preventDefault();
-
-          resetSceneState(currentIdx);
-
-          break;
-
-        case 'd':
-
-        case 'D':
-
-          e.preventDefault();
-
-          toggleDebug();
-
-          break;
-
-        case 'Escape':
-
-          e.preventDefault();
-
-          if (isMenuOpen) {
-
-            closeChapterMenu();
-
-          } else if (isNotesOpen) {
-
-            togglePresenterNotes();
-
-          } else if (document.fullscreenElement) {
-
-            document.exitFullscreen();
-
-          }
-
-          break;
-
-      }
-
-    });
-
-    // 윈도우 스케일링 이벤트 리스너
-
-    window.addEventListener('resize', resizeViewport);
-
-    window.addEventListener('load', initPresentation);
-
-    // ══════════════════════════════════════════════════════════
-
-    //  장면별 개별 연출 및 인터랙션 스크립트
-
-    // ══════════════════════════════════════════════════════════
-
-    
-
-    // ── [CH 00 / SC 01] 오프닝 부팅 터미널 연출 ──
-
-    const terminalLines = [
-
-      "ESTABLISHING CONTEXT COGNITIVE BRIDGE...",
-
-      "TARGET DOMAIN: DEEP DREAM SYSTEM [LUCID_DIVER]",
-
-      "CREW ON-DECK: REMnants",
-
-      "CHECKING DIVER INTEGRITY... SUCCESS",
-
-      "CHECKING TACTICAL LINK... SUCCESS",
-
-      "ESTABLISHED MIND LINK STAGE P-0.5",
-
-      "CRITICAL: SLEEP DISEASE DETECTION RATIO 100%",
-
-      "CONNECTING..."
-
-    ];
-
-    function startBootTerminal() {
-
-      const output = document.getElementById('bootTerminalOutput');
-
-      if (!output) return;
-
-      output.innerHTML = '';
-
-      
-
-      let lineIdx = 0;
-
-      function printLine() {
-
-        if (lineIdx < terminalLines.length) {
-
-          const div = document.createElement('div');
-
-          div.className = 'log-line show';
-
-          div.innerHTML = `<span style="color:#00ffcc">></span> ${terminalLines[lineIdx]}`;
-
-          output.appendChild(div);
-
-          lineIdx++;
-
-          setTimeout(printLine, 350);
-
-        } else {
-
-          // 커서 깜빡임과 버튼 활성화
-
-          const cursorDiv = document.createElement('div');
-
-          cursorDiv.innerHTML = `<span class="terminal-cursor"></span>`;
-
-          output.appendChild(cursorDiv);
-
-          document.getElementById('bootActionContainer').style.opacity = '1';
-
-        }
-
-      }
-
-      setTimeout(printLine, 500);
-
-    }
-
-    // ── [CH 01 / SC 01] 개요 순차 텔레메트리 ──
-
-    function triggerOverviewAnimation() {
-
-      const lines = document.querySelectorAll('#overviewLogTerminal .log-line');
-
-      lines.forEach(line => {
-
-        const delay = parseInt(line.getAttribute('data-delay') || '0', 10);
-
-        setTimeout(() => {
-
-          line.classList.add('show');
-
-        }, delay);
-
-      });
-
-      // 우측 성과 카드 노출
-
-      setTimeout(() => document.getElementById('pillar1').classList.add('show'), 1500);
-
-      setTimeout(() => document.getElementById('pillar2').classList.add('show'), 2200);
-
-    }
-
-    // ── [CH 02 / SC 01] 디자인 챌린지 인터랙션 ──
-
-    function triggerChallengeAnimation() {
-
-      const node = document.getElementById('conflictNode');
-
-      const overlay = document.getElementById('resolutionOverlay');
-
-      
-
-      // 발표 중 마우스가 노드에 올 때 연출
-
-      node.style.cursor = 'pointer';
-
-      node.onclick = () => {
-
-        node.textContent = 'SYNC';
-
-        node.classList.add('resolved');
-
-        overlay.classList.add('show');
-
-      };
-
-    }
-
-    // ── [CH 03 / SC 01] 플레이 루프 인터랙티브 ──
-
-    const loopSteps = [
-
-      {
-
-        title: "01. 출격 준비 (현실 스테이지)",
-
-        desc: "현실 로비에서 관제 정보 보드로 탈출 지점을 정비하고, 소모품 및 심상기록 장비를 강화합니다."
-
-      },
-
-      {
-
-        title: "02. 침몽도시 세션 진입 (다이브)",
-
-        desc: "뇌파 동조 링크를 가동하여 다이버가 대상의 침몽 영역으로 진입합니다. 진입 직후에는 몽막 필터 노이즈와 시야 페널티가 최대로 적용됩니다."
-
-      },
-
-      {
-
-        title: "03. 기억 파편 탐색 (동조율 수집)",
-
-        desc: "관제사의 전술 레이더 힌트를 얻어가며 맵에 쪼개진 핵심 기억 조각(Memory)을 수집하여 동조 상태를 유지합니다."
-
-      },
-
-      {
-
-        title: "04. 에너미 전투 및 심상 정화",
-
-        desc: "기본 꿈식자(Monster_Test) 개체와 마주합니다. 관제사가 적의 상태 FSM 및 위협 패턴을 무선 지시하며 격파를 서포트합니다."
-
-      },
-
-      {
-
-        title: "05. 전화부스 탈출 / 강제 각성 (분기)",
-
-        desc: "심상 정화 완료 후 활성화된 전화부스 구역을 통해 현실로 귀환하거나, 침몽 붕괴 시간이 초과되어 강제 각성 패널티를 안고 복귀합니다."
-
-      }
-
-    ];
-
-    function activateLoopStep(stepIdx) {
-
-      const rows = document.querySelectorAll('.loop-node-row');
-
-      rows.forEach((r, i) => {
-
-        if (i === stepIdx) r.classList.add('active');
-
-        else r.classList.remove('active');
-
-      });
-
-      document.getElementById('loopStepTitle').textContent = loopSteps[stepIdx].title;
-
-      document.getElementById('loopStepDesc').textContent = loopSteps[stepIdx].desc;
-
-    }
-
-    function toggleLoopRoute(routeType) {
-
-      const successBtn = document.querySelector('.btn-route--success');
-
-      const failureBtn = document.querySelector('.btn-route--failure');
-
-      const resultText = document.getElementById('routeResultText');
-
-      if (routeType === 'success') {
-
-        successBtn.classList.add('active');
-
-        failureBtn.classList.remove('active');
-
-        resultText.style.color = 'var(--accent-teal)';
-
-        resultText.innerHTML = '<strong>[성공 결과]</strong> 안전 귀환 완료. 획득한 모든 기억 조각이 스토리에 누적되며, 기어 파편 100%가 보존됩니다.';
-
-      } else {
-
-        failureBtn.classList.add('active');
-
-        successBtn.classList.remove('active');
-
-        resultText.style.color = 'var(--accent-red)';
-
-        resultText.innerHTML = '<strong>[실패 결과]</strong> 강제 각성으로 현실 귀환. 이번 세션에서 정화하지 못한 획득 파편은 전부 소실되며, 미회수된 기억으로 인해 다이버의 자아가 추가 마모됩니다.';
-
-      }
-
-    }
-
-    // ── [CH 05 / SC 01] UI 비교 슬라이더 연출 ──
-
-    function handleComparisonMove(e) {
-
-      const frame = document.getElementById('compFrame');
-
-      const afterImg = document.getElementById('compAfterImg');
-
-      const slider = document.getElementById('compSlider');
-
-      const rect = frame.getBoundingClientRect();
-
-      let x = (e.clientX || e.touches[0].clientX) - rect.left;
-
-      
-
-      // 경계 제한
-
-      if (x < 0) x = 0;
-
-      if (x > rect.width) x = rect.width;
-
-      const pct = (x / rect.width) * 100;
-
-      afterImg.style.clipPath = `polygon(0 0, ${pct}% 0, ${pct}% 100%, 0 100%)`;
-
-      slider.style.left = `${pct}%`;
-
-    }
-
-    // ── [CH 05 / SC 02] UI 시뮬레이터 탭 전환 ──
-
-    function switchSimTab(tabIdx) {
-
-      const tabs = document.querySelectorAll('.btn-sim-tab');
-
-      const panels = document.querySelectorAll('.sim-panel');
-
-      tabs.forEach((tab, i) => {
-
-        if (i === tabIdx) tab.classList.add('active');
-
-        else tab.classList.remove('active');
-
-      });
-
-      panels.forEach((panel, i) => {
-
-        if (i === tabIdx) panel.classList.add('active');
-
-        else panel.classList.remove('active');
-
-      });
-
-    }
-
-    // ── 장면 진입 애니메이션 트리거 ──
-
-    function triggerSceneAnimation(scene) {
-
-      const ch = scene.getAttribute('data-chapter');
-
-      const sc = scene.getAttribute('data-scene');
-
-      if (ch === '01' && sc === '01') {
-
-        triggerOverviewAnimation();
-
-      } else if (ch === '02' && sc === '01') {
-
-        triggerChallengeAnimation();
-
-      }
-
-    }
-
-    // ── 장면 상태 초기화 함수 (R키 또는 장면 이동 시 작동) ──
-
-    function resetSceneState(index) {
-
-      const scene = scenes[index];
-
-      if (!scene) return;
-
-      const ch = scene.getAttribute('data-chapter');
-
-      const sc = scene.getAttribute('data-scene');
-
-      if (ch === '00' && sc === '01') {
-
-        startBootTerminal();
-
-      }
-
-      else if (ch === '01' && sc === '01') {
-
-        const lines = document.querySelectorAll('#overviewLogTerminal .log-line');
-
-        lines.forEach(line => line.classList.remove('show'));
-
-        document.getElementById('pillar1').classList.remove('show');
-
-        document.getElementById('pillar2').classList.remove('show');
-
-      }
-
-      else if (ch === '02' && sc === '01') {
-
-        const node = document.getElementById('conflictNode');
-
-        const overlay = document.getElementById('resolutionOverlay');
-
-        node.textContent = '?';
-
-        node.classList.remove('resolved');
-
-        overlay.classList.remove('show');
-
-      }
-
-      else if (ch === '03' && sc === '01') {
-
-        activateLoopStep(0);
-
-        document.querySelector('.btn-route--success').classList.remove('active');
-
-        document.querySelector('.btn-route--failure').classList.remove('active');
-
-        document.getElementById('routeResultText').textContent = '시뮬레이션 경로를 클릭하세요.';
-
-        document.getElementById('routeResultText').style.color = 'var(--text-muted)';
-
-      }
-
-      else if (ch === '03' && sc === '02') {
-
-        currentSync = 15;
-
-        document.getElementById('syncMeterFill').style.width = '15%';
-
-        document.getElementById('syncMeterText').textContent = '현재 동조율: 15%';
-
-        document.getElementById('syncFeedback').textContent = '기억 조각을 눌러서 흡수하십시오.';
-
-        document.querySelectorAll('.memory-fragment-item').forEach(item => {
-
-          item.style.opacity = '1';
-
-          item.style.pointerEvents = 'auto';
-
-          item.style.transform = 'none';
-
-        });
-
-      }
-
-      else if (ch === '05' && sc === '01') {
-
-        document.getElementById('compAfterImg').style.clipPath = 'polygon(0 0, 50% 0, 50% 100%, 0 100%)';
-
-        document.getElementById('compSlider').style.left = '50%';
-
-      }
-
-      else if (ch === '05' && sc === '02') {
-
-        switchSimTab(0);
-
-      }
-
-    }
-
-  </script>
-
+  <script src="script.js"></script>
 </body>
-
 </html>
-
