@@ -9,9 +9,9 @@
 
 ## 1. 발표 웹페이지 수록용 주요 텍스트 (Title & Highlights)
 
-### 🏢 CP의 레벨 기획 원안 바탕 40x40 마트 맵 실기 구현 (Ch 08)
-- **지상 K-상점가 & 40x40 슈퍼숍 마트 맵 구현**:
-  - 장수영 CP의 레벨 기획 원안([프로토타입_맵_상가_구역_레벨_디자인.md](../../../LucidDiver_Document/01_SSOT_최종_기준문서/프로토타입_맵_상가_구역_레벨_디자인.md))을 바탕으로 40x40 마트 맵 실기 씬(`SuperShop_Level`) 및 3중 레이어 지형/건물 구성.
+### 🏢 CP의 레벨 기획 원안 바탕 슈퍼숍 마트 맵 실기 구현 (Ch 08)
+- **슈퍼숍 마트 맵 구현**:
+  - 장수영 CP의 레벨 기획 원안([프로토타입_맵_상가_구역_레벨_디자인.md](../../../LucidDiver_Document/01_SSOT_최종_기준문서/프로토타입_맵_상가_구역_레벨_디자인.md))을 바탕으로 슈퍼숍 마트 맵 실기 씬(`SuperShop_Level`) 및 3중 레이어 지형/건물 구성.
 - **물리 콜라이더 & 렌더링 안점화**:
   - 외곽 도로 차량 오브젝트 `BoxCollider` 전수 배치 (플레이어 통과 버그 해결).
   - Quad 2장 겹침으로 인한 Z-Fighting 깜빡임 결함을 **Cube 메시 + 머티리얼 방식**으로 교체 및 완벽 해소.
@@ -72,7 +72,7 @@
 
 | 구분 | 파일 경로 (relative to presentation/) | 에셋 설명 / 연출 포인트 |
 |:---:|:---|:---|
-| **이미지** | `assets/images/PD_Mart_Level_Overview.png` | 실기 씬(`SuperShop_Level`) 40x40 마트 맵 조감도 |
+| **이미지** | `assets/images/PD_Mart_Level_Overview.png` | 실기 씬(`SuperShop_Level`) 슈퍼숍 마트 맵 조감도 |
 | **영상** | `assets/videos/PD_Wall_Occlusion_Shader.mp4` | 카메라 이동 시 가림벽 반투명 알파 페이드 연출 실기 영상 |
 | **GIF** | `assets/images/PD_Flashlight_Volumetric.gif` | 듀얼 Spot Light 및 URP Volumetric Light 빛줄기 시각화 모션 GIF |
 | **이미지** | `assets/images/PD_DiverRecord_RectMask.png` | `Rect Mask 2D`가 적용된 `Canvas-DiverRecord` 스크롤 뷰 캡처 |
