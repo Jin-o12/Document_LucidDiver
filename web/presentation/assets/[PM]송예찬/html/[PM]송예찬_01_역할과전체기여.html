@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>송예찬 — 역할과 전체 기여</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #03050c;
+      --panel: rgba(10, 15, 31, 0.94);
+      --panel-2: #0d1428;
+      --text: #f5f7ff;
+      --muted: #aab4ca;
+      --cyan: #6ce7f2;
+      --violet: #ad77ff;
+      --gold: #f0bb73;
+      --line: rgba(122, 226, 239, 0.24);
+    }
+
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Pretendard, "Noto Sans KR", "Malgun Gothic", sans-serif;
+    }
+
+    button, a { font: inherit; }
+    button { color: inherit; }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 16% 18%, rgba(94, 60, 173, 0.18), transparent 31%),
+        radial-gradient(circle at 82% 72%, rgba(27, 147, 168, 0.14), transparent 32%),
+        linear-gradient(rgba(106, 231, 242, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(106, 231, 242, 0.025) 1px, transparent 1px);
+      background-size: auto, auto, 48px 48px, 48px 48px;
+    }
+
+    .page {
+      position: relative;
+      min-height: 100%;
+      padding: clamp(28px, 4.6vh, 58px) clamp(28px, 6vw, 112px) 32px;
+      isolation: isolate;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--cyan);
+      font-size: clamp(0.65rem, 0.8vw, 0.82rem);
+      font-weight: 800;
+      letter-spacing: 0.23em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 1100px;
+      margin: 0;
+      font-size: clamp(2.05rem, 4.2vw, 4.7rem);
+      line-height: 1.06;
+      letter-spacing: -0.045em;
+    }
+
+    .lead {
+      max-width: 840px;
+      margin: 15px 0 0;
+      color: #c2cada;
+      font-size: clamp(0.88rem, 1.15vw, 1.08rem);
+      line-height: 1.68;
+    }
+
+    .role-board {
+      position: relative;
+      width: min(1360px, 100%);
+      height: min(58vh, 570px);
+      min-height: 390px;
+      margin: clamp(22px, 4vh, 44px) auto 0;
+    }
+
+    .role-board::before {
+      content: "";
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: 50%;
+      height: 1px;
+      transform: rotate(14deg);
+      transform-origin: center;
+      background: linear-gradient(90deg, transparent, rgba(108, 231, 242, 0.38), rgba(173, 119, 255, 0.32), transparent);
+      box-shadow: 0 0 18px rgba(108, 231, 242, 0.18);
+    }
+
+    .role-card {
+      --accent: var(--cyan);
+      position: absolute;
+      width: min(37vw, 470px);
+      min-width: 320px;
+      height: clamp(180px, 23vh, 236px);
+      padding: clamp(22px, 2.2vw, 34px);
+      overflow: hidden;
+      text-align: left;
+      border: 1px solid color-mix(in srgb, var(--accent) 36%, transparent);
+      border-radius: 22px;
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, transparent), transparent 48%),
+        rgba(8, 13, 28, 0.9);
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.4), inset 0 1px rgba(255,255,255,0.035);
+      cursor: pointer;
+      transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+    }
+
+    .role-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -25% -55% 35%;
+      height: 170px;
+      border-radius: 50%;
+      background: var(--accent);
+      filter: blur(75px);
+      opacity: 0.13;
+      pointer-events: none;
+    }
+
+    .role-card:hover,
+    .role-card:focus-visible {
+      transform: translateY(-8px) scale(1.025);
+      border-color: color-mix(in srgb, var(--accent) 78%, transparent);
+      box-shadow: 0 28px 64px rgba(0,0,0,0.5), 0 0 35px color-mix(in srgb, var(--accent) 23%, transparent);
+      outline: none;
+      filter: brightness(1.08);
+    }
+
+    .role-card.pm { --accent: var(--cyan); left: 1%; top: 0; }
+    .role-card.planning { --accent: var(--violet); left: 31.5%; top: 30%; }
+    .role-card.development { --accent: var(--gold); right: 1%; bottom: 0; }
+
+    .card-index {
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+    }
+
+    .role-card h2 {
+      margin: 12px 0 10px;
+      font-size: clamp(1.35rem, 2.1vw, 2.05rem);
+      letter-spacing: -0.035em;
+    }
+
+    .role-card p {
+      max-width: 390px;
+      margin: 0;
+      color: #b6bfd2;
+      font-size: clamp(0.78rem, 0.92vw, 0.93rem);
+      line-height: 1.58;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 16px;
+    }
+
+    .chip {
+      padding: 6px 10px;
+      border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.028);
+      color: #dce2ef;
+      font-size: clamp(0.64rem, 0.72vw, 0.74rem);
+      white-space: nowrap;
+    }
+
+    .open-label {
+      position: absolute;
+      right: 24px;
+      bottom: 20px;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 800;
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .role-card:hover .open-label,
+    .role-card:focus-visible .open-label { opacity: 1; transform: translateX(0); }
+
+    .page-foot {
+      position: fixed;
+      left: clamp(28px, 6vw, 112px);
+      right: clamp(28px, 6vw, 112px);
+      bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #7e8aa5;
+      font-size: 0.72rem;
+      pointer-events: none;
+    }
+
+    .page-count { color: var(--cyan); font-weight: 800; letter-spacing: 0.15em; }
+
+    .modal-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: grid;
+      place-items: center;
+      padding: clamp(12px, 2.5vw, 38px);
+      background: rgba(0, 2, 9, 0.78);
+      backdrop-filter: blur(10px) saturate(0.72);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 190ms ease;
+    }
+
+    .modal-layer.open { opacity: 1; pointer-events: auto; }
+
+    .detail {
+      --accent: var(--cyan);
+      position: relative;
+      width: min(1180px, 96vw);
+      height: min(820px, 92vh);
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+      border-radius: 24px;
+      background: rgba(7, 11, 24, 0.985);
+      box-shadow: 0 40px 110px rgba(0,0,0,0.72), 0 0 55px color-mix(in srgb, var(--accent) 13%, transparent);
+      transform: translateY(24px) scale(0.965);
+      transition: transform 220ms cubic-bezier(.2,.75,.2,1);
+    }
+
+    .modal-layer.open .detail { transform: translateY(0) scale(1); }
+    .detail[data-kind="planning"] { --accent: var(--violet); }
+    .detail[data-kind="development"] { --accent: var(--gold); }
+
+    .detail-head {
+      position: absolute;
+      inset: 0 0 auto;
+      z-index: 3;
+      min-height: 116px;
+      padding: 23px 82px 20px 34px;
+      border-bottom: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
+      background: rgba(8, 13, 28, 0.96);
+      backdrop-filter: blur(12px);
+    }
+
+    .detail-kicker {
+      margin: 0 0 6px;
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+    }
+
+    .detail-title {
+      margin: 0;
+      font-size: clamp(1.65rem, 2.7vw, 2.65rem);
+      letter-spacing: -0.04em;
+    }
+
+    .close {
+      position: absolute;
+      top: 26px;
+      right: 27px;
+      z-index: 5;
+      width: 46px;
+      height: 46px;
+      padding: 0;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 50%;
+      background: rgba(255,255,255,0.035);
+      color: #f5f7ff;
+      font-size: 1.35rem;
+      cursor: pointer;
+      transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+    }
+
+    .close:hover, .close:focus-visible {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 13%, transparent);
+      transform: rotate(5deg) scale(1.06);
+      outline: none;
+    }
+
+    .detail-scroll {
+      height: 100%;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 145px clamp(24px, 4vw, 58px) 40px;
+      scrollbar-color: color-mix(in srgb, var(--accent) 58%, transparent) rgba(255,255,255,0.04);
+      scrollbar-width: thin;
+    }
+
+    .detail-intro {
+      max-width: 880px;
+      margin: 0 0 28px;
+      color: #c3cbdb;
+      font-size: clamp(0.9rem, 1.1vw, 1.04rem);
+      line-height: 1.75;
+    }
+
+    .section-label {
+      margin: 30px 0 14px;
+      color: var(--accent);
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .work-item {
+      padding: 19px 20px;
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 15px;
+      background: rgba(255,255,255,0.027);
+    }
+
+    .work-item h3 {
+      margin: 0 0 8px;
+      color: #f4f6ff;
+      font-size: 1rem;
+    }
+
+    .work-item p {
+      margin: 0;
+      color: #aeb8cd;
+      font-size: 0.84rem;
+      line-height: 1.65;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 5px 9px;
+      border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 0.65rem;
+      font-weight: 850;
+      letter-spacing: 0.05em;
+    }
+
+    .notice {
+      margin-top: 17px;
+      padding: 16px 18px;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      background: color-mix(in srgb, var(--accent) 7%, transparent);
+      color: #c5cede;
+      font-size: 0.82rem;
+      line-height: 1.65;
+    }
+
+    .evidence-hero { margin: 0 0 16px; }
+    .evidence-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-bottom: 28px; }
+    .evidence-link { display: block; position: relative; overflow: hidden; border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent); border-radius: 16px; background: #050711; color: #e7edf7; text-decoration: none; }
+    .evidence-link img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; transition: transform 220ms ease, filter 220ms ease; }
+    .evidence-link:hover img, .evidence-link:focus-visible img { transform: scale(1.015); filter: brightness(1.08); }
+    .evidence-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .evidence-caption { display: flex; justify-content: space-between; gap: 12px; padding: 12px 15px; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(8,13,28,0.94); font-size: 0.76rem; font-weight: 750; }
+    .evidence-caption span:last-child { color: var(--accent); white-space: nowrap; }
+    .image-viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: clamp(14px, 3vw, 42px);
+      background: rgba(0, 2, 9, 0.94);
+      backdrop-filter: blur(14px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms ease;
+    }
+
+    .image-viewer.open { opacity: 1; pointer-events: auto; }
+
+    .image-viewer-frame {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: min(1600px, 96vw);
+      height: min(900px, 92vh);
+      overflow: hidden;
+      border: 1px solid rgba(86, 231, 255, 0.38);
+      border-radius: 20px;
+      background: #050711;
+      box-shadow: 0 36px 100px rgba(0,0,0,0.78), 0 0 45px rgba(86,231,255,0.1);
+      transform: scale(0.96);
+      transition: transform 200ms cubic-bezier(.2,.75,.2,1);
+    }
+
+    .image-viewer.open .image-viewer-frame { transform: scale(1); }
+
+    .image-viewer-image {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .image-viewer-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 2;
+      width: 46px;
+      height: 46px;
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 50%;
+      background: rgba(5,7,17,0.82);
+      color: #fff;
+      font-size: 1.35rem;
+      cursor: pointer;
+    }
+
+    .image-viewer-close:hover, .image-viewer-close:focus-visible {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      outline: none;
+      transform: scale(1.06);
+    }
+    .detail-guide { display:flex; flex-wrap:wrap; gap:8px; margin:-8px 0 24px; }
+    .guide-chip { padding:7px 11px; border:1px solid rgba(255,255,255,.1); border-radius:999px; background:rgba(255,255,255,.03); color:#aeb8cd; font-size:.7rem; font-weight:800; }
+    .guide-chip.direct { border-color:color-mix(in srgb,var(--accent) 44%,transparent); color:var(--accent); }
+    .guide-chip.draft { border-color:rgba(170,118,255,.35); color:#c9a6ff; }
+    .guide-chip.followup { border-color:rgba(255,190,102,.35); color:#ffd08f; }
+    .case-stack { display:grid; gap:13px; }
+    .case-study { overflow:hidden; border:1px solid rgba(255,255,255,.1); border-radius:17px; background:rgba(255,255,255,.025); }
+    .case-study[open] { border-color:color-mix(in srgb,var(--accent) 34%,transparent); background:color-mix(in srgb,var(--accent) 4%,rgba(8,13,28,.98)); }
+    .case-summary { position:relative; display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:14px; min-height:78px; padding:15px 52px 15px 18px; cursor:pointer; list-style:none; }
+    .case-summary::-webkit-details-marker { display:none; }
+    .case-summary::after { content:'+'; position:absolute; right:20px; color:var(--accent); font-size:1.35rem; transition:transform 160ms ease; }
+    .case-study[open] .case-summary::after { transform:rotate(45deg); }
+    .case-summary:hover { background:color-mix(in srgb,var(--accent) 6%,transparent); }
+    .case-summary:focus-visible { outline:2px solid var(--accent); outline-offset:-3px; }
+    .case-index { display:grid; place-items:center; width:42px; height:42px; border:1px solid color-mix(in srgb,var(--accent) 40%,transparent); border-radius:12px; color:var(--accent); font-size:.7rem; font-weight:900; }
+    .case-title strong { display:block; margin-bottom:5px; color:#f3f6ff; font-size:1rem; }
+    .case-title span { display:block; color:#9eabc1; font-size:.76rem; line-height:1.45; }
+    .scope-tag { padding:5px 9px; border:1px solid color-mix(in srgb,var(--accent) 34%,transparent); border-radius:999px; color:var(--accent); font-size:.62rem; font-weight:900; white-space:nowrap; }
+    .scope-tag.draft { border-color:rgba(170,118,255,.35); color:#c9a6ff; }
+    .scope-tag.followup { border-color:rgba(255,190,102,.35); color:#ffd08f; }
+
+    .case-body { padding:4px 20px 22px; border-top:1px solid rgba(255,255,255,.07); }
+    .case-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:16px; }
+    .case-panel { padding:16px 17px; border:1px solid rgba(255,255,255,.08); border-radius:13px; background:rgba(3,6,16,.52); }
+    .case-panel.wide { grid-column:1/-1; }
+    .case-panel h4 { margin:0 0 8px; color:var(--accent); font-size:.7rem; letter-spacing:.1em; }
+    .case-panel p { margin:0; color:#bec7d8; font-size:.81rem; line-height:1.68; }
+    .case-panel ul { margin:0; padding-left:18px; color:#bec7d8; font-size:.79rem; line-height:1.75; }
+    .flow-line { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin-top:12px; }
+    .flow-line span { padding:7px 10px; border-radius:9px; background:rgba(255,255,255,.05); color:#dce3ef; font-size:.72rem; font-weight:750; }
+    .flow-line i { color:var(--accent); font-style:normal; }
+    .quote-proof { margin:13px 0 0; padding:14px 16px; border-left:3px solid var(--accent); border-radius:0 11px 11px 0; background:color-mix(in srgb,var(--accent) 7%,transparent); color:#e3e7f1; font-size:.85rem; line-height:1.65; }
+    .code-shot { grid-column:1/-1; overflow:hidden; border:1px solid rgba(86,231,255,.19); border-radius:14px; background:#050813; box-shadow:inset 0 1px rgba(255,255,255,.03); }
+    .code-head { display:flex; justify-content:space-between; gap:12px; padding:10px 13px; border-bottom:1px solid rgba(255,255,255,.08); background:rgba(12,18,36,.96); color:#8fa0bc; font-family:Consolas,'Courier New',monospace; font-size:.68rem; }
+    .code-head span:last-child { color:var(--accent); white-space:nowrap; }
+    .code-shot pre { margin:0; padding:15px 17px 18px; overflow-x:auto; color:#d8e5f4; font:.74rem/1.65 Consolas,'Courier New',monospace; tab-size:4; }
+    .code-shot .kw { color:#c695ff; }
+    .code-shot .fn { color:#5de7ff; }
+    .code-shot .str { color:#ffd08f; }
+    .code-shot .cm { color:#6f809b; }
+    .commit-strip { display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
+    .commit-strip span { padding:5px 8px; border-radius:8px; background:rgba(255,255,255,.045); color:#8fa0bc; font:.65rem Consolas,monospace; }
+    .work-ledger { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:14px; }
+    .ledger-item { padding:14px; border:1px solid rgba(255,255,255,.08); border-radius:12px; background:rgba(255,255,255,.025); }
+    .ledger-item strong { display:block; margin-bottom:6px; color:#eef2fa; font-size:.8rem; }
+    .ledger-item span { color:#98a6bc; font-size:.72rem; line-height:1.55; }
+    @media (max-width:760px) { .case-summary{grid-template-columns:auto minmax(0,1fr)} .scope-tag{grid-column:2;justify-self:start} .case-grid,.work-ledger{grid-template-columns:1fr} .case-panel.wide,.code-shot{grid-column:auto} }
+
+    .doc-showcase { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:16px; }
+    .doc-page { overflow:hidden; border:1px solid rgba(255,255,255,.11); border-radius:14px; background:linear-gradient(160deg,rgba(15,20,39,.98),rgba(6,9,20,.98)); box-shadow:0 12px 32px rgba(0,0,0,.24); }
+    .doc-page.featured { grid-column:1/-1; border-color:color-mix(in srgb,var(--accent) 34%,transparent); }
+    .doc-head { display:flex; justify-content:space-between; gap:12px; padding:13px 15px; border-bottom:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.025); }
+    .doc-head strong { color:#eef3fb; font-size:.8rem; line-height:1.45; }
+    .doc-version { color:var(--accent); font:700 .63rem Consolas,monospace; white-space:nowrap; }
+    .doc-content { padding:15px; }
+    .doc-meta { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:11px; }
+    .doc-meta span { padding:4px 7px; border-radius:7px; background:rgba(255,255,255,.05); color:#98a8bf; font-size:.62rem; }
+    .doc-meta .applied { color:#77efff; border:1px solid rgba(86,231,255,.25); }
+    .doc-meta .draft { color:#c9a6ff; border:1px solid rgba(170,118,255,.25); }
+    .doc-content h5 { margin:0 0 7px; color:var(--accent); font-size:.68rem; letter-spacing:.08em; }
+    .doc-content p { margin:0; color:#bec8da; font-size:.76rem; line-height:1.65; }
+
+    .doc-excerpt { margin:12px 0 0; padding:12px 13px; border-left:2px solid var(--accent); background:color-mix(in srgb,var(--accent) 6%,transparent); color:#e2e7f2; font-size:.78rem; line-height:1.62; }
+    .doc-path { display:block; margin-top:12px; color:#697a96; font:600 .6rem/1.5 Consolas,monospace; word-break:break-all; }
+    .doc-table { width:100%; margin-top:12px; border-collapse:collapse; font-size:.69rem; }
+    .doc-table th,.doc-table td { padding:8px 9px; border:1px solid rgba(255,255,255,.07); text-align:left; vertical-align:top; }
+    .doc-table th { color:var(--accent); background:rgba(255,255,255,.03); }
+    .doc-table td { color:#b8c3d6; }
+    .character-pitches { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-top:12px; }
+    .character-pitch { padding:11px; border:1px solid rgba(255,255,255,.08); border-radius:10px; background:rgba(255,255,255,.025); }
+    .character-pitch strong { display:block; margin-bottom:4px; color:#edf2fb; font-size:.73rem; }
+    .character-pitch span { color:#96a5bb; font-size:.65rem; line-height:1.5; }
+    @media(max-width:760px){.doc-showcase,.character-pitches{grid-template-columns:1fr}.doc-page.featured{grid-column:auto}}
+
+    .impact {
+      margin-top: 26px;
+      padding: 23px 24px;
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      border-radius: 17px;
+      background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, transparent), transparent 65%);
+    }
+
+    .impact strong { display: block; margin-bottom: 8px; color: var(--accent); font-size: 0.75rem; letter-spacing: 0.12em; }
+    .impact p { margin: 0; color: #e0e5f0; line-height: 1.7; }
+
+    .detail-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 28px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-button, .deep-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 16px;
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.035);
+      color: #dce2ee;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .nav-button:hover, .nav-button:focus-visible, .deep-link:hover, .deep-link:focus-visible {
+      border-color: var(--accent);
+      color: var(--accent);
+      outline: none;
+    }
+
+    .deep-link {
+      border-color: color-mix(in srgb, var(--accent) 42%, transparent);
+      background: color-mix(in srgb, var(--accent) 9%, transparent);
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    @media (max-width: 930px), (max-height: 720px) {
+      html, body { overflow: auto; }
+      .page { min-height: 100vh; padding-bottom: 70px; }
+      .role-board { height: auto; min-height: 0; display: grid; gap: 14px; }
+      .role-board::before { display: none; }
+      .role-card.pm, .role-card.planning, .role-card.development {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        min-width: 0;
+        height: auto;
+        min-height: 174px;
+      }
+      .page-foot { position: relative; left: auto; right: auto; bottom: auto; margin-top: 24px; }
+    }
+
+    @media (max-width: 720px) {
+      .work-grid { grid-template-columns: 1fr; }
+      .evidence-pair { grid-template-columns: 1fr; }
+      .detail-head { min-height: 104px; padding: 20px 68px 17px 22px; }
+      .detail-scroll { padding: 128px 20px 28px; }
+      .close { top: 20px; right: 18px; width: 42px; height: 42px; }
+      .detail-actions { align-items: stretch; flex-direction: column; }
+      .nav-button, .deep-link { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page" aria-labelledby="page-title">
+    <p class="eyebrow">SONG YECHAN · ROLE & CONTRIBUTION MAP</p>
+    <h1 id="page-title">PM 업무와 기획·개발을<br>병행해서 수행했습니다.</h1>
+    <p class="lead">세 역할은 상하 관계가 아닌 병행한 업무 축입니다. 각 카드를 선택하면 맡은 범위와 팀에 기여한 결과를 확인할 수 있습니다.</p>
+
+    <section class="role-board" aria-label="송예찬의 역할별 업무">
+      <button class="role-card pm" type="button" data-role="pm" aria-haspopup="dialog">
+        <span class="card-index">01 · PROJECT MANAGEMENT</span>
+        <h2>PM 업무</h2>
+        <p>일정·회의·개발 기록·문서와 빌드를 한곳에서 관리하는 Notion 팀 운영 허브를 직접 설계하고 운영했습니다.</p>
+        <span class="chips" aria-hidden="true"><span class="chip">Notion 운영 허브</span><span class="chip">업무지도</span><span class="chip">스크럼·개발일지</span></span>
+        <span class="open-label">세부 내용 보기 →</span>
+      </button>
+
+      <button class="role-card planning" type="button" data-role="planning" aria-haspopup="dialog">
+        <span class="card-index">02 · PLANNING</span>
+        <h2>기획 업무</h2>
+        <p>초기 컨셉 문서를 제안하고, 꿈식자는 세계관과 행동 구조를 직접 설계했습니다.</p>
+        <span class="chips" aria-hidden="true"><span class="chip">컨셉 초안</span><span class="chip">후속 초안</span><span class="chip">꿈식자 직접 기획</span></span>
+        <span class="open-label">세부 내용 보기 →</span>
+      </button>
+
+      <button class="role-card development" type="button" data-role="development" aria-haspopup="dialog">
+        <span class="card-index">03 · DEVELOPMENT</span>
+        <h2>개발 업무</h2>
+        <p>AI부터 튜토리얼, 입력·UI 피드백까지 실제 플레이에 필요한 기능을 구현하고 안정화했습니다.</p>
+        <span class="chips" aria-hidden="true"><span class="chip">Enemy AI</span><span class="chip">Tutorial</span><span class="chip">UI·VFX</span></span>
+        <span class="open-label">세부 내용 보기 →</span>
+      </button>
+    </section>
+
+    <footer class="page-foot"><span>카드를 클릭해 상세 업무를 확인하세요</span><span class="page-count">01 / 03 · OVERVIEW</span></footer>
+  </main>
+
+  <div class="modal-layer" id="modal-layer" aria-hidden="true">
+    <article class="detail" id="detail" role="dialog" aria-modal="true" aria-labelledby="detail-title" data-kind="pm">
+      <header class="detail-head">
+        <p class="detail-kicker" id="detail-kicker"></p>
+        <h2 class="detail-title" id="detail-title"></h2>
+      </header>
+      <button class="close" id="close" type="button" aria-label="상세 내용 닫기">×</button>
+      <div class="detail-scroll" id="detail-scroll"></div>
+    </article>
+  </div>
+
+  <div class="image-viewer" id="image-viewer" aria-hidden="true">
+    <div class="image-viewer-frame" role="dialog" aria-modal="true" aria-label="이미지 확대 보기">
+      <button class="image-viewer-close" id="image-viewer-close" type="button" aria-label="확대 이미지 닫기">×</button>
+      <img class="image-viewer-image" id="image-viewer-image" src="" alt="">
+    </div>
+  </div>
+
+  <template id="content-pm">
+    <p class="detail-intro">PM 역할의 핵심 결과물은 팀 REMnants의 Notion 운영 허브입니다. 전체 일정이 주별 목표와 하루 업무로 구체화되고, 팀원들의 실행 기록이 다시 주간 판단과 다음 일정으로 반영되는 하나의 업무지도를 목표로 정보 구조를 직접 설계하고 운영했습니다.</p>
+
+    <div class="evidence-hero">
+      <a class="evidence-link" href="../images/PM_Notion_WorkMap.png" data-image-viewer>
+        <img src="../images/PM_Notion_WorkMap.png" alt="전체 일정표부터 일일 개발일지와 주간 개발일지, 다음 일정 조정으로 이어지는 팀 업무지도">
+        <span class="evidence-caption"><span>Notion으로 구축한 순환형 팀 업무지도</span><span>이미지 확대 ↗</span></span>
+      </a>
+    </div>
+    <div class="evidence-pair">
+      <a class="evidence-link" href="../images/PM_Project_Timeline.png" data-image-viewer>
+        <img src="../images/PM_Project_Timeline.png" alt="기획부터 최종 발표까지의 팀 전체 일정">
+        <span class="evidence-caption"><span>전체 일정 타임라인</span><span>확대 ↗</span></span>
+      </a>
+      <a class="evidence-link" href="../images/PM_Weekly_Milestones.png" data-image-viewer>
+        <img src="../images/PM_Weekly_Milestones.png" alt="주차별 목표와 완료 조건을 정리한 마일스톤">
+        <span class="evidence-caption"><span>주별 마일스톤·판정 기준</span><span>확대 ↗</span></span>
+      </a>
+    </div>
+
+    <p class="section-label">직접 설계·구축한 운영 구조</p>
+    <div class="work-grid">
+      <section class="work-item"><span class="badge">계획 구조</span><h3>전체 일정 → 주별 → 일별</h3><p>프로젝트 전체 단계를 주별 목표와 완료 조건으로 나누고, 다시 팀원이 수행할 하루 단위 작업까지 연결했습니다.</p></section>
+      <section class="work-item"><span class="badge">실행 기록</span><h3>팀원별 일일 개발일지</h3><p>완료 작업, 발생 이슈와 다음 작업이 매일 축적되어 다른 팀원의 실제 진행 상태를 확인할 수 있도록 구성했습니다.</p></section>
+      <section class="work-item"><span class="badge">주간 취합</span><h3>PM 주간 개발일지</h3><p>팀원들의 일일 기록을 취합해 주간 성과, 완료·이월 항목과 다음 주 우선순위를 정리했습니다.</p></section>
+      <section class="work-item"><span class="badge">정보 통합</span><h3>문서·회의·빌드 중앙화</h3><p>스크럼과 미팅로그, 기획·개발 문서 보드, 저장소와 P0·알파·베타 빌드 링크를 하나의 운영 허브에 통합했습니다.</p></section>
+    </div>
+    <div class="notice"><strong>기여 구분:</strong> 팀원들의 개별 산출물을 모두 작성했다는 의미가 아니라, 각자의 작업이 계획·실행·기록·공유·다음 판단으로 연결되도록 Notion 페이지의 정보 구조와 운영 체계를 직접 만든 업무입니다.</div>
+    <div class="impact"><strong>TEAM CONTRIBUTION</strong><p>큰 일정에서 오늘의 작업까지 같은 흐름으로 내려오고, 실제 개발 기록이 다시 다음 주 일정으로 올라가도록 만들어 팀원 간 업무 공유와 우선순위 조정을 원활하게 했습니다.</p></div>
+    <div class="detail-actions"><button class="nav-button" type="button" data-nav="development">← 개발 업무</button><a class="deep-link" href="https://app.notion.com/p/elice-track/1-REMnants-05a2bb98425783ec8446013fb847e712" target="_blank" rel="noopener noreferrer">실제 Notion 운영 허브 보기 ↗</a><button class="nav-button" type="button" data-nav="planning">기획 업무 →</button></div>
+  </template>
+
+  <template id="content-planning">
+    <p class="detail-intro">기획 업무는 문서의 성격과 실제 반영 범위를 먼저 구분했습니다. 꿈식자는 세계관 컨셉부터 행동 규칙까지 직접 기획해 구현으로 연결했고, 나머지 초기 문서는 방향 검토를 위한 초안 또는 기존 기획의 후속 보완으로 표시했습니다.</p>
+    <div class="detail-guide"><span class="guide-chip direct">직접 기획·실제 적용</span><span class="guide-chip draft">초안·방향 제안</span><span class="guide-chip followup">기존 기획 후속 보완</span></div>
+    <div class="case-stack">
+      <details class="case-study" open>
+        <summary class="case-summary"><span class="case-index">P-01</span><span class="case-title"><strong>익스트랙션의 사냥꾼으로 설계한 꿈식자</strong><span>맵의 장애물이 아니라 탐색과 탈출 판단을 흔드는 능동적인 포식자</span></span><span class="scope-tag">직접 기획·구현 연결</span></summary>
+        <div class="case-body">
+                    <blockquote class="quote-proof">꿈식자는 맵에 배치된 장애물이 아니라, 플레이어가 남긴 흔적을 따라 꿈과 기억을 포식하고 탈출을 실패하게 만들려는 또 하나의 능동적인 사냥꾼입니다.</blockquote>
+          <div class="doc-showcase">
+            <article class="doc-page"><header class="doc-head"><strong>몬스터 컨셉 기획서</strong><span class="doc-version">2026.06.14 · v0.1</span></header><div class="doc-content"><div class="doc-meta"><span>작성자 송예찬</span><span class="draft">검수 전 수정안</span><span>P0 최소 범위</span></div><h5>출발점 · 구역을 배회하는 하위 포식자</h5><div class="doc-excerpt">“침몽도시 골목길을 2~3마리씩 배회하는 하위 침식체”</div><p style="margin-top:10px">정해진 자리를 지키는 경비가 아니라 먹잇감을 찾기 위해 구역을 돌아다니는 존재로 최초 역할을 정의했습니다.</p><span class="doc-path">검수전_송예찬_원본/컨셉_기획/몬스터_컨셉_기획서.md</span></div></article>
+            <article class="doc-page"><header class="doc-head"><strong>P0.5 꿈식자 AI 및 컨셉 기획서</strong><span class="doc-version">2026.07.01 · v1.0.0</span></header><div class="doc-content"><div class="doc-meta"><span>기획·개발 송예찬</span><span class="draft">검토 대기 초안</span><span class="applied">핵심 의도 구현 연결</span></div><h5>확장 · 오래 탐색할수록 커지는 사냥 압박</h5><div class="doc-excerpt">“2~3마리 배치 시 소리, 탐색, 추격 기억, 먹잇감 차단 이동을 통해 긴장감을 형성하는 기본 위협체”</div><p style="margin-top:10px">익스트랙션의 탐색 시간이 길어질수록 플레이어의 소리와 흔적이 사냥의 단서가 되고, 더 파밍할지 탈출할지 판단하게 만드는 방향으로 확장했습니다.</p><span class="doc-path">컨셉_기획서/P0.5_꿈식자_에너미_AI_및_컨셉_기획서_v1.0.0.md</span></div></article>
+          </div>
+                    <div class="case-grid">
+            <section class="case-panel"><h4>왜 존재하는가?</h4><p>플레이어의 이동을 잠시 막는 전투 장애물이 아니라, 탐색 시간이 길어질수록 자신이 사냥당하고 있다는 압박을 느끼게 하기 위해 설계했습니다.</p></section>
+            <section class="case-panel"><h4>무엇을 원하는가?</h4><p>꿈식자는 위치를 지키는 경비가 아닙니다. 악몽을 배회하며 사람의 꿈과 기억을 먹고, 플레이어를 먹잇감으로 인식해 쓰러뜨리려는 목적을 가진 존재입니다.</p></section>
+            <section class="case-panel wide"><h4>플레이어에게 어떤 판단을 요구하는가?</h4><p>전투 여부뿐 아니라 소음을 감수할지, 우회할지, 더 탐색할지, 확보한 전리품을 가지고 지금 탈출할지를 판단하게 만듭니다.</p><div class="flow-line"><span>탐색·파밍</span><i>→</i><span>소리와 흔적 발생</span><i>→</i><span>사냥 압박 증가</span><i>→</i><span>교전·우회 판단</span><i>→</i><span>더 파밍 / 지금 탈출</span></div></section>
+          </div>
+                    <article class="doc-page featured" style="margin-top:16px"><header class="doc-head"><strong>기획 의도를 AI 설계 원칙으로 바꾼 기준</strong><span class="doc-version">DESIGN RATIONALE</span></header><div class="doc-content"><table class="doc-table"><tr><th>기획 의도</th><th>설계 원칙</th></tr><tr><td>악몽을 돌아다니는 포식자</td><td>고정 초소가 아니라 먹잇감을 찾으며 구역을 배회</td></tr><tr><td>오래 탐색할수록 커지는 위험</td><td>플레이어가 만든 소리와 마지막 흔적을 사냥의 단서로 사용</td></tr><tr><td>전리품을 가지고 살아서 탈출하는 긴장</td><td>교전뿐 아니라 우회·추가 파밍·즉시 탈출 판단을 압박</td></tr><tr><td>기본 적 2~3마리의 무리 위협</td><td>고도의 협동 전술이 아니라 같은 자극에 반응하며 서로 다른 위치에서 경로를 압박</td></tr><tr><td>불공정한 전지적 AI 방지</td><td>플레이어 좌표를 항상 아는 대신 시야·소리·기억에 의존하고 추격을 포기할 조건도 제공</td></tr></table></div></article>
+          <div class="notice"><strong>페이지 역할 구분:</strong> 이 페이지에서는 왜 꿈식자를 이런 존재로 설계했는지만 설명합니다. 순찰·감지·조사·추격·공격·복귀 상태와 핵심 코드는 다음 페이지에서 보여줍니다.</div>
+          <div class="detail-actions"><span></span><a class="deep-link" href="[PM]송예찬_02_에너미AI_인터랙티브.html">다음 페이지 · 설계를 실제 AI로 구현한 방법 →</a></div>
+        </div>
+      </details>
+
+      <details class="case-study">
+        <summary class="case-summary"><span class="case-index">P-02</span><span class="case-title"><strong>프로젝트 초기 컨셉 문서</strong><span>핵심 플레이와 세계관 방향을 비교·검토하기 위한 문서화</span></span><span class="scope-tag draft">초안 작성</span></summary>
+        <div class="case-body"><div class="case-grid">
+          <section class="case-panel"><h4>작성 목적</h4><p>플레이어가 무엇을 반복하고 어떤 감정을 느껴야 하는지 팀이 비교할 수 있도록 프로젝트 의도, 핵심 플레이 루프와 몬스터·캐릭터·무장 연결 방향을 초안으로 정리했습니다.</p></section>
+          <section class="case-panel"><h4>발표 시 표현</h4><p>방향 검토를 위한 제안 문서이며 모두 정식 채택된 결과로 설명하지 않습니다. 이후 명세와 달라진 내용은 당시 검토 과정의 기록으로만 제시합니다.</p></section>
+          <section class="case-panel wide"><h4>문서에 담은 범위</h4><div class="flow-line"><span>프로젝트 의도</span><i>→</i><span>핵심 플레이 루프</span><i>→</i><span>세계관 키워드</span><i>→</i><span>캐릭터·몬스터 후보</span><i>→</i><span>무장 연결 방향</span></div></section>
+          <div class="doc-showcase" style="grid-column:1/-1">            <article class="doc-page"><header class="doc-head"><strong>몬스터 컨셉 기획서</strong><span class="doc-version">06.14</span></header><div class="doc-content"><div class="doc-meta"><span class="draft">검수 전 초안</span><span>P0: Monster_Test</span></div><p>기본 꿈식자의 배회·감지·근접 공격과 사망 보상, 상위 침식체의 확장 방향을 구분했습니다.</p></div></article>
+            <article class="doc-page"><header class="doc-head"><strong>캐릭터 컨셉 기획서</strong><span class="doc-version">06.14</span></header><div class="doc-content"><div class="doc-meta"><span class="draft">검수 전 초안</span><span>P0: Player_Test</span></div><p>플레이어 역할군과 5명의 캐릭터 후보, 전투 포지션과 특화 무기 연결 방향을 제안했습니다.</p></div></article>
+            <article class="doc-page"><header class="doc-head"><strong>기본·전용 무장 컨셉 기획서</strong><span class="doc-version">06.14</span></header><div class="doc-content"><div class="doc-meta"><span class="draft">검수 전 초안</span><span>P0: 에너지 권총</span></div><p>꿈 에너지인 마나를 소비하는 기본 무장과 7개 특화 무기군, 캐릭터별 무기 풀 후보를 정리했습니다.</p><div class="doc-excerpt">기본 무장 ‘희미한 잔상(REM Tracker)’ · 사격당 마나 1 소모</div></div></article>
+                        <article class="doc-page"><header class="doc-head"><strong>방어구 체계 컨셉 기획서</strong><span class="doc-version">06.15</span></header><div class="doc-content"><div class="doc-meta"><span class="draft">MVP 제안 초안</span><span>P0 제외</span></div><p>자아를 보호하는 정신 방벽, 현실성 유지도와 정신적 과부하라는 방어 구조를 세계관 용어로 제안했습니다.</p><div class="doc-excerpt">방어구 = 현실 안정 및 자아 보호 장치</div></div></article>
+            <article class="doc-page"><header class="doc-head"><strong>아이템·오브젝트 컨셉 기획서</strong><span class="doc-version">06.14</span></header><div class="doc-content"><div class="doc-meta"><span class="draft">검수 전 초안</span><span>P0: Item_Test·전화부스</span></div><p>심상기물 획득, 상자 개방과 탈출 전화부스의 P0·MVP 범위를 나누어 구현 우선순위를 제안했습니다.</p><div class="doc-excerpt">P0는 즉시 획득·즉시 탈출, 채널링과 보존 슬롯은 확장 범위</div></div></article></div>
+        </div></div>
+      </details>
+
+      <details class="case-study">
+        <summary class="case-summary"><span class="case-index">P-03</span><span class="case-title"><strong>캐릭터 컨셉·심층 기획 초안</strong><span>전투 역할과 성격·능력 연결을 실제 문서로 미리보기</span></span><span class="scope-tag draft">검수 전 초안</span></summary>
+        <div class="case-body">          <div class="doc-showcase">
+            <article class="doc-page featured"><header class="doc-head"><strong>《침몽도시: 루시드 다이버》 캐릭터 컨셉 기획서</strong><span class="doc-version">2026.06.14 · v1.0</span></header><div class="doc-content"><div class="doc-meta"><span>작성자 송예찬</span><span class="draft">검수 전 수정안</span><span>P0: Player_Test</span><span>MVP: 고유 캐릭터 5인</span></div><h5>역할군과 전투 포지션 제안</h5><p>캐릭터의 성격만 적는 데서 끝내지 않고, 각 인물이 전투에서 담당할 역할과 특화 무기 후보를 함께 정의했습니다.</p><table class="doc-table"><tr><th>역할군</th><th>플레이 기능</th><th>캐릭터 후보</th></tr><tr><td>브레이커</td><td>몽막 붕괴</td><td>에단</td></tr><tr><td>딜러</td><td>심상핵 치명타</td><td>레이라</td></tr><tr><td>서포터</td><td>회복·디버프 해제</td><td>헬레나</td></tr><tr><td>컨트롤러</td><td>스턴·진형 제어</td><td>채린</td></tr><tr><td>디펜더</td><td>방막·거점 방어</td><td>하선</td></tr></table><span class="doc-path">검수전_송예찬_원본/컨셉_기획/캐릭터_컨셉_기획서.md</span></div></article>
+          </div>
+                    <div class="character-pitches">
+            <div class="character-pitch"><strong>에단 · 브레이커</strong><span>“얼른 자러 가고 싶어 하는 천재 귀차니스트” · 해머/샷건 후보</span></div>
+            <div class="character-pitch"><strong>레이라 · 딜러</strong><span>“어둠이 무서운 중2병 허세 저격수” · 저격/지정사수소총 후보</span></div>
+            <div class="character-pitch"><strong>헬레나 · 서포터</strong><span>“부드러운 미소의 해부 매니아” · 회복과 지원 역할 후보</span></div>
+            <div class="character-pitch"><strong>채린 · 컨트롤러</strong><span>“꿈의 색채를 런처로 색칠하는 아티스트” · 로켓런처/기관단총 후보</span></div>
+            <div class="character-pitch"><strong>하선 · 디펜더</strong><span>“과로에 찌든 전술 관제 출신 멘토” · 방패권총/샷건 후보</span></div>
+          </div>
+                    <div class="doc-showcase">
+            <article class="doc-page featured"><header class="doc-head"><strong>캐릭터 심층 기획: 채린</strong><span class="doc-version">2026.06.17 · v1.14</span></header><div class="doc-content"><div class="doc-meta"><span>작성 원본 보관</span><span class="draft">검수 전 제안</span><span>성격 → 능력 연결</span></div><h5>방어적 불신을 전투 개성으로 변환</h5><p>‘직접 확인한 것만 믿는다’는 성격을 단순 설정으로 두지 않고, 조준 보정·위험 감지·프리즘 굴절 능력으로 연결하는 방향을 제안했습니다.</p><div class="doc-excerpt">“내가 직접 확인하지 않은 모든 정보는 나를 죽일 수 있다”는 방어 기제가 침몽도시에서 생존 감각으로 변환된다.</div><table class="doc-table"><tr><th>성격적 특징</th><th>능력 변환 초안</th></tr><tr><td>남의 말을 쉽게 믿지 않음</td><td>좌표를 교차 분석하는 에임 조준 보정</td></tr><tr><td>직접 본 것만 믿음</td><td>직접 조준한 구역의 프리즘 유탄</td></tr><tr><td>주변을 계속 의심함</td><td>은신 적·꿈속 덫을 알리는 위험 감지</td></tr></table><span class="doc-path">검수전_송예찬_원본/시나리오_및_세계관/260617_루시드다이버_캐릭터_심층기획_채린_V1.14.md</span></div></article>
+          </div>
+          <div class="notice"><strong>채택 범위:</strong> 위 역할군·캐릭터·능력은 초기 검토를 위한 초안입니다. 최종 게임에 모두 채택되었다고 표현하지 않으며, 캐릭터 수집·해금·감상 흐름은 송예찬의 작업 범위로 포함하지 않습니다.</div></div>
+      </details>
+
+      <details class="case-study">
+        <summary class="case-summary"><span class="case-index">P-04</span><span class="case-title"><strong>시나리오·프롤로그·인트로 후속 보완</strong><span>김남해 PD의 기존 기획을 이어받아 연결부와 표현을 보완</span></span><span class="scope-tag followup">기존 기획 후속</span></summary>
+        <div class="case-body"><div class="case-grid">
+          <section class="case-panel"><h4>본인 범위</h4><p>새로운 메인 시나리오를 처음부터 단독 작성한 것이 아니라, 김남해 PD의 기존 메인 시나리오와 프롤로그·인트로 구성을 이어받아 후속 초안을 보완했습니다.</p></section>
+          <section class="case-panel"><h4>기여 방식</h4><p>도입부 정보 순서, 장면 간 연결과 게임 플레이로 넘어가는 접점을 정리해 기존 기획을 구현 단계에서 사용할 수 있도록 다듬었습니다.</p></section>
+        </div></div>
+      </details>
+
+      <div class="notice"><strong>범위 원칙:</strong> 문서를 작성한 것과 최종안으로 채택된 것을 분리합니다. 꿈식자만 직접 기획·설계·구현까지 연결한 대표 사례이며, 다른 문서는 초안 또는 후속 보완으로 한정합니다.</div>
+      <div class="impact"><strong>TEAM CONTRIBUTION</strong><p>아이디어를 비교 가능한 문서로 만들고, 대표 사례인 꿈식자에서는 세계관 문장을 감지·조사·추격·공격·복귀라는 검증 가능한 행동 규칙으로 전환했습니다.</p></div>
+      <div class="detail-actions"><button class="nav-button" type="button" data-nav="pm">← PM 업무</button><button class="nav-button" type="button" data-nav="development">개발 업무 →</button></div>
+    </div>
+  </template>
+
+  <template id="content-development">
+    <p class="detail-intro">개발 업무는 기능 이름보다 실제로 어떤 문제를 코드로 해결했는지 중심으로 정리했습니다. 아래 코드는 Unity 저장소의 현재 소스와 송예찬 커밋에서 확인한 핵심 부분을 발표용으로 짧게 발췌한 것입니다.</p>
+    <div class="detail-guide"><span class="guide-chip direct">실제 Unity 코드</span><span class="guide-chip">커밋으로 검증</span><span class="guide-chip followup">공동·기존 기반은 별도 표기</span></div>
+    <div class="case-stack">
+      <details class="case-study" open>
+        <summary class="case-summary"><span class="case-index">D-01</span><span class="case-title"><strong>꿈식자 AI · 통제된 랜덤 순찰</strong><span>같은 패트롤 루트 안에서도 반복되지 않으며 도달 가능한 지점만 선택</span></span><span class="scope-tag">대표 작업</span></summary>
+        <div class="case-body"><div class="case-grid">
+          <section class="case-panel"><h4>문제</h4><p>고정 포인트만 순서대로 이동하면 여러 개체가 한 줄로 겹치고 순찰 패턴이 쉽게 읽혔습니다. 완전 무작위 이동은 벽 안이나 도달 불가능한 위치를 선택할 위험이 있었습니다.</p></section>
+          <section class="case-panel"><h4>해결</h4><p>패트롤 포인트 주변에서 후보를 무작위로 만들되 NavMesh 위 보정과 완전 경로 검증을 모두 통과한 위치만 목적지로 사용했습니다.</p></section>
+          <section class="case-panel wide"><h4>실행 흐름</h4><div class="flow-line"><span>스폰 지점 선택</span><i>→</i><span>개별 루트 할당</span><i>→</i><span>포인트 주변 후보 생성</span><i>→</i><span>NavMesh 검증</span><i>→</i><span>다음 인접 포인트 선택</span></div></section>
+          <div class="code-shot"><div class="code-head"><span>EnemyPatrolRoute.cs · 랜덤 목적지 검증</span><span>5a5343f / 88278ad</span></div><pre><span class="kw">for</span> (<span class="kw">int</span> i = 0; i &lt; randomSampleAttempts; i++)
+{
+    Vector2 offset = Random.insideUnitCircle * radius;
+    Vector3 candidate = point.position + <span class="kw">new</span> Vector3(offset.x, 0f, offset.y);
+
+    <span class="kw">if</span> (!NavMesh.<span class="fn">SamplePosition</span>(candidate, <span class="kw">out</span> NavMeshHit hit,
+            navMeshSampleDistance, agent.areaMask))
+        <span class="kw">continue</span>;
+
+    <span class="kw">if</span> (agent.<span class="fn">CalculatePath</span>(hit.position, path)
+        &amp;&amp; path.status == NavMeshPathStatus.PathComplete)
+        destination = hit.position;
+}</pre></div>
+        </div><div class="commit-strip"><span>247a0a8 소음 조사</span><span>4cb9910 차단 이동</span><span>f8de934 순찰·복귀 재설계</span><span>2a81ecc 군집 접근 분산</span></div>
+        <div class="detail-actions"><span></span><a class="deep-link" href="[PM]송예찬_02_에너미AI_인터랙티브.html">AI 전체 행동 구조 보기 →</a></div></div>
+      </details>
+
+      <details class="case-study">
+        <summary class="case-summary"><span class="case-index">D-02</span><span class="case-title"><strong>튜토리얼 런타임 진행 시스템</strong><span>기획 데이터를 장면·팝업·입력·게임 이벤트가 연결된 실제 진행 흐름으로 구현</span></span><span class="scope-tag">기획안 기반 구현</span></summary>
+        <div class="case-body"><div class="case-grid">
+          <section class="case-panel"><h4>담당 구분</h4><p>튜토리얼 원안은 우성혁 CD·장수영 CP가 기획했습니다. 송예찬은 JSON 단계 데이터, 독립 씬, UI, 입력 차단과 상자·적 처치·탈출 이벤트를 런타임으로 구현했습니다.</p></section>
+          <section class="case-panel"><h4>핵심 판단</h4><p>단계 번호만 강제로 증가시키지 않고 열림 조건과 클리어 조건을 데이터로 해석해, 실제 게임 이벤트가 발생해야 다음 안내가 진행되도록 만들었습니다.</p></section>
+          <section class="case-panel wide"><h4>진행 구조</h4><div class="flow-line"><span>JSON 가이드 로드</span><i>→</i><span>열림 조건 확인</span><i>→</i><span>팝업·하이라이트</span><i>→</i><span>입력 차단</span><i>→</i><span>게임 이벤트</span><i>→</i><span>다음 가이드</span></div></section>
+          <div class="code-shot"><div class="code-head"><span>TutorialManager.cs · 이벤트가 현재 단계를 닫고 다음 단계를 엶</span><span>bdef1c6 → 424edea</span></div><pre><span class="kw">public bool</span> <span class="fn">NotifyEvent</span>(<span class="kw">string</span> eventName)
+{
+    <span class="kw">bool</span> clearedCurrent = <span class="fn">TryClearCurrent</span>(
+        TutorialConditionTypes.Event, eventName);
+    <span class="kw">bool</span> openedNew = <span class="fn">TryOpenByCondition</span>(
+        TutorialConditionTypes.Event, eventName);
+    <span class="kw">return</span> clearedCurrent || openedNew;
+}
+
+<span class="cm">// 팝업 중 플레이 입력을 막고, 닫은 클릭이 발사로 새지 않게 다음 프레임에 복구</span>
+inputReader.<span class="fn">SetGameplayInputBlocked</span>(<span class="kw">true</span>);
+<span class="kw">yield return null</span>;
+readerToRestore.<span class="fn">SetGameplayInputBlocked</span>(<span class="kw">false</span>);</pre></div>
+        </div><div class="commit-strip"><span>bdef1c6 기본 시스템</span><span>3838dc8 씬·진행 추가</span><span>60122ec 우회·입력 누수 수정</span><span>424edea 전투 실습 안정화</span></div></div>
+      </details>
+
+      <details class="case-study">
+        <summary class="case-summary"><span class="case-index">D-03</span><span class="case-title"><strong>튜토리얼 조작 대상 하이라이트</strong><span>UI와 월드 대상의 위치를 따라가며 설명 단계와 조작 단계를 시각적으로 연결</span></span><span class="scope-tag">직접 구현</span></summary>
+        <div class="case-body"><div class="case-grid">
+          <section class="case-panel"><h4>문제</h4><p>텍스트 안내만으로는 플레이어가 눌러야 할 UI나 상호작용해야 할 월드 오브젝트를 바로 찾기 어려웠고, 팝업 종료 뒤 강조가 남는 상태 문제도 있었습니다.</p></section>
+          <section class="case-panel"><h4>해결</h4><p>가이드 데이터가 요청한 대상 ID를 수집해 화면 좌표 경계를 계산하고, 설명 중에는 주변을 암전하며 실제 조작 단계에서는 프레임과 목표 문구만 유지했습니다.</p></section>
+          <div class="code-shot"><div class="code-head"><span>TutorialHighlightController.cs · 데이터 기반 대상 수집과 생명주기</span><span>9d7af9e</span></div><pre><span class="kw">public bool</span> <span class="fn">Show</span>(TutorialGuideData guide)
+{
+    activeGuide = guide;
+    requestedTargetIds.<span class="fn">Clear</span>();
+    <span class="fn">AddTargetIds</span>(guide.UIHighlightPosition);
+    <span class="fn">AddTargetIds</span>(guide.HighlightEffectPosition);
+
+    hasHighlightRequest = requestedTargetIds.Count &gt; 0;
+    showDimPanels = hasHighlightRequest;
+    targetsDirty = <span class="kw">true</span>;
+    <span class="kw">return</span> hasHighlightRequest;
+}
+
+<span class="kw">public void</span> <span class="fn">Hide</span>()
+{
+    requestedTargetIds.<span class="fn">Clear</span>();
+    resolvedTargets.<span class="fn">Clear</span>();
+    <span class="fn">HideVisuals</span>();
+}</pre></div>
+        </div><div class="commit-strip"><span>UI·월드 대상 동시 지원</span><span>팝업 종료 시 일괄 정리</span><span>화면 가장자리 보정</span></div></div>
+      </details>
+
+      <details class="case-study">
+        <summary class="case-summary"><span class="case-index">D-04</span><span class="case-title"><strong>인벤토리 장착 가능 슬롯 하이라이트</strong><span>드래그한 아이템 종류에 맞는 목적지만 보여주고 취소 시 잔상을 제거</span></span><span class="scope-tag">직접 구현</span></summary>
+        <div class="case-body"><div class="case-grid">
+          <section class="case-panel"><h4>문제</h4><p>소모품과 아티팩트를 어디에 놓을 수 있는지 드래그 전에 알기 어려웠고, UI 표시 규칙과 실제 장착 규칙이 달라질 위험이 있었습니다.</p></section>
+          <section class="case-panel"><h4>해결</h4><p>공통 배치 정책으로 실제 장착 가능 여부를 판정한 뒤 퀵슬롯과 아티팩트 슬롯 중 유효한 대상만 점멸시켰습니다. UI 종료와 강제 취소에서는 즉시 숨겨 잔상을 방지했습니다.</p></section>
+          <div class="code-shot"><div class="code-head"><span>InventoryDragFeedbackController.cs · 유효한 드롭 대상만 표시</span><span>6e5f262</span></div><pre>ItemData itemData = sourceSlot.CurrentItemData;
+<span class="kw">bool</span> canUseQuickSlot = sourceSlot.CanAssignToQuickSlot
+    &amp;&amp; InventoryItemPlacementPolicy.<span class="fn">CanPlace</span>(
+        itemData, sourceSlot.CurrentItemTid,
+        InventoryDropTargetType.QuickSlot);
+
+<span class="kw">bool</span> canUseArtifactSlot =
+    InventoryItemPlacementPolicy.<span class="fn">CanPlace</span>(
+        itemData, InventoryDropTargetType.ArtifactSlot);
+
+<span class="fn">SetTargets</span>(quickSlotTargets, canUseQuickSlot);
+<span class="fn">SetTargets</span>(artifactSlotTargets, canUseArtifactSlot);</pre></div>
+        </div><div class="commit-strip"><span>공통 배치 정책</span><span>유효 슬롯 점멸</span><span>OnDisable 즉시 초기화</span></div></div>
+      </details>
+
+      <details class="case-study">
+        <summary class="case-summary"><span class="case-index">D-05</span><span class="case-title"><strong>총 발사 머즐 플래시·HDR 피드백</strong><span>기존 발사 로직 전체가 아니라 발사 순간의 빛과 VFX 가시성을 보강</span></span><span class="scope-tag">수정 범위 한정</span></summary>
+        <div class="case-body"><div class="case-grid">
+          <section class="case-panel"><h4>목표</h4><p>어두운 배경에서 발사 순간이 묻히는 문제를 해결하기 위해 총구 VFX와 매우 짧은 실시간 Light를 함께 재생했습니다.</p></section>
+          <section class="case-panel"><h4>안정화 판단</h4><p>발사마다 라이트를 생성하지 않고 하나의 컴포넌트를 재사용하며, 연사 시 효과를 누적하지 않고 유지 시간만 갱신했습니다. 일시정지 중 고정되지 않도록 실제 시간을 사용했습니다.</p></section>
+          <div class="code-shot"><div class="code-head"><span>PlayerWeapon.cs + MuzzleFlashLight.cs · 발사 피드백</span><span>bfd072d</span></div><pre><span class="cm">// 총구 위치와 방향으로 VFX와 짧은 발사광을 함께 재생</span>
+VFXService.Instance?.<span class="fn">Play</span>(
+    GameplayVFXIds.PlayerMuzzle,
+    firePoint.position, firePoint.rotation);
+muzzleFlashLight?.<span class="fn">PlayFlash</span>();
+
+<span class="cm">// 연사 시 새 라이트를 만들지 않고 현재 재생 시간을 갱신</span>
+playedFrame = Time.frameCount;
+remainingTime = Mathf.<span class="fn">Max</span>(0.01f, flashDuration);
+muzzleLight.intensity = peakIntensity;
+muzzleLight.enabled = <span class="kw">true</span>;</pre></div>
+        </div></div>
+      </details>
+
+      <section class="case-panel wide"><h4>추가 구현·안정화 기록</h4><div class="work-ledger">
+        <div class="ledger-item"><strong>커서 조준 Hitscan</strong><span>탄도 판정과 적중 궤적 연결 · 95a33eb</span></div>
+        <div class="ledger-item"><strong>상자·인벤토리 연동</strong><span>컨테이너 UI와 픽업 흐름 연결 · 82fe2d0</span></div>
+      </div></section>
+      <section class="case-panel wide"><div class="work-ledger">
+        <div class="ledger-item"><strong>아티팩트 장착·루팅</strong><span>장착 효과와 루팅 흐름 연결 · 7aca9f9 / c23023d</span></div>
+        <div class="ledger-item"><strong>종료 상태 입력 차단</strong><span>종료 뒤 전투·시간·UI 입력 차단 · 15baf92</span></div>
+        <div class="ledger-item"><strong>병합 유실 복구</strong><span>입력 참조·프리팹·VFX 연결 복구 · 2f085c3</span></div>
+        <div class="ledger-item"><strong>전투 피드백·보상</strong><span>피격 플래시·경직·보상 상자 연결 · 2a81ecc</span></div>
+      </div></section>
+      <div class="notice"><strong>코드 범위 안내:</strong> 기본 FSM과 전투 구조는 기존 기반을 확장한 것이며, AI 모듈 분리와 2연격은 공동 영역입니다. 튜토리얼은 원 기획이 아니라 런타임 구현 범위입니다.</div>
+      <div class="impact"><strong>TEAM CONTRIBUTION</strong><p>AI뿐 아니라 튜토리얼, 입력, UI 피드백, 인벤토리와 전투 VFX 사이의 연결 지점을 구현·안정화해 실제 시연 가능한 플레이 흐름을 완성했습니다.</p></div>
+      <div class="detail-actions"><button class="nav-button" type="button" data-nav="planning">기획 업무</button><a class="deep-link" href="[PM]송예찬_02_에너미AI_인터랙티브.html">꿈식자 AI 보기</a></div>
+    </div>
+  </template>
+
+  <script>
+    (() => {
+      const layer = document.getElementById('modal-layer');
+      const detail = document.getElementById('detail');
+      const scroll = document.getElementById('detail-scroll');
+      const title = document.getElementById('detail-title');
+      const kicker = document.getElementById('detail-kicker');
+      const closeButton = document.getElementById('close');
+      const imageViewer = document.getElementById('image-viewer');
+      const imageViewerImage = document.getElementById('image-viewer-image');
+      const imageViewerClose = document.getElementById('image-viewer-close');
+      const order = ['pm', 'planning', 'development'];
+      const labels = {
+        pm: ['01 · PROJECT MANAGEMENT', 'PM 업무'],
+        planning: ['02 · PLANNING', '기획 업무'],
+        development: ['03 · DEVELOPMENT', '개발 업무']
+      };
+      let activeRole = null;
+      let returnFocus = null;
+      let imageReturnFocus = null;
+
+      function openImageViewer(link) {
+        const preview = link.querySelector('img');
+        imageReturnFocus = link;
+        imageViewerImage.src = link.href;
+        imageViewerImage.alt = preview ? preview.alt : '확대 이미지';
+        imageViewer.classList.add('open');
+        imageViewer.setAttribute('aria-hidden', 'false');
+        imageViewerClose.focus();
+      }
+
+      function closeImageViewer() {
+        imageViewer.classList.remove('open');
+        imageViewer.setAttribute('aria-hidden', 'true');
+        imageViewerImage.removeAttribute('src');
+        if (imageReturnFocus) imageReturnFocus.focus();
+        imageReturnFocus = null;
+      }
+
+      function openRole(role) {
+        const template = document.getElementById(`content-${role}`);
+        if (!template) return;
+        activeRole = role;
+        returnFocus = document.activeElement;
+        detail.dataset.kind = role;
+        kicker.textContent = labels[role][0];
+        title.textContent = labels[role][1];
+        scroll.replaceChildren(template.content.cloneNode(true));
+        scroll.scrollTop = 0;
+        layer.classList.add('open');
+        layer.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        closeButton.focus();
+      }
+
+      function closeRole() {
+        layer.classList.remove('open');
+        layer.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        activeRole = null;
+        if (returnFocus && typeof returnFocus.focus === 'function') returnFocus.focus();
+      }
+
+      document.querySelectorAll('.role-card').forEach(card => {
+        card.addEventListener('click', () => openRole(card.dataset.role));
+      });
+
+      closeButton.addEventListener('click', closeRole);
+      layer.addEventListener('click', event => {
+        if (event.target === layer) closeRole();
+      });
+
+      scroll.addEventListener('click', event => {
+        const imageLink = event.target.closest('[data-image-viewer]');
+        if (imageLink) {
+          event.preventDefault();
+          openImageViewer(imageLink);
+          return;
+        }
+        const button = event.target.closest('[data-nav]');
+        if (button) openRole(button.dataset.nav);
+      });
+
+      imageViewerClose.addEventListener('click', closeImageViewer);
+      imageViewer.addEventListener('click', event => {
+        if (event.target === imageViewer) closeImageViewer();
+      });
+
+      document.addEventListener('keydown', event => {
+        if (imageViewer.classList.contains('open')) {
+          if (event.key === 'Escape') closeImageViewer();
+          return;
+        }
+        if (!activeRole) return;
+        if (event.key === 'Escape') closeRole();
+        if (event.key === 'Tab') {
+          const focusables = detail.querySelectorAll('button, a[href]');
+          if (!focusables.length) return;
+          const first = focusables[0];
+          const last = focusables[focusables.length - 1];
+          if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+          else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+        }
+      });
+
+      // 휠은 상세 본문 스크롤에만 사용하며 카드·페이지 전환에는 사용하지 않습니다.
+      void order;
+    })();
+  </script>
+</body>
+</html>
