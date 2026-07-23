@@ -72,6 +72,7 @@ window.scenes = [];
             });
           }
         });
+        resetSceneState(currentIdx);
         currentIdx = index;
         const nextActive = scenes[currentIdx];
         if (!nextActive) return;
@@ -103,17 +104,27 @@ window.scenes = [];
         console.warn('showScene execution recovered gracefully:', e);
       }
     }
-    // 미선언 예방용 안전 애니메이션 및 씬 리셋 제어 함수
-    function resetSceneState(idx) {
-      // 장면 복구용 상태 안전 리셋
-    }
-    function triggerSceneAnimation(activeScene) {
-      if (!activeScene) return;
-      const ch = activeScene.getAttribute('data-chapter');
-      const sc = activeScene.getAttribute('data-scene');
-      if (ch === '01' && sc === '01') {
-        triggerOverviewAnimation();
-      }
+    // 전역 순차 등장 애니메이션 헬퍼 (triggerSceneAnimation에서 호출)
+    function applyStaggerEntrance(scene) {
+      scene.querySelectorAll('.stagger-target').forEach(el => {
+        el.classList.remove('stagger-target', 'stagger-visible');
+      });
+      const targets = [];
+      const h1 = scene.querySelector('.scene-header h1');
+      const sub = scene.querySelector('.scene-header .subtitle');
+      if (h1) targets.push(h1);
+      if (sub) targets.push(sub);
+      scene.querySelectorAll('.glass-card').forEach(el => {
+        if (!el.classList.contains('pm-anim')) targets.push(el);
+      });
+      scene.querySelectorAll('.cd-flow-stage, .cd-wf-hint, .cd-wf-step.visible').forEach(el => {
+        targets.push(el);
+      });
+      const limited = targets.slice(0, 15);
+      limited.forEach((el, i) => {
+        el.classList.add('stagger-target');
+        setTimeout(() => el.classList.add('stagger-visible'), 80 + i * 80);
+      });
     }
     // 장면 이동 (락 무효화)
     function nextScene() {
@@ -602,20 +613,328 @@ window.scenes = [];
         else panel.classList.remove('active');
       });
     }
+    // ── [CH 05 / SC 02] 캐릭터 비주얼 크로스페이드 ──
+    function revealCharPanel(panelId) {
+      const panel = document.getElementById(panelId);
+      if (!panel) return;
+      panel.classList.toggle('revealed');
+      // 비디오 자동 재생/정지
+      const video = panel.querySelector('video');
+      if (video) {
+        if (panel.classList.contains('revealed')) {
+          video.play();
+        } else {
+          video.pause();
+          video.currentTime = 0;
+        }
+      }
+    }
+
+
+    // ── [CH 07 / SC 01] 꿈식자 FSM 원형 다이어그램 ──
+    const fsmStates = {
+      spawn: { index:"01 / 08 · SPAWN", title:"랜덤 스폰과 순찰 준비",
+        summary:"스폰 존의 후보 중 하나를 선택한 뒤 그 지점에 연결된 패트롤 루트와 가장 가까운 시작 포인트를 기억하고 순찰을 시작합니다.",
+        logic:["스폰 존 안의 후보 지점 중 하나를 무작위로 선택합니다.","선택한 스폰 지점에 에너미 개체를 생성합니다.","스폰 지점에 연결된 패트롤 루트를 활동 구역으로 저장합니다.","루트에서 가장 가까운 시작 포인트를 선택해 순찰 상태로 전환합니다."],
+        implementation:"<code>SpawnManager</code>가 스폰 포인트를 선택하고 연결된 패트롤 루트와 시작 인덱스를 개체에 전달합니다.",
+        gif:"assets/[PM]송예찬/gifs/PM_EnemyAI_SpawnPatrol.gif"
+      },
+      patrol: { index:"02 / 08 · PATROL", title:"통제된 랜덤 순찰",
+        summary:"패트롤 포인트는 고정 좌표가 아니라 랜덤 목적지를 생성하는 기준점입니다. 루트로 활동 범위를 통제하면서 각 포인트 반경의 NavMesh에서 도달 가능한 목적지를 선택해, 같은 루트에서도 순찰 궤적이 반복되지 않도록 설계했습니다.",
+        logic:["배정된 루트의 현재 패트롤 포인트를 기준점으로 사용합니다.","포인트 반경 안에서 임의 좌표를 만들고 NavMesh 위의 이동 가능한 지점으로 보정합니다.","완전한 경로를 계산할 수 있는 후보만 목적지로 채택하고, 실패하면 다시 추첨합니다.","정해진 횟수만큼 배회한 뒤 가까운 다음 포인트 중 하나를 무작위로 골라 순찰을 이어갑니다."],
+        implementation:"<code>Random.insideUnitCircle</code>로 반경 안의 후보를 만들고 <code>NavMesh.SamplePosition</code>과 <code>NavMeshPathStatus.PathComplete</code>를 모두 통과한 좌표만 사용합니다. 그래서 루트는 통제되지만 실제 이동선은 매번 달라집니다.",
+        design:"assets/[PM]송예찬/images/PM_EnemyAI_RandomPatrolDiagram.png",
+        designNote:"패트롤 포인트 반경 안에서 NavMesh 도달 가능 지점을 다시 뽑아, 루트는 유지하면서 이동 궤적은 반복되지 않게 합니다.",
+        gif:"assets/[PM]송예찬/gifs/PM_EnemyAI_Patrol.gif"
+      },
+      detect: { index:"03 / 08 · PERCEPTION", title:"시야·소리 감지",
+        summary:"꿈식자는 직접 시야, 근접 인지 반경, 소리 인식 반경을 서로 다른 감지 입력으로 판정하고, 조건을 충족하면 추적 또는 조사 상태로 전환합니다.",
+        logic:["시야 범위와 각도 안에 대상이 있는지 확인합니다.","Raycast로 벽이나 장애물에 가려졌는지 검사합니다.","가까운 대상은 근접 인지 반경으로 인식을 보정합니다.","소리는 청각 반경과 장애물 차단 여부를 판정해 다음 상태의 근거로 사용합니다."],
+        implementation:"<code>EnemyPerception</code>이 시야·근접·청각 입력을 각각 판정하고, 유효한 감지 결과를 FSM에 전달해 추적 또는 조사 전환의 기반을 만듭니다.",
+        design:"assets/[PM]송예찬/images/PM_EnemyAI_DetectionDesign_v4.png",
+        designNote:"보라색 부채꼴은 직접 시야(5.5m·100°), 청록색 안쪽 원은 근접 인지(~10m), 금색 점선 바깥 원은 소리 인식 반경(~20m)입니다.",
+        gif:"assets/[PM]송예찬/gifs/PM_EnemyAI_Detect.gif"
+      },
+      investigate: { index:"04 / 08 · INVESTIGATE", title:"소리 발생 위치 조사",
+        summary:"플레이어가 걷거나 달리면 이동 경로의 각 발소리 위치에 소리 앵커가 연속 생성됩니다. 꿈식자는 플레이어 좌표를 직접 추적하지 않고, 청각 범위와 소음 반경이 겹치며 차폐되지 않은 앵커를 감지해 조사 목표를 갱신합니다.",
+        logic:["걷기·달리기 소음 좌표마다 소리 앵커와 개별 소음 반경을 생성합니다.","각 앵커의 소음 반경이 꿈식자의 청각 범위와 겹치는지, 벽에 막혔는지 검사합니다.","감지된 앵커 중 최신/우선순위 높은 좌표를 NavMesh에 보정해 조사 목표로 갱신합니다.","앵커 위치들을 따라 이동하며, 현재 플레이어 위치까지 직접 추적하지는 않습니다."],
+        implementation:"<code>NoiseStimulus</code>가 발소리마다 위치·소음 반경·우선순위를 전달하고, <code>EnemyNoiseListener</code>가 반경 중첩과 차폐 검사를 통과한 앵커를 조사 목적지로 기억합니다.",
+        design:"assets/[PM]송예찬/images/PM_EnemyAI_InvestigateDesign_v2.png",
+        designNote:"큰 청록색 원은 꿈식자의 청각 감지 반경이고, 작은 금색 원들은 발소리마다 생성된 앵커의 개별 소음 반경입니다. 두 반경이 겹친 앵커가 밝게 표시됩니다.",
+        gif:"assets/[PM]송예찬/gifs/PM_EnemyAI_Investigate.gif"
+      },
+      chase: { index:"05 / 08 · CHASE", title:"이동 방향 예측과 길목 압박",
+        summary:"현재 위치만 뒤따르지 않고 이동 방향 앞쪽을 예상해 플레이어의 길목을 압박합니다. 여러 개체가 같은 좌표에 겹치지 않도록 접근 위치를 나눕니다.",
+        logic:["플레이어를 전투 타겟으로 등록하고 어그로를 채웁니다.","현재 위치와 이동 방향을 이용해 앞쪽의 예상 추격 지점을 정합니다.","개체별 접근 위치를 나눠 한 점에 뭉치지 않고 도주 길목을 압박합니다.","시야가 끊기면 마지막 확인 위치와 어그로를 이용해 추격을 잠시 유지합니다."],
+        implementation:"<code>currentTarget</code>, 마지막 확인 위치, 이동 방향 기반 목표 지점, <code>currentAggro</code>를 분리해 관리합니다.",
+        gif:"assets/[PM]송예찬/gifs/PM_EnemyAI_Chase.gif"
+      },
+      attack: { index:"06 / 08 · ATTACK", title:"2단 돌진 공격",
+        summary:"공격 사거리와 시야를 확인한 뒤 두 번의 연속 돌진으로 회피 타이밍을 압박합니다. 공격이 끝나면 후딜레이를 거쳐 다시 판단합니다.",
+        logic:["공격 사거리와 쿨다운을 확인합니다.","플레이어 사이에 벽이 없는지 Line of Sight로 다시 검사합니다.","1차 돌진 공격에 이어 2차 돌진 공격을 연결합니다.","공격 후 후딜레이가 끝나면 감지 결과에 따라 추격 또는 재탐색으로 전환합니다."],
+        implementation:"공격 판정 전 Line of Sight를 다시 확인해 벽을 관통하는 공격을 막았습니다. 돌진, 타격 판정, 애니메이션 이벤트와 후딜레이를 하나의 공격 순서로 연결합니다.",
+        design:"assets/[PM]송예찬/images/PM_EnemyAI_AttackDesign.jpg",
+        designNote:"바닥 전조 → 1타 돌진 → 짧은 재조준 → 2타 돌진 → 후딜레이 순서입니다.",
+        gif:"assets/[PM]송예찬/gifs/PM_EnemyAI_Attack.gif"
+      },
+      search: { index:"07 / 08 · SEARCH", title:"공격 후 재탐색과 마지막 단서",
+        summary:"공격이 끝나거나 플레이어를 놓치면 즉시 순찰로 돌아가지 않고 주변과 마지막 확인 위치를 다시 탐색합니다.",
+        logic:["공격 후 후딜레이가 끝나면 시야와 감지 범위를 다시 확인합니다.","플레이어가 보이면 추격 또는 공격 상태로 다시 전환합니다.","보이지 않으면 마지막 확인 위치로 이동해 주변을 재탐색합니다.","단서를 찾지 못하면 어그로를 감소시키고 순찰 복귀를 준비합니다."],
+        implementation:"공격 종료, 마지막 확인 위치, 시야 상실 시각을 별도로 관리해 공격 뒤 판단이 끊기지 않도록 했습니다.",
+        gif:"assets/[PM]송예찬/gifs/PM_EnemyAI_Search.gif"
+      },
+      return: { index:"08 / 08 · RETURN", title:"개별 순찰 루트 복귀",
+        summary:"어그로가 소진되거나 활동 반경을 벗어나면 각 개체가 자신의 패트롤 루트로 돌아갑니다. 공통 지점에 몰리지 않도록 개별 루트와 복귀 기준을 기억합니다.",
+        logic:["어그로 소진 또는 하드 리턴 거리 초과를 확인합니다.","전투 타겟·추격 계획·임시 조사 상태를 정리합니다.","현 위치에서 자기 루트의 적절한 복귀 포인트를 선택합니다.","복귀 후 랜덤 배회 상태를 새로 만들고 순찰을 재개합니다."],
+        implementation:"<code>EnemyMemory</code>가 루트·순찰 인덱스·복귀 앵커를 개체별로 보관합니다. 루트에서 지나치게 멀어지면 시야와 관계없이 즉시 복귀합니다.",
+        gif:"assets/[PM]송예찬/gifs/PM_EnemyAI_Return.gif"
+      }
+    };
+    const fsmKeyOrder = ['spawn','patrol','detect','investigate','chase','attack','search','return'];
+    let currentFsmKey = null;
+    function openFsmModal(key) {
+      const s = fsmStates[key];
+      if (!s) return;
+      currentFsmKey = key;
+      // 핫스팟 활성화
+      document.querySelectorAll('.fsm-hotspot').forEach(b => b.classList.toggle('active', b.getAttribute('data-fsm-key') === key));
+      // 모달 내용 채우기
+      document.getElementById('fsmModalIndex').textContent = s.index;
+      document.getElementById('fsmModalTitle').textContent = s.title;
+      document.getElementById('fsmModalSummary').textContent = s.summary;
+      // 로직
+      document.getElementById('fsmModalLogic').innerHTML = s.logic.map(l => '<li>' + l + '</li>').join('');
+      document.getElementById('fsmModalImpl').innerHTML = s.implementation;
+      // 설계 이미지
+      const dImg = document.getElementById('fsmModalDesign');
+      const dFb = document.getElementById('fsmDesignFallback');
+      const dNote = document.getElementById('fsmModalDesignNote');
+      if (s.design) {
+        dImg.src = s.design;
+        dImg.style.display = 'block';
+        dFb.style.display = 'none';
+        dNote.textContent = s.designNote || '';
+      } else {
+        dImg.style.display = 'none';
+        dFb.style.display = 'flex';
+        dNote.textContent = '';
+      }
+      // GIF
+      const gImg = document.getElementById('fsmModalGif');
+      const gFb = document.getElementById('fsmGifFallback');
+      const gPath = document.getElementById('fsmGifPath');
+      if (s.gif) {
+        gPath.textContent = s.gif;
+        const testImg = new Image();
+        testImg.onload = () => { gImg.src = s.gif; gImg.style.display = 'block'; gFb.style.display = 'none'; };
+        testImg.onerror = () => { gImg.style.display = 'none'; gFb.style.display = 'flex'; };
+        testImg.src = s.gif;
+      }
+      // 하단 네비
+      const nav = document.getElementById('fsmModalNav');
+      nav.innerHTML = fsmKeyOrder.map(k => {
+        const st = fsmStates[k];
+        return `<button class="${k===key?'active':''}" onclick="openFsmModal('${k}')">${st.index.split(' · ')[1]} ${st.title.split(/[과와·]/)[0]}</button>`;
+      }).join('');
+      // 모달 열기
+      document.getElementById('fsmModalLayer').classList.add('open');
+    }
+    function closeFsmModal(e) {
+      if (e && e.target !== document.getElementById('fsmModalLayer')) return;
+      const layer = document.getElementById('fsmModalLayer');
+      layer.classList.add('closing');
+      setTimeout(() => {
+        layer.classList.remove('open', 'closing');
+        document.querySelectorAll('.fsm-hotspot').forEach(b => b.classList.remove('active'));
+        currentFsmKey = null;
+      }, 250);
+    }
+    // 턴테이블
+    (function() {
+      const tt = document.getElementById('fsmTurntable');
+      const img = document.getElementById('fsmTurntableImg');
+      const label = document.getElementById('fsmTurntableAngle');
+      if (!tt) return;
+      const frames = ["00","07","06","03","04","05","02","01"].map(id => `assets/[PM]송예찬/images/PM_DreamEater_360/dream_eater_v6_${id}.png`);
+      const labels = ["정면 (0°)","좌전면 (45°)","좌측면 (90°)","좌후면 (135°)","후면 (180°)","우후면 (135°)","우측면 (90°)","우전면 (45°)"];
+      let idx = 0, dragX = null, dragIdx = 0;
+      tt.addEventListener('pointerdown', e => { dragX = e.clientX; dragIdx = idx; tt.setPointerCapture(e.pointerId); });
+      tt.addEventListener('pointermove', e => {
+        if (dragX === null) return;
+        const dx = e.clientX - dragX;
+        const step = Math.round(dx / 40);
+        idx = ((dragIdx - step) % 8 + 8) % 8;
+        img.src = frames[idx];
+        label.textContent = '관람자 시점 · ' + labels[idx];
+      });
+      tt.addEventListener('pointerup', () => { dragX = null; });
+      tt.addEventListener('pointercancel', () => { dragX = null; });
+    })();
+    // PM Scene 1 비디오 자동 감지
+    (function() {
+      const video = document.getElementById('pmFinalVideo');
+      const placeholder = document.getElementById('pmVideoPlaceholder');
+      if (!video || !placeholder) return;
+      video.addEventListener('canplay', () => {
+        video.style.display = 'block';
+        placeholder.style.display = 'none';
+      }, { once: true });
+      video.load();
+    })();
+
+    // ── [CH 06] CD 우성혁 인터랙션 ──
+    // Scene 1: 기획→개발 플로우 카드 쌍 하이라이트
+    document.querySelectorAll('.cd-flow-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        const pair = card.dataset.cdPair;
+        document.querySelectorAll(`.cd-flow-card[data-cd-pair="${pair}"]`).forEach(c => c.classList.add('highlight'));
+        const arrows = document.querySelectorAll('.cd-arrow-svg');
+        const idx = parseInt(pair) - 1;
+        arrows.forEach((a, i) => { a.style.opacity = i === idx ? '1' : '0.2'; });
+      });
+      card.addEventListener('mouseleave', () => {
+        document.querySelectorAll('.cd-flow-card').forEach(c => c.classList.remove('highlight'));
+        document.querySelectorAll('.cd-arrow-svg').forEach(a => { a.style.opacity = '0.6'; });
+      });
+    });
+
+    // Scene 2: 워크플로우 순차 등장
+    let cdWfStep = 1; // 2-1은 기본 표시
+    const CD_WF_MAX = 4;
+    // 2-1 기본 표시
+    (function() {
+      const s1 = document.querySelector('.cd-wf-step[data-wf-step="1"]');
+      if (s1) s1.classList.add('visible');
+    })();
+    window.advanceCdWorkflow = function() {
+      if (cdWfStep >= CD_WF_MAX) return;
+      cdWfStep++;
+      const step = document.querySelector(`.cd-wf-step[data-wf-step="${cdWfStep}"]`);
+      if (step) step.classList.add('visible');
+      const arrow = document.querySelector(`.cd-wf-arrow[data-wf-step="${cdWfStep}"]`);
+      if (arrow) arrow.classList.add('visible');
+      const hint = document.querySelector('.cd-wf-hint');
+      if (hint && cdWfStep >= CD_WF_MAX) hint.style.opacity = '0';
+    };
+    function resetCdWorkflow() {
+      cdWfStep = 1;
+      document.querySelectorAll('.cd-wf-step, .cd-wf-arrow').forEach(el => el.classList.remove('visible'));
+      const s1 = document.querySelector('.cd-wf-step[data-wf-step="1"]');
+      if (s1) s1.classList.add('visible');
+      const hint = document.querySelector('.cd-wf-hint');
+      if (hint) { hint.style.opacity = '1'; }
+    }
+
+    // Scene 3-4: 영상 오버레이 토글
+    window.toggleCdVideo = function(trigger) {
+      const video = trigger.querySelector('.cd-overlay-video');
+      const label = trigger.querySelector('.cd-video-label');
+      if (!video) return;
+      if (video.style.display === 'none' || !video.style.display) {
+        video.style.display = 'block';
+        if (label) label.style.display = 'none';
+        video.currentTime = 0;
+        video.play();
+      } else {
+        video.pause();
+        video.style.display = 'none';
+        if (label) label.style.display = 'flex';
+      }
+    };
+
+    // ── [CH 04] 세계관 관계도 빌드업 ──
+    let loreBuildStep = 0;
+    const LORE_MAX_STEP = 5;
+    const loreDescriptions = [
+      '화면을 클릭하여 세계관 구조를 탐색하세요.',
+      '침몽도시에 출격하여 기억 파편을 회수하고 세션을 정화하는 청소년 요원. 탈출 실패 시 본래 기억을 떨구고 돌아온다.',
+      '꿈과 현실의 경계가 붕괴되어 발현한 심상 세계. 학원 밀집 구역을 중심으로 최초 침식이 발생했다.',
+      '다이버의 의식과 현실을 연결하고 귀환 좌표를 유지하는 생명선. 링크가 끊어지면 강제 각성이 불가능해지며 다이버는 꿈식자로 변질된다.',
+      '강제 각성(탈출 실패) 시, 다이버의 본래 기억 — 이름, 관계, 자아 — 이 파편화되어 침몽도시에 남겨진다. 반복될수록 기억 총량이 줄어든다.',
+      '관제 기록(객관적 데이터)과 기억 파편(감정·자아)이 결합하면 다이버가 자신의 것으로 받아들일 수 있는 심상기록이 복구된다. 동조율이 이 과정의 안정성을 결정한다.'
+    ];
+    function advanceLoreBuild() {
+      if (loreBuildStep >= LORE_MAX_STEP) return;
+      loreBuildStep++;
+      // 노드 표시
+      document.querySelectorAll(`.lore-node[data-lore-step="${loreBuildStep}"]`).forEach(n => n.classList.add('visible'));
+      // SVG 라인 표시
+      document.querySelectorAll(`.lore-line[data-lore-step="${loreBuildStep}"]`).forEach(l => l.classList.add('visible'));
+      document.querySelectorAll(`.lore-line-label[data-lore-step="${loreBuildStep}"]`).forEach(l => l.classList.add('visible'));
+      // 설명 업데이트
+      const descEl = document.getElementById('loreDescText');
+      if (descEl) {
+        descEl.style.opacity = '0';
+        setTimeout(() => {
+          descEl.textContent = loreDescriptions[loreBuildStep];
+          descEl.style.opacity = '1';
+        }, 300);
+      }
+      // 스텝 인디케이터
+      document.querySelectorAll('.lore-dot').forEach(dot => {
+        const dotStep = parseInt(dot.getAttribute('data-lore-dot'));
+        dot.classList.remove('active', 'done');
+        if (dotStep === loreBuildStep) dot.classList.add('active');
+        else if (dotStep < loreBuildStep) dot.classList.add('done');
+      });
+      // Step 5: 동조율 게이지 애니메이션
+      if (loreBuildStep === 5) {
+        setTimeout(() => {
+          const fill = document.getElementById('loreSyncFill');
+          if (fill) fill.style.width = '72%';
+        }, 600);
+      }
+    }
+    function resetLoreBuild() {
+      loreBuildStep = 0;
+      document.querySelectorAll('.lore-node').forEach(n => n.classList.remove('visible'));
+      document.querySelectorAll('.lore-line, .lore-line-label').forEach(l => l.classList.remove('visible'));
+      document.querySelectorAll('.lore-dot').forEach(d => d.classList.remove('active', 'done'));
+      const descEl = document.getElementById('loreDescText');
+      if (descEl) descEl.textContent = loreDescriptions[0];
+      const fill = document.getElementById('loreSyncFill');
+      if (fill) fill.style.width = '0%';
+    }
     // ── 장면 진입 애니메이션 트리거 ──
     function triggerSceneAnimation(scene) {
+      if (!scene) return;
       const ch = scene.getAttribute('data-chapter');
       const sc = scene.getAttribute('data-scene');
+      // 전역 순차 등장 애니메이션 (모든 씨에 적용)
+      applyStaggerEntrance(scene);
       if (ch === '01' && sc === '01') {
         triggerOverviewAnimation();
       } else if (ch === '02' && sc === '01') {
         triggerChallengeAnimation();
+      } else if (ch === '04' && sc === '01') {
+        resetLoreBuild();
+        setTimeout(() => advanceLoreBuild(), 600);
+        const diagram = document.getElementById('loreDiagram');
+        if (diagram && !diagram._loreClickBound) {
+          diagram.addEventListener('click', (e) => {
+            e.stopPropagation();
+            advanceLoreBuild();
+          });
+          diagram._loreClickBound = true;
+        }
+      } else if (ch === '05' && sc === '03') {
+        const cards = document.querySelectorAll('#audioScene .audio-card');
+        cards.forEach((card, i) => {
+          card.classList.remove('show');
+          setTimeout(() => card.classList.add('show'), 300 + i * 200);
+        });
       }
     }
     // ── 장면 상태 초기화 함수 (R키 또는 장면 이동 시 작동) ──
     function resetSceneState(index) {
       const scene = scenes[index];
       if (!scene) return;
+      // stagger 클래스 제거
+      scene.querySelectorAll('.stagger-target').forEach(el => {
+        el.classList.remove('stagger-target', 'stagger-visible');
+      });
+      // CD 워크플로우 리셋
+      if (typeof resetCdWorkflow === 'function') resetCdWorkflow();
       const ch = scene.getAttribute('data-chapter');
       const sc = scene.getAttribute('data-scene');
       if (ch === '00' && sc === '01') {
@@ -624,15 +943,16 @@ window.scenes = [];
       else if (ch === '01' && sc === '01') {
         const lines = document.querySelectorAll('#overviewLogTerminal .log-line');
         lines.forEach(line => line.classList.remove('show'));
-        document.getElementById('pillar1').classList.remove('show');
-        document.getElementById('pillar2').classList.remove('show');
+        const p1 = document.getElementById('pillar1');
+        const p2 = document.getElementById('pillar2');
+        if (p1) p1.classList.remove('show');
+        if (p2) p2.classList.remove('show');
       }
       else if (ch === '02' && sc === '01') {
         const node = document.getElementById('conflictNode');
         const overlay = document.getElementById('resolutionOverlay');
-        node.textContent = '?';
-        node.classList.remove('resolved');
-        overlay.classList.remove('show');
+        if (node) { node.textContent = '?'; node.classList.remove('resolved'); }
+        if (overlay) overlay.classList.remove('show');
         // 듀얼 배경 초기화
         const bgSub = document.getElementById('bgSubculture');
         const bgExt = document.getElementById('bgExtraction');
@@ -645,18 +965,26 @@ window.scenes = [];
           challengeMouseHandler = null;
         }
       }
+      else if (ch === '04' && sc === '01') {
+        resetLoreBuild();
+      }
       else if (ch === '03' && sc === '01') {
-        activateLoopStep(0);
-        document.querySelector('.btn-route--success').classList.remove('active');
-        document.querySelector('.btn-route--failure').classList.remove('active');
-        document.getElementById('routeResultText').textContent = '시뮬레이션 경로를 클릭하세요.';
-        document.getElementById('routeResultText').style.color = 'var(--text-muted)';
+        if (typeof activateLoopStep === 'function') activateLoopStep(0);
+        const btnS = document.querySelector('.btn-route--success');
+        const btnF = document.querySelector('.btn-route--failure');
+        const rtxt = document.getElementById('routeResultText');
+        if (btnS) btnS.classList.remove('active');
+        if (btnF) btnF.classList.remove('active');
+        if (rtxt) { rtxt.textContent = '시뮬레이션 경로를 클릭하세요.'; rtxt.style.color = 'var(--text-muted)'; }
       }
       else if (ch === '03' && sc === '02') {
         currentSync = 15;
-        document.getElementById('syncMeterFill').style.width = '15%';
-        document.getElementById('syncMeterText').textContent = '현재 동조율: 15%';
-        document.getElementById('syncFeedback').textContent = '기억 조각을 눌러서 흡수하십시오.';
+        const smf = document.getElementById('syncMeterFill');
+        const smt = document.getElementById('syncMeterText');
+        const sfb = document.getElementById('syncFeedback');
+        if (smf) smf.style.width = '15%';
+        if (smt) smt.textContent = '현재 동조율: 15%';
+        if (sfb) sfb.textContent = '기억 조각을 눌러서 흡수하십시오.';
         document.querySelectorAll('.memory-fragment-item').forEach(item => {
           item.style.opacity = '1';
           item.style.pointerEvents = 'auto';
@@ -667,7 +995,8 @@ window.scenes = [];
         document.getElementById('compAfterImg').style.clipPath = 'polygon(0 0, 50% 0, 50% 100%, 0 100%)';
         document.getElementById('compSlider').style.left = '50%';
       }
-      else if (ch === '05' && sc === '02') {
-        switchSimTab(0);
+      else if (ch === '05' && sc === '03') {
+        document.querySelectorAll('#audioScene .audio-card').forEach(c => c.classList.remove('show'));
       }
+
     }
