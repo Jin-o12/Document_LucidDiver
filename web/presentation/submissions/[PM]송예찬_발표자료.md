@@ -3,7 +3,7 @@
 > **갱신 기준일**: 2026-07-24
 >
 > 구버전 컨셉 기획서, 최신 P0/P0.5 명세, 개발일지와 Unity 커밋을 교차 검증했습니다.
-> `assets/[PM]송예찬/html/`의 01·02·03 페이지는 개인 포트폴리오와 발표 구성을 검토하기 위한 인터랙티브 시안입니다. 팀 원본 `index.html`은 영상·GIF 미삽입 상태로 유지하고, `index_2.html`은 꿈식자 AI YouTube 영상과 트러블슈팅 GIF를 확인하기 위한 미디어 적용본입니다. 두 웹페이지 자체를 최종 결과로 확정한 것은 아니며, 검증된 내용·이미지·영상·GIF를 최종 발표 자료에 선별해 사용합니다.
+> `assets/[PM]송예찬/html/`의 01·02·03 페이지는 개인 포트폴리오와 발표 구성을 검토하기 위한 인터랙티브 시안입니다. 팀 발표 고정본은 `web/presentation/presentation.html`이며 직접 수정하지 않습니다. 검증된 내용·이미지·영상·GIF는 별도 에셋과 본 문서에서 관리하고, 최종 반영은 팀 담당자와 협의합니다.
 
 ---
 
@@ -105,7 +105,7 @@
 - [ ] 코드
 - [ ] 기타:
 
-**사용 파일**: [꿈식자 AI 완성 결과 YouTube](https://www.youtube.com/watch?v=BxIWsNXTyWU) (`index_2.html`에서 클릭 재생) / 오프라인 예비본 `assets/[PM]송예찬/videos/PM_EnemyAI_FinalLoop.mp4`
+**사용 파일**: [꿈식자 AI 완성 결과 YouTube](https://www.youtube.com/watch?v=BxIWsNXTyWU) / 오프라인 예비본 `assets/[PM]송예찬/videos/PM_EnemyAI_FinalLoop.mp4`
 
 **이때 말할 내용**: “꿈식자 컨셉을 실제 AI로 완성했습니다. 순찰하던 적이 소리를 조사하고 플레이어를 추격·공격한 뒤 자기 루트로 복귀합니다.”
 
@@ -161,7 +161,7 @@
 
 ### 구체적인 연출 요청
 
-**작성**: 01·02·03 HTML은 개인 참고용 시안으로 유지합니다. 팀 원본 `index.html`은 미디어 미삽입 상태로 보존하고, `index_2.html`에서 YouTube 완성 영상과 트러블슈팅 GIF를 검토합니다. 최종 발표에는 그 안의 검증된 설명·이미지·상태 구성과 미디어만 선별해서 반영해 주세요. 상태별 GIF와 로직 설명을 함께 보여주고, 이미지는 페이지 안에서 확대되도록 합니다. 감지 도식은 시야·근접·소리 범위를, 조사 도식은 소리 앵커 생성과 청각 범위 중첩을 분리해 설명합니다. 최종 결과물은 1920×1080과 오프라인 `file://` 실행을 기준으로 검수합니다.
+**작성**: 01·02·03 HTML은 개인 참고용 시안으로 유지합니다. 팀 발표 고정본 `presentation.html`은 직접 수정하지 않고, 상태별 GIF·로직 설명·이미지·영상은 별도 에셋으로 정리해 최종 반영 담당자에게 전달합니다. 이미지는 페이지 안 확대, 감지 도식은 시야·근접·소리 범위, 조사 도식은 소리 앵커 생성과 청각 범위 중첩을 기준으로 제안합니다. 최종 결과물은 1920×1080과 오프라인 `file://` 실행을 기준으로 검수합니다.
 
 ---
 
@@ -173,14 +173,15 @@
 - **최종 사용 후보**: HTML 시안 안에서 제작한 설명·로직·이미지로, 최종 발표 자료에 선별 반영할 수 있습니다.
 - **최종 발표 미디어**: 실제 최종 발표에 사용할 영상·GIF와 트러블슈팅의 문제–원인–해결–검증 자료이며, 현재 주요 에셋 제작을 완료했습니다.
 
-### 발표 웹 버전 구분
+### 발표 웹 관리 원칙
 
-| 파일 | 용도 | 미디어 상태 |
+| 파일 | 용도 | 관리 원칙 |
 |---|---|---|
-| `web/presentation/index.html` | 팀 원본 발표 구조 | 송예찬 완성 영상·트러블슈팅 GIF 미삽입 |
-| `web/presentation/index_2.html` | 송예찬 발표 미디어 적용·검토본 | YouTube 완성 영상, 조사 Stuck·군집 겹침 Before/After GIF 삽입 |
+| `web/presentation/presentation.html` | 팀 발표 고정본 | 직접 수정 금지. 변경이 필요하면 팀 담당자와 협의 |
+| `assets/[PM]송예찬/` | 송예찬 발표용 미디어·시안 | 영상·GIF·이미지를 별도 관리하고 최종 반영 후보로 전달 |
 
-> `index_2.html`은 개인 발표 자료의 미디어 배치 검토본이며, 팀 최종 발표 웹 확정본으로 단정하지 않습니다. YouTube 재생은 인터넷 연결이 필요하므로 로컬 MP4를 발표장 예비본으로 유지합니다.
+> YouTube 영상은 인터넷 연결이 필요하므로 로컬 MP4를 발표장 예비본으로 유지합니다.
+
 ### 참고용 HTML 시안
 
 | 순서 | 종류 | 파일명 | 용도 | 상태 |
@@ -207,8 +208,8 @@
 
 | 순서 | 종류 | 파일명·주소 | 보여주는 내용 | 상태 |
 |---:|---|---|---|---|
-| 1 | YouTube 영상 | `https://www.youtube.com/watch?v=BxIWsNXTyWU` | 꿈식자 AI 완성 결과 | 업로드·`index_2.html` 연결 완료 |
-| 2 | 로컬 MP4 | `assets/[PM]송예찬/videos/PM_EnemyAI_FinalLoop.mp4` | 전체 행동 루프 오프라인 예비본·GIF 추출 원본 | 제작 완료, 원본 `index.html`에는 미삽입 |
+| 1 | YouTube 영상 | `https://www.youtube.com/watch?v=BxIWsNXTyWU` | 꿈식자 AI 완성 결과 | 업로드 완료·별도 재생 자료 |
+| 2 | 로컬 MP4 | `assets/[PM]송예찬/videos/PM_EnemyAI_FinalLoop.mp4` | 전체 행동 루프 오프라인 예비본·GIF 추출 원본 | 제작 완료·별도 보관 |
 | 3 | GIF 8종 | `PM_EnemyAI_SpawnPatrol.gif`, `PM_EnemyAI_Patrol.gif`, `PM_EnemyAI_Detect.gif`, `PM_EnemyAI_Investigate.gif`, `PM_EnemyAI_Chase.gif`, `PM_EnemyAI_Attack.gif`, `PM_EnemyAI_Search.gif`, `PM_EnemyAI_Return.gif` | 상태별 실제 플레이 장면 | 제작 완료 |
 | 4 | Before | `PM_Trouble_InvestigateStuck_Before.gif` | 벽 너머 조사 좌표로 인해 이동이 정체되는 문제 | 제작 완료 — `11-23-29.mp4` 29~33초 |
 | 5 | After | `PM_Trouble_InvestigateStuck_After.gif` | NavMesh 보정 후 조사와 상태 전환 | 제작 완료 — `11-23-29.mp4` 1:45~1:50 |
