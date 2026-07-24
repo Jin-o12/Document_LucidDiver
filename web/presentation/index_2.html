@@ -84,9 +84,9 @@
               <div>1080p | STEREO AUDIO</div>
             </div>
             <div class="pv-iframe-wrapper">
-              <iframe src="https://www.youtube.com/embed/UH0oJ1b-EuY?enablejsapi=1&rel=0&autoplay=0" 
-                      title="침몽도시: 루시드 다이버 공식 PV" 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              <iframe src="https://www.youtube.com/embed/UH0oJ1b-EuY?enablejsapi=1&rel=0&autoplay=0"
+                      title="침몽도시: 루시드 다이버 공식 PV"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                       allowfullscreen>
               </iframe>
             </div>
@@ -234,7 +234,7 @@
                   <div class="crew-back-body">
                     <div class="crew-back-sec-title">🎯 핵심 R&R & 담당 파트</div>
                     <div class="crew-back-text">
-                      프로젝트 총괄 결정권자 & 서사·세계관·레벨 디자인 원작자. 
+                      프로젝트 총괄 결정권자 & 서사·세계관·레벨 디자인 원작자.
                       AnyPortrait 2D 캐릭터 리깅, 58종 SFX/BGM 오디오 원작 제작.
                     </div>
                     <div class="crew-back-sec-title">📌 대표 기여 작업</div>
@@ -1185,17 +1185,17 @@
           </div>
         </div>
         <div style="display: flex; flex-direction: column; flex: 1; align-items: center; justify-content: center; width: 100%; gap: 20px;">
-          <div class="glass-card pm-anim" style="width: 100%; max-width: 960px; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-            <video id="pmFinalVideo" style="width: 100%; height: 100%; object-fit: contain; display: none;" controls>
-              <source src="assets/[PM]송예찬/videos/PM_EnemyAI_FinalLoop.mp4" type="video/mp4">
-            </video>
-            <div class="media-error-box" id="pmVideoPlaceholder" style="width: 100%; height: 100%; background: rgba(0,0,0,0.4);">
-              <span style="font-size: 2.5rem; opacity: 0.3;">▶</span>
-              <span style="color: var(--accent-teal); font-weight: bold;">전체 루프 영상 촬영 대기</span>
-              <span style="color: var(--text-muted); font-size: 0.85rem;">PM_EnemyAI_FinalLoop.mp4</span>
-              <span style="color: var(--text-muted); font-size: 0.75rem;">순찰하던 적이 소리를 조사하고 플레이어를 추격·공격한 뒤 자기 루트로 복귀하는 장면</span>
-            </div>
+          <div id="pmYouTubePlayer" class="glass-card pm-anim" style="width: 100%; max-width: 960px; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: #050711;">
+            <button type="button" onclick="playPmYouTube(this)" aria-label="꿈식자 AI 완성 결과 영상 재생" style="position: relative; width: 100%; height: 100%; padding: 0; border: 0; cursor: pointer; background: #050711; color: white;">
+              <img src="https://i.ytimg.com/vi/BxIWsNXTyWU/maxresdefault.jpg" alt="꿈식자 AI 완성 결과 영상 썸네일" style="width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.78;">
+              <span style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: linear-gradient(180deg, rgba(5,7,17,0.1), rgba(5,7,17,0.58));">
+                <span style="width: 82px; height: 82px; border-radius: 50%; display: grid; place-items: center; padding-left: 6px; color: #06101a; background: var(--accent-teal); box-shadow: 0 0 34px rgba(45,212,191,0.5); font-size: 2.1rem;">▶</span>
+                <strong style="font-size: 1.15rem; letter-spacing: 0.04em;">꿈식자 AI 완성 결과 재생</strong>
+                <span style="font-size: 0.8rem; color: rgba(255,255,255,0.72);">클릭하면 YouTube 영상이 페이지 안에서 재생됩니다</span>
+              </span>
+            </button>
           </div>
+          <a href="https://www.youtube.com/watch?v=BxIWsNXTyWU" target="_blank" rel="noopener noreferrer" style="color: var(--accent-teal); font-size: 0.8rem; text-decoration: none;">영상이 재생되지 않으면 YouTube에서 보기 ↗</a>
           <p style="color: var(--text-secondary); font-size: 0.95rem; text-align: center; max-width: 700px; line-height: 1.6;">
             "꿈식자 컨셉을 실제 AI로 완성했습니다.<br>순찰하던 적이 소리를 조사하고 플레이어를 추격·공격한 뒤 자기 루트로 복귀합니다."
           </p>
@@ -1363,18 +1363,11 @@
             <h2 style="color: var(--accent-teal); font-size: 1.05rem; margin: 0;">조사 좌표 Stuck 해결</h2>
             <p style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.55; margin: 0;">소음 좌표를 바닥 NavMesh로 보정하고 조사 제한시간을 추가해 적이 멈추는 문제를 해결했습니다.</p>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1;">
-              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px dashed rgba(248,113,113,0.3); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-muted); font-size: 0.72rem;">
-                  <span style="color: var(--accent-red); font-weight: 700; font-size: 0.78rem;">BEFORE</span>
-                  <span>GIF 재현·촬영 필요</span>
-                  <span style="opacity: 0.5; font-size: 0.65rem;">PM_Trouble_InvestigateStuck.gif</span>
-                </div>
+              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px solid rgba(248,113,113,0.38); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
+                <img src="assets/[PM]송예찬/gifs/PM_Trouble_InvestigateStuck_Before.gif?v=20260724-8" alt="조사 좌표 정체 문제 상황 재현" style="width: 100%; height: 100%; object-fit: contain; display: block;">
               </div>
-              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px dashed rgba(45,212,191,0.3); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-muted); font-size: 0.72rem;">
-                  <span style="color: var(--accent-teal); font-weight: 700; font-size: 0.78rem;">AFTER</span>
-                  <span>GIF 재현·촬영 필요</span>
-                </div>
+              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px solid rgba(45,212,191,0.38); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
+                <img src="assets/[PM]송예찬/gifs/PM_Trouble_InvestigateStuck_After.gif?v=20260724-8" alt="조사 좌표 보정 후 실제 동작" style="width: 100%; height: 100%; object-fit: contain; display: block;">
               </div>
             </div>
           </div>
@@ -1383,18 +1376,11 @@
             <h2 style="color: var(--accent-teal); font-size: 1.05rem; margin: 0;">군집 겹침과 접근 분산</h2>
             <p style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.55; margin: 0;">개체별 접근 위치를 나눠 같은 좌표에 뭉치지 않고 도주 길목을 압박하도록 개선했습니다.</p>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1;">
-              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px dashed rgba(248,113,113,0.3); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-muted); font-size: 0.72rem;">
-                  <span style="color: var(--accent-red); font-weight: 700; font-size: 0.78rem;">BEFORE</span>
-                  <span>GIF 재현·촬영 필요</span>
-                  <span style="opacity: 0.5; font-size: 0.65rem;">PM_Trouble_CrowdOverlap.gif</span>
-                </div>
+              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px solid rgba(248,113,113,0.38); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
+                <img src="assets/[PM]송예찬/gifs/PM_Trouble_CrowdOverlap_Before.gif?v=20260724-8" alt="군집 겹침 문제 상황 재현" style="width: 100%; height: 100%; object-fit: contain; display: block;">
               </div>
-              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px dashed rgba(45,212,191,0.3); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-muted); font-size: 0.72rem;">
-                  <span style="color: var(--accent-teal); font-weight: 700; font-size: 0.78rem;">AFTER</span>
-                  <span>GIF 재현·촬영 필요</span>
-                </div>
+              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px solid rgba(45,212,191,0.38); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
+                <img src="assets/[PM]송예찬/gifs/PM_Trouble_CrowdOverlap_After.gif?v=20260724-8" alt="개체별 접근 분산 후 실제 동작" style="width: 100%; height: 100%; object-fit: contain; display: block;">
               </div>
             </div>
           </div>
@@ -1787,5 +1773,19 @@
     </div>
   </div>
   <script src="script.js"></script>
+<script>
+function playPmYouTube(button) {
+  const wrapper = button.closest('#pmYouTubePlayer');
+  if (!wrapper) return;
+  const iframe = document.createElement('iframe');
+  iframe.src = 'https://www.youtube.com/embed/BxIWsNXTyWU?autoplay=1&rel=0&modestbranding=1';
+  iframe.title = '꿈식자 AI 완성 결과';
+  iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+  iframe.allowFullscreen = true;
+  iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+  iframe.style.cssText = 'width:100%;height:100%;border:0;display:block;';
+  wrapper.replaceChildren(iframe);
+}
+</script>
 </body>
 </html>
