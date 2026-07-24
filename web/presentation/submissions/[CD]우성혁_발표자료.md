@@ -103,9 +103,9 @@
 #### 3.1.2 작업 목표
 
 **작성**: 개념 및 구상 단계에 있던 원안 기획을 개발팀(TD, PM, PD)이 즉시 구현 및 검증할 수 있는 체계적인 SSOT 기준 문서로 구체화하는 것을 목표로 했습니다.
-① 개발 구현 과정에서의 중복·혼선 방지를 위한 P0~P1 시스템 및 기능 명세 일원화
-② 캐릭터, 스킬, UI, 오디오, 씬 전환 메커니즘을 예외 처리 규칙 및 수치/흐름 기반으로 상세 정의
-③ 기획 문서가 개발 및 QA 검증의 기준점이 되는 유기적 개발 환경 구축
+1. 개발 구현 과정에서의 중복·혼선 방지를 위한 P0~P1 시스템 및 기능 명세 일원화
+1. 캐릭터, 스킬, UI, 오디오, 씬 전환 메커니즘을 예외 처리 규칙 및 수치/흐름 기반으로 상세 정의
+1. 기획 문서가 개발 및 QA 검증의 기준점이 되는 유기적 개발 환경 구축
 
 #### 3.1.3 핵심 문제 또는 제약
 
@@ -145,9 +145,9 @@
 이 작업을 통해 어떤 플레이 경험 또는 개발 목표를 달성하려 했나요?
 
 **작성**: 사운드 호출이 각 스크립트에 분산되어 관리하기 어려워지는 사태를 예방하기 위해 단일 `AudioManager`로 일원화하여,
-① 어느 씬에서든 GlobalEventBus 구조를 통해 동일한 API로 사운드 호출을 가능하게 하고,
-② 상태 변화 및 씬 전환 시 BGM 및 환경음 클립 무한 재시작을 방지하는 클립 필터링 기능을 AudioManager에 내장하며,
-③ FMOD 미설치 환경에서도 Unity 내장 `AudioSource`로 자동 Fallback되는 안전망 확보를 목표로 했습니다.
+1. 어느 씬에서든 GlobalEventBus 구조를 통해 동일한 API로 사운드 호출을 가능하게 하고,
+1. 상태 변화 및 씬 전환 시 BGM 및 환경음 클립 무한 재시작을 방지하는 클립 필터링 기능을 AudioManager에 내장하며,
+1. FMOD 미설치 환경에서도 Unity 내장 `AudioSource`로 자동 Fallback되는 안전망 확보를 목표로 했습니다.
 
 #### 3.2.3 핵심 문제 또는 제약
 
@@ -205,7 +205,7 @@
 
 ### Scene 2. 대표 작업
 
-#### Scene 2-1. 작업 소개
+#### Tab 1. 작업 소개
 
 **무엇을 보여줄까요?**
 
@@ -221,7 +221,7 @@
 
 **이때 말할 내용**: 프로젝트 초기 개발 방향성을 설정할 시기에 시스템 명세서를 작성하여 개발에 필요한 규칙과 예외 처리 가이드라인을 기획하였습니다.
 
-#### Scene 2-2. 작업 목표와 문제
+#### Tab 2. 작업 목표와 문제
 
 **무엇을 보여줄까요?**
 
@@ -241,7 +241,7 @@
 
 **이때 말할 내용**: 기획 단계는 프로젝트에 주어진 시간과 인력 내에서 구현 가능한 범위를 설정하는 것을 목표로 하며, 그 범위에 어떤 시스템을 포함하여 어느 선까지 구체화하고 어느 점을 제외할 것인지가 문제가 됩니다.
 
-#### Scene 2-3. 기술적 판단
+#### Tab 3. 기술적 판단
 
 **무엇을 보여줄까요?**
 
@@ -259,11 +259,11 @@
 
 **이때 말할 내용**: 따라서 기획 단계에서는 필요한 내용을 정리한 후 각각 기술적으로 어떻게 구현해야 하는지를 실제 코딩에 사용되는 변수 및 함수 형식으로 상세하게 정리할 필요가 있습니다.
 
-#### Scene 2-4. 결과 비교 및 검증
+#### Tab 4. 결과 비교 및 검증
 
 **무엇을 보여줄까요?**
 
-- [x] 최종 결과 영상
+- [ ] 최종 결과 영상
 - [ ] 문제 상황
 - [ ] 게임 플레이
 - [x] 이미지
@@ -279,7 +279,7 @@
 
 ### Scene 3. 보조 작업
 
-#### Scene 3-1. 작업 소개
+#### Tab 1. 작업 소개
 
 **무엇을 보여줄까요?**
 
@@ -287,7 +287,7 @@
 - [ ] 문제 상황
 - [ ] 게임 플레이
 - [ ] 이미지
-- [ ] 구조도
+- [x] 구조도
 - [ ] 코드
 - [ ] 기타:
 
@@ -302,7 +302,7 @@
 
 ---
 
-#### Scene 3-2. 작업 목표와 문제
+#### Tab 2. 작업 목표와 문제
 
 **무엇을 보여줄까요?**
 
@@ -322,7 +322,7 @@
 
 ---
 
-#### Scene 3-3. 기술적 판단
+#### Tab 3. 기술적 판단
 
 **무엇을 보여줄까요?**
 
@@ -345,7 +345,7 @@
 
 ---
 
-#### Scene 3-4. 결과 비교 또는 검증
+#### Tab 4. 결과 비교 또는 검증
 
 **무엇을 보여줄까요?**
 
@@ -433,9 +433,9 @@
 | 4 | 기획서 | `P0.5_UI_아이템 슬롯 배경 이미지 변경 기획_v1.0.0.md` | 아이템 등급 표시 기획 | [P0.5_UI_아이템 슬롯 배경 이미지 변경 기획_v1.0.0](../../../LucidDiver_Document/02_개발_전달용/P0.5_기획_명세서/P0.5_UI_아이템%20슬롯%20배경%20이미지%20변경%20기획_v1.0.0.md) |
 | 5 | 기획서 | `P1_인트로 신 기획서_v1.0.0.md` | 인트로 신 기획 | [P1_인트로 신 기획서_v1.0.0](../../../LucidDiver_Document/검수/P1_인트로%20신%20기획서_v1.0.0/P1_인트로%20신%20기획서_v1.0.0.md) |
 | 6 | 기획서 | `P1_오디오 매니저_기획서_v1.0.0.md` | 오디오 시스템 기획 | [P1_오디오 매니저_기획서_v1.0.0](../../../LucidDiver_Document/검수/P1_오디오%20매니저_기획서_v1.0.0.md) |
-| 7 | 구조도 | 기획 → 개발 구조도 | 기획 명세서가 실제 개발로 이어지는 흐름도 | [GameDesign_Introduction.png](../assets/%5BCD%5D우성혁/images/GameDesign_Introduction.png) |
+| 7 | 구조도 | 기획 → 개발 구조도 | 기획 명세서가 실제 개발로 이어지는 흐름도 | [GameDesign_Introduction.png](../assets/%5BCD%5D우성혁/images/GameDesign_Introduction.png)<br>HTML의 CSS 인터랙티브 컴포넌트로 대체 |
 | 8 | 구조도 | `AudioManager.cs` 구조 | `AudioManager` 클래스 전체를 region 접기를 통해 요약 | [AudioManager_Snippet_Regions.png](../assets/%5BCD%5D우성혁/images/AudioManager_Snippet_Regions.png) |
-| 9 | 구조도 | `AudioManager` 구조도 | 사운드 종류 및 재생 타입에 따른 분류 구조도 | [AudioManager_Chart.png](../assets/%5BCD%5D우성혁/images/AudioManager_Chart.png) |
+| 9 | 구조도 | `AudioManager` 구조도 | 사운드 종류 및 재생 타입에 따른 분류 구조도 | [AudioManager_Chart.png](../assets/%5BCD%5D우성혁/images/AudioManager_Chart.png)<br>HTML의 CSS 인터랙티브 컴포넌트로 대체 |
 | 10 | 코드 | `AudioManager.cs` 스니펫 | `Play2DSound` 메소드 | [AudioManager_Snippet_Play2DSound.png](../assets/%5BCD%5D우성혁/images/AudioManager_Snippet_Play2DSound.png) |
 | 11 | 코드 | `AudioManager.cs` 스니펫 | `Play3DSound` 메소드 | [AudioManager_Snippet_Play3DSound.png](../assets/%5BCD%5D우성혁/images/AudioManager_Snippet_Play3DSound.png) |
 | 12 | 코드 | `AudioManager.cs` 스니펫 | `Play3DSoundAndReturn` 및 `Stop3DSound` 메소드 | [Play3DSoundAndReturn.png](../assets/%5BCD%5D우성혁/images/AudioManager_Snippet_Play3DSoundAndReturn.png) · [Stop3DSound.png](../assets/%5BCD%5D우성혁/images/AudioManager_Snippet_Stop3DSound.png) |
@@ -586,7 +586,7 @@ private GameObject Play3DSoundAndReturn(int audioID, Vector3 sourcePosition)
         AudioType.SFX       => SFXMixerGroup,
         AudioType.UI        => UIMixerGroup,
         AudioType.AMBIENT   => AmbMixerGroup,
-        _ => SFXMixerGroup
+        _                   => SFXMixerGroup
     };
     src.loop = _data.Loop;
 
@@ -709,7 +709,7 @@ private void Stop3DSound(AudioSource source)
 ## 10. 확인이 필요한 내용
 
 - [x] 대표 작업이 정확히 내 담당인지 확인 필요
-- [ ] 구현 완료 여부 확인 필요
+- [x] 구현 완료 여부 확인 필요
 - [x] 사용할 영상 촬영 필요
 - [x] 다른 발표자와 내용 중복 확인 필요
 - [x] 발표 시간 확인 필요
@@ -719,13 +719,13 @@ private void Stop3DSound(AudioSource source)
 
 ## 11. 최종 체크
 
-- [ ] 작업 전체를 나열하지 않았다.
-- [ ] 대표 작업을 1~2개로 줄였다.
-- [ ] 완성 결과를 먼저 보여준다.
-- [ ] 기술 사용 이유를 설명했다.
-- [ ] 실제 구현과 계획을 구분했다.
-- [ ] 사용할 에셋을 작성했다.
-- [ ] 원하는 웹 연출을 구체적으로 작성했다.
+- [x] 작업 전체를 나열하지 않았다.
+- [x] 대표 작업을 1~2개로 줄였다.
+- [x] 완성 결과를 먼저 보여준다.
+- [x] 기술 사용 이유를 설명했다.
+- [x] 실제 구현과 계획을 구분했다.
+- [x] 사용할 에셋을 작성했다.
+- [x] 원하는 웹 연출을 구체적으로 작성했다.
 - [ ] 제한 시간 안에 발표 가능하다.
 
 ---
