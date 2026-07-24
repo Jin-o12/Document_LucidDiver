@@ -188,7 +188,7 @@
 - [ ] 코드
 - [ ] 기타:
 
-![](../assets/[CD]우성혁/images/GameDesign_Introduction.png)
+![발표 시작 이미지](../assets/[CD]우성혁/images/GameDesign_Introduction.png)
 
 **이때 말할 내용**: 프로젝트 내 시스템 명세서 및 구현에 필요한 기능의 기획 문서를 작성하고, 이 중 오디오 시스템을 직접 구현하였습니다.
 
@@ -206,7 +206,7 @@
 - [ ] 코드
 - [ ] 기타:
 
-![](../assets/[CD]우성혁/images/GameDesign_Workflow.png)
+![기획 워크플로우 소개](../assets/[CD]우성혁/images/GameDesign_Workflow.png)
 
 **이때 말할 내용**: 프로젝트 초기 개발 방향성을 설정할 시기에 시스템 명세서를 작성하여 개발에 필요한 규칙과 예외 처리 가이드라인을 기획하였습니다.
 
@@ -222,11 +222,11 @@
 - [ ] 코드
 - [ ] 기타:
 
-![](../assets/[CD]우성혁/images/GameDesign_SystemVersion_v0.01.png)
-![](../assets/[CD]우성혁/images/GameDesign_SystemVersion_v1.00.png)
-![](../assets/[CD]우성혁/images/GameDesign_SystemVersion_v1.03.png)
-![](../assets/[CD]우성혁/images/GameDesign_SystemVersion_P0.01.png)
-![](../assets/[CD]우성혁/images/GameDesign_SystemVersion_P0.02.png)
+![최초 버전](../assets/[CD]우성혁/images/GameDesign_SystemVersion_v0.01.png)
+![1.00 이후](../assets/[CD]우성혁/images/GameDesign_SystemVersion_v1.00.png)
+![1.03 이후](../assets/[CD]우성혁/images/GameDesign_SystemVersion_v1.03.png)
+![P0 명세](../assets/[CD]우성혁/images/GameDesign_SystemVersion_P0.01.png)
+![P0 수정](../assets/[CD]우성혁/images/GameDesign_SystemVersion_P0.02.png)
 
 **이때 말할 내용**: 기획 단계는 프로젝트에 주어진 시간과 인력 내에서 구현 가능한 범위를 설정하는 것을 목표로 하며, 그 범위에 어떤 시스템을 포함하여 어느 선까지 구체화하고 어느 점을 제외할 것인지가 문제가 됩니다.
 
@@ -242,9 +242,9 @@
 - [ ] 코드
 - [ ] 기타:
 
-![](../../../LucidDiver_Document/07_기획서_이미지_자료/P0.5_스킬_areaType_설명.png)
-![](../assets/[CD]우성혁/images/GameDesign_SkillData_01.png)
-![](../assets/[CD]우성혁/images/GameDesign_SkillData_02.png)
+![AreaType 설명 이미지](../../../LucidDiver_Document/07_기획서_이미지_자료/P0.5_스킬_areaType_설명.png)
+![스킬 데이터 정리_1](../assets/[CD]우성혁/images/GameDesign_SkillData_01.png)
+![스킬 데이터 정리_2](../assets/[CD]우성혁/images/GameDesign_SkillData_02.png)
 
 **이때 말할 내용**: 따라서 기획 단계에서는 필요한 내용을 정리한 후 각각 기술적으로 어떻게 구현해야 하는지를 실제 코딩에 사용되는 변수 및 함수 형식으로 상세하게 정리할 필요가 있습니다.
 
@@ -252,10 +252,10 @@
 
 **무엇을 보여줄까요?**
 
-- [ ] 최종 결과 영상
+- [×] 최종 결과 영상
 - [ ] 문제 상황
 - [ ] 게임 플레이
-- [ ] 이미지
+- [×] 이미지
 - [×] 구조도
 - [ ] 코드
 - [ ] 기타:
@@ -285,7 +285,7 @@
 - [ ] 스크린샷
 - [ ] 비디오
 
-![](../assets/[CD]우성혁/images/AudioManager_Snippet_Regions.png)
+![AudioManager 코드 구조](../assets/[CD]우성혁/images/AudioManager_Snippet_Regions.png)
 
 **이때 말할 내용**: "단일 `AudioManager` API에서 전체 사운드를 통합 관리하고, 환경음/BGM/SFX/UI로 구분되는 각 사운드를 독립적으로 제어할 수 있는 음량 연동 구조를 구현하였습니다."
 
@@ -305,7 +305,7 @@
 
 **화면에 보여줄 내용**: `AudioManager.cs` 설계 흐름도
 
-![](../assets/[CD]우성혁/images/AudioManager_Chart.png)
+![AudioManager 설계 흐름도](../assets/[CD]우성혁/images/AudioManager_Chart.png)
 
 **이때 말할 내용**: "사운드 리소스의 상황별 재생 처리 및 음량 관리를 단일 매니저 스크립트에서 통합할 수 있도록 설계하는 것이 목표였습니다. 이 과정에서 2D 및 3D 사운드를 어떻게 구분해 재생할 것인지를 주요 문제로 설정했습니다."
 
@@ -326,9 +326,9 @@
 **화면에 보여줄 내용**: `Play2DSound` 및 `Play3DSound` 코드 스니펫 + `EscapeSuccess-Play2DSound` 및 `Weapon-Play3DSound` 이미지
 | Play2DSound | Play3DSound |
 | --- | --- |
-| ![](../assets/[CD]우성혁/images/EscapeSuccess_Play2dSound.png) | ![](../assets/[CD]우성혁/images/Weapon_Play3dSound.png) |
+| ![탈출 성공 효과음](../assets/[CD]우성혁/images/EscapeSuccess_Play2dSound.png) | ![기본 공격 사격 효과음](../assets/[CD]우성혁/images/Weapon_Play3dSound.png) |
 | Play2DSound<br>예시: 탈출 성공 판정 시 | Play3DSound<br>예시: 기본 공격 사격 시 - 기본 공격 발사 위치 |
-| ![](../assets/[CD]우성혁/images/AudioManager_Snippet_Play2DSound.png) | ![](../assets/[CD]우성혁/images/AudioManager_Snippet_Play3DSound.png) |
+| ![Play2DSound 코드](../assets/[CD]우성혁/images/AudioManager_Snippet_Play2DSound.png) | ![Play3DSound 코드](../assets/[CD]우성혁/images/AudioManager_Snippet_Play3DSound.png) |
 
 **이때 말할 내용**: "사운드 종류별 전용 AudioSource를 사용하고, `Play2DSound`에서는 PlayOneShot()을 호출, `Play3DSound` 메서드에서는 지정된 위치에 일시적인 Audiosource를 생성하게 함으로써 동시 다발적인 사운드 재생이 가능하도록 구현하였습니다."
 
@@ -338,9 +338,9 @@
 
 **무엇을 보여줄까요?**
 
-- [ ] 최종 결과 영상
+- [×] 최종 결과 영상
 - [ ] 문제 상황
-- [×] 게임 플레이
+- [ ] 게임 플레이
 - [ ] 이미지
 - [ ] 구조도
 - [×] 코드
@@ -348,9 +348,9 @@
 
 **화면에 보여줄 내용**: `Play3DSoundAndReturn` 및 `Stop3DSound` 코드 스니펫 + `Grenade_Play3DSoundAndReturn` 비디오
 
-![](../assets/[CD]우성혁/images/AudioManager_Snippet_Play3DSoundAndReturn.png)
-![](../assets/[CD]우성혁/videos/Grenade_Play3DSoundAndReturn.mp4)
-![](../assets/[CD]우성혁/images/AudioManager_Snippet_Stop3DSound.png)
+![Play3DSoundAndReturn 코드](../assets/[CD]우성혁/images/AudioManager_Snippet_Play3DSoundAndReturn.png)
+![3D 사운드 루프 재생 시연](../assets/[CD]우성혁/videos/Grenade_Play3DSoundAndReturn.mp4)
+![Stop3DSound 코드](../assets/[CD]우성혁/images/AudioManager_Snippet_Stop3DSound.png)
 
 **이때 말할 내용**: "이어서, 소음 디코이 오브젝트를 생성하는 스킬 같이 3D 사운드 소스에 루프 처리가 필요한 경우에 대한 오브젝트 반환 코드까지 작성하여 오디오 출력 처리 구조를 완성하였습니다."
 
@@ -359,7 +359,7 @@
 ### Scene 4. 마무리
 
 **마지막에 보여줄 화면**: 기획 → 구현 → 결과물 도표
-![](../assets/[CD]우성혁/images/GameDesign_Finale.png)
+![발표 마무리 이미지](../assets/[CD]우성혁/images/GameDesign_Finale.png)
 
 **마무리 문장**:
 
@@ -373,8 +373,8 @@
 
 - [ ] 영상 자동 재생
 - [×] 클릭 후 영상 재생
-- [ ] 설명 순차 등장
-- [ ] Before / After 비교
+- [×] 설명 순차 등장
+- [×] Before / After 비교
 - [ ] 이미지 확대
 - [ ] 영상 위 오버레이 표시
 - [ ] FSM 또는 단계별 강조
@@ -402,7 +402,15 @@
         - [진행] 버튼: [기술적 판단] 부분에 강조 이펙트를 출력 AND 강조 이펙트 외부 구역 이미지를 어둡게 처리
         - [결과] 버튼: [결과 비교 및 검증] 부분에 강조 이펙트를 출력 AND 강조 이펙트 외부 구역 이미지를 어둡게 처리
     - Scene 3: 버튼 클릭 시 슬라이드 구역에 출력되는 이미지 그룹을 해당 버튼에 연결된 그룹으로 변경하는 슬라이딩 애니메이션 효과 재생
-    
+
+- Scene 2-2에서 버전 관리 내역 시트가 출력된 구역을 마우스 드래그하여 위아래 스크롤되게 연출
+
+- Scene 2-3의 스킬 데이터 테이블에서 AreaType 또는 AreaWidth 구역에 마우스 호버 시 설명 이미지가 툴팁 양식으로 출력되도록 구성
+
+- Scene 2-4에 가로 슬라이드를 통해 Before 기획 / After 구현 사례를 보여주도록 연출
+    - Before: 기획서 Preview 이미지
+    - After: 인게임 스크린샷 또는 영상
+
 - Scene 3-4에서 `Play3DSoundAndReturn` 메소드 코드 스니펫 이미지를 버튼으로 설정
     - 버튼 클릭 시 코드 스니펫 이미지 위치에 Grenade_Play3DSoundAndReturn 영상이 오버레이되어 출력
     - Grenade_Play3DSoundAndReturn 영상 재생 종료 후 오버레이되었던 영상이 비활성화되고 코드 스니펫 이미지가 다시 전면에 출력됨
@@ -415,18 +423,19 @@
 |---:|---|---|---|---|
 | 1 | 기획서 | `01_P0_시스템_명세서.md` | 시스템 기획 구체화 상황 | [01_P0_시스템_명세서](../../../LucidDiver_Document/01_SSOT_최종_기준문서/01_P0_시스템_명세서.md) <br> 버전 관리 시트 이미지 추가<br>[0.01~0.05](../assets/[CD]우성혁/images/GameDesign_SystemVersion_v0.01.png) [1.00~1.02](../assets/[CD]우성혁/images/GameDesign_SystemVersion_v1.00.png) [1.03~1.05](../assets/[CD]우성혁/images/GameDesign_SystemVersion_v1.03.png) [P0 결정](../assets/[CD]우성혁/images/GameDesign_SystemVersion_P0.01.png) [P0 수정](../assets/[CD]우성혁/images/GameDesign_SystemVersion_P0.02.png) |
 | 2 | 기획서 | `P0.5_플레이어 캐릭터_기획서_시스템 명세_v1.0.3.md` | 캐릭터 시스템 기획 | [P0.5_플레이어 캐릭터_기획서_시스템 명세_v1.0.3](../../../LucidDiver_Document/02_개발_전달용/P0.5_기획_명세서/플레이어_캐릭터_시스템_명세/P0.5_플레이어%20캐릭터_기획서_시스템%20명세_v1.0.3.md) |
-| 3 | 기획서 | `P0.5_플레이어 캐릭터_기획서_스킬 기능 명세_v1.0.0.md` | 스킬 시스템 기획 | [P0.5_플레이어 캐릭터_기획서_스킬 기능 명세_v1.0.0](../../../LucidDiver_Document/02_개발_전달용/P0.5_기획_명세서/플레이어_캐릭터_시스템_명세/P0.5_플레이어%20캐릭터_기획서_스킬%20기능%20명세_v1.0.0.md) |
+| 3 | 기획서 | `P0.5_플레이어 캐릭터_기획서_스킬 기능 명세_v1.0.0.md` | 스킬 시스템 기획 | [P0.5_플레이어 캐릭터_기획서_스킬 기능 명세_v1.0.0](../../../LucidDiver_Document/02_개발_전달용/P0.5_기획_명세서/플레이어_캐릭터_시스템_명세/P0.5_플레이어%20캐릭터_기획서_스킬%20기능%20명세_v1.0.0.md)<br>설명 이미지 추가<br>[AreaType 설명 이미지](../../../LucidDiver_Document/07_기획서_이미지_자료/P0.5_스킬_areaType_설명.png) [스킬 데이터 정리_1](../assets/[CD]우성혁/images/GameDesign_SkillData_01.png) [스킬 데이터 정리_2](../assets/[CD]우성혁/images/GameDesign_SkillData_02.png) [디코이 생성 스킬 기획](../assets/[CD]우성혁/images/GameDesign_Doc_Skill_Decoy.png) |
 | 4 | 기획서 | `P0.5_UI_아이템 슬롯 배경 이미지 변경 기획_v1.0.0.md` | 아이템 등급 표시 기획 | [P0.5_UI_아이템 슬롯 배경 이미지 변경 기획_v1.0.0](../../../LucidDiver_Document/02_개발_전달용/P0.5_기획_명세서/P0.5_UI_아이템%20슬롯%20배경%20이미지%20변경%20기획_v1.0.0.md) |
 | 5 | 기획서 | `P1_인트로 신 기획서_v1.0.0.md` | 인트로 신 기획 | [P1_인트로 신 기획서_v1.0.0](../../../LucidDiver_Document/검수/P1_인트로%20신%20기획서_v1.0.0/P1_인트로%20신%20기획서_v1.0.0.md) |
 | 6 | 기획서 | `P1_오디오 매니저_기획서_v1.0.0.md` | 오디오 시스템 기획 | [P1_오디오 매니저_기획서_v1.0.0](../../../LucidDiver_Document/검수/P1_오디오%20매니저_기획서_v1.0.0.md) |
 | 7 | 구조도 | 기획 → 개발 구조도 | 기획 명세서가 실제 개발로 이어지는 흐름도 | [web\presentation\assets\[CD]우성혁\images\GameDesign_Introduction.png] |
 | 8 | 구조도 | `AudioManager.cs` 구조 | `AudioManager` 클래스 전체를 region 접기를 통해 요약 | [web\presentation\assets\[CD]우성혁\images\AudioManager_Snippet_Regions.png] |
 | 9 | 구조도 | `AudioManager` 구조도 | 사운드 종류 및 재생 타입에 따른 분류 구조도 | [web\presentation\assets\[CD]우성혁\images\AudioManager_Chart.png] |
-| 10 | 코드 | `AudioManager.cs` 스니펫 | `Play2DSound` 메소드 | [web\presentation\assets\[CD]우성혁\images\AudioManager_Snippet_Play2DSound.png]<br>코드 출력만으로 충분한 경우 하단 '코드 스니펫 제시' 문단 참조 |
-| 11 | 코드 | `AudioManager.cs` 스니펫 | `Play3DSound` 메소드 | [web\presentation\assets\[CD]우성혁\images\AudioManager_Snippet_Play3DSound.png]<br>코드 출력만으로 충분한 경우 하단 '코드 스니펫 제시' 문단 참조 |
-| 12 | 코드 | `AudioManager.cs` 스니펫 | `Play3DSoundAndReturn` 및 `Stop3DSound` 메소드 | 이미지 첨부<br>[web\presentation\assets\[CD]우성혁\images\AudioManager_Snippet_Play3DSoundAndReturn.png]<br>[web\presentation\assets\[CD]우성혁\images\AudioManager_Snippet_Stop3DSound.png]<br>코드 출력만으로 충분한 경우 하단 '코드 스니펫 제시' 문단 참조 |
-| 12 | 이미지 | `EscapeSuccess-Play2DSound` | Play2DSound 메소드 실행 예시: 탈출 성공 판정 시 | 이미지 첨부 |
-| 13 | 이미지 | `Weapon-Play3DSound` | Play3DSound 메소드 실행 예시: 기본 공격 사격 시 - 기본 공격 발사 위치 | 이미지 첨부 |
+| 10 | 코드 | `AudioManager.cs` 스니펫 | `Play2DSound` 메소드 | [web\presentation\assets\[CD]우성혁\images\AudioManager_Snippet_Play2DSound.png] |
+| 11 | 코드 | `AudioManager.cs` 스니펫 | `Play3DSound` 메소드 | [web\presentation\assets\[CD]우성혁\images\AudioManager_Snippet_Play3DSound.png] |
+| 12 | 코드 | `AudioManager.cs` 스니펫 | `Play3DSoundAndReturn` 및 `Stop3DSound` 메소드 | [web\presentation\assets\[CD]우성혁\images\AudioManager_Snippet_Play3DSoundAndReturn.png][web\presentation\assets\[CD]우성혁\images\AudioManager_Snippet_Stop3DSound.png] |
+| 13 | 이미지 | `EscapeSuccess-Play2DSound` | Play2DSound 메소드 실행 예시: 탈출 성공 판정 시 | 이미지 첨부 |
+| 14 | 이미지 | `Weapon-Play3DSound` | Play3DSound 메소드 실행 예시: 기본 공격 사격 시 - 기본 공격 발사 위치 | 이미지 첨부 |
+| 15 | 비디오 | `Grenade_Play3DSoundAndReturn` | Play3DSoundAndReturn 메소드 실행 예시: 수류탄 투척 시 | [Grenade_Play3DSoundAndReturn](../assets/[CD]우성혁/videos/Grenade_Play3DSoundAndReturn.mp4) |
 
 ### 구조도 예시
 
