@@ -69,8 +69,8 @@
 
 ### 3.1 완성 결과
 
-**작성**: 프로젝트의 시작 단계에서, '계층형 아키텍쳐'를 기반으로 한 프로젝트의 개발에 있어 기반을 다지는 작업을 진행했습니다. 기능에 따라 파일을 분리하고, 각 파일의 책임을 명확히 정의하여 유지보수가 용이한 코드를 작성했습니다. 이때, Assambly Definition을 이용하여 규칙을 더욱 견고히 하였습니다.
-이를 통해 스크립트간의 무분별한 호출을 방지하고, 의존성을 낮추어 스크립트간의 순환 참조로 인한 문제가 발생하지 않을 수 있었습니다. 또한 기능별로 스크립트를 분류했기 때문에 코드를 전달받은 다른 팀원들이 혼동하지 않고 기능을 쉽게 파악하여 추가 개발을 진행할 수 있었습니다.
+**작성**: 프로젝트의 시작 단계에서, '계층형 아키텍쳐'를 기반으로 한 프로젝트의 개발의 기반을 다지는 작업을 진행했습니다. 기능에 따라 파일을 분리하고, 각 파일의 책임을 명확히 정의하여 유지보수가 용이한 코드를 작성했습니다. 이때, Assambly Definition을 이용하여 규칙을 더욱 견고히 하였습니다.
+이를 통해 스크립트간의 무분별한 호출을 방지하고, 의존성을 낮추어 스크립트간의 순환 참조로 인한 문제가 발생하지 않을 수 있었습니다. 또한 기능별로 스크립트를 분류했기 때문에 코드를 전달받은 다른 팀원들이 혼동하지 않고 기능을 쉽게 파악하여 추가 개발을 진행할 수 있는 환경을 도모했습니다.
 
 ### 3.2 작업 목표
 
@@ -91,7 +91,7 @@
 
 ### 3.5 구현 결과
 
-**작성**: 모듈화 설계를 적용하여 게임의 핵심 기능들을 물리적인 단위로 분리할 수 있었습니다. 또한 Assembly Definition을 도입하여 각 기능별 코드의 의존성을 명시적으로 관리함으로써, 불필요한 컴파일 시간을 단축하고 코드의 안정성을 확보할 수 있었습니다.
+**작성**: 걔층형 아키텍쳐의 구조 위에 모듈화 설계를 적용하여 게임의 핵심 기능들을 물리적인 단위로 분리할 수 있었습니다. 또한 Assembly Definition을 도입하여 각 기능별 코드의 의존성을 명시적으로 관리함으로써, 불필요한 컴파일 시간을 단축하고 코드의 안정성을 확보할 수 있었습니다.
 
 ### 3.6 남은 한계 또는 개선점
 
@@ -113,20 +113,24 @@
 - [ ] 코드
 - [ ] 기타:
 
+**화면에 보여줄 내용**: 프로젝트 파일 전체 구조도를 크게 보여줍니다
+
+**사용 파일**:
+- [x] [프로젝트 파일 전체 구조도](../assets/[TD]강다영/images/TD_ProjectArchitecture.png)
 
 **이때 말할 내용**: "구현 초반, 저는 프로젝트의 아키텍쳐와 폴더 구조를 설계하는 작업을 진행했습니다. 이전 프로젝트에서의 경험을 바탕으로 기능별 파일을 분리하고, 각 파일의 책임을 명확히 정의하여 유지보수가 용이한 코드를 작성하고자 했습니다."
 
 ---
 
 ### Scene 2. 계층형 아키텍쳐 구조
-**화면에 보여줄 내용**: 프로젝트 파일 전체 구조도를 왼쪽에 크게 보여주고, 오른쪽에 각 구조 항목에 대한 대표 이미지를 보여줍니다.
+
+**화면에 보여줄 내용**: 프로젝트 파일 전체 구조도를 왼쪽에 보여주고, 오른쪽에 각 구조 항목에 대한 대표 이미지를 보여줍니다.
 
 **사용 파일**:
-- [x](../assets/[TD]강다영/images/TD_ProjectArchitecture.png) - 프로젝트 파일 전체 구조도
-- [x](../assets/[TD]강다영/images/Manager_Inspector.png) - Manager&Presenters 대표 이미지
-- [x](../assets/[TD]강다영/images/UI_Image_Lobby.png) - UI 대표 이미지
-- [x](../assets/[TD]강다영/images/System_Image_InGamePlay.png) - System 대표 이미지
-- [x](../assets/[TD]강다영/images/Define_Script_Enum.png) - Define 대표 이미지: Enum
+- [x] [Manager&Presenters 대표 이미지](../assets/[TD]강다영/images/Manager_Inspector.png)
+- [x] [UI 대표 이미지](../assets/[TD]강다영/images/UI_Image_Lobby.png)
+- [x] [System 대표 이미지](../assets/[TD]강다영/images/System_Image_InGamePlay.png)
+- [x] [Define 대표 이미지: Enum](../assets/[TD]강다영/images/Define_Script_Enum.png)
 
 **이때 말할 내용**: "규모가 큰 프로젝트일수록, 개발 과정에서 기능이 추가될수록 스크립트 간의 의존성이 높아져, 하나를 수정하면 다른 곳에서 에러가 터지는 순환 참조 문제가 발생할 위험이 켜집니다. 이를 방지하기 위한 명확한 개발 환경의 규칙이 필요했습니다. 이를 해결하기 위해 기능별 물리적 분리, Assembly Definition 도입과 함께 UI 시스템을 개별 모듈로 취급하는 설계를 적용했습니다."
 
@@ -134,30 +138,39 @@
 
 ### Scene 3. 데이터의 구조화
 
-**화면에 보여줄 내용**:
+**화면에 보여줄 내용**: (1) 엑셀 데이터 시트와 JSON 직렬화 데이터, 해당 데이터들이 화면에 출력되는 예시를 순차적으로 보여줍니다. (2) 주소가 등록 된 Addressible 에셋들과 에셋 이미지가 적용된 모습을 보여줍니다.
 
-**이때 말할 내용**: "이러한 계층 구조는 데이터와 시스템의 분리로 이어졌습니다. 게임 속 정적 데이터들은 Excel을 변환한 JSON으로서 직렬화 된 형태로 저장했고, 플레이어의 고유 데이터와 같은 동적 데이터는 Scriptable Object를 사용하여 효율적으로 관리했습니다. 이러한 데이터 구조는 게임 시스템의 핵심 로직과 게임 데이터를 분리함으로써 유연성을 확보했고, 이는 새로운 시스템이나 데이터를 추가할 때 기존 코드 수정 없이 확장을 가능하게 합니다."
+**사용 파일**:
+- [x] [엑셀 데이터 시트](../assets/[TD]강다영/images/Data_Log_Excel.png)
+- [x] [JSON 직렬화 데이터](../assets/[TD]강다영/images/Data_Log_JSON.png)
+- [x] [Scriptable Object](../assets/[TD]강다영/images/Data_Log_Print.png)
+- [x] [Addressible 리스트](../assets/[TD]강다영/images/Addressible_List.png)
+- [x] [Addressible 이미지 적용 예시](../assets/[TD]강다영/images/Addressible_Image.png)
+
+
+**이때 말할 내용**: "이러한 계층 구조는 데이터와 시스템의 분리로 이어졌습니다. 게임 속 정적 데이터들은 Excel을 변환한 JSON으로서 직렬화 된 형태로 저장하거나 Addressible을 통해 관리하였고, 플레이어의 고유 데이터와 같은 동적 데이터는 Scriptable Object를 사용하여 효율적으로 관리했습니다. 이러한 데이터 구조는 게임 시스템의 핵심 로직과 게임 데이터를 분리함으로써 유연성을 확보했고, 이는 새로운 시스템이나 데이터를 추가할 때 기존 코드 수정 없이 확장을 가능하게 합니다."
 
 ---
 
 ### Scene 4. Git Branch 전략을 통한 유지보수 및 협업의 완성
 
 **화면에 보여줄 내용**:
-- [x](../assets/[TD]강다영/images/BranchStrategy.png)
+- [x] [Git Branch 전략](../assets/[TD]강다영/images/BranchStrategy.png)
 
 
 **이때 말할 내용**: "이렇게 짜여진 구조가 유지될 수 있게 한 마지막 장치는 Git Branch 전략이었습니다. 프로젝트 작업을 기능별로 분리하여 각 브랜치에서 별도로 수행할 수 있게 관리하였고, 충돌이 일어나더라도 팀원들과의 리뷰를 통해 빠르게 문제를 파악하고 수정할 수 있었습니다. 결과적으로 팀원 간의 협업 시 코드 충돌 및 디버깅 시간 또한 대폭 단축되어 안정적인 개발이 가능해졌습니다."
-
 
 ---
 
 ### Scene 5. 마무리
 
-**마지막에 보여줄 화면**:
+**마지막에 보여줄 화면**: 전체적인 프로젝트의 구조도를 보여줍니다
 
+**화면에 보여줄 내용**:
+- [x] [프로젝트 전체 구조도](../assets/[TD]강다영/images/project_architecture_Gemini_Generated_Image.png)
 
 **마무리 문장**:
-"이처럼 보이지 않는 곳에서의 튼튼한 기초 공사와 규칙 수립이 프로젝트 전체의 속도와 안정성을 이끄는 원동력임을 증명했습니다. 감사합니다."
+"이처럼 보이지 않는 곳에서의 튼튼한 기초 공사와 규칙 수립이 프로젝트 전체의 속도와 안정성을 이끄는 원동력이 된 전체 프로젝트 구조도를 보여드리며 마무리하겠습니다. 감사합니다."
 
 ---
 
@@ -171,7 +184,7 @@
 - [ ] Before / After 비교
 - [ ] 이미지 확대
 - [ ] 영상 위 오버레이 표시
-- [ ] FSM 또는 단계별 강조
+- [x] FSM 또는 단계별 강조
 - [ ] 코드와 실행 결과 동시 표시
 - [x] 버튼 클릭으로 상태 전환
 - [ ] 맵 경로 애니메이션
@@ -181,7 +194,14 @@
 
 ### 구체적인 연출 요청
 
-**작성**: 프로젝트 파일의 전체 구조도를 보여줄 때, 구조도의 각 항목이 클릭 혹은 호버로 상호작용 할 수 있는 버튼이었으면 함. 행동을 수행 시, 오른쪽에 해당 항목에 대한 예시 이미지가 출력되는 연출.
+**작성**: 
+- Scene2: 프로젝트 파일의 전체 구조도를 보여줄 때, 구조도의 각 항목이 클릭 혹은 호버로 상호작용 할 수 있는 버튼이었으면 함. 행동을 수행 시, 오른쪽에 해당 항목에 대한 예시 이미지가 출력되는 연출.
+- Scene5: 프로젝트 전체 구조도 이미지 그대로 사용, 혹은 페이지의 디자인에 맞게 구조도를 새롭게 구성. 
+(새롭게 구성 하기 위한 오브젝트 파일 별도 첨부)
+   - [Excel](../assets/[TD]강다영/images/Icon_Excel.png)
+   - [Unity](../assets/[TD]강다영/images/Icon_Unity.png)
+   - [Git](../assets/[TD]강다영/images/Icon_Git.png)
+   - [Github](../assets/[TD]강다영/images/Icon_Github.png)
 
 
 ---
@@ -190,9 +210,22 @@
 
 | 순서 | 종류 | 파일명 | 보여주는 내용 | 준비 상태 |
 |---:|---|---|---|---|
-| 1 | 이미지 | `assets/images/TD/System_Architecture.png` | 프로젝트의 아키텍쳐 및 폴더 구조 | 준비 완료 |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
+| 1 | 이미지 | `assets/[TD]강다영/images/TD_ProjectArchitecture.png` | 프로젝트 파일 전체 구조도 | 준비 완료 |
+| 2 | 이미지 | `assets/[TD]강다영/images/Manager_Inspector.png` | Manager&Presenters 대표 이미지 | 준비 완료 |
+| 3 | 이미지 | `assets/[TD]강다영/images/UI_Image_Lobby.png` | UI 대표 이미지 | 준비 완료 |
+| 4 | 이미지 | `assets/[TD]강다영/images/System_Image_InGamePlay.png` | System 대표 이미지 | 준비 완료 |
+| 5 | 이미지 | `assets/[TD]강다영/images/Define_Script_Enum.png` | Define 대표 이미지: Enum | 준비 완료 |
+| 6 | 이미지 | `assets/[TD]강다영/images/Data_Log_Excel.png` | 엑셀 데이터 시트 | 준비 완료 |
+| 7 | 이미지 | `assets/[TD]강다영/images/Data_Log_JSON.png` | JSON 직렬화 데이터 | 준비 완료 |
+| 8 | 이미지 | `assets/[TD]강다영/images/Data_Log_Print.png` | Scriptable Object | 준비 완료 |
+| 9 | 이미지 | `assets/[TD]강다영/images/Addressible_List.png` | Addressible 리스트 | 준비 완료 |
+| 10 | 이미지 | `assets/[TD]강다영/images/Addressible_Image.png` | Addressible 이미지 적용 예시 | 준비 완료 |
+| 11 | 이미지 | `assets/[TD]강다영/images/BranchStrategy.png` | Git Branch 전략 | 준비 완료 |
+| 12 | 이미지 | `assets/[TD]강다영/images/project_architecture_Gemini_Generated_Image.png` | 프로젝트 전체 구조도 | 준비 완료 |
+| 13 | 이미지 | `assets/[TD]강다영/images/Icon_Excel.png` | 엑셀 아이콘 | 준비 완료 |
+| 14 | 이미지 | `assets/[TD]강다영/images/Icon_Unity.png` | 유니티 아이콘 | 준비 완료 |
+| 15 | 이미지 | `assets/[TD]강다영/images/Icon_Git.png` | 깃 아이콘 | 준비 완료 |
+| 16 | 이미지 | `assets/[TD]강다영/images/Icon_Github.png` | 깃허브 아이콘 | 준비 완료 |
 
 ### 직접 녹화가 필요한 장면
 
