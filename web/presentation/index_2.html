@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script>
+  /* 이미지 로드 실패 시 안전 처리 (인라인 onerror에서 호출) */
+  function handleImageError(img) {
+    if (img) img.style.display = 'none';
+  }
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>침몽도시: 루시드 다이버 — 송예찬 미디어 적용 예시</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 메인 16:9 슬라이드 컨테이너 -->
+  <div id="viewport">
+    <!-- 진행률 상단 게이지 -->
+    <div class="progress-bar-container">
+      <div id="progressBar" class="progress-bar-fill"></div>
+    </div>
+    <!-- 이전/다음 핫스팟 클릭 영역 -->
+    <div class="nav-hotspot nav-hotspot-left" onclick="prevScene()">◀</div>
+    <div class="nav-hotspot nav-hotspot-right" onclick="nextScene()">▶</div>
+    <!-- 디버그 정보 패널 -->
+    <div id="debugOverlay" class="debug-overlay">
+      <table>
+        <tr><td>[SCENE INDEX]</td><td id="dbgIndex">0 / 0</td></tr>
+        <tr><td>[CLASSIFICATION]</td><td><span id="dbgType" class="debug-badge debug-badge--core">CORE</span></td></tr>
+        <tr><td>[PRESENTER]</td><td id="dbgPresenter">-</td></tr>
+        <tr><td>[EST. TIME]</td><td id="dbgTime">-</td></tr>
+        <tr><td>[TODO LIST]</td><td id="dbgTodo" style="color:#ffcc00">-</td></tr>
+      </table>
+    </div>
+    <!-- 슬라이드 덱 -->
+    <div id="sceneContainer" class="scene-container">
+<!-- ========================================= -->
+
+<!-- CHAPTER 00 / SCENE 01 -->
+
+      <section class="scene" data-chapter="00" data-scene="01" data-type="CORE" data-presenter="송예찬 PM" data-title="시스템 부팅 시퀀스" data-time="1분 00초" data-notes="[CONTENT] 오프닝 부팅 장치입니다. 콘솔 메시지가 순차적으로 표시되면 발표자가 클릭하여 루시드 커넥션을 체결합니다.">
+        <div class="opening-terminal">
+          <div class="terminal-output" id="bootTerminalOutput">
+            <!-- JS에서 동적 출력 처리 -->
+          </div>
+          <div class="terminal-action" id="bootActionContainer">
+            <button class="btn-terminal" onclick="nextScene()">[ CONNECT TO DIVER LINK ]</button>
+          </div>
+        </div>
+
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 00 / SCENE 02 -->
+
+      <section class="scene" data-chapter="00" data-scene="02" data-type="CORE" data-presenter="송예찬 PM" data-title="게임 타이틀 & 슬로건" data-time="1분 00초" data-notes="[CONTENT] 메인 커버입니다. 침몽도시의 기본 서사 정체성을 띠는 슬로건을 소개하고 본 발표를 시작합니다.">
+        <div class="opening-title-scene">
+          <div class="opening-logo">침몽도시: 루시드 다이버</div>
+          <div class="opening-slogan">다이버는 잊는다. 관제사는 기록한다. 그리고 다시, 구하러 들어간다.</div>
+          <div class="opening-team">TEAM REMNANTS</div>
+        </div>
+
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 00 / SCENE 03 -->
+
+      <section class="scene" data-chapter="00" data-scene="03" data-type="CORE" data-presenter="장수영 CP / 송예찬 PM" data-title="공식 PV 시네마틱 트레일러" data-time="1분 30초" data-notes="[CONTENT] 침몽도시: 루시드 다이버 공식 PV 영상입니다. 세계관, 캐릭터 비주얼, 오디오 및 핵심 플레이 분위기를 시네마틱 뷰어로 소개합니다.">
+        <div class="scene-header">
+          <div>
+            <h1>공식 PV 트레일러</h1>
+            <div class="subtitle">CINEMATIC TRAILER & GAME OVERVIEW</div>
+          </div>
+        </div>
+        <div class="pv-cinematic-layout">
+          <div class="pv-video-container">
+            <div class="pv-video-header">
+              <div class="pv-video-badge">
+                <span class="pv-video-dot"></span>
+                OFFICIAL PV TRAILER — ON AIR
+              </div>
+              <div>1080p | STEREO AUDIO</div>
+            </div>
+            <div class="pv-iframe-wrapper">
+              <iframe src="https://www.youtube.com/embed/UH0oJ1b-EuY?enablejsapi=1&rel=0&autoplay=0" 
+                      title="침몽도시: 루시드 다이버 공식 PV" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                      allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+          <div class="pv-info-panel">
+            <div class="pv-card">
+              <div class="pv-card-title">🎮 GAME IDENTITY</div>
+              <div class="pv-card-desc">Subculture Extraction Action RPG</div>
+            </div>
+            <div class="pv-card">
+              <div class="pv-card-title">💬 MASTER SLOGAN</div>
+              <div class="pv-card-desc">"다이버는 잊는다. 관제사는 기록한다. 그리고 다시, 구하러 들어간다."</div>
+            </div>
+            <div class="pv-highlights">
+              <div class="pv-item">
+                <span class="pv-item-icon">🌌</span>
+                <div class="pv-item-text">
+                  <strong>세계관 & 서사</strong><br>
+                  침몽도시 NDMA 관제소와 다이버 유안의 자아 복구 스토리
+                </div>
+              </div>
+              <div class="pv-item">
+                <span class="pv-item-icon">⚔️</span>
+                <div class="pv-item-text">
+                  <strong>2.5D 하이브리드 공간</strong><br>
+                  레트로 픽셀 아트 x 3D URP 실시간 공간 광원 연출
+                </div>
+              </div>
+              <div class="pv-item">
+                <span class="pv-item-icon">🎵</span>
+                <div class="pv-item-text">
+                  <strong>시청각 프로토타이핑</strong><br>
+                  58종 오디오 사운드 x AnyPortrait 2D 캐릭터 애니메이션
+                </div>
+              </div>
+            </div>
+            <a href="https://youtu.be/UH0oJ1b-EuY" target="_blank" rel="noopener noreferrer" class="pv-external-btn">
+              YOUTUBE 본편 보기 ↗
+            </a>
+          </div>
+        </div>
+
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 01 / SCENE 01 -->
+
+      <section class="scene" data-chapter="01" data-scene="01" data-type="CORE" data-presenter="송예찬 PM" data-title="프로젝트 프로필 개요" data-time="1분 30초" data-notes="[CONTENT] 프로젝트 프로필 장치입니다. 장르, 개발 플랫폼, 엔진 등의 개요 로그가 텔레메트리 연출처럼 순차적으로 표시됩니다.">
+        <div class="scene-header">
+          <div>
+            <h1>프로젝트 개요</h1>
+            <div class="subtitle">PROJECT STATUS & MATRIX</div>
+          </div>
+        </div>
+        <div class="overview-layout">
+          <div class="overview-left-panel">
+            <!-- 연출 가미 게임 브랜드 로고 박스 -->
+            <div class="overview-logo-box">
+              <div class="overview-logo-shimmer"></div>
+              <img src="assets/공용/images/game_logo.png" alt="침몽도시: 루시드 다이버 로고" class="overview-logo-img" loading="lazy">
+            </div>
+            <!-- 스펙 텔레메트리 터미널 -->
+            <div class="log-terminal" id="overviewLogTerminal">
+              <div class="log-line" data-delay="300"><span class="label">> GENRE:</span><span class="value">Subculture Extraction Action RPG</span></div>
+              <div class="log-line" data-delay="800"><span class="label">> PLATFORM:</span><span class="value">PC (Steam target)</span></div>
+              <div class="log-line" data-delay="1300"><span class="label">> ENGINE:</span><span class="value">Unity 2022.3.62f3 (URP)</span></div>
+              <div class="log-line" data-delay="1800"><span class="label">> DEV PERIOD:</span><span class="value">2026.06.11 - 2026.07.28 (approx. 7 Weeks)</span></div>
+              <div class="log-line" data-delay="2300"><span class="label">> CREW:</span><span class="value">Team REMnants (5 Crew members)</span></div>
+            </div>
+          </div>
+          <div class="overview-content-box">
+            <!-- 1. P0 원안 기획 의도 -->
+            <div class="overview-intent-card">
+              <div class="overview-intent-title">🎯 ORIGINAL DESIGN INTENT (P0 의도)</div>
+              <div class="overview-intent-desc">
+                익스트랙션 장르의 손실 긴장감과 서브컬처 캐릭터 애착을 결합하여,<br>
+                단순한 전리품 탐색이 아닌 <strong>'다이버의 잃어버린 기억과 자아를 되찾는 서사적 루프'</strong>를 검증하고자 했습니다.
+              </div>
+            </div>
+            <!-- 2. 베타까지의 마일스톤 진화 -->
+            <div class="overview-evolution-card">
+              <div class="overview-evolution-title">🚀 MILESTONE EVOLUTION (프로젝트 진화)</div>
+              <div class="milestone-stepper">
+                <div class="milestone-step-item">
+                  <span class="milestone-badge">P0 PROTOTYPE</span>
+                  <div class="milestone-text">
+                    <strong>핵심 플레이 루프 검증</strong> — 출격·전투·탈출·정산의 기본 루프 및 두 장르의 결합 가능성 최초 증명
+                  </div>
+                </div>
+                <div class="milestone-step-item">
+                  <span class="milestone-badge">P0.5 ALPHA</span>
+                  <div class="milestone-text">
+                    <strong>세션 긴장감 & 기능 고도화</strong> — 제한시간, 탈출 채널링, FSM AI, 공간 오디오 등 핵심 시스템 수납
+                  </div>
+                </div>
+                <div class="milestone-step-item active">
+                  <span class="milestone-badge">P1 BETA</span>
+                  <div class="milestone-text">
+                    <strong>완성형 버티컬 슬라이스</strong> — URP 툰 셰이더, 손전등 시야 연출, 동조율 기반 로비 & 심상기록 컷신 통합
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 01 / SCENE 02 -->
+
+      <section class="scene" data-chapter="01" data-scene="02" data-type="CORE" data-presenter="송예찬 PM / Team REMnants" data-title="팀원 관제사 크루 쇼케이스" data-time="1분 30초" data-notes="[CONTENT] 프로젝트를 구축한 5명의 NDMA 관제사 크루를 소개합니다. 카드를 클릭하면 3D로 뒤집어지며 각 직군별 상세 R&R과 대표 기여 요약을 확인할 수 있습니다.">
+        <div class="scene-header">
+          <div>
+            <h1>크루 쇼케이스</h1>
+            <div class="subtitle">TEAM REMNANTS 5 CONTROL OFFICERS</div>
+          </div>
+        </div>
+        <div class="crew-showcase-container">
+          <div class="crew-hint-bar">
+            <div><strong>NDMA CONTROL CENTER:</strong> 5명의 관제사가 각각의 전문 영역을 담당하고 있습니다.</div>
+            <div>💡 <strong>TIP:</strong> 카드를 클릭하면 3D로 뒤집히며 상세 R&R 및 발표 챕터를 확인할 수 있습니다.</div>
+          </div>
+          <div class="crew-deck-grid">
+            <!-- 1. 장수영 CP -->
+            <div class="crew-card-wrapper" onclick="toggleCrewFlip(this)">
+              <div class="crew-card-inner">
+                <div class="crew-card-front">
+                  <div class="crew-card-img-box">
+                    <img src="assets/공용/images/CP_장수영.png" alt="CP 장수영" loading="lazy">
+                  </div>
+                  <div class="crew-card-front-info">
+                    <span class="crew-role-badge">CP — CONTENT PRODUCER</span>
+                    <div class="crew-name">장수영</div>
+                    <div class="crew-flip-btn-hint">↺ Click to View Details</div>
+                  </div>
+                </div>
+                <div class="crew-card-back">
+                  <div class="crew-back-header">
+                    <div class="crew-back-role">CONTENT PRODUCER</div>
+                    <div class="crew-back-name">장수영 (관제사)</div>
+                  </div>
+                  <div class="crew-back-body">
+                    <div class="crew-back-sec-title">🎯 핵심 R&R & 담당 파트</div>
+                    <div class="crew-back-text">
+                      프로젝트 총괄 결정권자 & 서사·세계관·레벨 디자인 원작자. 
+                      AnyPortrait 2D 캐릭터 리깅, 58종 SFX/BGM 오디오 원작 제작.
+                    </div>
+                    <div class="crew-back-sec-title">📌 대표 기여 작업</div>
+                    <div class="crew-back-tags">
+                      <span class="crew-tag">핵심 루프 설계</span>
+                      <span class="crew-tag">동조율/심상기록</span>
+                      <span class="crew-tag">AnyPortrait 리깅</span>
+                      <span class="crew-tag">58종 SFX/BGM</span>
+                      <span class="crew-tag">SSOT 총괄</span>
+                    </div>
+                  </div>
+                  <div class="crew-back-footer">
+                    PRESENTATION: Ch 00, 01, 02 (전담) ↗
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 2. 우성혁 CD -->
+            <div class="crew-card-wrapper" onclick="toggleCrewFlip(this)">
+              <div class="crew-card-inner">
+                <div class="crew-card-front">
+                  <div class="crew-card-img-box">
+                    <img src="assets/공용/images/CD_우성혁.png" alt="CD 우성혁" loading="lazy">
+                  </div>
+                  <div class="crew-card-front-info">
+                    <span class="crew-role-badge">CD — CONTENT DESIGNER</span>
+                    <div class="crew-name">우성혁</div>
+                    <div class="crew-flip-btn-hint">↺ Click to View Details</div>
+                  </div>
+                </div>
+                <div class="crew-card-back">
+                  <div class="crew-back-header">
+                    <div class="crew-back-role">CONTENT DESIGNER</div>
+                    <div class="crew-back-name">우성혁 (관제사)</div>
+                  </div>
+                  <div class="crew-back-body">
+                    <div class="crew-back-sec-title">🎯 핵심 R&R & 담당 파트</div>
+                    <div class="crew-back-text">
+                      시스템 기획 명세화, FSM 기반 에너미 AI 로직 구축, 결과 정산 파이프라인 및 3D 공간 오디오 연동.
+                    </div>
+                    <div class="crew-back-sec-title">📌 대표 기여 작업</div>
+                    <div class="crew-back-tags">
+                      <span class="crew-tag">에너미 FSM AI</span>
+                      <span class="crew-tag">3D 공간 오디오</span>
+                      <span class="crew-tag">결과 정산 시스템</span>
+                      <span class="crew-tag">관제 지시 명세</span>
+                    </div>
+                  </div>
+                  <div class="crew-back-footer">
+                    PRESENTATION: Ch 03 (전담) ↗
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 3. 송예찬 PM -->
+            <div class="crew-card-wrapper" onclick="toggleCrewFlip(this)">
+              <div class="crew-card-inner">
+                <div class="crew-card-front">
+                  <div class="crew-card-img-box">
+                    <img src="assets/공용/images/PM_송예찬.png" alt="PM 송예찬" loading="lazy">
+                  </div>
+                  <div class="crew-card-front-info">
+                    <span class="crew-role-badge">PM — PROJECT MANAGER</span>
+                    <div class="crew-name">송예찬</div>
+                    <div class="crew-flip-btn-hint">↺ Click to View Details</div>
+                  </div>
+                </div>
+                <div class="crew-card-back">
+                  <div class="crew-back-header">
+                    <div class="crew-back-role">PROJECT MANAGER</div>
+                    <div class="crew-back-name">송예찬 (관제사)</div>
+                  </div>
+                  <div class="crew-back-body">
+                    <div class="crew-back-sec-title">🎯 핵심 R&R & 담당 파트</div>
+                    <div class="crew-back-text">
+                      개발 일정 총괄 관리, 튜토리얼 세션 구축, 상자/체스트 기믹 및 사용자 조작 경험 개선.
+                    </div>
+                    <div class="crew-back-sec-title">📌 대표 기여 작업</div>
+                    <div class="crew-back-tags">
+                      <span class="crew-tag">일정 및 마일스톤</span>
+                      <span class="crew-tag">튜토리얼 루프</span>
+                      <span class="crew-tag">상자/체스트 기믹</span>
+                      <span class="crew-tag">UX 가이드라인</span>
+                    </div>
+                  </div>
+                  <div class="crew-back-footer">
+                    PRESENTATION: Ch 04 (전담) ↗
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 4. 김남해 PD -->
+            <div class="crew-card-wrapper" onclick="toggleCrewFlip(this)">
+              <div class="crew-card-inner">
+                <div class="crew-card-front">
+                  <div class="crew-card-img-box">
+                    <img src="assets/공용/images/PD_김남해.png" alt="PD 김남해" loading="lazy">
+                  </div>
+                  <div class="crew-card-front-info">
+                    <span class="crew-role-badge">PD — PROGRAM DIRECTOR</span>
+                    <div class="crew-name">김남해</div>
+                    <div class="crew-flip-btn-hint">↺ Click to View Details</div>
+                  </div>
+                </div>
+                <div class="crew-card-back">
+                  <div class="crew-back-header">
+                    <div class="crew-back-role">PROGRAM DIRECTOR</div>
+                    <div class="crew-back-name">김남해 (관제사)</div>
+                  </div>
+                  <div class="crew-back-body">
+                    <div class="crew-back-sec-title">🎯 핵심 R&R & 담당 파트</div>
+                    <div class="crew-back-text">
+                      침몽도시 3D 마트 공간 레벨 그래픽스, URP 툰 셰이더 & 2.5D 쿼터뷰 투과 라이팅 렌더링.
+                    </div>
+                    <div class="crew-back-sec-title">📌 대표 기여 작업</div>
+                    <div class="crew-back-tags">
+                      <span class="crew-tag">URP 툰 셰이더</span>
+                      <span class="crew-tag">쿼터뷰 시인성</span>
+                      <span class="crew-tag">손전등 라이팅</span>
+                      <span class="crew-tag">마트 레벨 디렉팅</span>
+                    </div>
+                  </div>
+                  <div class="crew-back-footer">
+                    PRESENTATION: Ch 05 (전담) ↗
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 5. 강다영 TD -->
+            <div class="crew-card-wrapper" onclick="toggleCrewFlip(this)">
+              <div class="crew-card-inner">
+                <div class="crew-card-front">
+                  <div class="crew-card-img-box">
+                    <img src="assets/공용/images/TD_강다영.png" alt="TD 강다영" loading="lazy">
+                  </div>
+                  <div class="crew-card-front-info">
+                    <span class="crew-role-badge">TD — TECHNICAL DIRECTOR</span>
+                    <div class="crew-name">강다영</div>
+                    <div class="crew-flip-btn-hint">↺ Click to View Details</div>
+                  </div>
+                </div>
+                <div class="crew-card-back">
+                  <div class="crew-back-header">
+                    <div class="crew-back-role">TECHNICAL DIRECTOR</div>
+                    <div class="crew-back-name">강다영 (관제사)</div>
+                  </div>
+                  <div class="crew-back-body">
+                    <div class="crew-back-sec-title">🎯 핵심 R&R & 담당 파트</div>
+                    <div class="crew-back-text">
+                      클라이언트 코어 인프라 구축, 인벤토리 & 창고 시스템, VFX 오브젝트 풀링 및 QA 안정화.
+                    </div>
+                    <div class="crew-back-sec-title">📌 대표 기여 작업</div>
+                    <div class="crew-back-tags">
+                      <span class="crew-tag">인벤토리/창고</span>
+                      <span class="crew-tag">VFX 오브젝트 풀링</span>
+                      <span class="crew-tag">클라이언트 구조</span>
+                      <span class="crew-tag">QA 버그 트래킹</span>
+                    </div>
+                  </div>
+                  <div class="crew-back-footer">
+                    PRESENTATION: Ch 06 (전담) ↗
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 02 / SCENE 01 -->
+
+      <section class="scene" data-chapter="02" data-scene="01" data-type="CORE" data-presenter="CP 장수영" data-title="장르 모순과 해결책" data-time="2분 00초" data-notes="[CONTENT] 캐릭터 애착을 지녀야 하는 서브컬처 게임의 특성과, 사망 시 손실 위험을 안는 익스트랙션의 상반된 장르 모순을 해결하는 '심상 동조율' 구조를 설명합니다.">
+        <!-- 마우스 위치 반응형 듀얼 배경 -->
+        <div class="challenge-dual-bg" id="challengeDualBg">
+          <div class="challenge-bg-layer challenge-bg--subculture" id="bgSubculture"></div>
+          <div class="challenge-bg-layer challenge-bg--extraction" id="bgExtraction"></div>
+          <div class="challenge-bg-layer challenge-bg--resolved" id="bgResolved"></div>
+          <div class="challenge-bg-vignette"></div>
+        </div>
+        <div class="scene-header" style="position:relative; z-index:2;">
+          <div>
+            <h1>디자인 챌린지</h1>
+            <div class="subtitle">THE GENRE INTEGRATION CONFLICT</div>
+          </div>
+        </div>
+        <div class="challenge-quote" style="position:relative; z-index:2; text-align:center; margin-bottom: 10px;">
+          <p style="font-size: 1.15rem; color: rgba(220, 220, 230, 0.95); line-height: 1.8; letter-spacing: 0.02em; text-shadow: 0 1px 8px rgba(0,0,0,0.6);">
+            캐릭터를 수집하고 육성하는 <span style="color: var(--accent-purple);">서브컬처</span>와,
+            실패하면 모든 것을 잃는 <span style="color: var(--accent-teal);">익스트랙션</span>은 물과 기름과 같다.
+          </p>
+          <p style="font-size: 1.3rem; color: var(--text-primary); font-weight: 700; margin-top: 8px;">
+            "잃어야 하는 장르"와 "잃어선 안 되는 장르"를 어떻게 결합할 것인가?
+          </p>
+        </div>
+        <div class="challenge-grid" style="position:relative; z-index:2;">
+          <div class="glass-card challenge-pane challenge-pane--subculture">
+            <h2>서브컬처 수집형</h2>
+            <p>캐릭터에 깊은 감정적 유대를 가짐.<br>영구 소실이나 사망 패널티에 극도로 취약함.</p>
+          </div>
+          <div class="challenge-center">
+            <div id="conflictNode" class="conflict-node">?</div>
+          </div>
+          <div class="glass-card challenge-pane challenge-pane--extraction">
+            <h2>익스트랙션</h2>
+            <p>탈출 실패 시 아이템/기억 영구 손실.<br>손실의 공포에서 비롯되는 극한의 쾌감.</p>
+          </div>
+        </div>
+        <div class="resolution-overlay" id="resolutionOverlay" style="z-index:3;">
+          <div class="glass-card" style="border-color: var(--accent-teal);">
+            <h3 style="color: var(--accent-teal); font-size: 1.4rem; margin-bottom: 10px;">[해결책] 심상 동조 및 억제 시스템</h3>
+            <p style="font-size: 1rem; line-height: 1.6;">
+              캐릭터가 사망하더라도 영구 소실되지 않고 <strong>'강제 각성(Forced Awakening)'</strong>으로 귀환합니다.<br>
+              대신 침몽도시에 남겨진 다이버 본래의 <strong>'기억 파편'</strong>을 회수하지 못해 자아 복구 및 동조율 상승이 지연되는 간접적 패널티를 취합니다.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 03 / SCENE 01 -->
+
+      <section class="scene" data-chapter="03" data-scene="01" data-type="CORE" data-presenter="송예찬 PM" data-title="인터랙티브 플레이 루프" data-time="3분 00초" data-notes="[CONTENT] 기획의 핵심 플레이 루프를 5단계 단계별 강조와 함께 시연합니다. 성공 루트와 실패 루트 클릭에 따라 분기 연출을 보여줄 수 있습니다.">
+        <div class="scene-header">
+          <div>
+            <h1>핵심 플레이 루프</h1>
+            <div class="subtitle">CORE PLAY LOOP & ROUTE BRANCH</div>
+          </div>
+        </div>
+        <div class="loop-flow-container">
+          <div class="loop-nodes-grid">
+            <div class="loop-node-row active" onclick="activateLoopStep(0)">
+              <div class="loop-node-num">01</div>
+              <div class="loop-node-text">출격 준비</div>
+            </div>
+            <div class="loop-node-row" onclick="activateLoopStep(1)">
+              <div class="loop-node-num">02</div>
+              <div class="loop-node-text">세션 진입</div>
+            </div>
+            <div class="loop-node-row" onclick="activateLoopStep(2)">
+              <div class="loop-node-num">03</div>
+              <div class="loop-node-text">아이템 / 파편 탐색</div>
+            </div>
+            <div class="loop-node-row" onclick="activateLoopStep(3)">
+              <div class="loop-node-num">04</div>
+              <div class="loop-node-text">에너미 전투</div>
+            </div>
+            <div class="loop-node-row" onclick="activateLoopStep(4)">
+              <div class="loop-node-num">05</div>
+              <div class="loop-node-text">탈출 / 탈출 실패</div>
+            </div>
+            <div class="loop-node-row" onclick="activateLoopStep(5)">
+              <div class="loop-node-num">06</div>
+              <div class="loop-node-text">서사 보상 확인</div>
+            </div>
+          </div>
+          <div class="glass-card loop-info-pane" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between; padding: 25px;">
+            <div>
+              <h3 id="loopStepTitle" style="color: var(--accent-teal); font-size: 1.4rem; margin-bottom: 8px;">01. 출격 준비</h3>
+              <p id="loopStepDesc" style="font-size: 0.95rem; line-height: 1.5; color: var(--text-secondary); margin-bottom: 15px;">
+                소지품 슬롯과 아티팩트를 정비하고 출격을 준비합니다.
+              </p>
+            </div>
+            <!-- 이미지 프리뷰 뷰어 디스플레이 -->
+            <div class="loop-preview-box" style="flex: 1; min-height: 420px; background: #000; border: 1px solid var(--border-glow-purple); border-radius: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative;">
+              <img id="loopImageDisplay" src="assets/[CP]장수영/images/CP_UI_Sortie_Preparation.png" alt="핵심 플레이 루프 화면" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+            <!-- 성공/실패 분기 기믹 (5번째 단계에서만 표시) -->
+            <div id="loopRouteToggleContainer" style="display: none; margin-top: 15px;">
+              <div class="loop-route-toggle" style="display: flex; gap: 15px;">
+                <button class="btn-route btn-route--success active" onclick="toggleLoopRoute('success')" style="flex: 1; padding: 10px 15px; font-weight: bold; border-radius: 6px; cursor: pointer;">⭕ 탈출 성공 결과 시연</button>
+                <button class="btn-route btn-route--failure" onclick="toggleLoopRoute('failure')" style="flex: 1; padding: 10px 15px; font-weight: bold; border-radius: 6px; cursor: pointer;">❌ 탈출 실패 결과 시연</button>
+              </div>
+              <p id="routeResultText" style="margin-top: 10px; font-size: 0.9rem; line-height: 1.4; color: var(--accent-teal); font-weight: 500;">
+                <strong>[탈출 성공]</strong> 탈출 성공! 획득한 파편과 아이템 보존 완료.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+<!-- ========================================= -->
+<!-- ========================================= -->
+
+<!-- CHAPTER 04 / SCENE 01 -->
+<!-- 세계관 및 서사: 인터랙티브 관계도 빌드업 (관제사 정의서 v2.0.0 기반) -->
+
+      <section class="scene" data-chapter="04" data-scene="01" data-type="CORE" data-presenter="장수영 CP / 송예찬 PM" data-title="침몽도시 세계관 & 4대 설정" data-time="2분 30초" data-notes="[CONTENT] 클릭할 때마다 세계관 요소가 하나씩 등장하며 관계가 구축됩니다. 5단계 빌드업 후 전체 구조가 완성됩니다.">
+        <div class="scene-header">
+          <div>
+            <h1>세계관 및 설정</h1>
+            <div class="subtitle">WORLD & LORE — INTERACTIVE BUILD-UP</div>
+          </div>
+        </div>
+        <div class="lore-diagram" id="loreDiagram">
+          <!-- SVG 연결선 오버레이 -->
+          <svg class="lore-svg" viewBox="0 0 1000 550" preserveAspectRatio="xMidYMid meet">
+            <!-- Step 2: 침몽도시 → 다이버 (출격) -->
+            <line class="lore-line" data-lore-step="2" x1="500" y1="80" x2="719" y2="211" />
+            <text class="lore-line-label" data-lore-step="2" x="555" y="120" text-anchor="middle">출격 / 귀환</text>
+            <!-- Step 3: 관제사 ── 링크 ── 다이버 -->
+            <line class="lore-line" data-lore-step="3" x1="281" y1="211" x2="719" y2="211" />
+            <text class="lore-line-label" data-lore-step="3" x="500" y="199" text-anchor="middle">⚡ 링크</text>
+            <!-- Step 3: 링크 끊김 경고 -->
+            <text class="lore-line-label lore-warning-label" data-lore-step="3" x="500" y="227" text-anchor="middle">링크 단절 시 → 꿈식자 변질</text>
+            <!-- Step 4: 다이버 → 기억 파편 (드롭) -->
+            <line class="lore-line lore-line--drop" data-lore-step="4" x1="719" y1="211" x2="635" y2="424" />
+            <text class="lore-line-label" data-lore-step="4" x="692" y="306" text-anchor="start">실패 시 드롭 ↓</text>
+            <!-- Step 5: 관제사 → 심상기록 (관제 기록) -->
+            <line class="lore-line" data-lore-step="5" x1="281" y1="211" x2="365" y2="424" />
+            <text class="lore-line-label" data-lore-step="5" x="308" y="306" text-anchor="middle">관제 기록</text>
+            <!-- Step 5: 기억 파편 → 심상기록 (합류) -->
+            <line class="lore-line" data-lore-step="5" x1="635" y1="424" x2="365" y2="424" />
+          </svg>
+          <!-- ── 노드: 다이버 (Step 1) ── -->
+          <div class="lore-node" data-lore-step="1" style="top: 35%; left: 67%;">
+            <div class="lore-node-thumb lore-node-thumb--teal">
+              <img src="assets/[CP]장수영/images/CP_Lore_Diver_Concept.png" alt="다이버">
+            </div>
+            <div class="lore-node-info">
+              <h3>다이버</h3>
+              <span>DIVER AGENT</span>
+            </div>
+          </div>
+          <!-- ── 노드: 침몽도시 (Step 2) ── -->
+          <div class="lore-node" data-lore-step="2" style="top: 11%; left: 46%;">
+            <div class="lore-node-thumb lore-node-thumb--purple">
+              <img src="assets/[CP]장수영/images/CP_Lore_City_Bg.png" alt="침몽도시">
+            </div>
+            <div class="lore-node-info">
+              <h3>침몽도시</h3>
+              <span>LUCID CITY</span>
+            </div>
+          </div>
+          <!-- ── 노드: 관제사 (Step 3) ── -->
+          <div class="lore-node" data-lore-step="3" style="top: 35%; left: 24%;">
+            <div class="lore-node-thumb lore-node-thumb--purple">
+              <img src="assets/[CP]장수영/images/CP_Lore_Linker_Vn.png" alt="관제사">
+            </div>
+            <div class="lore-node-info">
+              <h3>링크 관제사</h3>
+              <span>LINK CONTROLLER</span>
+            </div>
+          </div>
+          <!-- ── 노드: 기억 파편 (Step 4) ── -->
+          <div class="lore-node" data-lore-step="4" style="top: 74%; left: 59%;">
+            <div class="lore-node-thumb lore-node-thumb--teal">
+              <img src="assets/[CP]장수영/images/CP_Lore_Memory_Fragment.png" alt="기억 파편">
+            </div>
+            <div class="lore-node-info">
+              <h3>기억 파편</h3>
+              <span>MEMORY FRAGMENT</span>
+            </div>
+          </div>
+          <!-- ── 노드: 심상기록 (Step 5) ── -->
+          <div class="lore-node" data-lore-step="5" style="top: 74%; left: 32%;">
+            <div class="lore-node-thumb lore-node-thumb--gold">
+              <span class="lore-node-icon">🔮</span>
+            </div>
+            <div class="lore-node-info">
+              <h3>심상기록 복구</h3>
+              <span>MENTAL RECORD</span>
+              <div class="lore-sync-bar" data-lore-step="5">
+                <div class="lore-sync-label">동조율 (Link Rate)</div>
+                <div class="lore-sync-track"><div class="lore-sync-fill" id="loreSyncFill"></div></div>
+              </div>
+            </div>
+          </div>
+          <!-- ── 하단 설명 패널 ── -->
+          <div class="lore-desc-panel" id="loreDescPanel">
+            <p id="loreDescText">화면을 클릭하여 세계관 구조를 탐색하세요.</p>
+          </div>
+          <!-- ── 스텝 인디케이터 ── -->
+          <div class="lore-step-dots">
+            <span class="lore-dot" data-lore-dot="1"></span>
+            <span class="lore-dot" data-lore-dot="2"></span>
+            <span class="lore-dot" data-lore-dot="3"></span>
+            <span class="lore-dot" data-lore-dot="4"></span>
+            <span class="lore-dot" data-lore-dot="5"></span>
+          </div>
+        </div>
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 05 / SCENE 01 -->
+
+      <section class="scene" data-chapter="05" data-scene="01" data-type="CORE" data-presenter="장수영 Art/기획" data-title="UI 기획 및 실제 구현 비교" data-time="2분 00초" data-notes="[CONTENT] Before-After 기획/구현 교차 인터랙션입니다. 슬라이더를 마우스로 잡고 양옆으로 밀면 기획 목업과 실제 인게임 구현 화면이 겹쳐서 비교됩니다.">
+        <div class="scene-header">
+          <div>
+            <h1>UI 기획 및 실제 구현</h1>
+            <div class="subtitle">MOCKUP VS ACTUAL WORK COMPARISON</div>
+          </div>
+        </div>
+        <div class="comparison-container">
+          <div class="comparison-frame" id="compFrame" onmousemove="handleComparisonMove(event)" ontouchmove="handleComparisonMove(event)">
+            <!-- Before (기획 목업) -->
+            <img class="comparison-img" src="assets/[CP]장수영/images/CP_UI_Mockup_Design.png" alt="UI 와이어프레임 목업 시안" onerror="handleImageError(this, 'CP_UI_Mockup_Design.png')">
+            <!-- After (실제 구현 화면 - 클리핑 영역 조절) -->
+            <img class="comparison-img comparison-img--after" id="compAfterImg" src="assets/[CP]장수영/images/CP_UI_Runtime_Lobby.png" alt="유니티 런타임 로비 UI" onerror="handleImageError(this, 'CP_UI_Runtime_Lobby.png')">
+            <!-- 슬라이더 바 -->
+            <div class="comparison-slider" id="compSlider"></div>
+          </div>
+          <p style="color: var(--text-secondary); font-size: 0.95rem;">마우스를 이미지 위에 올리고 움직여서 UI 기획 와이어프레임과 Unity 인게임 화면을 비교해 보세요.</p>
+        </div>
+
+      </section>
+
+<!-- ========================================= -->
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 05 / SCENE 02 -->
+<!-- CP 보조 작업: AnyPortrait 2D 캐릭터 리깅 & Live2D Cubism 일러스트 -->
+
+      <section class="scene" data-chapter="05" data-scene="02" data-type="CORE" data-presenter="장수영 CP" data-title="AnyPortrait 리깅 & Live2D 일러스트" data-time="1분 30초" data-notes="[CONTENT] 각 패널을 클릭하면 에디터 정적 화면에서 실제 동작 영상/GIF로 크로스페이드됩니다.">
+        <div class="scene-header">
+          <div>
+            <h1>2D 캐릭터 비주얼 파이프라인</h1>
+            <div class="subtitle">ANYPORTRAIT RIGGING & LIVE2D CUBISM ILLUSTRATION</div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px; flex: 1; align-items: stretch; width: 100%;">
+          <!-- 좌: AnyPortrait -->
+          <div class="char-reveal-panel" id="charPanelAny" onclick="revealCharPanel('charPanelAny')">
+            <div class="char-reveal-badge" style="background: rgba(45, 212, 191, 0.15); border-color: var(--accent-teal); color: var(--accent-teal);">AnyPortrait — 2D Mesh-Bone Rigging</div>
+            <div class="char-reveal-viewport">
+              <img class="char-reveal-static" src="assets/[CP]장수영/images/CP_AnyPortrait_Editor.png" alt="AnyPortrait 에디터 작업 화면">
+              <img class="char-reveal-animated" src="assets/[CP]장수영/images/CP_AnyPortrait_Yuan_Rigging.gif" alt="AnyPortrait 리깅 모션">
+            </div>
+            <div class="char-reveal-desc">
+              <strong style="color: var(--accent-teal);">[구현]</strong> Player_Yuan 메시 정점 배치, Bone 뼈대 가중치 리깅, Idle / Walk / Run / Die / Dodge 등 <strong>8종 애니메이션</strong> 구축
+            </div>
+            <div class="char-reveal-hint">▶ 클릭하여 실제 동작 보기</div>
+          </div>
+          <!-- 우: Live2D Cubism -->
+          <div class="char-reveal-panel" id="charPanelL2D" onclick="revealCharPanel('charPanelL2D')">
+            <div class="char-reveal-badge" style="background: rgba(192, 132, 252, 0.15); border-color: var(--accent-purple); color: var(--accent-purple);">Live2D Cubism — Character Illustration</div>
+            <div class="char-reveal-viewport">
+              <img class="char-reveal-static" src="assets/[CP]장수영/images/CP_Live2D_Cubism_Editor.png" alt="Live2D Cubism 에디터 작업 화면">
+              <video class="char-reveal-animated" src="assets/[CP]장수영/videos/Yuan_Live2D_VP9.webm" loop muted playsinline></video>
+            </div>
+            <div class="char-reveal-desc">
+              <strong style="color: var(--accent-purple);">[구현]</strong> PSD 파츠 분리 → Cubism Editor 메시 정점 매핑 → 파라미터 애니메이션 → <strong>유니티 런타임 연동</strong> 완료
+            </div>
+            <div class="char-reveal-hint">▶ 클릭하여 실제 동작 보기</div>
+          </div>
+        </div>
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 05 / SCENE 03 -->
+<!-- CP 보조 작업: 58종 SFX & BGM 오디오 파이프라인 -->
+
+      <section class="scene" data-chapter="05" data-scene="03" data-type="CORE" id="audioScene" data-presenter="장수영 CP" data-title="58종 SFX/BGM 오디오 파이프라인" data-time="1분 00초" data-notes="[CONTENT] CP 보조 작업 — Splice, ElevenLabs, Suno 인프라를 통한 소스 수집과 FL Studio 후가공을 거친 58종 SFX/BGM 구축 과정을 소개합니다.">
+        <div class="scene-header">
+          <div>
+            <h1>오디오 파이프라인</h1>
+            <div class="subtitle">58 SFX/BGM — SOURCE COLLECTION & FL STUDIO POST-PROCESSING</div>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 28px; flex: 1; width: 100%; align-items: center; justify-content: center;">
+          <!-- 상단: 4개 툴 로고 카드 -->
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; max-width: 1200px;">
+            <!-- Splice -->
+            <div class="glass-card audio-card" style="padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center;">
+              <div style="width: 80px; height: 80px; border-radius: 12px; overflow: hidden; background: #1a1a2e; display: flex; align-items: center; justify-content: center;">
+                <img src="assets/[CP]장수영/images/logo_splice.png" alt="Splice" style="width: 70%; height: 70%; object-fit: contain;">
+              </div>
+              <div>
+                <h3 style="font-size: 1rem; color: #fff; font-weight: 700;">Splice</h3>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">샘플 소스 수집</p>
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;">
+                전문 사운드 라이브러리에서 총격, 타격, 환경 SFX 원본 소스를 수집
+              </div>
+            </div>
+            <!-- ElevenLabs -->
+            <div class="glass-card audio-card" style="padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center;">
+              <div style="width: 80px; height: 80px; border-radius: 12px; overflow: hidden; background: #1a1a2e; display: flex; align-items: center; justify-content: center;">
+                <img src="assets/[CP]장수영/images/logo_elevenlabs.png" alt="ElevenLabs" style="width: 70%; height: 70%; object-fit: contain;">
+              </div>
+              <div>
+                <h3 style="font-size: 1rem; color: #fff; font-weight: 700;">ElevenLabs</h3>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">AI SFX 생성</p>
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;">
+                SFX 효과음 및 앰비언트 사운드 AI 생성
+              </div>
+            </div>
+            <!-- Suno -->
+            <div class="glass-card audio-card" style="padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center;">
+              <div style="width: 80px; height: 80px; border-radius: 12px; overflow: hidden; background: #1a1a2e; display: flex; align-items: center; justify-content: center;">
+                <img src="assets/[CP]장수영/images/logo_suno.png" alt="Suno" style="width: 70%; height: 70%; object-fit: contain;">
+              </div>
+              <div>
+                <h3 style="font-size: 1rem; color: #fff; font-weight: 700;">Suno</h3>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">AI BGM 생성</p>
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;">
+                로비, 세션 내부, 긴장 상황별 BGM 초안 생성
+              </div>
+            </div>
+            <!-- FL Studio -->
+            <div class="glass-card audio-card" style="padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; border-color: var(--accent-teal);">
+              <div style="width: 80px; height: 80px; border-radius: 12px; overflow: hidden; background: #1a1a2e; display: flex; align-items: center; justify-content: center;">
+                <img src="assets/[CP]장수영/images/logo_fl_studio.png" alt="FL Studio" style="width: 70%; height: 70%; object-fit: contain;">
+              </div>
+              <div>
+                <h3 style="font-size: 1rem; color: var(--accent-teal); font-weight: 700;">FL Studio</h3>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">후가공 & 마스터링</p>
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;">
+                이퀄라이징, 볼륨 정규화, 컷 편집 후 인게임 규격 출력
+              </div>
+            </div>
+          </div>
+          <!-- 하단: 파이프라인 흐름 요약 -->
+          <div class="glass-card audio-card" style="padding: 24px 36px; max-width: 1200px; width: 100%;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;">
+              <div style="text-align: center;">
+                <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent-teal);">58</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">SFX/BGM 총 종수</div>
+              </div>
+              <span style="color: var(--text-muted); font-size: 1.5rem;">→</span>
+              <div style="text-align: center;">
+                <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+                  <strong style="color: #fff;">소스 수집</strong> (Splice · ElevenLabs · Suno)
+                </div>
+              </div>
+              <span style="color: var(--text-muted); font-size: 1.5rem;">→</span>
+              <div style="text-align: center;">
+                <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+                  <strong style="color: var(--accent-teal);">FL Studio 후가공</strong> (EQ · 볼륨 · 마스터링)
+                </div>
+              </div>
+              <span style="color: var(--text-muted); font-size: 1.5rem;">→</span>
+              <div style="text-align: center;">
+                <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+                  <strong style="color: #fff;">AudioManager</strong> (3D 거리 감쇄 적용)
+                </div>
+              </div>
+              <span style="color: var(--text-muted); font-size: 1.5rem;">→</span>
+              <div style="text-align: center;">
+                <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+                  <strong style="color: var(--accent-purple);">인게임 출력</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 06 : CD 우성혁 대표작업 -->
+
+<!-- CHAPTER 06 / SCENE 01 -->
+<!-- CD Scene 1: 기획→개발 구조도 (인터랙티브) -->
+
+      <section class="scene" data-chapter="06" data-scene="01" data-type="CORE" data-presenter="우성혁 CD" data-title="기획 명세 → 개발 구현" data-time="30초" data-notes="[CONTENT] 기획 문서 5종이 실제 개발 구현으로 연결되는 구조도. CSS 인터랙티브.">
+        <div class="scene-header">
+          <div>
+            <h1>기획 명세 → 개발 구현</h1>
+            <div class="subtitle">SYSTEM SPECIFICATION TO IMPLEMENTATION</div>
+          </div>
+        </div>
+        <div class="cd-flow-stage" style="flex:1; display:flex; align-items:center; justify-content:center; width:100%; gap:40px;">
+          <!-- 좌측: 기획 명세 -->
+          <div class="cd-flow-group" style="display:flex; flex-direction:column; gap:12px; align-items:stretch; min-width:280px;">
+            <div class="cd-flow-header" style="color:#c084fc; font-weight:800; font-size:1.15rem; display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+              <span style="font-size:1.3rem;">📋</span> 기획 명세
+            </div>
+            <button class="cd-flow-card pm-anim" data-cd-pair="1" style="--cd-idx:0">
+              <span class="cd-flow-icon">📄</span> 시스템 명세서
+            </button>
+            <button class="cd-flow-card pm-anim" data-cd-pair="2" style="--cd-idx:1">
+              <span class="cd-flow-icon">👤</span> 캐릭터 기획서
+            </button>
+            <button class="cd-flow-card pm-anim" data-cd-pair="3" style="--cd-idx:2">
+              <span class="cd-flow-icon">✨</span> 스킬 기획서
+            </button>
+            <button class="cd-flow-card pm-anim" data-cd-pair="4" style="--cd-idx:3">
+              <span class="cd-flow-icon">🎬</span> 인트로 기획서
+            </button>
+            <button class="cd-flow-card pm-anim" data-cd-pair="5" style="--cd-idx:4">
+              <span class="cd-flow-icon">🔊</span> 오디오 기획서
+            </button>
+          </div>
+          <!-- 중앙: 화살표 SVG -->
+          <div class="cd-flow-arrows pm-anim" style="display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center; padding-top:36px;">
+            <svg class="cd-arrow-svg" viewBox="0 0 60 20" style="width:60px;height:20px;"><path d="M0 10 L48 10 L42 4 M48 10 L42 16" stroke="#c084fc" stroke-width="2" fill="none" opacity="0.6"/></svg>
+            <svg class="cd-arrow-svg" viewBox="0 0 60 20" style="width:60px;height:20px;"><path d="M0 10 L48 10 L42 4 M48 10 L42 16" stroke="#c084fc" stroke-width="2" fill="none" opacity="0.6"/></svg>
+            <svg class="cd-arrow-svg" viewBox="0 0 60 20" style="width:60px;height:20px;"><path d="M0 10 L48 10 L42 4 M48 10 L42 16" stroke="#c084fc" stroke-width="2" fill="none" opacity="0.6"/></svg>
+            <svg class="cd-arrow-svg" viewBox="0 0 60 20" style="width:60px;height:20px;"><path d="M0 10 L48 10 L42 4 M48 10 L42 16" stroke="#c084fc" stroke-width="2" fill="none" opacity="0.6"/></svg>
+            <svg class="cd-arrow-svg" viewBox="0 0 60 20" style="width:60px;height:20px;"><path d="M0 10 L48 10 L42 4 M48 10 L42 16" stroke="#c084fc" stroke-width="2" fill="none" opacity="0.6"/></svg>
+          </div>
+          <!-- 우측: 개발 구현 -->
+          <div class="cd-flow-group" style="display:flex; flex-direction:column; gap:12px; align-items:stretch; min-width:280px;">
+            <div class="cd-flow-header" style="color:var(--accent-teal); font-weight:800; font-size:1.15rem; display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+              <span style="font-size:1.3rem;">⟨/⟩</span> 개발 구현
+            </div>
+            <button class="cd-flow-card cd-flow-card--dev pm-anim" data-cd-pair="1" style="--cd-idx:0">
+              <span class="cd-flow-icon">📦</span> 게임 시스템
+            </button>
+            <button class="cd-flow-card cd-flow-card--dev pm-anim" data-cd-pair="2" style="--cd-idx:1">
+              <span class="cd-flow-icon">🏃</span> 캐릭터 동작
+            </button>
+            <button class="cd-flow-card cd-flow-card--dev pm-anim" data-cd-pair="3" style="--cd-idx:2">
+              <span class="cd-flow-icon">⚔</span> 캐릭터 스킬
+            </button>
+            <button class="cd-flow-card cd-flow-card--dev pm-anim" data-cd-pair="4" style="--cd-idx:3">
+              <span class="cd-flow-icon">🎥</span> IntroScene
+            </button>
+            <button class="cd-flow-card cd-flow-card--dev pm-anim" data-cd-pair="5" style="--cd-idx:4">
+              <span class="cd-flow-icon">🎵</span> AudioManager
+            </button>
+          </div>
+        </div>
+        <p style="text-align:center; color:var(--text-secondary); font-size:0.9rem; padding-top:10px;">
+          "시스템 명세서 및 구현에 필요한 기능의 기획 문서를 작성하고, 이 중 오디오 시스템을 직접 구현하였습니다."
+        </p>
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 06 / SCENE 02 -->
+<!-- CD Scene 2: 기획 명세 워크플로우 (인터랙티브 탭) -->
+
+      <section class="scene" data-chapter="06" data-scene="02" data-type="CORE" data-presenter="우성혁 CD" data-title="기획 명세 워크플로우" data-time="1분 30초" data-notes="[CONTENT] 클릭마다 2-1~2-4 카드 순차 등장." id="cdWorkflowScene" onclick="advanceCdWorkflow()">
+        <div class="scene-header">
+          <div>
+            <h1>시스템 기획 명세 워크플로우</h1>
+            <div class="subtitle">SPECIFICATION WORKFLOW — INTRODUCTION · GOAL · PROGRESS · RESULT</div>
+          </div>
+        </div>
+        <div style="flex:1; width:100%; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+          <div class="cd-wf-flow">
+            <!-- 2-1 작업 소개 -->
+            <div class="cd-wf-step" data-wf-step="1">
+              <div class="cd-wf-step-header">2-1 <strong>작업 소개</strong></div>
+              <div class="cd-wf-step-icon">📝</div>
+              <div class="cd-wf-step-title">시스템 명세서 작성</div>
+              <div class="cd-wf-step-body">
+                <div class="cd-wf-detail"><span>📋</span> 규칙 정의</div>
+                <div class="cd-wf-detail"><span>⚠️</span> 예외 처리 가이드라인</div>
+              </div>
+            </div>
+            <div class="cd-wf-arrow" data-wf-step="2">➤</div>
+            <!-- 2-2 목표와 문제 -->
+            <div class="cd-wf-step" data-wf-step="2">
+              <div class="cd-wf-step-header">2-2 <strong>작업 목표와 문제</strong></div>
+              <div style="display:flex; gap:10px; justify-content:center;">
+                <div class="cd-wf-step-icon">🎯</div>
+                <div class="cd-wf-step-icon">🧩</div>
+              </div>
+              <div class="cd-wf-step-body">
+                <div class="cd-wf-sub-title" style="color:var(--accent-teal);">목표</div>
+                <div class="cd-wf-detail"><span>⏱</span> 시간 내 구현</div>
+                <div class="cd-wf-detail"><span>👥</span> 인력 내 구현</div>
+                <div class="cd-wf-sub-title" style="color:var(--accent-red); margin-top:8px;">문제</div>
+                <div class="cd-wf-detail"><span>❓</span> 범위 설정의 기준과 한계</div>
+                <div class="cd-wf-detail" style="font-size:0.7rem; color:#d8beff;">포함 / 구체화 / 제외의 판단</div>
+              </div>
+            </div>
+            <div class="cd-wf-arrow" data-wf-step="3">➤</div>
+            <!-- 2-3 기술적 판단 -->
+            <div class="cd-wf-step" data-wf-step="3">
+              <div class="cd-wf-step-header">2-3 <strong>기술적 판단</strong></div>
+              <div class="cd-wf-step-icon" style="font-size:2rem;">⟨/⟩</div>
+              <div class="cd-wf-step-body">
+                <div class="cd-wf-chip-row">
+                  <span class="cd-wf-chip">변수<br><small>int, float, bool...</small></span>
+                  <span class="cd-wf-chip">함수<br><small>Function()</small></span>
+                </div>
+                <div class="cd-wf-chip-row">
+                  <span class="cd-wf-chip">구조체<br><small>struct</small></span>
+                  <span class="cd-wf-chip">열거형<br><small>enum</small></span>
+                </div>
+              </div>
+            </div>
+            <div class="cd-wf-arrow" data-wf-step="4">➤</div>
+            <!-- 2-4 결과 비교 및 검증 -->
+            <div class="cd-wf-step" data-wf-step="4">
+              <div class="cd-wf-step-header">2-4 <strong>결과 비교 및 검증</strong></div>
+              <div style="display:flex; gap:8px; justify-content:center;">
+                <div class="cd-wf-step-icon">✅</div>
+                <div class="cd-wf-step-icon">👥</div>
+              </div>
+              <div class="cd-wf-step-body">
+                <div class="cd-wf-detail"><span>✅</span> 명세서 작성</div>
+                <div class="cd-wf-detail"><span>👥</span> 팀원 검토</div>
+                <div class="cd-wf-detail"><span>🚀</span> 개발 적용</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="cd-wf-hint" style="text-align:center; color:var(--text-muted); font-size:0.78rem; padding:4px 0; margin:0;">화면을 클릭하여 워크플로우를 확인하세요</p>
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 06 / SCENE 03 -->
+<!-- CD Scene 3-1: 오디오 코드 구조 소개 -->
+
+      <section class="scene" data-chapter="06" data-scene="03" data-type="CORE" data-presenter="우성혁 CD" data-title="AudioManager 코드 구조" data-time="20초" data-notes="[CONTENT] AudioManager.cs 전체 region 구조 소개.">
+        <div class="scene-header">
+          <div>
+            <h1>AudioManager 코드 구조</h1>
+            <div class="subtitle">CENTRALIZED AUDIO ARCHITECTURE — CODE OVERVIEW</div>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:auto 1fr; gap:30px; flex:1; align-items:center; width:100%;">
+          <div class="glass-card pm-anim" style="padding:16px; display:flex; align-items:center;">
+            <img src="assets/[CD]우성혁/images/AudioManager_Snippet_Regions.png" alt="AudioManager regions" style="height:min(440px,60vh); object-fit:contain;">
+          </div>
+          <div style="display:flex; flex-direction:column; gap:14px;">
+            <div class="glass-card pm-anim" style="padding:20px;">
+              <h2 style="color:var(--accent-teal); margin-bottom:10px; font-size:1.05rem;">단일 AudioManager API</h2>
+              <p style="color:var(--text-secondary); font-size:0.88rem; line-height:1.6; margin:0;">전체 사운드를 통합 관리하고, 환경음/BGM/SFX/UI로 구분되는 각 사운드를 독립적으로 제어할 수 있는 음량 연동 구조를 구현하였습니다.</p>
+            </div>
+            <div class="glass-card pm-anim" style="padding:16px;">
+              <h3 style="color:var(--text-primary); margin-bottom:8px; font-size:0.92rem;">Region 구조</h3>
+              <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                <span class="cd-region-tag">변수 리스트</span>
+                <span class="cd-region-tag">초기화</span>
+                <span class="cd-region-tag">데이터 관리</span>
+                <span class="cd-region-tag">사운드 재생 / 중단</span>
+                <span class="cd-region-tag">음량 관리</span>
+                <span class="cd-region-tag">믹서 관리</span>
+                <span class="cd-region-tag">공통 사운드 재생</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 06 / SCENE 04 -->
+<!-- CD Scene 3-2: AudioManager 아키텍처 구조도 (인터랙티브) -->
+
+      <section class="scene" data-chapter="06" data-scene="04" data-type="CORE" data-presenter="우성혁 CD" data-title="AudioManager 아키텍처" data-time="30초" data-notes="[CONTENT] AudioManager 구조도. 사운드 종류별 분기 흐름.">
+        <div class="scene-header">
+          <div>
+            <h1>AudioManager 아키텍처</h1>
+            <div class="subtitle">SOUND TYPE ROUTING — BGM · AMBIENT · UI · SFX</div>
+          </div>
+        </div>
+        <div class="audio-arch-chart" role="img" aria-label="AudioManager가 AudioMixer의 음량과 음소거를 제어하고, BGM·환경음·UI·SFX를 각각의 AudioSource 및 2D·3D 사운드로 분기하는 구조도">
+          <div class="audio-arch-wires" aria-hidden="true">
+            <i class="audio-arch-wire wire-root-return"></i>
+            <i class="audio-arch-wire wire-root-mixer"></i>
+            <i class="audio-arch-wire wire-root-router"></i>
+            <i class="audio-arch-wire wire-mixer-controls"></i>
+            <i class="audio-arch-wire wire-tip wire-volume-tip"></i>
+            <i class="audio-arch-wire wire-tip wire-mute-tip"></i>
+            <i class="audio-arch-wire wire-router-types"></i>
+            <i class="audio-arch-wire wire-tip wire-bgm-tip"></i>
+            <i class="audio-arch-wire wire-tip wire-ambient-tip"></i>
+            <i class="audio-arch-wire wire-tip wire-ui-tip"></i>
+            <i class="audio-arch-wire wire-tip wire-sfx-tip"></i>
+            <i class="audio-arch-wire wire-bgm-source"></i>
+            <i class="audio-arch-wire wire-ambient-source"></i>
+            <i class="audio-arch-wire wire-ui-source"></i>
+            <i class="audio-arch-wire wire-sfx-paths"></i>
+            <i class="audio-arch-wire wire-tip wire-2d-tip"></i>
+            <i class="audio-arch-wire wire-tip wire-3d-tip"></i>
+            <i class="audio-arch-wire wire-2d-source"></i>
+            <i class="audio-arch-wire wire-3d-loop"></i>
+            <i class="audio-arch-wire wire-3d-temp"></i>
+            <i class="audio-arch-wire wire-loop-temp"></i>
+          </div>
+
+          <div class="audio-arch-node audio-arch-root audio-pos-root pm-anim">
+            <span class="audio-arch-icon" aria-hidden="true">▥</span>
+            <div><small>GLOBAL AUDIO SYSTEM</small><strong>AudioManager</strong></div>
+          </div>
+
+          <div class="audio-arch-node audio-pos-mixer pm-anim">
+            <span class="audio-arch-icon" aria-hidden="true">≋</span><strong>AudioMixer</strong>
+          </div>
+          <div class="audio-arch-node audio-arch-node--compact audio-pos-volume pm-anim">
+            <span class="audio-arch-icon" aria-hidden="true">◖))</span><strong>음량 제어</strong><small>Volume</small>
+          </div>
+          <div class="audio-arch-node audio-arch-node--compact audio-pos-mute pm-anim">
+            <span class="audio-arch-icon audio-arch-icon--pink" aria-hidden="true">◖×</span><strong>음소거</strong><small>Mute</small>
+          </div>
+
+          <div class="audio-arch-router audio-pos-router pm-anim">
+            <div><span aria-hidden="true">♫</span><strong>오디오 종류</strong></div>
+          </div>
+          <div class="audio-arch-node audio-arch-type audio-arch-type--bgm audio-pos-bgm pm-anim">
+            <span aria-hidden="true">♫</span><strong>BGM</strong>
+          </div>
+          <div class="audio-arch-node audio-arch-type audio-arch-type--ambient audio-pos-ambient pm-anim">
+            <span aria-hidden="true">◒</span><strong>환경음</strong><small>Ambient</small>
+          </div>
+          <div class="audio-arch-node audio-arch-type audio-arch-type--ui audio-pos-ui pm-anim">
+            <span aria-hidden="true">▣</span><strong>UI</strong>
+          </div>
+          <div class="audio-arch-node audio-arch-type audio-arch-type--sfx audio-pos-sfx pm-anim">
+            <span aria-hidden="true">▥</span><strong>SFX</strong>
+          </div>
+
+          <section class="audio-arch-bank audio-pos-source-bank pm-anim">
+            <div class="audio-arch-bank-title">
+              <span aria-hidden="true">◖))</span><strong>AudioSource</strong><small>채널별 상시 소스</small>
+            </div>
+            <div class="audio-arch-sources">
+              <span class="audio-arch-source audio-arch-source--bgm">♫ <b>BGMSource</b></span>
+              <span class="audio-arch-source audio-arch-source--ambient">◒ <b>AmbSource</b></span>
+              <span class="audio-arch-source audio-arch-source--ui">▣ <b>UISource</b></span>
+              <span class="audio-arch-source audio-arch-source--sfx">▥ <b>SFXSource</b></span>
+            </div>
+          </section>
+
+          <div class="audio-arch-node audio-arch-node--path audio-pos-2d pm-anim">
+            <span aria-hidden="true">◖))</span><strong>2D 사운드</strong>
+          </div>
+          <div class="audio-arch-node audio-arch-node--path audio-pos-3d pm-anim">
+            <span aria-hidden="true">◇</span><strong>3D 사운드</strong>
+          </div>
+          <div class="audio-arch-node audio-arch-node--loop audio-pos-loop pm-anim">
+            <span aria-hidden="true">↻</span><strong>3D 루프 사운드</strong><small>Loop 3D Sound</small>
+          </div>
+          <div class="audio-arch-node audio-arch-node--temp audio-pos-temp pm-anim">
+            <span aria-hidden="true">◇</span><strong>임시 오디오 소스 생성</strong><small>Temp AudioSource</small>
+          </div>
+        </div>
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 06 / SCENE 05 -->
+<!-- CD Scene 3-3: 2D/3D 사운드 기술 비교 -->
+
+      <section class="scene" data-chapter="06" data-scene="05" data-type="CORE" data-presenter="우성혁 CD" data-title="2D·3D 사운드 기술" data-time="30초" data-notes="[CONTENT] Play2DSound/Play3DSound 코드 스니펫 + 실행 예시 이미지 비교.">
+        <div class="scene-header">
+          <div>
+            <h1>2D · 3D 사운드 재생</h1>
+            <div class="subtitle">Play2DSound — PlayOneShot() · Play3DSound — SPATIAL AUDIO SOURCE</div>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; flex:1; width:100%; align-items:stretch; overflow:hidden;">
+          <!-- Play2DSound -->
+          <div class="glass-card pm-anim" style="padding:14px; display:flex; flex-direction:column; gap:8px; overflow:hidden;">
+            <div style="display:flex; justify-content:space-between; align-items:baseline;">
+              <h2 style="color:var(--accent-teal); font-size:0.95rem; margin:0;">Play2DSound</h2>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <img src="assets/[CD]우성혁/images/EscapeSuccess_Play2dSound.png" alt="EscapeSuccess" style="height:100px; width:auto; border-radius:4px; border:1px solid var(--border-subtle); flex-shrink:0;">
+              <span style="color:var(--text-muted); font-size:0.72rem; line-height:1.4;">Play2DSound<br>예시: 탈출 성공 판정 시</span>
+            </div>
+            <img src="assets/[CD]우성혁/images/AudioManager_Snippet_Play2DSound.png" alt="Play2DSound code" style="width:100%; min-height:0; flex:1; object-fit:contain; object-position:left top; border-radius:4px; border:1px solid var(--border-subtle);">
+          </div>
+          <!-- Play3DSound -->
+          <div class="glass-card pm-anim" style="padding:14px; display:flex; flex-direction:column; gap:8px; overflow:hidden;">
+            <div style="display:flex; justify-content:space-between; align-items:baseline;">
+              <h2 style="color:var(--accent-purple); font-size:0.95rem; margin:0;">Play3DSound</h2>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <img src="assets/[CD]우성혁/images/Weapon_Play3dSound.png" alt="Weapon 3D" style="height:100px; width:auto; border-radius:4px; border:1px solid var(--border-subtle); flex-shrink:0;">
+              <span style="color:var(--text-muted); font-size:0.72rem; line-height:1.4;">Play3DSound<br>예시: 기본 공격 사격 시<br>- 기본 공격 발사 위치</span>
+            </div>
+            <img src="assets/[CD]우성혁/images/AudioManager_Snippet_Play3DSound.png" alt="Play3DSound code" style="width:100%; min-height:0; flex:1; object-fit:contain; object-position:left top; border-radius:4px; border:1px solid var(--border-subtle);">
+          </div>
+        </div>
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 06 / SCENE 06 -->
+<!-- CD Scene 3-4: 3D 루프 사운드 + 영상 오버레이 -->
+
+      <section class="scene" data-chapter="06" data-scene="06" data-type="CORE" data-presenter="우성혁 CD" data-title="3D 루프 사운드 및 영상" data-time="30초" data-notes="[CONTENT] Play3DSoundAndReturn + Stop3DSound 코드. 클릭 시 Grenade 영상 오버레이 재생.">
+        <div class="scene-header">
+          <div>
+            <h1>3D 루프 사운드 제어</h1>
+            <div class="subtitle">Play3DSoundAndReturn · Stop3DSound — LOOP LIFECYCLE</div>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; flex:1; width:100%; align-items:stretch; overflow:hidden;">
+          <div class="glass-card pm-anim" style="padding:14px; display:flex; flex-direction:column; gap:8px; overflow:hidden;">
+            <h2 style="color:var(--accent-teal); font-size:1rem; margin:0; flex-shrink:0;">Play3DSoundAndReturn</h2>
+            <img src="assets/[CD]우성혁/images/AudioManager_Snippet_Play3DSoundAndReturn.png" alt="Play3DSoundAndReturn" style="width:100%; min-height:0; flex:1; object-fit:contain; object-position:left top; border-radius:4px; border:1px solid var(--border-subtle);">
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px; overflow:hidden;">
+            <div class="glass-card pm-anim" style="padding:14px; display:flex; flex-direction:column; gap:8px; flex-shrink:0;">
+              <h2 style="color:var(--accent-red); font-size:1rem; margin:0;">Stop3DSound</h2>
+              <img src="assets/[CD]우성혁/images/AudioManager_Snippet_Stop3DSound.png" alt="Stop3DSound" style="width:100%; border-radius:4px; border:1px solid var(--border-subtle);">
+            </div>
+            <div class="glass-card pm-anim cd-video-trigger" style="padding:12px; cursor:pointer; overflow:hidden; min-height:0; flex:1; display:flex; flex-direction:column;" onclick="toggleCdVideo(this)">
+              <h3 style="color:#fbbf24; font-size:0.88rem; margin:0 0 6px; flex-shrink:0;">▶ 클릭: 디코이 스킬 3D 사운드 시연</h3>
+              <video class="cd-overlay-video" style="width:100%; min-height:0; flex:1; object-fit:contain; border-radius:4px; display:none;" onended="this.style.display='none'; this.parentElement.querySelector('.cd-video-label').style.display='flex';">
+                <source src="assets/[CD]우성혁/videos/Grenade_Play3DSoundAndReturn.mp4" type="video/mp4">
+              </video>
+              <div class="cd-video-label" style="display:flex; align-items:center; justify-content:center; gap:8px; flex:1; color:var(--text-muted); font-size:0.82rem;">
+                <span style="font-size:1.5rem; opacity:0.4;">▶</span>
+                <span>Grenade_Play3DSoundAndReturn.mp4</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 06 / SCENE 07 -->
+<!-- CD Scene 7: 기획 명세 마무리 -->
+
+      <section class="scene" data-chapter="06" data-scene="07" data-type="CORE" data-presenter="우성혁 CD" data-title="기획 명세 마무리" data-time="10초" data-notes="[CONTENT] 기획 명세가 실제 구현으로 연결되기 위해 필요한 설계 기준을 정리하며 CD 파트를 마무리합니다.">
+        <div class="scene-header">
+          <div>
+            <h1>기획 명세 마무리</h1>
+            <div class="subtitle">CONTENT DESIGN SPECIFICATION WRAP-UP</div>
+          </div>
+        </div>
+        <div style="flex:1; display:flex; align-items:center; justify-content:center; width:100%;">
+          <div class="glass-card pm-anim" style="padding:48px 60px; text-align:center; max-width:800px;">
+            <p style="color:var(--accent-teal); font-size:0.85rem; font-weight:700; letter-spacing:0.1em; margin-bottom:12px;">기획이란</p>
+            <p style="color:var(--text-primary); font-size:1.4rem; line-height:1.65; font-weight:600; margin:0;">
+              게임의 뼈대가 되는 구조를<br>안정적으로 설계하여<br><span style="color:var(--accent-purple);">실제로 구현될 수 있게 하는 것</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 07 / SCENE 01 -->
+<!-- PM Scene 1: 완성 결과 영상 -->
+
+      <section class="scene" data-chapter="07" data-scene="01" data-type="CORE" data-presenter="송예찬 PM" data-title="꿈식자 AI 완성 결과" data-time="30초" data-notes="[CONTENT] 스폰→순찰→감지→조사→추격→공격→탐색→복귀 전체 루프 영상. 영상 촬영 후 교체 예정.">
+        <div class="scene-header">
+          <div>
+            <h1>꿈식자 AI — 완성 결과</h1>
+            <div class="subtitle">SPAWN → PATROL → DETECT → INVESTIGATE → CHASE → ATTACK → SEARCH → RETURN</div>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; flex: 1; align-items: center; justify-content: center; width: 100%; gap: 20px;">
+          <div class="glass-card pm-anim" style="width: 100%; max-width: 960px; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+            <video id="pmFinalVideo" style="width: 100%; height: 100%; object-fit: contain; display: none;" controls>
+              <source src="assets/[PM]송예찬/videos/PM_EnemyAI_FinalLoop.mp4?v=20260724-8453" type="video/mp4">
+            </video>
+            <div class="media-error-box" id="pmVideoPlaceholder" style="width: 100%; height: 100%; background: rgba(0,0,0,0.4);">
+              <span style="font-size: 2.5rem; opacity: 0.3;">▶</span>
+              <span style="color: var(--accent-teal); font-weight: bold;">전체 루프 영상 촬영 대기</span>
+              <span style="color: var(--text-muted); font-size: 0.85rem;">PM_EnemyAI_FinalLoop.mp4</span>
+              <span style="color: var(--text-muted); font-size: 0.75rem;">순찰하던 적이 소리를 조사하고 플레이어를 추격·공격한 뒤 자기 루트로 복귀하는 장면</span>
+            </div>
+          </div>
+          <p style="color: var(--text-secondary); font-size: 0.95rem; text-align: center; max-width: 700px; line-height: 1.6;">
+            "꿈식자 컨셉을 실제 AI로 완성했습니다.<br>순찰하던 적이 소리를 조사하고 플레이어를 추격·공격한 뒤 자기 루트로 복귀합니다."
+          </p>
+        </div>
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 07 / SCENE 02 -->
+<!-- PM Scene 2: 작업 목표 & 기획 의도 -->
+
+      <section class="scene" data-chapter="07" data-scene="02" data-type="CORE" data-presenter="송예찬 PM" data-title="작업 목표와 기획 의도" data-time="40초" data-notes="[CONTENT] 세계관 컨셉에서 AI 설계 원칙으로 전환한 과정. ConceptToRuntime 이미지와 판단 흐름 설명.">
+        <div class="scene-header">
+          <div>
+            <h1>작업 목표 — 익스트랙션의 사냥꾼</h1>
+            <div class="subtitle">CONCEPT TO RUNTIME — DESIGNING THE HUNTER</div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px; flex: 1; align-items: center; width: 100%;">
+          <div class="glass-card pm-anim" style="padding: 0; overflow: hidden; height: 100%; display: flex; align-items: center;">
+            <img src="assets/[PM]송예찬/images/PM_EnemyAI_ConceptToRuntime.png" alt="세계관→AI 행동→플레이 경험 연결" class="pm-anim" style="width: 100%; height: 100%; object-fit: contain;">
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 18px;">
+            <div class="glass-card pm-anim" style="padding: 24px;">
+              <h2 style="color: var(--accent-teal); margin-bottom: 14px; font-size: 1.15rem;">기획 의도 → 설계 원칙</h2>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div style="display: flex; gap: 12px; align-items: baseline;"><span style="color: #d8beff; font-weight: 700; white-space: nowrap;">악몽의 포식자</span><span style="color: var(--text-secondary); font-size: 0.85rem;">→ 고정 초소가 아니라 먹잇감을 찾으며 구역을 배회</span></div>
+                <div style="display: flex; gap: 12px; align-items: baseline;"><span style="color: #d8beff; font-weight: 700; white-space: nowrap;">커지는 위험</span><span style="color: var(--text-secondary); font-size: 0.85rem;">→ 소리와 마지막 흔적을 사냥의 단서로 사용</span></div>
+                <div style="display: flex; gap: 12px; align-items: baseline;"><span style="color: #d8beff; font-weight: 700; white-space: nowrap;">탈출 긴장</span><span style="color: var(--text-secondary); font-size: 0.85rem;">→ 교전·우회·추가 파밍·즉시 탈출 판단을 압박</span></div>
+                <div style="display: flex; gap: 12px; align-items: baseline;"><span style="color: #d8beff; font-weight: 700; white-space: nowrap;">무리 위협</span><span style="color: var(--text-secondary); font-size: 0.85rem;">→ 2~3마리가 서로 다른 위치에서 경로를 압박</span></div>
+                <div style="display: flex; gap: 12px; align-items: baseline;"><span style="color: #d8beff; font-weight: 700; white-space: nowrap;">공정한 AI</span><span style="color: var(--text-secondary); font-size: 0.85rem;">→ 시야·소리·기억에 의존, 추격 포기 조건 제공</span></div>
+              </div>
+            </div>
+            <div class="glass-card pm-anim" style="padding: 18px;">
+              <h3 style="color: var(--text-primary); margin-bottom: 10px; font-size: 0.95rem;">핵심 판단 흐름</h3>
+              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 0.8rem;">
+                <span style="padding: 5px 10px; border-radius: 6px; background: rgba(45,212,191,0.12); color: var(--accent-teal); font-weight: 600;">탐색·파밍</span>
+                <span style="color: var(--text-muted);">→</span>
+                <span style="padding: 5px 10px; border-radius: 6px; background: rgba(216,190,255,0.12); color: #d8beff; font-weight: 600;">소리와 흔적</span>
+                <span style="color: var(--text-muted);">→</span>
+                <span style="padding: 5px 10px; border-radius: 6px; background: rgba(248,113,113,0.12); color: var(--accent-red); font-weight: 600;">사냥 압박</span>
+                <span style="color: var(--text-muted);">→</span>
+                <span style="padding: 5px 10px; border-radius: 6px; background: rgba(251,191,36,0.12); color: #fbbf24; font-weight: 600;">교전·우회</span>
+                <span style="color: var(--text-muted);">→</span>
+                <span style="padding: 5px 10px; border-radius: 6px; background: rgba(45,212,191,0.15); color: var(--accent-teal); font-weight: 700;">더 파밍 / 지금 탈출</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 07 / SCENE 03 -->
+<!-- PM Scene 3: 기술적 판단 -->
+
+      <section class="scene" data-chapter="07" data-scene="03" data-type="CORE" data-presenter="송예찬 PM" data-title="꿈식자 AI 기술적 판단" data-time="1분 00초" data-notes="[CONTENT] 통제된 랜덤 순찰과 공정한 추적을 구현하기 위한 두 기술 흐름, 조사·전투·어그로·복귀 기억의 분리 구조를 설명합니다.">
+        <div class="scene-header">
+          <div>
+            <h1>기술적 판단 — 통제된 무작위와 공정한 추적</h1>
+            <div class="subtitle">TECHNICAL DECISIONS — PATROL CONTROL · PERCEPTION · MEMORY SEPARATION</div>
+          </div>
+        </div>
+        <div class="pm-tech-board">
+          <div class="pm-tech-thesis pm-anim">
+            <span>CORE DECISION</span>
+            <strong>상태를 늘리는 대신, <em>판단 근거와 기억을 분리</em>했습니다.</strong>
+            <p>무작위성은 루트 안에서만 허용하고, 추적은 시야·소리·어그로라는 근거가 있을 때만 유지합니다.</p>
+          </div>
+
+          <div class="pm-tech-lanes">
+            <article class="pm-tech-lane pm-tech-lane--patrol pm-anim">
+              <header>
+                <span class="pm-tech-lane-no">01</span>
+                <div>
+                  <h2>통제된 랜덤 순찰</h2>
+                  <p>완전 랜덤의 구역 이탈과 고정 웨이포인트의 반복성을 동시에 해결</p>
+                </div>
+              </header>
+              <div class="pm-tech-flow pm-tech-flow--five">
+                <div><small>SPAWN</small><strong>랜덤 스폰</strong></div>
+                <div><small>MEMORY</small><strong>루트·시작점 저장</strong></div>
+                <div><small>CANDIDATE</small><strong>반경 내 좌표 생성</strong></div>
+                <div><small>VALIDATE</small><strong>NavMesh 완전 경로</strong></div>
+                <div><small>NEXT</small><strong>인접 포인트 선택</strong></div>
+              </div>
+              <div class="pm-tech-rule">
+                <code>Random.insideUnitCircle</code>
+                <span>+</span>
+                <code>NavMesh.SamplePosition</code>
+                <span>→</span>
+                <b>구역은 통제, 이동선은 변화</b>
+              </div>
+            </article>
+
+            <article class="pm-tech-lane pm-tech-lane--perception pm-anim">
+              <header>
+                <span class="pm-tech-lane-no">02</span>
+                <div>
+                  <h2>근거가 있는 추적</h2>
+                  <p>좌표를 전지적으로 아는 적이 아니라, 감지와 기억으로 압박하는 공정한 사냥꾼</p>
+                </div>
+              </header>
+              <div class="pm-tech-flow pm-tech-flow--six">
+                <div><small>HEAR</small><strong>소리 인식</strong></div>
+                <div><small>CHECK</small><strong>차폐·반경 판정</strong></div>
+                <div><small>TRACE</small><strong>앵커 조사</strong></div>
+                <div><small>ENGAGE</small><strong>추격·공격</strong></div>
+                <div><small>DECAY</small><strong>어그로 감소</strong></div>
+                <div><small>RESET</small><strong>탐색·복귀</strong></div>
+              </div>
+              <div class="pm-tech-sensors">
+                <span><b>5.5m · 100°</b> 직접 시야</span>
+                <span><b>약 10m</b> 근접 인지</span>
+                <span><b>약 20m</b> 소리 인식</span>
+                <span><b>Raycast</b> 벽 차폐</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="pm-memory-strip">
+            <div class="pm-memory-title pm-anim">
+              <span>MEMORY MODEL</span>
+              <strong>“무엇을, 누구를, 얼마나, 어디로”를 따로 기억</strong>
+            </div>
+            <div class="pm-memory-card pm-memory-card--noise pm-anim">
+              <code>investigateTarget</code>
+              <strong>무엇을 조사?</strong>
+              <span>소리 앵커 좌표</span>
+            </div>
+            <div class="pm-memory-card pm-memory-card--target pm-anim">
+              <code>currentTarget</code>
+              <strong>누구를 공격?</strong>
+              <span>플레이어 전투 대상</span>
+            </div>
+            <div class="pm-memory-card pm-memory-card--aggro pm-anim">
+              <code>aggroTarget · currentAggro</code>
+              <strong>누구를 얼마나 추적?</strong>
+              <span>유도 대상과 추적 지속값</span>
+            </div>
+            <div class="pm-memory-card pm-memory-card--route pm-anim">
+              <code>patrolRoute · patrolIndex</code>
+              <strong>어디로 복귀?</strong>
+              <span>개체별 루트와 기준점</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 07 / SCENE 04 -->
+<!-- PM Scene 4: 결과 비교 (Before / After) -->
+
+      <section class="scene" data-chapter="07" data-scene="04" data-type="CORE" data-presenter="송예찬 PM" data-title="트러블슈팅 Before/After" data-time="30초" data-notes="[CONTENT] 조사 Stuck, 군집 겹침 등의 문제를 Before/After GIF로 비교. GIF 재현·촬영 후 교체 예정.">
+        <div class="scene-header">
+          <div>
+            <h1>결과 비교 — Before / After</h1>
+            <div class="subtitle">TROUBLESHOOTING — INVESTIGATION STUCK · CROWD OVERLAP</div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; flex: 1; align-items: center; width: 100%;">
+          <!-- B/A 1: 조사 Stuck -->
+          <div class="glass-card pm-anim" style="padding: 20px; display: flex; flex-direction: column; gap: 14px; height: 100%;">
+            <h2 style="color: var(--accent-teal); font-size: 1.05rem; margin: 0;">조사 좌표 Stuck 해결</h2>
+            <p style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.55; margin: 0;">소음 좌표를 바닥 NavMesh로 보정하고 조사 제한시간을 추가해 적이 멈추는 문제를 해결했습니다.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1;">
+              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px solid rgba(248,113,113,0.38); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
+                <img src="assets/[PM]송예찬/gifs/PM_Trouble_InvestigateStuck_Before.gif?v=20260724-8" alt="조사 좌표 정체 문제 상황 재현" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+              </div>
+              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px solid rgba(45,212,191,0.38); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
+                <img src="assets/[PM]송예찬/gifs/PM_Trouble_InvestigateStuck_After.gif?v=20260724-8" alt="조사 좌표 보정 후 실제 동작" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+              </div>
+            </div>
+          </div>
+          <!-- B/A 2: 군집 겹침 -->
+          <div class="glass-card pm-anim" style="padding: 20px; display: flex; flex-direction: column; gap: 14px; height: 100%;">
+            <h2 style="color: var(--accent-teal); font-size: 1.05rem; margin: 0;">군집 겹침과 접근 분산</h2>
+            <p style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.55; margin: 0;">개체별 접근 위치를 나눠 같은 좌표에 뭉치지 않고 도주 길목을 압박하도록 개선했습니다.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1;">
+              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px solid rgba(248,113,113,0.38); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
+                <img src="assets/[PM]송예찬/gifs/PM_Trouble_CrowdOverlap_Before.gif?v=20260724-8" alt="군집 겹침 문제 상황 재현" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+              </div>
+              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px solid rgba(45,212,191,0.38); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
+                <img src="assets/[PM]송예찬/gifs/PM_Trouble_CrowdOverlap_After.gif?v=20260724-8" alt="개체별 접근 분산 후 실제 동작" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 07 / SCENE 05 -->
+<!-- PM Scene 5: 마무리 -->
+
+      <section class="scene" data-chapter="07" data-scene="05" data-type="CORE" data-presenter="송예찬 PM" data-title="마무리 — 피격·보상·튜토리얼" data-time="20초" data-notes="[MEDIA PREVIEW] 피격 HUD·시간 차감·낙인, 처치 보상 상자, 적 처치 튜토리얼 연동 GIF 적용 예시.">
+        <div class="scene-header">
+          <div>
+            <h1>마무리 — 피격·보상·튜토리얼</h1>
+            <div class="subtitle">COMBAT FEEDBACK · REWARD · TUTORIAL RUNTIME</div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; flex: 1; align-items: start; width: 100%;">
+          <!-- 피격 피드백 -->
+          <div class="glass-card pm-anim" style="padding: 22px; display: flex; flex-direction: column; gap: 12px;">
+            <h2 style="color: var(--accent-red); font-size: 1rem; margin: 0;">피격 피드백</h2>
+            <div style="border-radius: 8px; overflow: hidden; border: 1.5px solid rgba(248,113,113,0.45); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 200px; aspect-ratio: 16/9;">
+              <img src="assets/[PM]송예찬/gifs/PM_EnemyAI_HitFeedback.gif?v=20260724-1" alt="1회 피격 HUD 흔들림과 시간 5초 차감, 2회 피격 루시드 낙인 이펙트" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.8rem; line-height: 1.5; margin: 0;">1회 피격은 HUD 흔들림과 시간 5초 차감으로, 2회 피격은 루시드 낙인 이펙트로 위험을 전달합니다.</p>
+          </div>
+          <!-- 처치 보상 -->
+          <div class="glass-card pm-anim" style="padding: 22px; display: flex; flex-direction: column; gap: 12px;">
+            <h2 style="color: #fbbf24; font-size: 1rem; margin: 0;">처치 보상</h2>
+            <div style="border-radius: 8px; overflow: hidden; border: 1.5px solid rgba(251,191,36,0.45); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 200px; aspect-ratio: 16/9;">
+              <img src="assets/[PM]송예찬/gifs/PM_EnemyAI_KillReward.gif?v=20260724-1" alt="꿈식자 처치 후 보상 상자 생성과 전리품 확인" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.8rem; line-height: 1.5; margin: 0;">꿈식자 처치 후 보상 상자가 생성되고, 상호작용을 통해 전리품을 확인합니다.</p>
+          </div>
+          <!-- 튜토리얼 -->
+          <div class="glass-card pm-anim" style="padding: 22px; display: flex; flex-direction: column; gap: 12px;">
+            <h2 style="color: var(--accent-teal); font-size: 1rem; margin: 0;">튜토리얼 연동</h2>
+            <div style="border-radius: 8px; overflow: hidden; border: 1.5px solid rgba(45,212,191,0.45); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 200px; aspect-ratio: 16/9;">
+              <img src="assets/[PM]송예찬/gifs/PM_Tutorial_EnemyDefeat.gif?v=20260724-2" alt="적 처치 이벤트 완료 후 다음 튜토리얼 안내 호출" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.8rem; line-height: 1.5; margin: 0;">적 처치 이벤트를 완료 조건으로 받아 전투 실습을 판정하고 다음 안내를 호출합니다.</p>
+          </div>
+        </div>
+        <div style="width: 100%; text-align: center; padding: 16px 0 0;">
+          <p style="color: var(--text-secondary); font-size: 0.95rem; font-style: italic; line-height: 1.6;">
+            "일정을 문서로 관리하는 데서 끝내지 않고<br>기획한 위협 경험을 코드와 테스트로 연결했습니다."
+          </p>
+        </div>
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 08 / SCENE 01 -->
+
+      <section class="scene" data-chapter="08" data-scene="01" data-type="CORE" data-presenter="김남해 PD" data-title="슈퍼숍 마트 맵 완성 결과" data-time="35초" data-notes="[CONTENT] 안녕하세요. 루시드 다이버의 렌더링 및 레벨 그래픽스를 담당한 PD 김남해입니다. 저는 게임의 주 무대인 슈퍼숍 마트 맵을 만들었습니다. 익숙한 현대적 마트 공간이지만 검정 Plane, 어두운 하늘, 보라색 안개를 조합해 이상현상에 잠식된 침몽도시의 분위기를 구현했습니다.">
+        <div class="scene-header">
+          <div>
+            <h1>슈퍼숍 마트 — 완성 결과</h1>
+            <div class="subtitle">FROM LEVEL PLAN TO PLAYABLE SPACE</div>
+          </div>
+          <span class="pd-scene-index">PD 01 / 05</span>
+        </div>
+        <div class="pd-map-layout">
+          <button class="glass-card pd-main-visual" type="button" onclick="openPdImage(this.querySelector('img'))">
+            <img src="assets/[PD]김남해/images/레벨디자인_3.png" alt="완성된 슈퍼숍 마트 전체 전경" data-caption="완성된 슈퍼숍 마트 전체 전경">
+            <span class="pd-image-label">FINAL LEVEL · 클릭하여 확대</span>
+          </button>
+          <div class="pd-map-side">
+            <div class="glass-card pd-map-summary">
+              <span class="pd-kicker">REPRESENTATIVE WORK</span>
+              <h2>기획 원안을<br>플레이 가능한 공간으로</h2>
+              <p>진열대·계산대·창고 구역을 구성하고 에셋, 콜라이더, 머티리얼, 후처리 레이어를 직접 쌓았습니다.</p>
+              <div class="pd-atmosphere-tags">
+                <span>BLACK PLANE</span><span>FLAT KIT</span><span>VOLUMETRIC FOG</span>
+              </div>
+            </div>
+            <div class="pd-thumb-grid">
+              <button class="glass-card pd-thumb-card" type="button" onclick="openPdImage(this.querySelector('img'))">
+                <img src="assets/[PD]김남해/images/레벨디자인_1.png" alt="슈퍼숍 내부 탑뷰 1" data-caption="슈퍼숍 내부 탑뷰 — 진열대와 이동 동선">
+                <span>TOP VIEW A</span>
+              </button>
+              <button class="glass-card pd-thumb-card" type="button" onclick="openPdImage(this.querySelector('img'))">
+                <img src="assets/[PD]김남해/images/레벨디자인_2.png" alt="슈퍼숍 내부 탑뷰 2" data-caption="슈퍼숍 내부 탑뷰 — 계산대와 창고 구역">
+                <span>TOP VIEW B</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 08 / SCENE 02 -->
+
+      <section class="scene" data-chapter="08" data-scene="02" data-type="CORE" data-presenter="김남해 PD" data-title="콜라이더 관통 문제" data-time="30초" data-notes="[CONTENT] 맵 완성 후 가장 치명적인 문제는 캐릭터의 벽 관통 버그였습니다. 얇은 벽 콜라이더나 모서리 겹침 지점에서 빠르게 이동하면 물리 엔진이 한 프레임 내 충돌을 인지하지 못해 벽을 통과하는 터널링 현상이 발생했습니다.">
+        <div class="scene-header">
+          <div>
+            <h1>문제 — 한 프레임의 틈</h1>
+            <div class="subtitle">COLLIDER TUNNELING AT THIN WALLS & CORNERS</div>
+          </div>
+          <span class="pd-scene-index">PD 02 / 05</span>
+        </div>
+        <div class="pd-problem-layout">
+          <button class="glass-card pd-problem-visual" type="button" onclick="openPdImage(this.querySelector('img'))">
+            <img src="assets/[PD]김남해/images/캐릭터 콜라이더 관통 문제 예시 이미지.png" alt="캐릭터가 벽 콜라이더를 관통하는 문제 예시" data-caption="캐릭터 콜라이더 관통 문제 — 얇은 벽과 모서리 겹침 지점">
+            <span class="pd-image-label pd-image-label--danger">BUG REPRODUCTION · 클릭하여 확대</span>
+          </button>
+          <div class="pd-problem-copy">
+            <div class="glass-card pd-problem-lead">
+              <span class="pd-kicker pd-kicker--danger">CRITICAL ISSUE</span>
+              <h2>빠른 이동이 충돌 판정보다 먼저 벽을 넘었다</h2>
+              <p>캡슐 콜라이더를 추가하는 임시 보완만으로는 터널링의 근본 원인을 제거할 수 없었습니다.</p>
+            </div>
+            <div class="pd-cause-grid">
+              <div class="glass-card pd-cause-card"><strong>01</strong><span>얇은 벽체<br>콜라이더</span></div>
+              <div class="glass-card pd-cause-card"><strong>02</strong><span>모서리의<br>겹침 지점</span></div>
+              <div class="glass-card pd-cause-card"><strong>03</strong><span>고속 이동의<br>프레임 간격</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 08 / SCENE 03 -->
+
+      <section class="scene" data-chapter="08" data-scene="03" data-type="CORE" data-presenter="김남해 PD" data-title="레이캐스트와 슬라이딩 이동" data-time="45초" data-notes="[CONTENT] 단순한 콜라이더 보완 대신 이동 로직을 재설계했습니다. LayerMask로 벽을 필터링하고 매 프레임 이동 경로를 레이캐스트로 사전 검사했습니다. 충돌 시 남은 이동량을 충돌면 법선에 수직인 슬라이딩 벡터로 투영해 벽을 뚫지 않고 자연스럽게 벽면을 따라 이동하도록 해결했습니다.">
+        <div class="scene-header">
+          <div>
+            <h1>판단 — 이동 경로를 먼저 검사한다</h1>
+            <div class="subtitle">LAYERMASK · RAYCAST · SLIDING VECTOR PROJECTION</div>
+          </div>
+          <span class="pd-scene-index">PD 03 / 05</span>
+        </div>
+        <div class="pd-solution-layout">
+          <div class="pd-solution-steps">
+            <div class="glass-card pd-solution-step">
+              <span>01</span><div><strong>LayerMask</strong><p>벽 레이어만 선별해 1차 충돌 방어</p></div>
+            </div>
+            <div class="pd-solution-line"></div>
+            <div class="glass-card pd-solution-step">
+              <span>02</span><div><strong>Raycast</strong><p>매 프레임 이동 예정 경로를 사전 검사</p></div>
+            </div>
+            <div class="pd-solution-line"></div>
+            <div class="glass-card pd-solution-step">
+              <span>03</span><div><strong>Vector Projection</strong><p>남은 이동량을 벽면 방향으로 투영</p></div>
+            </div>
+            <div class="pd-result-strip"><span>RESULT</span> 관통 차단 + 자연스러운 벽면 슬라이딩</div>
+          </div>
+          <div class="pd-code-stack">
+            <button class="glass-card pd-code-card pd-code-card--strip" type="button" onclick="openPdImage(this.querySelector('img'))">
+              <div class="pd-code-head"><span>MOVEMENT GUARD</span><span>01</span></div>
+              <img src="assets/[PD]김남해/images/플레이어 콜라이더 관통문제 코드_1.png" alt="LayerMask 이동 경로 검사 코드" data-caption="LayerMask와 이동 경로 검사 코드">
+            </button>
+            <button class="glass-card pd-code-card" type="button" onclick="openPdImage(this.querySelector('img'))">
+              <div class="pd-code-head"><span>SLIDING PROJECTION</span><span>02</span></div>
+              <img src="assets/[PD]김남해/images/플레이어 콜라이더 관통문제 코드_2.png" alt="충돌면 슬라이딩 벡터 투영 코드" data-caption="충돌면 법선을 이용한 슬라이딩 벡터 투영 코드">
+            </button>
+          </div>
+        </div>
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 08 / SCENE 04 -->
+
+      <section class="scene" data-chapter="08" data-scene="04" data-type="CORE" data-presenter="김남해 PD" data-title="레벨 VFX 전후 비교" data-time="35초" data-notes="[CONTENT] 충돌 문제를 해결한 뒤 에셋의 머티리얼 톤을 통일하고 FlatKit 툰 셰이더와 Volumetric Fog를 적용했습니다. 검정 Plane과 보라색 안개가 결합되면서 평범한 마트가 익숙하지만 기이한 침몽도시의 공간으로 완성되었습니다.">
+        <div class="scene-header">
+          <div>
+            <h1>결과 — 공간의 분위기를 완성하다</h1>
+            <div class="subtitle">VFX BEFORE / AFTER · FLAT KIT & VOLUMETRIC FOG</div>
+          </div>
+          <span class="pd-scene-index">PD 04 / 05</span>
+        </div>
+        <div class="pd-compare-layout">
+          <div class="glass-card pd-comparison-frame" id="pdVfxFrame" onmousemove="handlePdComparisonMove(event, 'pdVfx')" ontouchmove="handlePdComparisonMove(event, 'pdVfx')">
+            <img class="pd-comparison-img" src="assets/[PD]김남해/images/VFX 적용 전.png" alt="VFX 적용 전 슈퍼숍 마트">
+            <img class="pd-comparison-img pd-comparison-img--after" id="pdVfxAfter" src="assets/[PD]김남해/images/VFX 적용 후.png" alt="VFX 적용 후 슈퍼숍 마트">
+            <span class="pd-ba-label pd-ba-label--before">BEFORE · 기본 렌더</span>
+            <span class="pd-ba-label pd-ba-label--after">AFTER · 최종 분위기</span>
+            <div class="pd-comparison-slider" id="pdVfxSlider"><span>◀ ▶</span></div>
+          </div>
+          <div class="pd-compare-caption">
+            <div><strong>FLAT KIT</strong><span>에셋 간 머티리얼 톤 통일</span></div>
+            <div><strong>VOLUMETRIC FOG</strong><span>보라색 안개로 깊이와 긴장감 형성</span></div>
+            <p>이미지 위에서 포인터를 좌우로 움직여 비교하세요.</p>
+          </div>
+        </div>
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 08 / SCENE 05 -->
+
+      <section class="scene" data-chapter="08" data-scene="05" data-type="CORE" data-presenter="김남해 PD" data-title="가림벽 반투명 동적 셰이더" data-time="35초" data-notes="[CONTENT] 마지막은 보조 작업인 카메라 가림벽 반투명 동적 셰이더입니다. 아이소메트릭 시점에서 캐릭터가 벽 뒤에 가려지는 문제를 해결하기 위해 셰이더 그래프를 직접 제작했습니다. 캐릭터 위치를 셰이더에 전달해 주변 벽면의 Alpha가 부드럽게 감쇠되도록 구현했습니다. 노드 이미지는 클릭해 확대할 수 있습니다.">
+        <div class="scene-header">
+          <div>
+            <h1>보조 작업 — 보이지 않던 플레이어를 드러내다</h1>
+            <div class="subtitle">DYNAMIC OCCLUSION WALL SHADER · SHADER GRAPH</div>
+          </div>
+          <span class="pd-scene-index">PD 05 / 05</span>
+        </div>
+        <div class="pd-shader-layout">
+          <button class="glass-card pd-node-card" type="button" onclick="openPdImage(this.querySelector('img'))">
+            <div class="pd-node-head">
+              <span class="pd-kicker">SHADER GRAPH</span>
+              <strong>캐릭터 위치 기반 Alpha Fade</strong>
+            </div>
+            <img src="assets/[PD]김남해/images/셰이더그래프_노드.png" alt="가림벽 반투명 셰이더 그래프 노드 구조" data-caption="가림벽 반투명 동적 셰이더 — Shader Graph 노드 구조">
+            <span class="pd-node-hint">클릭하여 노드 구조 확대</span>
+          </button>
+          <div class="glass-card pd-shader-comparison" id="pdShaderFrame" onmousemove="handlePdComparisonMove(event, 'pdShader')" ontouchmove="handlePdComparisonMove(event, 'pdShader')">
+            <img class="pd-comparison-img" src="assets/[PD]김남해/images/셰이더그래프 반영 전.png" alt="가림벽 반투명 셰이더 적용 전">
+            <img class="pd-comparison-img pd-comparison-img--after" id="pdShaderAfter" src="assets/[PD]김남해/images/셰이더그래프 반영 후.png" alt="가림벽 반투명 셰이더 적용 후">
+            <span class="pd-ba-label pd-ba-label--before">BEFORE · 시야 차단</span>
+            <span class="pd-ba-label pd-ba-label--after">AFTER · 동적 반투명</span>
+            <div class="pd-comparison-slider" id="pdShaderSlider"><span>◀ ▶</span></div>
+          </div>
+        </div>
+        <div class="pd-handoff">“물리적으로 안정화된 슈퍼숍 레벨 위에서, 다음 시스템들이 어떻게 연동되는지 이어서 설명드리겠습니다.”</div>
+
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 12 / SCENE 01 -->
+
+      <section class="scene" data-chapter="12" data-scene="01" data-type="CORE" data-presenter="전원 / Team REMnants" data-title="Q&A 및 질의응답" data-time="3분 00초" data-notes="[CONTENT] 발표 본편이 종료되었습니다. 코치진 및 청중분들의 기획, 그래픽스, AI, 코어 시스템 관련 질의응답 및 피드백을 수렴하는 QA 세션입니다.">
+        <div class="scene-header">
+          <div>
+            <h1>Q&A 세션</h1>
+            <div class="subtitle">QUESTIONS & ANSWERS / DISCUSSION</div>
+          </div>
+        </div>
+        <div class="qa-session-grid">
+          <div class="qa-card-list">
+            <div class="qa-topic-card">
+              <span class="qa-topic-icon">💬</span>
+              <div class="qa-topic-info">
+                <h3>01. 기획 & 세계관</h3>
+                <p>서브컬처 다이버 자아 회수 서사와 익스트랙션 사망 손실 구조의 융합 지점</p>
+              </div>
+            </div>
+            <div class="qa-topic-card">
+              <span class="qa-topic-icon">🎨</span>
+              <div class="qa-topic-info">
+                <h3>02. URP 그래픽스 & UI/UX</h3>
+                <p>2.5D Cel Shading 외곽선, 세미 픽셀 포스트 프로세싱 & 손전등 부채꼴 시야 마스킹</p>
+              </div>
+            </div>
+            <div class="qa-topic-card">
+              <span class="qa-topic-icon">👾</span>
+              <div class="qa-topic-info">
+                <h3>03. 에너미 AI & 오디오</h3>
+                <p>5단계 모듈형 FSM AI (시야/청각 감지, 차단 이동) & 3D 공간 오디오 연동 수치</p>
+              </div>
+            </div>
+            <div class="qa-topic-card">
+              <span class="qa-topic-icon">⚡</span>
+              <div class="qa-topic-info">
+                <h3>04. 코어 인프라 & 시스템</h3>
+                <p>각성 보존 안전 슬롯, 창고/인벤토리 데이터 파이프라인 & VFX 오브젝트 풀링</p>
+              </div>
+            </div>
+          </div>
+          <div class="qa-prompt-box">
+            <span class="qa-prompt-badge">NDMA CONTROL CENTER</span>
+            <div class="qa-prompt-title">발표 내용에 관해<br>자유롭게 질문해주세요</div>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
+              담당 크루 관제사가 질의 항목에 맞춰<br>
+              기술 및 기획적 판단 사유를 성실히 답변드립니다.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+<!-- ========================================= -->
+
+<!-- CHAPTER 12 / SCENE 02 -->
+
+      <section class="scene" data-chapter="12" data-scene="02" data-type="CORE" data-presenter="전원 / Team REMnants" data-title="발표 마무리 & 감사인사" data-time="1분 00초" data-notes="[CONTENT] 《침몽도시: 루시드 다이버》 최종 발표가 마쳐졌습니다. 팀원 5명의 성찰과 감사인사를 표하고 Git 및 빌드 링크를 안내합니다.">
+        <div class="ending-hero-header">
+          <img src="assets/공용/images/game_logo.png" alt="침몽도시: 루시드 다이버" class="ending-logo-img">
+          <div class="ending-slogan">" 다이버는 잊는다. 관제사는 기록한다. 그리고 다시, 구하러 들어간다. "</div>
+        </div>
+        <div class="ending-crew-bar">
+          <div class="ending-crew-mini-card">
+            <span class="ending-crew-role">CP (총괄)</span>
+            <div class="ending-crew-name">장수영</div>
+            <span class="ending-crew-sub">기획·아트·오디오</span>
+          </div>
+          <div class="ending-crew-mini-card">
+            <span class="ending-crew-role">CD (시스템)</span>
+            <div class="ending-crew-name">우성혁</div>
+            <span class="ending-crew-sub">명세·AI·오디오</span>
+          </div>
+          <div class="ending-crew-mini-card">
+            <span class="ending-crew-role">PM (일정)</span>
+            <div class="ending-crew-name">송예찬</div>
+            <span class="ending-crew-sub">WBS·튜토리얼</span>
+          </div>
+          <div class="ending-crew-mini-card">
+            <span class="ending-crew-role">PD (디렉팅)</span>
+            <div class="ending-crew-name">김남해</div>
+            <span class="ending-crew-sub">URP 셰이더·레벨</span>
+          </div>
+          <div class="ending-crew-mini-card">
+            <span class="ending-crew-role">TD (기술)</span>
+            <div class="ending-crew-name">강다영</div>
+            <span class="ending-crew-sub">인프라·VFX풀링</span>
+          </div>
+        </div>
+        <div class="ending-layout" style="grid-template-columns: 1.2fr 1fr; align-items: center;">
+          <div>
+            <h3 style="color: var(--accent-teal); font-size: 1.2rem; margin-bottom: 10px;">경청해 주셔서 감사합니다 — Team REMnants</h3>
+            <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary);">
+              본 최종 발표 웹페이지와 P1 프로토타입 빌드 및 문서들은 아래 공개 저장소를 통해 언제든 확인하실 수 있습니다.
+            </p>
+            <div class="ending-links" style="margin-top: 15px;">
+              <a href="https://github.com/Jin-o12/Document_LucidDiver" target="_blank" rel="noopener" class="ending-link-item">
+                <span>🔗 GitHub Repository</span>
+                <span>방문 ↗</span>
+              </a>
+              <a href="assets/downloads/lucid_diver_proposal_v2.1.pptx" download class="ending-link-item">
+                <span>📊 PPT 제안서 다운로드</span>
+                <span>저장 ↗</span>
+              </a>
+            </div>
+          </div>
+          <div style="text-align: center;">
+            <div class="ending-qr-box" style="width: 180px; height: 180px;">
+              <span style="color: var(--accent-teal); font-weight: bold; font-size: 0.85rem; margin-bottom: 4px;">P1 BETA BUILD</span>
+              <span style="color: var(--text-muted); font-size: 0.75rem;">스마트폰 QR 스캔</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+    <!-- PD 이미지 확대 오버레이 -->
+    <div id="pdImageLightbox" class="pd-lightbox" role="dialog" aria-modal="true" aria-label="이미지 확대 보기" onclick="closePdImage(event)">
+      <div class="pd-lightbox-dialog" onclick="event.stopPropagation()">
+        <button class="pd-lightbox-close" type="button" aria-label="확대 이미지 닫기" onclick="closePdImage()">&times;</button>
+        <img id="pdLightboxImage" src="" alt="">
+        <div id="pdLightboxCaption" class="pd-lightbox-caption"></div>
+      </div>
+    </div>
+    <!-- 발표자 대본 슬라이드 패널 -->
+    <div id="presenterNotesPanel" class="presenter-notes-panel">
+      <div class="notes-header">Presenter Script</div>
+      <div id="notesBody" class="notes-body">대본을 로드하고 있습니다...</div>
+    </div>
+    <!-- 챕터 네비게이션 팝업 메뉴 -->
+    <div id="chapterMenuOverlay" class="chapter-menu-overlay" onclick="closeChapterMenu()">
+      <div class="chapter-menu-grid" onclick="event.stopPropagation()">
+        <!-- JS에서 동적으로 메뉴 그리드 추가 -->
+      </div>
+    </div>
+    <!-- 하단 HUD 조작 바 -->
+    <div class="presentation-hud">
+      <div class="hud-left">
+        <span id="hudChapter" class="chapter-tag">CH 00</span>
+        <span id="hudSceneNum">SCENE 01 / 02</span>
+        <span style="color: var(--text-muted);">|</span>
+        <span id="hudSceneTitle">시작</span>
+      </div>
+      <div class="hud-center">
+        침몽도시: 루시드 다이버 최종 발표
+      </div>
+      <div class="hud-right">
+        <span id="hudPresenter" class="presenter-info">발표: 기획 담당자</span>
+        <div class="hud-buttons">
+          <button onclick="togglePresenterNotes()">대본 (N)</button>
+          <button onclick="toggleChapterMenu()">메뉴 (M)</button>
+          <button onclick="toggleFullscreen()">전체화면 (F)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
