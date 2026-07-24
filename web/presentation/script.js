@@ -27,6 +27,7 @@ window.scenes = [];
     // 초기화 함수
     function initPresentation() {
       scenes = Array.from(document.querySelectorAll('.scene'));
+      buildPresenterSequenceBadges();
       // 디버그 파라미터 확인 (?debug=1 or debug)
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has('debug') || window.location.hash === '#debug') {
@@ -52,6 +53,31 @@ window.scenes = [];
       // 오프닝 첫 슬라이드 터미널 타이핑 작동
       startBootTerminal();
     }
+    // 발표자별 파트 안에서 현재 씬 번호와 총 장수를 자동 표기
+    function buildPresenterSequenceBadges() {
+      const presenterBlocks = [
+        { role: 'CP', chapters: ['00', '01', '02', '03', '04', '05'] },
+        { role: 'CD', chapters: ['06'] },
+        { role: 'PM', chapters: ['07'] }
+      ];
+
+      document.querySelectorAll('.section-scene-index').forEach(badge => badge.remove());
+      presenterBlocks.forEach(block => {
+        const blockScenes = scenes.filter(scene => block.chapters.includes(scene.getAttribute('data-chapter')));
+        blockScenes.forEach((scene, index) => {
+          const badge = document.createElement('span');
+          badge.className = `section-scene-index section-scene-index--${block.role.toLowerCase()}`;
+          badge.textContent = `${block.role} ${String(index + 1).padStart(2, '0')} / ${String(blockScenes.length).padStart(2, '0')}`;
+          const header = scene.querySelector('.scene-header');
+          if (header) {
+            header.appendChild(badge);
+          } else {
+            badge.classList.add('section-scene-index--floating');
+            scene.appendChild(badge);
+          }
+        });
+      });
+    }
     // 특정 장면 표시 (철통 전환 보장)
     function showScene(index) {
       if (!scenes || scenes.length === 0) return;
@@ -63,6 +89,7 @@ window.scenes = [];
         document.activeElement.blur();
       }
       try {
+        closePdImage();
         // 모든 씬의 active 클래스 강제 클리어 (중복 덮임 및 화면 조작 마비 100% 차단)
         scenes.forEach((s, idx) => {
           if (s) {
@@ -76,6 +103,8 @@ window.scenes = [];
         currentIdx = index;
         const nextActive = scenes[currentIdx];
         if (!nextActive) return;
+        // 씬이 화면에 나타나기 전에 진입 요소를 먼저 숨겨 첫 프레임 플래시를 방지
+        prepareStaggerEntrance(nextActive);
         // 현재 씬 활성화
         nextActive.classList.add('active');
         // 활성화된 장면에 자동 재생 비디오가 있다면 재생
@@ -104,26 +133,69 @@ window.scenes = [];
         console.warn('showScene execution recovered gracefully:', e);
       }
     }
-    // 전역 순차 등장 애니메이션 헬퍼 (triggerSceneAnimation에서 호출)
-    function applyStaggerEntrance(scene) {
-      scene.querySelectorAll('.stagger-target').forEach(el => {
+    // 전역 순차 등장 대상 준비 — 반드시 씬 활성화 전에 호출
+    function prepareStaggerEntrance(scene) {
+      if (scene._staggerTimers) {
+        scene._staggerTimers.forEach(timer => clearTimeout(timer));
+      }
+      scene._staggerTimers = [];
+      scene._staggerTargets = [];
+
+      scene.querySelectorAll('.stagger-target, .stagger-visible').forEach(el => {
         el.classList.remove('stagger-target', 'stagger-visible');
       });
+
       const targets = [];
+      const addTarget = el => {
+        if (el && !targets.includes(el)) targets.push(el);
+      };
       const h1 = scene.querySelector('.scene-header h1');
       const sub = scene.querySelector('.scene-header .subtitle');
-      if (h1) targets.push(h1);
-      if (sub) targets.push(sub);
-      scene.querySelectorAll('.glass-card').forEach(el => {
-        if (!el.classList.contains('pm-anim')) targets.push(el);
+      addTarget(h1);
+      addTarget(sub);
+
+      const cardSelector = [
+        '.glass-card',
+        '.pv-card',
+        '.pv-item',
+        '.crew-card-wrapper',
+        '.overview-intent-card',
+        '.overview-evolution-card',
+        '.char-reveal-panel',
+        '.cd-flow-card',
+        '.fsm-side-panel',
+        '.qa-topic-card',
+        '.milestone-step-item',
+        '.ending-crew-mini-card',
+        '.ending-link-item',
+        '.pm-anim'
+      ].join(', ');
+
+      scene.querySelectorAll(cardSelector).forEach(el => {
+        const isNestedCard = el.parentElement && el.parentElement.closest(cardSelector);
+        if (!isNestedCard && !el.hasAttribute('data-no-stagger')) {
+          addTarget(el);
+        }
       });
-      scene.querySelectorAll('.cd-flow-stage, .cd-wf-hint, .cd-wf-step.visible').forEach(el => {
-        targets.push(el);
+
+      scene.querySelectorAll('.cd-wf-hint, .cd-wf-step.visible').forEach(el => {
+        addTarget(el);
       });
-      const limited = targets.slice(0, 15);
-      limited.forEach((el, i) => {
-        el.classList.add('stagger-target');
-        setTimeout(() => el.classList.add('stagger-visible'), 80 + i * 80);
+
+      targets.forEach(el => el.classList.add('stagger-target'));
+      scene._staggerTargets = targets;
+    }
+
+    // 준비된 요소를 씬 활성화 후 순차적으로 노출
+    function playStaggerEntrance(scene) {
+      const targets = scene._staggerTargets || [];
+      targets.forEach((el, i) => {
+        const entranceDelay = 80 + Math.min(i * 80, 960);
+        const showTimer = setTimeout(() => el.classList.add('stagger-visible'), entranceDelay);
+        const cleanupTimer = setTimeout(() => {
+          el.classList.remove('stagger-target', 'stagger-visible');
+        }, entranceDelay + 650);
+        scene._staggerTimers.push(showTimer, cleanupTimer);
       });
     }
     // 장면 이동 (락 무효화)
@@ -334,7 +406,10 @@ window.scenes = [];
           break;
         case 'Escape':
           e.preventDefault();
-          if (isMenuOpen) {
+          const pdLightbox = document.getElementById('pdImageLightbox');
+          if (pdLightbox && pdLightbox.classList.contains('open')) {
+            closePdImage();
+          } else if (isMenuOpen) {
             closeChapterMenu();
           } else if (isNotesOpen) {
             togglePresenterNotes();
@@ -589,16 +664,63 @@ window.scenes = [];
     // ── [CH 05 / SC 01] UI 비교 슬라이더 연출 ──
     function handleComparisonMove(e) {
       const frame = document.getElementById('compFrame');
-      const afterImg = document.getElementById('compAfterImg');
-      const slider = document.getElementById('compSlider');
+      if (!frame) return;
+      if (e.cancelable) e.preventDefault();
+      const point = e.touches ? e.touches[0] : e;
       const rect = frame.getBoundingClientRect();
-      let x = (e.clientX || e.touches[0].clientX) - rect.left;
-      // 경계 제한
-      if (x < 0) x = 0;
-      if (x > rect.width) x = rect.width;
+      const x = Math.max(0, Math.min(rect.width, point.clientX - rect.left));
+      frame._comparisonPct = (x / rect.width) * 100;
+      if (frame._comparisonRaf) return;
+      frame._comparisonRaf = requestAnimationFrame(() => {
+        frame.style.setProperty('--comparison-position', `${frame._comparisonPct}%`);
+        frame._comparisonRaf = 0;
+      });
+    }
+    function resetComparisonSlider() {
+      const frame = document.getElementById('compFrame');
+      if (!frame) return;
+      if (frame._comparisonRaf) {
+        cancelAnimationFrame(frame._comparisonRaf);
+        frame._comparisonRaf = 0;
+      }
+      frame._comparisonPct = 50;
+      frame.style.setProperty('--comparison-position', '50%');
+    }
+    // ── [CH 08] PD Before/After 비교 및 이미지 확대 ──
+    function handlePdComparisonMove(e, prefix) {
+      const frame = document.getElementById(`${prefix}Frame`);
+      const afterImg = document.getElementById(`${prefix}After`);
+      const slider = document.getElementById(`${prefix}Slider`);
+      if (!frame || !afterImg || !slider) return;
+      const point = e.touches ? e.touches[0] : e;
+      const rect = frame.getBoundingClientRect();
+      const x = Math.max(0, Math.min(rect.width, point.clientX - rect.left));
       const pct = (x / rect.width) * 100;
       afterImg.style.clipPath = `polygon(0 0, ${pct}% 0, ${pct}% 100%, 0 100%)`;
       slider.style.left = `${pct}%`;
+    }
+    function resetPdComparison(prefix) {
+      const afterImg = document.getElementById(`${prefix}After`);
+      const slider = document.getElementById(`${prefix}Slider`);
+      if (afterImg) afterImg.style.clipPath = 'polygon(0 0, 50% 0, 50% 100%, 0 100%)';
+      if (slider) slider.style.left = '50%';
+    }
+    function openPdImage(image) {
+      if (!image) return;
+      const lightbox = document.getElementById('pdImageLightbox');
+      const lightboxImage = document.getElementById('pdLightboxImage');
+      const caption = document.getElementById('pdLightboxCaption');
+      if (!lightbox || !lightboxImage || !caption) return;
+      lightboxImage.src = image.currentSrc || image.src;
+      lightboxImage.alt = image.alt || '확대 이미지';
+      caption.textContent = image.dataset.caption || image.alt || '';
+      lightbox.classList.add('open');
+    }
+    function closePdImage(e) {
+      const lightbox = document.getElementById('pdImageLightbox');
+      if (!lightbox) return;
+      if (e && e.target !== lightbox) return;
+      lightbox.classList.remove('open');
     }
     // ── [CH 05 / SC 02] UI 시뮬레이터 탭 전환 ──
     function switchSimTab(tabIdx) {
@@ -900,8 +1022,8 @@ window.scenes = [];
       if (!scene) return;
       const ch = scene.getAttribute('data-chapter');
       const sc = scene.getAttribute('data-scene');
-      // 전역 순차 등장 애니메이션 (모든 씨에 적용)
-      applyStaggerEntrance(scene);
+      // 전역 순차 등장 애니메이션 (모든 씬에 적용)
+      playStaggerEntrance(scene);
       if (ch === '01' && sc === '01') {
         triggerOverviewAnimation();
       } else if (ch === '02' && sc === '01') {
@@ -917,20 +1039,19 @@ window.scenes = [];
           });
           diagram._loreClickBound = true;
         }
-      } else if (ch === '05' && sc === '03') {
-        const cards = document.querySelectorAll('#audioScene .audio-card');
-        cards.forEach((card, i) => {
-          card.classList.remove('show');
-          setTimeout(() => card.classList.add('show'), 300 + i * 200);
-        });
       }
     }
     // ── 장면 상태 초기화 함수 (R키 또는 장면 이동 시 작동) ──
     function resetSceneState(index) {
       const scene = scenes[index];
       if (!scene) return;
+      if (scene._staggerTimers) {
+        scene._staggerTimers.forEach(timer => clearTimeout(timer));
+        scene._staggerTimers = [];
+      }
+      scene._staggerTargets = [];
       // stagger 클래스 제거
-      scene.querySelectorAll('.stagger-target').forEach(el => {
+      scene.querySelectorAll('.stagger-target, .stagger-visible').forEach(el => {
         el.classList.remove('stagger-target', 'stagger-visible');
       });
       // CD 워크플로우 리셋
@@ -992,11 +1113,13 @@ window.scenes = [];
         });
       }
       else if (ch === '05' && sc === '01') {
-        document.getElementById('compAfterImg').style.clipPath = 'polygon(0 0, 50% 0, 50% 100%, 0 100%)';
-        document.getElementById('compSlider').style.left = '50%';
+        resetComparisonSlider();
       }
-      else if (ch === '05' && sc === '03') {
-        document.querySelectorAll('#audioScene .audio-card').forEach(c => c.classList.remove('show'));
+      else if (ch === '08' && sc === '04') {
+        resetPdComparison('pdVfx');
+      }
+      else if (ch === '08' && sc === '05') {
+        resetPdComparison('pdShader');
       }
 
     }

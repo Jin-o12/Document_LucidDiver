@@ -992,9 +992,85 @@
             <div class="subtitle">SOUND TYPE ROUTING — BGM · AMBIENT · UI · SFX</div>
           </div>
         </div>
-        <div style="flex:1; width:100%; display:flex; align-items:stretch; justify-content:center; overflow:hidden;">
-          <div class="glass-card pm-anim" style="padding:6px; display:flex; align-items:center; justify-content:center; width:100%; overflow:hidden;">
-            <img src="assets/[CD]우성혁/images/AudioManager_Chart.png" alt="AudioManager 구조도" style="max-width:100%; max-height:100%; object-fit:contain; border-radius:6px;">
+        <div class="audio-arch-chart" role="img" aria-label="AudioManager가 AudioMixer의 음량과 음소거를 제어하고, BGM·환경음·UI·SFX를 각각의 AudioSource 및 2D·3D 사운드로 분기하는 구조도">
+          <div class="audio-arch-wires" aria-hidden="true">
+            <i class="audio-arch-wire wire-root-return"></i>
+            <i class="audio-arch-wire wire-root-mixer"></i>
+            <i class="audio-arch-wire wire-root-router"></i>
+            <i class="audio-arch-wire wire-mixer-controls"></i>
+            <i class="audio-arch-wire wire-tip wire-volume-tip"></i>
+            <i class="audio-arch-wire wire-tip wire-mute-tip"></i>
+            <i class="audio-arch-wire wire-router-types"></i>
+            <i class="audio-arch-wire wire-tip wire-bgm-tip"></i>
+            <i class="audio-arch-wire wire-tip wire-ambient-tip"></i>
+            <i class="audio-arch-wire wire-tip wire-ui-tip"></i>
+            <i class="audio-arch-wire wire-tip wire-sfx-tip"></i>
+            <i class="audio-arch-wire wire-bgm-source"></i>
+            <i class="audio-arch-wire wire-ambient-source"></i>
+            <i class="audio-arch-wire wire-ui-source"></i>
+            <i class="audio-arch-wire wire-sfx-paths"></i>
+            <i class="audio-arch-wire wire-tip wire-2d-tip"></i>
+            <i class="audio-arch-wire wire-tip wire-3d-tip"></i>
+            <i class="audio-arch-wire wire-2d-source"></i>
+            <i class="audio-arch-wire wire-3d-loop"></i>
+            <i class="audio-arch-wire wire-3d-temp"></i>
+            <i class="audio-arch-wire wire-loop-temp"></i>
+          </div>
+
+          <div class="audio-arch-node audio-arch-root audio-pos-root pm-anim">
+            <span class="audio-arch-icon" aria-hidden="true">▥</span>
+            <div><small>GLOBAL AUDIO SYSTEM</small><strong>AudioManager</strong></div>
+          </div>
+
+          <div class="audio-arch-node audio-pos-mixer pm-anim">
+            <span class="audio-arch-icon" aria-hidden="true">≋</span><strong>AudioMixer</strong>
+          </div>
+          <div class="audio-arch-node audio-arch-node--compact audio-pos-volume pm-anim">
+            <span class="audio-arch-icon" aria-hidden="true">◖))</span><strong>음량 제어</strong><small>Volume</small>
+          </div>
+          <div class="audio-arch-node audio-arch-node--compact audio-pos-mute pm-anim">
+            <span class="audio-arch-icon audio-arch-icon--pink" aria-hidden="true">◖×</span><strong>음소거</strong><small>Mute</small>
+          </div>
+
+          <div class="audio-arch-router audio-pos-router pm-anim">
+            <div><span aria-hidden="true">♫</span><strong>오디오 종류</strong></div>
+          </div>
+          <div class="audio-arch-node audio-arch-type audio-arch-type--bgm audio-pos-bgm pm-anim">
+            <span aria-hidden="true">♫</span><strong>BGM</strong>
+          </div>
+          <div class="audio-arch-node audio-arch-type audio-arch-type--ambient audio-pos-ambient pm-anim">
+            <span aria-hidden="true">◒</span><strong>환경음</strong><small>Ambient</small>
+          </div>
+          <div class="audio-arch-node audio-arch-type audio-arch-type--ui audio-pos-ui pm-anim">
+            <span aria-hidden="true">▣</span><strong>UI</strong>
+          </div>
+          <div class="audio-arch-node audio-arch-type audio-arch-type--sfx audio-pos-sfx pm-anim">
+            <span aria-hidden="true">▥</span><strong>SFX</strong>
+          </div>
+
+          <section class="audio-arch-bank audio-pos-source-bank pm-anim">
+            <div class="audio-arch-bank-title">
+              <span aria-hidden="true">◖))</span><strong>AudioSource</strong><small>채널별 상시 소스</small>
+            </div>
+            <div class="audio-arch-sources">
+              <span class="audio-arch-source audio-arch-source--bgm">♫ <b>BGMSource</b></span>
+              <span class="audio-arch-source audio-arch-source--ambient">◒ <b>AmbSource</b></span>
+              <span class="audio-arch-source audio-arch-source--ui">▣ <b>UISource</b></span>
+              <span class="audio-arch-source audio-arch-source--sfx">▥ <b>SFXSource</b></span>
+            </div>
+          </section>
+
+          <div class="audio-arch-node audio-arch-node--path audio-pos-2d pm-anim">
+            <span aria-hidden="true">◖))</span><strong>2D 사운드</strong>
+          </div>
+          <div class="audio-arch-node audio-arch-node--path audio-pos-3d pm-anim">
+            <span aria-hidden="true">◇</span><strong>3D 사운드</strong>
+          </div>
+          <div class="audio-arch-node audio-arch-node--loop audio-pos-loop pm-anim">
+            <span aria-hidden="true">↻</span><strong>3D 루프 사운드</strong><small>Loop 3D Sound</small>
+          </div>
+          <div class="audio-arch-node audio-arch-node--temp audio-pos-temp pm-anim">
+            <span aria-hidden="true">◇</span><strong>임시 오디오 소스 생성</strong><small>Temp AudioSource</small>
           </div>
         </div>
       </section>
@@ -1076,13 +1152,13 @@
 <!-- ========================================= -->
 
 <!-- CHAPTER 06 / SCENE 07 -->
-<!-- CD Scene 4: 마무리 -->
+<!-- CD Scene 7: 기획 명세 마무리 -->
 
-      <section class="scene" data-chapter="06" data-scene="07" data-type="CORE" data-presenter="우성혁 CD" data-title="CD 마무리" data-time="10초" data-notes="[CONTENT] 마무리 문장.">
+      <section class="scene" data-chapter="06" data-scene="07" data-type="CORE" data-presenter="우성혁 CD" data-title="기획 명세 마무리" data-time="10초" data-notes="[CONTENT] 기획 명세가 실제 구현으로 연결되기 위해 필요한 설계 기준을 정리하며 CD 파트를 마무리합니다.">
         <div class="scene-header">
           <div>
-            <h1>마무리</h1>
-            <div class="subtitle">CONTENT DESIGN WRAP-UP</div>
+            <h1>기획 명세 마무리</h1>
+            <div class="subtitle">CONTENT DESIGN SPECIFICATION WRAP-UP</div>
           </div>
         </div>
         <div style="flex:1; display:flex; align-items:center; justify-content:center; width:100%;">
@@ -1174,108 +1250,98 @@
 <!-- ========================================= -->
 
 <!-- CHAPTER 07 / SCENE 03 -->
-<!-- PM Scene 3: FSM 인터랙티브 (기존 구현) -->
+<!-- PM Scene 3: 기술적 판단 -->
 
-      <section class="scene" data-chapter="07" data-scene="03" data-type="CORE" data-presenter="송예찬 PM" data-title="꿈식자 에너미 AI 시스템" data-time="2분 30초" data-notes="[CONTENT] 원형 FSM 다이어그램의 각 노드를 클릭하면 모달로 상세 정보가 표시됩니다. 중앙 꿈식자는 드래그로 360° 회전합니다.">
+      <section class="scene" data-chapter="07" data-scene="03" data-type="CORE" data-presenter="송예찬 PM" data-title="꿈식자 AI 기술적 판단" data-time="1분 00초" data-notes="[CONTENT] 통제된 랜덤 순찰과 공정한 추적을 구현하기 위한 두 기술 흐름, 조사·전투·어그로·복귀 기억의 분리 구조를 설명합니다.">
         <div class="scene-header">
           <div>
-            <h1>꿈식자 에너미 AI</h1>
-            <div class="subtitle">DREAM EATER FSM — 8-STATE BEHAVIOR LOOP</div>
+            <h1>기술적 판단 — 통제된 무작위와 공정한 추적</h1>
+            <div class="subtitle">TECHNICAL DECISIONS — PATROL CONTROL · PERCEPTION · MEMORY SEPARATION</div>
           </div>
         </div>
-        <div class="fsm-stage">
-          <!-- 좌측: 컨셉 이미지 영역 -->
-          <aside class="fsm-side-panel">
-            <strong>꿈을 먹는 무리형 포식자</strong>
-            <span class="fsm-side-tag">2~3마리 배회</span>
-            <div class="fsm-side-placeholder">
-              <span style="font-size: 1.5rem; opacity: 0.4;">🖼️</span>
-              <span>컨셉 아트 이미지 추가 예정</span>
-            </div>
-          </aside>
-          <!-- 중앙: 원형 FSM + 턴테이블 -->
-          <div class="fsm-circle-area">
-            <!-- 원형 링 -->
-            <div class="fsm-ring"></div>
-            <!-- 8개 핫스팟 (원형 배치) -->
-            <button class="fsm-hotspot" style="--angle: 0deg" data-fsm-key="spawn" onclick="openFsmModal('spawn')">
-              <span class="fsm-hs-icon">✦</span><span class="fsm-hs-label">스폰·시작</span>
-            </button>
-            <button class="fsm-hotspot" style="--angle: 45deg" data-fsm-key="patrol" onclick="openFsmModal('patrol')">
-              <span class="fsm-hs-icon">↝</span><span class="fsm-hs-label">순찰</span>
-            </button>
-            <button class="fsm-hotspot" style="--angle: 90deg" data-fsm-key="detect" onclick="openFsmModal('detect')">
-              <span class="fsm-hs-icon">◉</span><span class="fsm-hs-label">시야·소리 감지</span>
-            </button>
-            <button class="fsm-hotspot" style="--angle: 135deg" data-fsm-key="investigate" onclick="openFsmModal('investigate')">
-              <span class="fsm-hs-icon">⌕</span><span class="fsm-hs-label">조사</span>
-            </button>
-            <button class="fsm-hotspot" style="--angle: 180deg" data-fsm-key="chase" onclick="openFsmModal('chase')">
-              <span class="fsm-hs-icon">➜</span><span class="fsm-hs-label">추격</span>
-            </button>
-            <button class="fsm-hotspot fsm-hotspot--attack" style="--angle: 225deg" data-fsm-key="attack" onclick="openFsmModal('attack')">
-              <span class="fsm-hs-icon">⚔</span><span class="fsm-hs-label">공격</span>
-            </button>
-            <button class="fsm-hotspot" style="--angle: 270deg" data-fsm-key="search" onclick="openFsmModal('search')">
-              <span class="fsm-hs-icon">?</span><span class="fsm-hs-label">탐색</span>
-            </button>
-            <button class="fsm-hotspot" style="--angle: 315deg" data-fsm-key="return" onclick="openFsmModal('return')">
-              <span class="fsm-hs-icon">↩</span><span class="fsm-hs-label">개별 복귀</span>
-            </button>
-            <!-- 중앙 턴테이블 -->
-            <div class="fsm-turntable" id="fsmTurntable">
-              <img class="fsm-turntable-img" id="fsmTurntableImg" src="assets/[PM]송예찬/images/PM_DreamEater_360/dream_eater_v6_00.png" alt="꿈식자 외형" draggable="false">
-              <span class="fsm-turntable-label">꿈식자 AI CORE</span>
-              <span class="fsm-turntable-hint">↔ 드래그해서 8방향 회전</span>
-            </div>
+        <div class="pm-tech-board">
+          <div class="pm-tech-thesis pm-anim">
+            <span>CORE DECISION</span>
+            <strong>상태를 늘리는 대신, <em>판단 근거와 기억을 분리</em>했습니다.</strong>
+            <p>무작위성은 루트 안에서만 허용하고, 추적은 시야·소리·어그로라는 근거가 있을 때만 유지합니다.</p>
           </div>
-          <!-- 우측: 외형 이미지 영역 -->
-          <aside class="fsm-side-panel">
-            <strong>3D 외형 상상도</strong>
-            <span class="fsm-side-tag">8방향 컨셉 시각화</span>
-            <div class="fsm-side-placeholder">
-              <span style="font-size: 1.5rem; opacity: 0.4;">🖼️</span>
-              <span>외형 이미지 추가 예정</span>
-            </div>
-          </aside>
-          <span class="fsm-usage-hint">노드 클릭: 상세 로직 · 중앙 드래그: 8방향 회전</span>
-        </div>
-        <!-- 모달 -->
-        <div class="fsm-modal-layer" id="fsmModalLayer" onclick="closeFsmModal(event)">
-          <article class="fsm-modal" id="fsmModal" onclick="event.stopPropagation()">
-            <button class="fsm-modal-close" onclick="closeFsmModal()">&times;</button>
-            <div class="fsm-modal-body">
-              <p class="fsm-modal-index" id="fsmModalIndex"></p>
-              <h2 class="fsm-modal-title" id="fsmModalTitle"></h2>
-              <p class="fsm-modal-summary" id="fsmModalSummary"></p>
-              <div class="fsm-modal-grid">
-                <div class="fsm-modal-visuals">
-                  <div class="fsm-modal-card">
-                    <h3>설계 시각화</h3>
-                    <div class="fsm-modal-media" id="fsmDesignFrame">
-                      <img id="fsmModalDesign" style="display:none" alt="">
-                      <div class="fsm-modal-fallback" id="fsmDesignFallback"><span>설계 이미지 준비 중</span></div>
-                    </div>
-                    <p class="fsm-modal-note" id="fsmModalDesignNote"></p>
-                  </div>
-                  <div class="fsm-modal-card">
-                    <h3>실제 플레이 GIF</h3>
-                    <div class="fsm-modal-media" id="fsmGifFrame">
-                      <img id="fsmModalGif" style="display:none" alt="">
-                      <div class="fsm-modal-fallback" id="fsmGifFallback"><span>GIF 촬영 대기</span><span class="fsm-modal-path" id="fsmGifPath"></span></div>
-                    </div>
-                  </div>
+
+          <div class="pm-tech-lanes">
+            <article class="pm-tech-lane pm-tech-lane--patrol pm-anim">
+              <header>
+                <span class="pm-tech-lane-no">01</span>
+                <div>
+                  <h2>통제된 랜덤 순찰</h2>
+                  <p>완전 랜덤의 구역 이탈과 고정 웨이포인트의 반복성을 동시에 해결</p>
                 </div>
-                <div class="fsm-modal-logic-col">
-                  <h3>행동 로직</h3>
-                  <ol class="fsm-modal-logic" id="fsmModalLogic"></ol>
-                  <h3 style="margin-top: 16px;">구현 근거</h3>
-                  <p class="fsm-modal-impl" id="fsmModalImpl"></p>
-                </div>
+              </header>
+              <div class="pm-tech-flow pm-tech-flow--five">
+                <div><small>SPAWN</small><strong>랜덤 스폰</strong></div>
+                <div><small>MEMORY</small><strong>루트·시작점 저장</strong></div>
+                <div><small>CANDIDATE</small><strong>반경 내 좌표 생성</strong></div>
+                <div><small>VALIDATE</small><strong>NavMesh 완전 경로</strong></div>
+                <div><small>NEXT</small><strong>인접 포인트 선택</strong></div>
               </div>
-              <nav class="fsm-modal-nav" id="fsmModalNav"></nav>
+              <div class="pm-tech-rule">
+                <code>Random.insideUnitCircle</code>
+                <span>+</span>
+                <code>NavMesh.SamplePosition</code>
+                <span>→</span>
+                <b>구역은 통제, 이동선은 변화</b>
+              </div>
+            </article>
+
+            <article class="pm-tech-lane pm-tech-lane--perception pm-anim">
+              <header>
+                <span class="pm-tech-lane-no">02</span>
+                <div>
+                  <h2>근거가 있는 추적</h2>
+                  <p>좌표를 전지적으로 아는 적이 아니라, 감지와 기억으로 압박하는 공정한 사냥꾼</p>
+                </div>
+              </header>
+              <div class="pm-tech-flow pm-tech-flow--six">
+                <div><small>HEAR</small><strong>소리 인식</strong></div>
+                <div><small>CHECK</small><strong>차폐·반경 판정</strong></div>
+                <div><small>TRACE</small><strong>앵커 조사</strong></div>
+                <div><small>ENGAGE</small><strong>추격·공격</strong></div>
+                <div><small>DECAY</small><strong>어그로 감소</strong></div>
+                <div><small>RESET</small><strong>탐색·복귀</strong></div>
+              </div>
+              <div class="pm-tech-sensors">
+                <span><b>5.5m · 100°</b> 직접 시야</span>
+                <span><b>약 10m</b> 근접 인지</span>
+                <span><b>약 20m</b> 소리 인식</span>
+                <span><b>Raycast</b> 벽 차폐</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="pm-memory-strip">
+            <div class="pm-memory-title pm-anim">
+              <span>MEMORY MODEL</span>
+              <strong>“무엇을, 누구를, 얼마나, 어디로”를 따로 기억</strong>
             </div>
-          </article>
+            <div class="pm-memory-card pm-memory-card--noise pm-anim">
+              <code>investigateTarget</code>
+              <strong>무엇을 조사?</strong>
+              <span>소리 앵커 좌표</span>
+            </div>
+            <div class="pm-memory-card pm-memory-card--target pm-anim">
+              <code>currentTarget</code>
+              <strong>누구를 공격?</strong>
+              <span>플레이어 전투 대상</span>
+            </div>
+            <div class="pm-memory-card pm-memory-card--aggro pm-anim">
+              <code>aggroTarget · currentAggro</code>
+              <strong>누구를 얼마나 추적?</strong>
+              <span>유도 대상과 추적 지속값</span>
+            </div>
+            <div class="pm-memory-card pm-memory-card--route pm-anim">
+              <code>patrolRoute · patrolIndex</code>
+              <strong>어디로 복귀?</strong>
+              <span>개체별 루트와 기준점</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1393,151 +1459,175 @@
 
 <!-- CHAPTER 08 / SCENE 01 -->
 
-      <section class="scene" data-chapter="08" data-scene="01" data-type="CORE" data-presenter="김남해 PD" data-title="침몽마트 레벨 디자인 및 비주얼 연출" data-time="25초" data-notes="[CONTENT] 레벨 디자인 구현 성과 및 최적화 내역입니다. URP 그래픽 및 카메라 셰이더 연출을 포함합니다.">
+      <section class="scene" data-chapter="08" data-scene="01" data-type="CORE" data-presenter="김남해 PD" data-title="슈퍼숍 마트 맵 완성 결과" data-time="35초" data-notes="[CONTENT] 안녕하세요. 루시드 다이버의 렌더링 및 레벨 그래픽스를 담당한 PD 김남해입니다. 저는 게임의 주 무대인 슈퍼숍 마트 맵을 만들었습니다. 익숙한 현대적 마트 공간이지만 검정 Plane, 어두운 하늘, 보라색 안개를 조합해 이상현상에 잠식된 침몽도시의 분위기를 구현했습니다.">
         <div class="scene-header">
           <div>
-            <h1>레벨디자인 & 동선</h1>
-            <div class="subtitle">LEVEL PLAN & DIVER MOVEMENT ROUTES</div>
+            <h1>슈퍼숍 마트 — 완성 결과</h1>
+            <div class="subtitle">FROM LEVEL PLAN TO PLAYABLE SPACE</div>
+          </div>
+          <span class="pd-scene-index">PD 01 / 05</span>
+        </div>
+        <div class="pd-map-layout">
+          <button class="glass-card pd-main-visual" type="button" onclick="openPdImage(this.querySelector('img'))">
+            <img src="assets/[PD]김남해/images/레벨디자인_3.png" alt="완성된 슈퍼숍 마트 전체 전경" data-caption="완성된 슈퍼숍 마트 전체 전경">
+            <span class="pd-image-label">FINAL LEVEL · 클릭하여 확대</span>
+          </button>
+          <div class="pd-map-side">
+            <div class="glass-card pd-map-summary">
+              <span class="pd-kicker">REPRESENTATIVE WORK</span>
+              <h2>기획 원안을<br>플레이 가능한 공간으로</h2>
+              <p>진열대·계산대·창고 구역을 구성하고 에셋, 콜라이더, 머티리얼, 후처리 레이어를 직접 쌓았습니다.</p>
+              <div class="pd-atmosphere-tags">
+                <span>BLACK PLANE</span><span>FLAT KIT</span><span>VOLUMETRIC FOG</span>
+              </div>
+            </div>
+            <div class="pd-thumb-grid">
+              <button class="glass-card pd-thumb-card" type="button" onclick="openPdImage(this.querySelector('img'))">
+                <img src="assets/[PD]김남해/images/레벨디자인_1.png" alt="슈퍼숍 내부 탑뷰 1" data-caption="슈퍼숍 내부 탑뷰 — 진열대와 이동 동선">
+                <span>TOP VIEW A</span>
+              </button>
+              <button class="glass-card pd-thumb-card" type="button" onclick="openPdImage(this.querySelector('img'))">
+                <img src="assets/[PD]김남해/images/레벨디자인_2.png" alt="슈퍼숍 내부 탑뷰 2" data-caption="슈퍼숍 내부 탑뷰 — 계산대와 창고 구역">
+                <span>TOP VIEW B</span>
+              </button>
+            </div>
           </div>
         </div>
-        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; flex: 1; align-items: center; width: 100%;">
-          <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <h2 style="color: var(--accent-teal); margin-bottom: 20px; font-size: 1.4rem;">[구현 완료] 40x40 격전지형 맵 스펙</h2>
-              <ul style="color: var(--text-secondary); line-height: 2; font-size: 1.05rem; padding-left: 20px; list-style-type: square;">
-                <li><strong>레벨 스케일:</strong> 개발 최적화를 위해 원본 데모 씬에서 40m x 40m 마켓 맵으로 축소 설계 및 조립</li>
-                <li><strong>비주얼 톤:</strong> FlatKit 툰 셰이더 적용 및 Realistic Fog FX 안개 연출 기포 셋업</li>
-                <li><strong>장애물 깊이 투명화:</strong> ShaderGraph 기반 카메라 가림 벽 반투명 동적 교체 머티리얼 개발 완료</li>
-                <li><strong>그림자 분리:</strong> PlayerShadow 레이어 분리 및 AniPortrait 전용 그림자 복제본 씬 빌드</li>
-              </ul>
-            </div>
-            <div style="background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 6px; font-size: 0.95rem; border: 1px dashed var(--border-subtle);">
-              <span style="color: var(--accent-red);">[이월 해결 건]</span> F키 문 상호작용 Canvas 가이드 UI의 World Space 깊이 벽 투사 오류 해결 논의 진행 중 (김남해 PD / 송예찬 PM)
-            </div>
-          </div>
-          <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-            <div class="media-error-box" style="width: 100%; height: 350px; background: rgba(0,0,0,0.4);">
-              <span style="color: var(--accent-teal); font-weight: bold; margin-bottom: 10px;">[실제 Unity 화면 캡처 예정]</span>
-              <span style="color: var(--text-muted); font-size: 0.9rem;">assets/images/level_blueprint.jpg</span>
-            </div>
-            <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);">실제 침몽마트 2.5D 탑다운 레벨 동선 스크린샷</p>
-          </div>
-        </div>
-
       </section>
 
 <!-- ========================================= -->
 
-<!-- CHAPTER 09 / SCENE 01 -->
+<!-- CHAPTER 08 / SCENE 02 -->
 
-      <section class="scene" data-chapter="09" data-scene="01" data-type="CORE" data-presenter="강다영 TD" data-title="시스템 아키텍처 및 연동" data-time="30초" data-notes="[CONTENT] 개발 협업 환경과 전역 시스템 설계 결과입니다. 사운드 및 VFX 아키텍처를 다룹니다.">
+      <section class="scene" data-chapter="08" data-scene="02" data-type="CORE" data-presenter="김남해 PD" data-title="콜라이더 관통 문제" data-time="30초" data-notes="[CONTENT] 맵 완성 후 가장 치명적인 문제는 캐릭터의 벽 관통 버그였습니다. 얇은 벽 콜라이더나 모서리 겹침 지점에서 빠르게 이동하면 물리 엔진이 한 프레임 내 충돌을 인지하지 못해 벽을 통과하는 터널링 현상이 발생했습니다.">
         <div class="scene-header">
           <div>
-            <h1>엔지니어링 & 테크 협업</h1>
-            <div class="subtitle">NETWORKING ARCHITECTURE & CLOUD ENGINE</div>
+            <h1>문제 — 한 프레임의 틈</h1>
+            <div class="subtitle">COLLIDER TUNNELING AT THIN WALLS & CORNERS</div>
+          </div>
+          <span class="pd-scene-index">PD 02 / 05</span>
+        </div>
+        <div class="pd-problem-layout">
+          <button class="glass-card pd-problem-visual" type="button" onclick="openPdImage(this.querySelector('img'))">
+            <img src="assets/[PD]김남해/images/캐릭터 콜라이더 관통 문제 예시 이미지.png" alt="캐릭터가 벽 콜라이더를 관통하는 문제 예시" data-caption="캐릭터 콜라이더 관통 문제 — 얇은 벽과 모서리 겹침 지점">
+            <span class="pd-image-label pd-image-label--danger">BUG REPRODUCTION · 클릭하여 확대</span>
+          </button>
+          <div class="pd-problem-copy">
+            <div class="glass-card pd-problem-lead">
+              <span class="pd-kicker pd-kicker--danger">CRITICAL ISSUE</span>
+              <h2>빠른 이동이 충돌 판정보다 먼저 벽을 넘었다</h2>
+              <p>캡슐 콜라이더를 추가하는 임시 보완만으로는 터널링의 근본 원인을 제거할 수 없었습니다.</p>
+            </div>
+            <div class="pd-cause-grid">
+              <div class="glass-card pd-cause-card"><strong>01</strong><span>얇은 벽체<br>콜라이더</span></div>
+              <div class="glass-card pd-cause-card"><strong>02</strong><span>모서리의<br>겹침 지점</span></div>
+              <div class="glass-card pd-cause-card"><strong>03</strong><span>고속 이동의<br>프레임 간격</span></div>
+            </div>
           </div>
         </div>
-        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; flex: 1; align-items: center; width: 100%;">
-          <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <h2 style="color: var(--accent-teal); margin-bottom: 20px; font-size: 1.4rem;">[구현 완료] 테크 아키텍처 및 협업 성과</h2>
-              <ul style="color: var(--text-secondary); line-height: 2; font-size: 1.05rem; padding-left: 20px; list-style-type: square;">
-                <li><strong>개발 프로세스:</strong> Unity Git 레포지토리 구성, Git LFS 및 브랜치 머지 전략 확립</li>
-                <li><strong>데이터 기반 VFX 시스템:</strong> 카탈로그 정의를 통한 런타임 풀링 매니저 연동 (송예찬 PM)</li>
-                <li><strong>오디오 시스템:</strong> AudioManager 및 IAudioRepository 기반 3D 볼륨 제어 및 수명 관리 (우성혁 CD)</li>
-                <li><strong>결과 정산 아웃게임 연동:</strong> 세션 플레이 결과 변수 창고 DB 자동 합산 로직 리팩토링</li>
-              </ul>
-            </div>
-            <div style="background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 6px; font-size: 0.95rem; border: 1px dashed var(--border-subtle);">
-              <span style="color: var(--accent-purple);">[P0 범위 고정]</span> PUN2 기반 멀티플레이어 대기방/동기화 비용 배제, 로컬 샌드박스로 개발 우선순위 안정화
-            </div>
-          </div>
-          <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-            <div class="media-error-box" style="width: 100%; height: 350px; background: rgba(0,0,0,0.4);">
-              <span style="color: var(--accent-teal); font-weight: bold; margin-bottom: 10px;">[실제 Unity 화면 캡처 예정]</span>
-              <span style="color: var(--text-muted); font-size: 0.9rem;">assets/images/server_structure.png</span>
-            </div>
-            <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);">Unity 아키텍처 다이어그램 및 오디오/VFX 에셋 구조도</p>
-          </div>
-        </div>
-
       </section>
 
 <!-- ========================================= -->
 
-<!-- CHAPTER 10 / SCENE 01 -->
+<!-- CHAPTER 08 / SCENE 03 -->
 
-      <section class="scene" data-chapter="10" data-scene="01" data-type="CORE" data-presenter="강다영 TD / 송예찬 PM" data-title="QA 및 반복 테스트 프로세스" data-time="20초" data-notes="[CONTENT] 플레이 안정성 확보를 위한 빌드 디버그 결과입니다. 마우스, 오버레이, 충돌 버그 수정 내역을 기술합니다.">
+      <section class="scene" data-chapter="08" data-scene="03" data-type="CORE" data-presenter="김남해 PD" data-title="레이캐스트와 슬라이딩 이동" data-time="45초" data-notes="[CONTENT] 단순한 콜라이더 보완 대신 이동 로직을 재설계했습니다. LayerMask로 벽을 필터링하고 매 프레임 이동 경로를 레이캐스트로 사전 검사했습니다. 충돌 시 남은 이동량을 충돌면 법선에 수직인 슬라이딩 벡터로 투영해 벽을 뚫지 않고 자연스럽게 벽면을 따라 이동하도록 해결했습니다.">
         <div class="scene-header">
           <div>
-            <h1>QA & 개선 프로세스</h1>
-            <div class="subtitle">QUALITY ASSURANCE & FEEDBACK LOOP</div>
+            <h1>판단 — 이동 경로를 먼저 검사한다</h1>
+            <div class="subtitle">LAYERMASK · RAYCAST · SLIDING VECTOR PROJECTION</div>
+          </div>
+          <span class="pd-scene-index">PD 03 / 05</span>
+        </div>
+        <div class="pd-solution-layout">
+          <div class="pd-solution-steps">
+            <div class="glass-card pd-solution-step">
+              <span>01</span><div><strong>LayerMask</strong><p>벽 레이어만 선별해 1차 충돌 방어</p></div>
+            </div>
+            <div class="pd-solution-line"></div>
+            <div class="glass-card pd-solution-step">
+              <span>02</span><div><strong>Raycast</strong><p>매 프레임 이동 예정 경로를 사전 검사</p></div>
+            </div>
+            <div class="pd-solution-line"></div>
+            <div class="glass-card pd-solution-step">
+              <span>03</span><div><strong>Vector Projection</strong><p>남은 이동량을 벽면 방향으로 투영</p></div>
+            </div>
+            <div class="pd-result-strip"><span>RESULT</span> 관통 차단 + 자연스러운 벽면 슬라이딩</div>
+          </div>
+          <div class="pd-code-stack">
+            <button class="glass-card pd-code-card pd-code-card--strip" type="button" onclick="openPdImage(this.querySelector('img'))">
+              <div class="pd-code-head"><span>MOVEMENT GUARD</span><span>01</span></div>
+              <img src="assets/[PD]김남해/images/플레이어 콜라이더 관통문제 코드_1.png" alt="LayerMask 이동 경로 검사 코드" data-caption="LayerMask와 이동 경로 검사 코드">
+            </button>
+            <button class="glass-card pd-code-card" type="button" onclick="openPdImage(this.querySelector('img'))">
+              <div class="pd-code-head"><span>SLIDING PROJECTION</span><span>02</span></div>
+              <img src="assets/[PD]김남해/images/플레이어 콜라이더 관통문제 코드_2.png" alt="충돌면 슬라이딩 벡터 투영 코드" data-caption="충돌면 법선을 이용한 슬라이딩 벡터 투영 코드">
+            </button>
           </div>
         </div>
-        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; flex: 1; align-items: center; width: 100%;">
-          <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <h2 style="color: var(--accent-teal); margin-bottom: 20px; font-size: 1.4rem;">[수정 완료] 주요 크리티컬 이슈 해결</h2>
-              <ul style="color: var(--text-secondary); line-height: 2; font-size: 1.05rem; padding-left: 20px; list-style-type: square;">
-                <li><strong>마우스 이탈 방지:</strong> 플레이 중 마우스 커서가 게임 창을 이탈하여 조작이 불능해지던 오류 수정</li>
-                <li><strong>아이템 드래그 & 아티팩트 해제 오류:</strong> 결과창 정산 인벤토리 간 드래그 및 탈장착 연동 오작동 버그 수정</li>
-                <li><strong>물리 충돌 개선:</strong> 플레이어 이동 시 오브젝트 끼임 현상 최소화를 위한 NavMesh 및 콜라이더 배치 조정</li>
-                <li><strong>튜토리얼 안정 장치:</strong> 튜토리얼 씬 내 플레이어 사망 방지(HP=1 고정) 및 강제 이탈 차단 콜라이더 추가</li>
-              </ul>
-            </div>
-            <div style="background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 6px; font-size: 0.95rem; border: 1px dashed var(--border-subtle);">
-              <span style="color: var(--accent-teal);">[QA 완료 기준]</span> 플레이 타임 정상 기록, 탈출 및 강제 각성 결과창 정산 변수 100% 보존/유실 정합성 통과
-            </div>
-          </div>
-          <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-            <div class="media-error-box" style="width: 100%; height: 350px; background: rgba(0,0,0,0.4);">
-              <span style="color: var(--accent-teal); font-weight: bold; margin-bottom: 10px;">[실제 Unity 화면 캡처 예정]</span>
-              <span style="color: var(--text-muted); font-size: 0.9rem;">assets/images/qa_bug_tracker.png</span>
-            </div>
-            <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);">QA 진행 보드 및 해결 티켓 히스토리</p>
-          </div>
-        </div>
-
       </section>
 
 <!-- ========================================= -->
 
-<!-- CHAPTER 11 / SCENE 01 -->
+<!-- CHAPTER 08 / SCENE 04 -->
 
-      <section class="scene" data-chapter="11" data-scene="01" data-type="CORE" data-presenter="송예찬 PM" data-title="로드맵 및 향후 확장 계획" data-time="25초" data-notes="[CONTENT] 마일스톤 성과와 P1 로드맵 비전을 소개하는 슬라이드입니다.">
+      <section class="scene" data-chapter="08" data-scene="04" data-type="CORE" data-presenter="김남해 PD" data-title="레벨 VFX 전후 비교" data-time="35초" data-notes="[CONTENT] 충돌 문제를 해결한 뒤 에셋의 머티리얼 톤을 통일하고 FlatKit 툰 셰이더와 Volumetric Fog를 적용했습니다. 검정 Plane과 보라색 안개가 결합되면서 평범한 마트가 익숙하지만 기이한 침몽도시의 공간으로 완성되었습니다.">
         <div class="scene-header">
           <div>
-            <h1>결과 및 향후 계획</h1>
-            <div class="subtitle">PROJECT ROADMAP & P1 MILESTONE PLAN</div>
+            <h1>결과 — 공간의 분위기를 완성하다</h1>
+            <div class="subtitle">VFX BEFORE / AFTER · FLAT KIT & VOLUMETRIC FOG</div>
+          </div>
+          <span class="pd-scene-index">PD 04 / 05</span>
+        </div>
+        <div class="pd-compare-layout">
+          <div class="glass-card pd-comparison-frame" id="pdVfxFrame" onmousemove="handlePdComparisonMove(event, 'pdVfx')" ontouchmove="handlePdComparisonMove(event, 'pdVfx')">
+            <img class="pd-comparison-img" src="assets/[PD]김남해/images/VFX 적용 전.png" alt="VFX 적용 전 슈퍼숍 마트">
+            <img class="pd-comparison-img pd-comparison-img--after" id="pdVfxAfter" src="assets/[PD]김남해/images/VFX 적용 후.png" alt="VFX 적용 후 슈퍼숍 마트">
+            <span class="pd-ba-label pd-ba-label--before">BEFORE · 기본 렌더</span>
+            <span class="pd-ba-label pd-ba-label--after">AFTER · 최종 분위기</span>
+            <div class="pd-comparison-slider" id="pdVfxSlider"><span>◀ ▶</span></div>
+          </div>
+          <div class="pd-compare-caption">
+            <div><strong>FLAT KIT</strong><span>에셋 간 머티리얼 톤 통일</span></div>
+            <div><strong>VOLUMETRIC FOG</strong><span>보라색 안개로 깊이와 긴장감 형성</span></div>
+            <p>이미지 위에서 포인터를 좌우로 움직여 비교하세요.</p>
           </div>
         </div>
-        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; flex: 1; align-items: center; width: 100%;">
-          <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <h2 style="color: var(--accent-teal); margin-bottom: 20px; font-size: 1.4rem;">[차주 과제] 잔여 이월 작업 및 버그 수정</h2>
-              <ul style="color: var(--text-secondary); line-height: 2; font-size: 1.05rem; padding-left: 20px; list-style-type: square;">
-                <li><strong>가이드 UI 투사 해결:</strong> F키 GuideUI World Space Canvas의 worldCamera 누락 해결</li>
-                <li><strong>아이템 설명 리스트업:</strong> 임시 차단된 Enum 타입의 한글 매핑 딕셔너리 구축</li>
-              </ul>
-            </div>
-            <div style="background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 6px; font-size: 0.95rem; border: 1px dashed var(--border-subtle);">
-              <strong style="color: var(--accent-teal);">[P1 로드맵 비전]</strong> 에너미 공통 스탯 구조 세분화 및 멀티플레이어 네트워크 연동을 고려한 전역 이벤트 ID 참조 체계 설계 회의 기획 진행 예정
-            </div>
-          </div>
-          <div class="glass-card" style="padding: 30px; height: 480px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-            <div class="media-error-box" style="width: 100%; height: 350px; background: rgba(0,0,0,0.4);">
-              <span style="color: var(--accent-teal); font-weight: bold; margin-bottom: 10px;">[로드맵 다이어그램]</span>
-              <span style="color: var(--text-muted); font-size: 0.9rem;">[최종 발표 범위 미확정]</span>
-            </div>
-            <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);">베타 버전 시연 이후의 차기 스프린트 로드맵</p>
-          </div>
-        </div>
-
       </section>
 
 <!-- ========================================= -->
 
-<!-- CHAPTER 12 / SCENE 01 -->
+<!-- CHAPTER 08 / SCENE 05 -->
+
+      <section class="scene" data-chapter="08" data-scene="05" data-type="CORE" data-presenter="김남해 PD" data-title="가림벽 반투명 동적 셰이더" data-time="35초" data-notes="[CONTENT] 마지막은 보조 작업인 카메라 가림벽 반투명 동적 셰이더입니다. 아이소메트릭 시점에서 캐릭터가 벽 뒤에 가려지는 문제를 해결하기 위해 셰이더 그래프를 직접 제작했습니다. 캐릭터 위치를 셰이더에 전달해 주변 벽면의 Alpha가 부드럽게 감쇠되도록 구현했습니다. 노드 이미지는 클릭해 확대할 수 있습니다.">
+        <div class="scene-header">
+          <div>
+            <h1>보조 작업 — 보이지 않던 플레이어를 드러내다</h1>
+            <div class="subtitle">DYNAMIC OCCLUSION WALL SHADER · SHADER GRAPH</div>
+          </div>
+          <span class="pd-scene-index">PD 05 / 05</span>
+        </div>
+        <div class="pd-shader-layout">
+          <button class="glass-card pd-node-card" type="button" onclick="openPdImage(this.querySelector('img'))">
+            <div class="pd-node-head">
+              <span class="pd-kicker">SHADER GRAPH</span>
+              <strong>캐릭터 위치 기반 Alpha Fade</strong>
+            </div>
+            <img src="assets/[PD]김남해/images/셰이더그래프_노드.png" alt="가림벽 반투명 셰이더 그래프 노드 구조" data-caption="가림벽 반투명 동적 셰이더 — Shader Graph 노드 구조">
+            <span class="pd-node-hint">클릭하여 노드 구조 확대</span>
+          </button>
+          <div class="glass-card pd-shader-comparison" id="pdShaderFrame" onmousemove="handlePdComparisonMove(event, 'pdShader')" ontouchmove="handlePdComparisonMove(event, 'pdShader')">
+            <img class="pd-comparison-img" src="assets/[PD]김남해/images/셰이더그래프 반영 전.png" alt="가림벽 반투명 셰이더 적용 전">
+            <img class="pd-comparison-img pd-comparison-img--after" id="pdShaderAfter" src="assets/[PD]김남해/images/셰이더그래프 반영 후.png" alt="가림벽 반투명 셰이더 적용 후">
+            <span class="pd-ba-label pd-ba-label--before">BEFORE · 시야 차단</span>
+            <span class="pd-ba-label pd-ba-label--after">AFTER · 동적 반투명</span>
+            <div class="pd-comparison-slider" id="pdShaderSlider"><span>◀ ▶</span></div>
+          </div>
+        </div>
+        <div class="pd-handoff">“물리적으로 안정화된 슈퍼숍 레벨 위에서, 다음 시스템들이 어떻게 연동되는지 이어서 설명드리겠습니다.”</div>
+
+      </section>
+
 <!-- ========================================= -->
 
 <!-- CHAPTER 12 / SCENE 01 -->
@@ -1655,6 +1745,14 @@
 
       </section>
 
+    </div>
+    <!-- PD 이미지 확대 오버레이 -->
+    <div id="pdImageLightbox" class="pd-lightbox" role="dialog" aria-modal="true" aria-label="이미지 확대 보기" onclick="closePdImage(event)">
+      <div class="pd-lightbox-dialog" onclick="event.stopPropagation()">
+        <button class="pd-lightbox-close" type="button" aria-label="확대 이미지 닫기" onclick="closePdImage()">&times;</button>
+        <img id="pdLightboxImage" src="" alt="">
+        <div id="pdLightboxCaption" class="pd-lightbox-caption"></div>
+      </div>
     </div>
     <!-- 발표자 대본 슬라이드 패널 -->
     <div id="presenterNotesPanel" class="presenter-notes-panel">
