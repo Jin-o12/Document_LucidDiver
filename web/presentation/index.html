@@ -1187,7 +1187,7 @@
         <div style="display: flex; flex-direction: column; flex: 1; align-items: center; justify-content: center; width: 100%; gap: 20px;">
           <div class="glass-card pm-anim" style="width: 100%; max-width: 960px; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
             <video id="pmFinalVideo" style="width: 100%; height: 100%; object-fit: contain; display: none;" controls>
-              <source src="assets/[PM]송예찬/videos/PM_EnemyAI_FinalLoop.mp4?v=20260724-1453" type="video/mp4">
+              <source src="assets/[PM]송예찬/videos/PM_EnemyAI_FinalLoop.mp4?v=20260724-8453" type="video/mp4">
             </video>
             <div class="media-error-box" id="pmVideoPlaceholder" style="width: 100%; height: 100%; background: rgba(0,0,0,0.4);">
               <span style="font-size: 2.5rem; opacity: 0.3;">▶</span>
@@ -1363,18 +1363,11 @@
             <h2 style="color: var(--accent-teal); font-size: 1.05rem; margin: 0;">조사 좌표 Stuck 해결</h2>
             <p style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.55; margin: 0;">소음 좌표를 바닥 NavMesh로 보정하고 조사 제한시간을 추가해 적이 멈추는 문제를 해결했습니다.</p>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1;">
-              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px dashed rgba(248,113,113,0.3); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-muted); font-size: 0.72rem;">
-                  <span style="color: var(--accent-red); font-weight: 700; font-size: 0.78rem;">BEFORE</span>
-                  <span>GIF 재현·촬영 필요</span>
-                  <span style="opacity: 0.5; font-size: 0.65rem;">PM_Trouble_InvestigateStuck.gif</span>
-                </div>
+              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px solid rgba(248,113,113,0.38); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
+                <img src="assets/[PM]송예찬/gifs/PM_Trouble_InvestigateStuck_Before.gif?v=20260724-8" alt="조사 좌표 정체 문제 상황 재현" style="width: 100%; height: 100%; object-fit: contain; display: block;">
               </div>
-              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px dashed rgba(45,212,191,0.3); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-muted); font-size: 0.72rem;">
-                  <span style="color: var(--accent-teal); font-weight: 700; font-size: 0.78rem;">AFTER</span>
-                  <span>GIF 재현·촬영 필요</span>
-                </div>
+              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px solid rgba(45,212,191,0.38); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
+                <img src="assets/[PM]송예찬/gifs/PM_Trouble_InvestigateStuck_After.gif?v=20260724-8" alt="조사 좌표 보정 후 실제 동작" style="width: 100%; height: 100%; object-fit: contain; display: block;">
               </div>
             </div>
           </div>
@@ -1383,18 +1376,11 @@
             <h2 style="color: var(--accent-teal); font-size: 1.05rem; margin: 0;">군집 겹침과 접근 분산</h2>
             <p style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.55; margin: 0;">개체별 접근 위치를 나눠 같은 좌표에 뭉치지 않고 도주 길목을 압박하도록 개선했습니다.</p>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1;">
-              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px dashed rgba(248,113,113,0.3); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-muted); font-size: 0.72rem;">
-                  <span style="color: var(--accent-red); font-weight: 700; font-size: 0.78rem;">BEFORE</span>
-                  <span>GIF 재현·촬영 필요</span>
-                  <span style="opacity: 0.5; font-size: 0.65rem;">PM_Trouble_CrowdOverlap.gif</span>
-                </div>
+              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px solid rgba(248,113,113,0.38); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
+                <img src="assets/[PM]송예찬/gifs/PM_Trouble_CrowdOverlap_Before.gif?v=20260724-8" alt="군집 겹침 문제 상황 재현" style="width: 100%; height: 100%; object-fit: contain; display: block;">
               </div>
-              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px dashed rgba(45,212,191,0.3); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-muted); font-size: 0.72rem;">
-                  <span style="color: var(--accent-teal); font-weight: 700; font-size: 0.78rem;">AFTER</span>
-                  <span>GIF 재현·촬영 필요</span>
-                </div>
+              <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px solid rgba(45,212,191,0.38); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
+                <img src="assets/[PM]송예찬/gifs/PM_Trouble_CrowdOverlap_After.gif?v=20260724-8" alt="개체별 접근 분산 후 실제 동작" style="width: 100%; height: 100%; object-fit: contain; display: block;">
               </div>
             </div>
           </div>
