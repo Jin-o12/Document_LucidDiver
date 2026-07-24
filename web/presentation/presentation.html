@@ -674,20 +674,20 @@
           </div>
         </div>
         <div class="comparison-container">
-          <div class="comparison-frame" id="compFrame" onmousemove="handleComparisonMove(event)"
-            ontouchmove="handleComparisonMove(event)">
+          <div class="comparison-frame unified-comparison-frame" id="cpUiFrame"
+            onmousemove="handleUnifiedComparisonMove(event)" ontouchmove="handleUnifiedComparisonMove(event)">
             <!-- Before (기획 목업) -->
-            <img class="comparison-img" src="assets/[CP]장수영/images/CP_UI_Mockup_Design.png" alt="UI 와이어프레임 목업 시안"
+            <img class="comparison-img pd-comparison-img" src="assets/[CP]장수영/images/CP_UI_Mockup_Design.png" alt="UI 와이어프레임 목업 시안"
               onerror="handleImageError(this, 'CP_UI_Mockup_Design.png')">
             <!-- After (실제 구현 화면 - 클리핑 영역 조절) -->
-            <img class="comparison-img comparison-img--after" id="compAfterImg"
+            <img class="comparison-img pd-comparison-img pd-comparison-img--after"
               src="assets/[CP]장수영/images/CP_UI_Runtime_Lobby.png" alt="유니티 런타임 로비 UI"
               onerror="handleImageError(this, 'CP_UI_Runtime_Lobby.png')">
-            <!-- 슬라이더 바 -->
-            <div class="comparison-slider" id="compSlider"></div>
+            <span class="pd-ba-label pd-ba-label--before">BEFORE · UI 목업</span>
+            <span class="pd-ba-label pd-ba-label--after">AFTER · 인게임 UI</span>
+            <div class="pd-comparison-slider"><span>◀ ▶</span></div>
           </div>
-          <p style="color: var(--text-secondary); font-size: 0.95rem;">마우스를 이미지 위에 올리고 움직여서 UI 기획 와이어프레임과 Unity 인게임 화면을
-            비교해 보세요.</p>
+          <p style="color: var(--text-secondary); font-size: 0.95rem;">이미지 위에서 포인터를 좌우로 움직여 UI 목업과 인게임 화면을 비교하세요.</p>
         </div>
 
       </section>
@@ -1080,7 +1080,7 @@
               <div class="cd-panel-heading">
                 <span>INTRODUCTION</span>
                 <h2>추상적인 원안을 개발 가능한 규칙으로 바꾼다</h2>
-                <p>기능 설명에 그치지 않고 범위, 상태 변화, 예외 처리와 검증 기준을 한 문서 안에 고정했습니다.</p>
+                <p>명세 항목: 구현 범위 · 상태 변화 · 예외 처리 · 검증 기준</p>
               </div>
               <div class="cd-spec-process">
                 <div><b>01</b><strong>원안 분석</strong><span>플레이 경험과 필수 기능 추출</span></div>
@@ -1091,14 +1091,14 @@
                 <i>→</i>
                 <div><b>04</b><strong>공유 기준</strong><span>개발과 QA가 같은 SSOT 참조</span></div>
               </div>
-              <div class="cd-panel-callout"><b>핵심 역할</b><strong>“무엇을 만들 것인가”를 구현 가능한 단위로 결정</strong></div>
+              <div class="cd-panel-callout"><b>판단 기준</b><strong>포함 범위 · 구체화 수준 · 개발 공통 기준</strong></div>
             </article>
 
             <article class="cd-macro-panel" data-cd-deck="spec" data-cd-panel="goal">
               <div class="cd-panel-copy">
                 <span>GOAL & CONSTRAINT</span>
                 <h2>어디까지 구체화할 것인가</h2>
-                <p>프로젝트의 시간과 인력 안에서 구현할 범위를 조절하고, 명세에 포함·구체화·제외할 기준을 버전별로 갱신했습니다.</p>
+                <p>버전별 검토 항목: 필수 기능 · 구체화할 수치와 예외 · 제외할 범위</p>
                 <div class="cd-decision-triad">
                   <div><b>INCLUDE</b><span>반드시 구현할 핵심 규칙</span></div>
                   <div><b>DETAIL</b><span>개발 판단이 필요한 수치와 예외</span></div>
@@ -1120,7 +1120,7 @@
               <div class="cd-panel-heading">
                 <span>TECHNICAL DECISION</span>
                 <h2>기능 설명을 데이터 구조와 예외 규칙까지 내린다</h2>
-                <p>변수·함수·구조체·열거형을 명세하여 구현자가 같은 의미를 다른 방식으로 해석하지 않도록 했습니다.</p>
+                <p>명세 대상: 변수 · 함수 · 구조체 · 열거형 · 예외 처리 규칙</p>
               </div>
               <div class="cd-data-evidence">
                 <figure><img src="assets/[CD]우성혁/images/GameDesign_SkillData_01.png" alt="스킬 데이터 명세 첫 번째 표"></figure>
@@ -1137,13 +1137,19 @@
                 <span>RESULT & VALIDATION</span>
                 <h2>기획서의 규칙이 실제 디코이 스킬로 이어졌다</h2>
               </div>
-              <div class="cd-before-after" style="--split:50%;">
-                <img class="cd-after-image" src="assets/[CD]우성혁/images/GameDesign_InGame_Skill_Decoy.png" alt="명세 이후 구현된 인게임 디코이 스킬">
-                <div class="cd-before-layer"><img src="assets/[CD]우성혁/images/GameDesign_Doc_Skill_Decoy.png" alt="디코이 스킬 기획 명세"></div>
-                <span class="cd-compare-label cd-compare-label--before">BEFORE · 기획 명세</span>
-                <span class="cd-compare-label cd-compare-label--after">AFTER · 인게임 구현</span>
-                <i class="cd-compare-divider"></i>
-                <input type="range" min="8" max="92" value="50" aria-label="기획 명세와 구현 결과 비교" oninput="setCdCompare(this)">
+              <div class="cd-before-after unified-comparison-frame unified-comparison-frame--contain"
+                id="cdDecoyFrame" onmousemove="handleUnifiedComparisonMove(event)"
+                ontouchmove="handleUnifiedComparisonMove(event)">
+                <img class="pd-comparison-img" src="assets/[CD]우성혁/images/GameDesign_Doc_Skill_Decoy.png" alt="디코이 스킬 기획 명세">
+                <video class="pd-comparison-img pd-comparison-img--after cd-before-after-video"
+                  autoplay muted loop playsinline preload="metadata"
+                  poster="assets/[CD]우성혁/images/GameDesign_InGame_Skill_Decoy.png"
+                  aria-label="명세 이후 구현된 인게임 디코이 스킬 영상">
+                  <source src="assets/[CD]우성혁/videos/Grenade_Play3DSoundAndReturn.mp4" type="video/mp4">
+                </video>
+                <span class="pd-ba-label pd-ba-label--before">BEFORE · 기획 명세</span>
+                <span class="pd-ba-label pd-ba-label--after">AFTER · 인게임 구현</span>
+                <div class="pd-comparison-slider"><span>◀ ▶</span></div>
               </div>
               <div class="cd-panel-callout"><b>검증</b><strong>문서의 입력·범위·지속시간 규칙을 실제 동작과 대조</strong></div>
             </article>
@@ -1248,30 +1254,97 @@
                     <div><small>CONTRACT</small><strong>IAudioRepository</strong></div><i>→</i>
                     <div><small>SERVICE</small><strong>AudioManager</strong></div>
                   </div>
-                  <p>데이터 저장 방식과 재생 서비스를 분리하여 오디오 메타데이터를 코드 수정 없이 교체·확장할 수 있는 경로를 만들었습니다.</p>
+                  <p>오디오 메타데이터 경로: Sound.xlsx → JSON → Repository → AudioManager</p>
                 </div>
               </div>
             </article>
 
-            <article class="cd-macro-panel" data-cd-deck="audio" data-cd-panel="goal">
+            <article class="cd-macro-panel cd-macro-panel--architecture" data-cd-deck="audio" data-cd-panel="goal">
               <div class="cd-panel-heading cd-panel-heading--compact">
                 <span>ARCHITECTURE</span>
                 <h2>모든 사운드 요청은 하나의 진입점에서 종류와 수명을 판단한다</h2>
               </div>
-              <div class="cd-audio-system-map">
-                <div class="cd-map-input"><small>REQUEST</small><strong>GlobalEventBus</strong><span>audioID · position</span></div>
-                <i>→</i>
-                <div class="cd-map-manager"><small>SERVICE</small><strong>AudioManager</strong><span>조회 · 분기 · 수명 관리</span></div>
-                <i>→</i>
-                <div class="cd-map-branches">
-                  <div><b>BGM · AMBIENT</b><span>clip 비교 후 루프 유지</span></div>
-                  <div><b>UI · 2D SFX</b><span>PlayOneShot 동시 재생</span></div>
-                  <div><b>3D SFX</b><span>위치 기반 임시 AudioSource</span></div>
-                  <div><b>3D LOOP</b><span>반환 객체로 종료 시점 제어</span></div>
+              <div class="audio-arch-chart audio-arch-chart--embedded" role="img"
+                aria-label="AudioManager가 AudioMixer의 음량과 음소거를 제어하고, BGM·환경음·UI·SFX를 각각의 AudioSource 및 2D·3D 사운드로 분기하는 구조도">
+                <div class="audio-arch-wires" aria-hidden="true">
+                  <i class="audio-arch-wire wire-root-return"></i>
+                  <i class="audio-arch-wire wire-root-mixer"></i>
+                  <i class="audio-arch-wire wire-root-router"></i>
+                  <i class="audio-arch-wire wire-mixer-controls"></i>
+                  <i class="audio-arch-wire wire-tip wire-volume-tip"></i>
+                  <i class="audio-arch-wire wire-tip wire-mute-tip"></i>
+                  <i class="audio-arch-wire wire-router-types"></i>
+                  <i class="audio-arch-wire wire-tip wire-bgm-tip"></i>
+                  <i class="audio-arch-wire wire-tip wire-ambient-tip"></i>
+                  <i class="audio-arch-wire wire-tip wire-ui-tip"></i>
+                  <i class="audio-arch-wire wire-tip wire-sfx-tip"></i>
+                  <i class="audio-arch-wire wire-bgm-source"></i>
+                  <i class="audio-arch-wire wire-ambient-source"></i>
+                  <i class="audio-arch-wire wire-ui-source"></i>
+                  <i class="audio-arch-wire wire-sfx-paths"></i>
+                  <i class="audio-arch-wire wire-tip wire-2d-tip"></i>
+                  <i class="audio-arch-wire wire-tip wire-3d-tip"></i>
+                  <i class="audio-arch-wire wire-2d-source"></i>
+                  <i class="audio-arch-wire wire-3d-loop"></i>
+                  <i class="audio-arch-wire wire-3d-temp"></i>
+                  <i class="audio-arch-wire wire-loop-temp"></i>
                 </div>
-              </div>
-              <div class="cd-mixer-row">
-                <span>AudioMixer</span><b>MASTER</b><b>BGM</b><b>AMBIENT</b><b>SFX</b><b>UI</b>
+
+                <div class="audio-arch-node audio-arch-root audio-pos-root pm-anim">
+                  <span class="audio-arch-icon" aria-hidden="true">▥</span>
+                  <div><small>GLOBAL AUDIO SYSTEM</small><strong>AudioManager</strong></div>
+                </div>
+
+                <div class="audio-arch-node audio-pos-mixer pm-anim">
+                  <span class="audio-arch-icon" aria-hidden="true">≋</span><strong>AudioMixer</strong>
+                </div>
+                <div class="audio-arch-node audio-arch-node--compact audio-pos-volume pm-anim">
+                  <span class="audio-arch-icon" aria-hidden="true">◖))</span><strong>음량 제어</strong><small>Volume</small>
+                </div>
+                <div class="audio-arch-node audio-arch-node--compact audio-pos-mute pm-anim">
+                  <span class="audio-arch-icon audio-arch-icon--pink" aria-hidden="true">◖×</span><strong>음소거</strong><small>Mute</small>
+                </div>
+
+                <div class="audio-arch-router audio-pos-router pm-anim">
+                  <div><span aria-hidden="true">♫</span><strong>오디오 종류</strong></div>
+                </div>
+                <div class="audio-arch-node audio-arch-type audio-arch-type--bgm audio-pos-bgm pm-anim">
+                  <span aria-hidden="true">♫</span><strong>BGM</strong>
+                </div>
+                <div class="audio-arch-node audio-arch-type audio-arch-type--ambient audio-pos-ambient pm-anim">
+                  <span aria-hidden="true">◒</span><strong>환경음</strong><small>Ambient</small>
+                </div>
+                <div class="audio-arch-node audio-arch-type audio-arch-type--ui audio-pos-ui pm-anim">
+                  <span aria-hidden="true">▣</span><strong>UI</strong>
+                </div>
+                <div class="audio-arch-node audio-arch-type audio-arch-type--sfx audio-pos-sfx pm-anim">
+                  <span aria-hidden="true">▥</span><strong>SFX</strong>
+                </div>
+
+                <section class="audio-arch-bank audio-pos-source-bank pm-anim">
+                  <div class="audio-arch-bank-title">
+                    <span aria-hidden="true">◖))</span><strong>AudioSource</strong><small>채널별 상시 소스</small>
+                  </div>
+                  <div class="audio-arch-sources">
+                    <span class="audio-arch-source audio-arch-source--bgm">♫ <b>BGMSource</b></span>
+                    <span class="audio-arch-source audio-arch-source--ambient">◒ <b>AmbSource</b></span>
+                    <span class="audio-arch-source audio-arch-source--ui">▣ <b>UISource</b></span>
+                    <span class="audio-arch-source audio-arch-source--sfx">▥ <b>SFXSource</b></span>
+                  </div>
+                </section>
+
+                <div class="audio-arch-node audio-arch-node--path audio-pos-2d pm-anim">
+                  <span aria-hidden="true">◖))</span><strong>2D 사운드</strong>
+                </div>
+                <div class="audio-arch-node audio-arch-node--path audio-pos-3d pm-anim">
+                  <span aria-hidden="true">◇</span><strong>3D 사운드</strong>
+                </div>
+                <div class="audio-arch-node audio-arch-node--loop audio-pos-loop pm-anim">
+                  <span aria-hidden="true">↻</span><strong>3D 루프 사운드</strong><small>Loop 3D Sound</small>
+                </div>
+                <div class="audio-arch-node audio-arch-node--temp audio-pos-temp pm-anim">
+                  <span aria-hidden="true">◇</span><strong>임시 오디오 소스 생성</strong><small>Temp AudioSource</small>
+                </div>
               </div>
             </article>
 
@@ -1533,24 +1606,59 @@
       <!-- CD Scene 7: 기획 명세 마무리 -->
 
       <section class="scene" data-chapter="06" data-scene="04" data-type="CORE" data-presenter="우성혁 CD"
-        data-title="기획이 구현되기까지" data-time="15초"
-        data-notes="[CONTENT] 기획 명세가 실제 구현으로 연결되기 위해 필요한 설계 기준을 정리하며 CD 파트를 마무리합니다.">
+        data-title="기획 → 구현 → 결과물" data-time="15초"
+        data-notes="[CONTENT] 시스템 명세 작성, 아키텍처 설계, AudioManager 구현 및 검증까지 이어진 역할을 정리하며 CD 파트를 마무리합니다.">
         <div class="scene-header">
           <div>
-            <h1>기획이 구현되기까지</h1>
-            <div class="subtitle">ORIGINAL IDEA → SSOT → DATA & INTERFACE → PLAYABLE RESULT</div>
+            <h1>기획 → 구현 → 결과물</h1>
+            <div class="subtitle">SYSTEM DESIGN → DEVELOPMENT → PLAYABLE RESULT</div>
           </div>
         </div>
-        <div style="flex:1; display:flex; align-items:center; justify-content:center; width:100%;">
-          <div class="glass-card pm-anim cd-finale-card">
-            <p
-              style="color:var(--accent-teal); font-size:0.85rem; font-weight:700; letter-spacing:0.1em; margin-bottom:12px;">
-              기획이란</p>
-            <p style="color:var(--text-primary); font-size:1.4rem; line-height:1.65; font-weight:600; margin:0;">
-              구현 범위를 정하고, 같은 기준으로 판단하게 하며,<br><span style="color:var(--accent-purple);">실제 결과까지 확인할 수 있게 하는 것</span>
-            </p>
-            <div class="cd-finale-flow"><span>원안</span><i>→</i><span>SSOT 명세</span><i>→</i><span>데이터·인터페이스</span><i>→</i><span>실행·검증</span></div>
+        <div class="cd-finale-interactive pm-anim" data-stage="1">
+          <div class="cd-finale-pipeline" aria-label="기획에서 개발을 거쳐 결과물로 이어지는 과정">
+            <button class="cd-finale-node cd-finale-node--plan" type="button" aria-pressed="true"
+              onclick="setCdFinaleStage(event, 1)">
+              <span class="cd-finale-node-icon">▤</span>
+              <small>01 · SYSTEM DESIGN</small>
+              <strong>기획</strong>
+            </button>
+            <i class="cd-finale-arrow cd-finale-arrow--one" aria-hidden="true"><span></span><b>›</b></i>
+            <button class="cd-finale-node cd-finale-node--dev" type="button" aria-pressed="false"
+              onclick="setCdFinaleStage(event, 2)">
+              <span class="cd-finale-node-icon">&lt;/&gt;</span>
+              <small>02 · DEVELOPMENT</small>
+              <strong>개발</strong>
+            </button>
+            <i class="cd-finale-arrow cd-finale-arrow--two" aria-hidden="true"><span></span><b>›</b></i>
+            <button class="cd-finale-node cd-finale-node--result" type="button" aria-pressed="false"
+              onclick="setCdFinaleStage(event, 3)">
+              <span class="cd-finale-node-icon">♕</span>
+              <small>03 · PLAYABLE RESULT</small>
+              <strong>결과물</strong>
+            </button>
           </div>
+
+          <div class="cd-finale-lower">
+            <section class="cd-finale-role-panel">
+              <header><span>♙</span><strong>담당 범위</strong></header>
+              <div class="cd-finale-role" data-role-stage="1"><span>▤</span><b>시스템 명세 작성</b></div>
+              <div class="cd-finale-role" data-role-stage="2"><span>⌘</span><b>아키텍처 설계</b></div>
+              <div class="cd-finale-role" data-role-stage="2"><span>≋</span><b>AudioManager 설계</b></div>
+              <div class="cd-finale-role" data-role-stage="3"><span>&lt;/&gt;</span><b>구현 및 검증</b></div>
+            </section>
+
+            <section class="cd-finale-definition">
+              <div class="cd-finale-definition-title"><i></i><strong>기획이란:</strong><i></i></div>
+              <p>게임의 뼈대가 되는 구조를 안정적으로 설계하여<br><em>실제로 구현될 수 있게 하는 것</em></p>
+              <div class="cd-finale-stage-note">
+                <span data-note-stage="1">기획 단계 — 구현 범위 · 규칙 · 예외 처리</span>
+                <span data-note-stage="2">개발 단계 — 데이터 · 인터페이스 · 재생 구조</span>
+                <span data-note-stage="3">검증 단계 — 실행 결과 · 동작 기준 · 수명 관리</span>
+              </div>
+            </section>
+          </div>
+
+          <p class="cd-finale-hint">기획 · 개발 · 결과물 노드를 선택해 연결 과정을 확인하세요</p>
         </div>
       </section>
 
@@ -1562,33 +1670,42 @@
 
       <section class="scene" data-chapter="07" data-scene="01" data-type="CORE" data-presenter="송예찬 PM"
         data-title="꿈식자 AI 완성 결과" data-time="30초"
-        data-notes="[CONTENT] 스폰→순찰→감지→조사→추격→공격→탐색→복귀 전체 루프 영상. 영상 촬영 후 교체 예정.">
+        data-notes="[CONTENT] 전체 루프 영상과 상태별 GIF를 선택해 스폰→순찰→감지→조사→추격→공격→탐색→복귀 흐름을 확인합니다.">
         <div class="scene-header">
           <div>
             <h1>꿈식자 AI — 완성 결과</h1>
             <div class="subtitle">SPAWN → PATROL → DETECT → INVESTIGATE → CHASE → ATTACK → SEARCH → RETURN</div>
           </div>
         </div>
-        <div
-          style="display: flex; flex-direction: column; flex: 1; align-items: center; justify-content: center; width: 100%; gap: 20px;">
-          <div class="glass-card pm-anim"
-            style="width: 100%; max-width: 960px; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-            <video id="pmFinalVideo" style="width: 100%; height: 100%; object-fit: contain; display: none;" controls>
+        <div class="pm-ai-demo pm-anim" data-clip="all">
+          <div class="glass-card pm-ai-media">
+            <video id="pmFinalVideo" controls preload="auto">
               <source src="assets/[PM]송예찬/videos/PM_EnemyAI_FinalLoop.mp4" type="video/mp4">
             </video>
+            <img id="pmStateGif" alt="선택한 꿈식자 AI 상태의 실행 GIF">
             <div class="media-error-box" id="pmVideoPlaceholder"
               style="width: 100%; height: 100%; background: rgba(0,0,0,0.4);">
               <span style="font-size: 2.5rem; opacity: 0.3;">▶</span>
-              <span style="color: var(--accent-teal); font-weight: bold;">전체 루프 영상 촬영 대기</span>
+              <span style="color: var(--accent-teal); font-weight: bold;">전체 루프 영상 로드 중</span>
               <span style="color: var(--text-muted); font-size: 0.85rem;">PM_EnemyAI_FinalLoop.mp4</span>
-              <span style="color: var(--text-muted); font-size: 0.8rem;">순찰하던 적이 소리를 조사하고 플레이어를 추격·공격한 뒤 자기 루트로 복귀하는
-                장면</span>
             </div>
+            <span class="pm-ai-media-label" id="pmAiMediaLabel">FULL LOOP · 전체 행동 순환</span>
           </div>
-          <p
-            style="color: var(--text-secondary); font-size: 0.95rem; text-align: center; max-width: 700px; line-height: 1.6;">
-            "구현 목표: 꿈식자의 위협 경험을 근거 있는 행동 변화로 전환<br>순찰 → 소리 조사 → 추격·공격 → 개별 루트 복귀"
-          </p>
+          <nav class="pm-ai-clip-nav" aria-label="꿈식자 AI 실행 장면 선택">
+            <button class="active" type="button" onclick="showPmAiClip(event, 'all')"><b>ALL</b><span>전체 루프</span></button>
+            <button type="button" onclick="showPmAiClip(event, 'spawn')"><b>01</b><span>스폰</span></button>
+            <button type="button" onclick="showPmAiClip(event, 'patrol')"><b>02</b><span>순찰</span></button>
+            <button type="button" onclick="showPmAiClip(event, 'detect')"><b>03</b><span>감지</span></button>
+            <button type="button" onclick="showPmAiClip(event, 'investigate')"><b>04</b><span>조사</span></button>
+            <button type="button" onclick="showPmAiClip(event, 'chase')"><b>05</b><span>추격</span></button>
+            <button type="button" onclick="showPmAiClip(event, 'attack')"><b>06</b><span>공격</span></button>
+            <button type="button" onclick="showPmAiClip(event, 'search')"><b>07</b><span>탐색</span></button>
+            <button type="button" onclick="showPmAiClip(event, 'return')"><b>08</b><span>복귀</span></button>
+          </nav>
+          <div class="pm-ai-demo-summary">
+            <span>BEHAVIOR LOOP</span>
+            <strong>순찰 → 소리 조사 → 추격·공격 → 마지막 단서 탐색 → 개별 루트 복귀</strong>
+          </div>
         </div>
       </section>
 
@@ -1767,67 +1884,44 @@
 
       <section class="scene" data-chapter="07" data-scene="04" data-type="CORE" data-presenter="송예찬 PM"
         data-title="트러블슈팅 Before/After" data-time="30초"
-        data-notes="[CONTENT] 조사 Stuck, 군집 겹침 등의 문제를 Before/After GIF로 비교. GIF 재현·촬영 후 교체 예정.">
+        data-notes="[CONTENT] 조사 좌표 Stuck과 군집 겹침 문제를 실제 Before/After GIF로 비교합니다.">
         <div class="scene-header">
           <div>
             <h1>결과 비교 — Before / After</h1>
             <div class="subtitle">TROUBLESHOOTING — INVESTIGATION STUCK · CROWD OVERLAP</div>
           </div>
         </div>
-        <div
-          style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; flex: 1; align-items: center; width: 100%;">
+        <div class="pm-trouble-grid">
           <!-- B/A 1: 조사 Stuck -->
-          <div class="glass-card pm-anim"
-            style="padding: 20px; display: flex; flex-direction: column; gap: 14px; height: 100%;">
-            <h2 style="color: var(--accent-teal); font-size: 1.05rem; margin: 0;">조사 좌표 Stuck 해결</h2>
-            <p style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.55; margin: 0;">결과: 소음 좌표의
-              NavMesh 보정과 조사 제한시간 적용으로 조사 지점에서의 정지 방지</p>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1;">
-              <div
-                style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px dashed rgba(248,113,113,0.3); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
-                <div
-                  style="display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-muted); font-size: 0.76rem;">
-                  <span style="color: var(--accent-red); font-weight: 700; font-size: 0.8rem;">BEFORE</span>
-                  <span>GIF 재현·촬영 필요</span>
-                  <span style="opacity: 0.5; font-size: 0.68rem;">PM_Trouble_InvestigateStuck.gif</span>
-                </div>
-              </div>
-              <div
-                style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px dashed rgba(45,212,191,0.3); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
-                <div
-                  style="display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-muted); font-size: 0.76rem;">
-                  <span style="color: var(--accent-teal); font-weight: 700; font-size: 0.8rem;">AFTER</span>
-                  <span>GIF 재현·촬영 필요</span>
-                </div>
-              </div>
+          <article class="glass-card pm-trouble-card pm-anim">
+            <header><h2>조사 좌표 Stuck</h2><p>NavMesh 좌표 보정 · 조사 제한시간</p></header>
+            <div class="pm-trouble-pair">
+              <figure class="pm-trouble-frame pm-trouble-frame--before">
+                <img src="assets/[PM]송예찬/gifs/PM_Trouble_InvestigateStuck_Before.gif" alt="조사 좌표에서 멈추는 문제 수정 전">
+                <figcaption>BEFORE · 조사 지점 정지</figcaption>
+              </figure>
+              <figure class="pm-trouble-frame pm-trouble-frame--after">
+                <img src="assets/[PM]송예찬/gifs/PM_Trouble_InvestigateStuck_After.gif" alt="조사 좌표 Stuck 문제 수정 후">
+                <figcaption>AFTER · 재탐색 전환</figcaption>
+              </figure>
             </div>
-          </div>
+            <div class="pm-trouble-result"><b>RESULT</b><span>도달 불가능 좌표와 장시간 정지 상태를 다음 판단으로 전환</span></div>
+          </article>
           <!-- B/A 2: 군집 겹침 -->
-          <div class="glass-card pm-anim"
-            style="padding: 20px; display: flex; flex-direction: column; gap: 14px; height: 100%;">
-            <h2 style="color: var(--accent-teal); font-size: 1.05rem; margin: 0;">군집 겹침과 접근 분산</h2>
-            <p style="color: var(--text-secondary); font-size: 0.82rem; line-height: 1.55; margin: 0;">결과: 개체별 접근 위치
-              분산으로 군집 겹침을 줄이고 도주 길목 압박</p>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1;">
-              <div
-                style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px dashed rgba(248,113,113,0.3); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
-                <div
-                  style="display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-muted); font-size: 0.76rem;">
-                  <span style="color: var(--accent-red); font-weight: 700; font-size: 0.8rem;">BEFORE</span>
-                  <span>GIF 재현·촬영 필요</span>
-                  <span style="opacity: 0.5; font-size: 0.68rem;">PM_Trouble_CrowdOverlap.gif</span>
-                </div>
-              </div>
-              <div
-                style="position: relative; border-radius: 8px; overflow: hidden; border: 1.5px dashed rgba(45,212,191,0.3); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); min-height: 160px;">
-                <div
-                  style="display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-muted); font-size: 0.76rem;">
-                  <span style="color: var(--accent-teal); font-weight: 700; font-size: 0.8rem;">AFTER</span>
-                  <span>GIF 재현·촬영 필요</span>
-                </div>
-              </div>
+          <article class="glass-card pm-trouble-card pm-anim">
+            <header><h2>군집 겹침과 접근 분산</h2><p>개체별 접근 위치 · 도주 길목 압박</p></header>
+            <div class="pm-trouble-pair">
+              <figure class="pm-trouble-frame pm-trouble-frame--before">
+                <img src="assets/[PM]송예찬/gifs/PM_Trouble_CrowdOverlap_Before.gif" alt="꿈식자 군집이 한 위치에 겹치는 수정 전">
+                <figcaption>BEFORE · 동일 좌표 집중</figcaption>
+              </figure>
+              <figure class="pm-trouble-frame pm-trouble-frame--after">
+                <img src="assets/[PM]송예찬/gifs/PM_Trouble_CrowdOverlap_After.gif" alt="꿈식자의 접근 위치가 분산된 수정 후">
+                <figcaption>AFTER · 접근 위치 분산</figcaption>
+              </figure>
             </div>
-          </div>
+            <div class="pm-trouble-result"><b>RESULT</b><span>개체별 접근 지점을 나눠 겹침을 줄이고 압박 방향을 분산</span></div>
+          </article>
         </div>
       </section>
 
@@ -1920,7 +2014,7 @@
             <div class="glass-card pd-map-summary">
               <span class="pd-kicker">LEVEL IMPLEMENTATION</span>
               <h2>기획 원안을<br>플레이 가능한 공간으로</h2>
-              <p>진열대·계산대·창고 구역에 에셋·콜라이더·머티리얼·후처리 레이어를 결합해 플레이 가능한 마트 공간을 구성했습니다.</p>
+              <p>공간 구성: 진열대 · 계산대 · 창고 구역 · 콜라이더 · 머티리얼 · 후처리 레이어</p>
               <div class="pd-atmosphere-tags">
                 <span>BLACK PLANE</span><span>FLAT KIT</span><span>VOLUMETRIC FOG</span>
               </div>
@@ -2043,14 +2137,14 @@
           <span class="pd-scene-index">PD 04 / 05</span>
         </div>
         <div class="pd-compare-layout">
-          <div class="glass-card pd-comparison-frame" id="pdVfxFrame"
-            onmousemove="handlePdComparisonMove(event, 'pdVfx')" ontouchmove="handlePdComparisonMove(event, 'pdVfx')">
+          <div class="glass-card pd-comparison-frame unified-comparison-frame" id="pdVfxFrame"
+            onmousemove="handleUnifiedComparisonMove(event)" ontouchmove="handleUnifiedComparisonMove(event)">
             <img class="pd-comparison-img" src="assets/[PD]김남해/images/VFX 적용 전.png" alt="VFX 적용 전 슈퍼숍 마트">
-            <img class="pd-comparison-img pd-comparison-img--after" id="pdVfxAfter"
+            <img class="pd-comparison-img pd-comparison-img--after"
               src="assets/[PD]김남해/images/VFX 적용 후.png" alt="VFX 적용 후 슈퍼숍 마트">
             <span class="pd-ba-label pd-ba-label--before">BEFORE · 기본 렌더</span>
             <span class="pd-ba-label pd-ba-label--after">AFTER · 최종 분위기</span>
-            <div class="pd-comparison-slider" id="pdVfxSlider"><span>◀ ▶</span></div>
+            <div class="pd-comparison-slider"><span>◀ ▶</span></div>
           </div>
           <div class="pd-compare-caption">
             <div><strong>FLAT KIT</strong><span>에셋 간 머티리얼 톤 통일</span></div>
@@ -2084,15 +2178,15 @@
               data-caption="가림벽 반투명 동적 셰이더 — Shader Graph 노드 구조">
             <span class="pd-node-hint">클릭하여 노드 구조 확대</span>
           </button>
-          <div class="glass-card pd-shader-comparison" id="pdShaderFrame"
-            onmousemove="handlePdComparisonMove(event, 'pdShader')"
-            ontouchmove="handlePdComparisonMove(event, 'pdShader')">
+          <div class="glass-card pd-shader-comparison unified-comparison-frame" id="pdShaderFrame"
+            onmousemove="handleUnifiedComparisonMove(event)"
+            ontouchmove="handleUnifiedComparisonMove(event)">
             <img class="pd-comparison-img" src="assets/[PD]김남해/images/셰이더그래프 반영 전.png" alt="가림벽 반투명 셰이더 적용 전">
-            <img class="pd-comparison-img pd-comparison-img--after" id="pdShaderAfter"
+            <img class="pd-comparison-img pd-comparison-img--after"
               src="assets/[PD]김남해/images/셰이더그래프 반영 후.png" alt="가림벽 반투명 셰이더 적용 후">
             <span class="pd-ba-label pd-ba-label--before">BEFORE · 시야 차단</span>
             <span class="pd-ba-label pd-ba-label--after">AFTER · 동적 반투명</span>
-            <div class="pd-comparison-slider" id="pdShaderSlider"><span>◀ ▶</span></div>
+            <div class="pd-comparison-slider"><span>◀ ▶</span></div>
           </div>
         </div>
         <div class="pd-handoff">“물리적으로 안정화된 슈퍼숍 레벨 위에서, 기능들이 충돌 없이 확장될 수 있도록 만든 기술 기반을 이어서 보겠습니다.”</div>
@@ -2102,44 +2196,30 @@
       <!-- ========================================= -->
 
       <!-- CHAPTER 09 / SCENE 01 -->
-      <!-- TD Scene 1: 완성된 기술 기반 -->
-
       <section class="scene" data-chapter="09" data-scene="01" data-type="CORE" data-presenter="강다영 TD"
-        data-title="보이지 않는 기반 — 완성 구조" data-time="35초"
-        data-notes="[CONTENT] TD 파트의 시작입니다. 프로젝트 초기에 계층형 아키텍처와 폴더·의존성 규칙을 수립하고, 데이터와 UI를 각자의 책임에 맞게 분리했습니다. 목표는 기능 추가가 기존 코드 전체로 번지지 않는 클라이언트 기반을 만드는 것이었습니다.">
+        data-title="프로젝트 아키텍처 — 개발 규칙의 출발점" data-time="30초"
+        data-notes="[CONTENT] TD 파트의 출발점은 기능 구현보다 먼저 정한 프로젝트 구조입니다. 참조 방향, 책임 위치, 데이터 경로를 한 구조 안에서 확인합니다.">
         <div class="scene-header">
           <div>
-            <h1>보이지 않는 기반 — 완성 구조</h1>
-            <div class="subtitle">CLIENT FOUNDATION · ARCHITECTURE · DATA · UI MODULES</div>
+            <h1>보이지 않는 기반 — <span>개발 규칙의 출발점</span></h1>
+            <div class="subtitle">PROJECT ARCHITECTURE · RESPONSIBILITY · DEPENDENCY</div>
           </div>
         </div>
-        <div class="td-overview-layout">
-          <button class="td-visual-card pm-anim" type="button" onclick="openPdImage(this.querySelector('img'))">
-            <span class="td-eyebrow">PROJECT ARCHITECTURE</span>
-            <img src="assets/[TD]강다영/images/TD_ProjectArchitecture.png" alt="루시드 다이버 계층형 프로젝트 아키텍처"
-              data-caption="강다영 TD — 루시드 다이버 계층형 프로젝트 아키텍처">
-            <span class="td-zoom-hint">클릭하여 원본 구조도 확대</span>
+        <div class="tdf-opening">
+          <button class="tdf-architecture-image pm-anim" type="button" onclick="openPdImage(this.querySelector('img'))">
+            <span class="tdf-kicker">PROJECT ARCHITECTURE</span>
+            <img src="assets/[TD]강다영/images/TD_ProjectArchitecture.png" alt="Manager, UI, System, Utils, Define 계층 구조"
+              data-caption="프로젝트 계층 구조 — 제어 방향과 이벤트 전파 방향">
+            <span class="tdf-image-hint">클릭하여 구조도 확대</span>
           </button>
-          <div class="td-overview-copy">
-            <div class="td-foundation-card td-foundation-card--violet pm-anim">
-              <span>01 · DEPENDENCY</span>
-              <strong>참조 방향을 규칙으로 고정</strong>
-              <p>폴더 구조와 Assembly Definition으로 기능 간 경계를 명시합니다.</p>
+          <div class="tdf-opening-copy">
+            <div class="tdf-question pm-anim"><small>STARTING QUESTION</small><strong>기능이 늘어나도 구조를 예측할 수 있으려면?</strong></div>
+            <div class="tdf-principle-grid">
+              <div class="tdf-principle pm-anim"><b>01</b><strong>참조 방향</strong><span>상위 제어 ↓ · 이벤트 전파 ↑</span></div>
+              <div class="tdf-principle pm-anim"><b>02</b><strong>책임 위치</strong><span>Manager · UI · System · Utils · Define</span></div>
+              <div class="tdf-principle pm-anim"><b>03</b><strong>물리적 경계</strong><span>폴더 규칙 · Assembly Definition</span></div>
             </div>
-            <div class="td-foundation-card td-foundation-card--cyan pm-anim">
-              <span>02 · DATA</span>
-              <strong>데이터의 성격에 따라 분리</strong>
-              <p>Define·ScriptableObject·JSON을 역할에 맞게 배치합니다.</p>
-            </div>
-            <div class="td-foundation-card td-foundation-card--blue pm-anim">
-              <span>03 · UI MODULE</span>
-              <strong>화면과 게임 규칙을 분리</strong>
-              <p>UIManager와 Presenter가 표시·입력과 시스템 로직을 중재합니다.</p>
-            </div>
-            <div class="td-goal-band pm-anim">
-              <span>DESIGN GOAL</span>
-              <strong>기능 하나의 변경이 프로젝트 전체로 번지지 않는 구조</strong>
-            </div>
+            <div class="tdf-thesis pm-anim"><span>DESIGN GOAL</span><strong>기능 변경의 영향 범위를 해당 계층 안으로 제한</strong></div>
           </div>
         </div>
       </section>
@@ -2147,130 +2227,140 @@
       <!-- ========================================= -->
 
       <!-- CHAPTER 09 / SCENE 02 -->
-      <!-- TD Scene 2: 계층형 아키텍처와 의존성 규칙 -->
-
       <section class="scene" data-chapter="09" data-scene="02" data-type="CORE" data-presenter="강다영 TD"
-        data-title="판단 — 기능별 물리적 경계를 만든다" data-time="45초"
-        data-notes="[CONTENT] 기능이 늘어날수록 자유로운 상호 참조는 코드 비대화와 순환 참조로 이어집니다. 이를 막기 위해 Manager·Presenter, UI, System, Utils, Define의 계층을 나누고 Assembly Definition으로 허용된 참조 방향을 물리적으로 강제했습니다.">
+        data-title="계층형 아키텍처 — 책임을 선택해 확인한다" data-time="45초"
+        data-notes="[CONTENT] 각 계층을 선택해 실제 적용 화면을 확인합니다. Manager와 Presenter는 중재, UI는 표시와 입력, System은 상태와 규칙, Define은 공통 타입을 담당합니다.">
         <div class="scene-header">
           <div>
-            <h1>판단 — 기능별 물리적 경계를 만든다</h1>
-            <div class="subtitle">LAYERED ARCHITECTURE · ASSEMBLY DEFINITION · SRP</div>
+            <h1>계층형 아키텍처 — <span>책임의 위치</span></h1>
+            <div class="subtitle">LAYER EXPLORER · ASSEMBLY DEFINITION · SINGLE RESPONSIBILITY</div>
           </div>
         </div>
-        <div class="td-architecture-layout">
-          <div class="td-layer-stack pm-anim">
-            <div class="td-direction-note">
-              <span>CONTROL FLOW ↓</span>
-              <span>EVENT FLOW ↑</span>
-            </div>
-            <div class="td-layer td-layer--manager">
-              <small>LAYER 4</small>
-              <strong>Manager & Presenter</strong>
-              <p>UI–System 중재 · 하위 레이어 조절</p>
-            </div>
-            <div class="td-layer-branch">
-              <div class="td-layer td-layer--ui">
-                <small>LAYER 3</small>
-                <strong>UI</strong>
-                <p>입력 · 화면 출력</p>
-              </div>
-              <div class="td-layer td-layer--system">
-                <small>LAYER 2</small>
-                <strong>System</strong>
-                <p>상태 머신 · 게임 로직</p>
-              </div>
-            </div>
-            <div class="td-layer td-layer--utils">
-              <small>LAYER 1</small>
-              <strong>Utils</strong>
-              <p>Global Event Bus · 범용 도구 · 데이터</p>
-            </div>
-            <div class="td-layer td-layer--define">
-              <small>LAYER 0</small>
-              <strong>Define</strong>
-              <p>ScriptableObject · Class · Enum 원형 정의</p>
-            </div>
-          </div>
-          <div class="td-architecture-proof">
-            <button class="td-wide-image pm-anim" type="button" onclick="openPdImage(this.querySelector('img'))">
-              <div class="td-image-head">
-                <span>UNITY INSPECTOR</span>
-                <strong>책임 단위로 분리된 Manager · Presenter · System</strong>
-              </div>
-              <img src="assets/[TD]강다영/images/Manager_Inspector.png" alt="Manager Presenter System이 분리된 Unity Inspector"
-                data-caption="Unity Inspector — Manager, Presenter, System 책임 분리">
+        <div class="tdf-layer-explorer pm-anim">
+          <nav class="tdf-layer-nav" aria-label="계층별 구현 사례">
+            <button class="active tdf-layer-button--manager" type="button" onclick="setTdLayer(event, 'manager')">
+              <small>LAYER 4</small><strong>Manager & Presenter</strong><span>UI–System 중재 · 흐름 제어</span>
             </button>
-            <div class="td-rule-grid">
-              <div class="td-rule-card pm-anim">
-                <b>ASMDEF</b>
-                <span>허용하지 않은 참조와 순환 의존을 컴파일 단계에서 차단</span>
-              </div>
-              <div class="td-rule-card pm-anim">
-                <b>SRP</b>
-                <span>수정 이유가 같은 코드만 한 모듈에 배치해 영향 범위를 제한</span>
-              </div>
-              <div class="td-rule-card pm-anim">
-                <b>FOLDER RULE</b>
-                <span>파일 위치만으로 책임과 연결 방향을 예측할 수 있게 구성</span>
-              </div>
-            </div>
+            <button class="tdf-layer-button--ui" type="button" onclick="setTdLayer(event, 'ui')">
+              <small>LAYER 3</small><strong>UI</strong><span>입력 · 화면 출력</span>
+            </button>
+            <button class="tdf-layer-button--system" type="button" onclick="setTdLayer(event, 'system')">
+              <small>LAYER 2</small><strong>System</strong><span>상태 머신 · 게임 규칙</span>
+            </button>
+            <button class="tdf-layer-button--define" type="button" onclick="setTdLayer(event, 'define')">
+              <small>LAYER 0</small><strong>Define</strong><span>Class · Enum · 공통 타입</span>
+            </button>
+          </nav>
+          <div class="tdf-layer-preview">
+            <article class="tdf-layer-panel active" data-td-layer="manager">
+              <div class="tdf-preview-head"><small>MEDIATION</small><strong>Manager와 Presenter가 화면과 시스템 사이를 중재</strong></div>
+              <img src="assets/[TD]강다영/images/Manager_Inspector.png" alt="Manager와 Presenter가 분리된 Unity Inspector">
+              <p>UIManager · ResultManager · SceneController · Presenter의 책임 위치</p>
+            </article>
+            <article class="tdf-layer-panel" data-td-layer="ui">
+              <div class="tdf-preview-head"><small>VIEW</small><strong>UI는 표시와 입력에 집중</strong></div>
+              <img src="assets/[TD]강다영/images/UI_Image_Lobby.png" alt="모듈화된 로비 UI">
+              <p>로비 화면의 생명주기와 입력을 UI 계층에서 관리</p>
+            </article>
+            <article class="tdf-layer-panel" data-td-layer="system">
+              <div class="tdf-preview-head"><small>GAME LOGIC</small><strong>System은 상태 변화와 게임 규칙을 처리</strong></div>
+              <img src="assets/[TD]강다영/images/System_Image_InGamePlay.png" alt="시스템 로직이 적용된 인게임 화면">
+              <p>화면 표현과 분리된 전투·상태·진행 로직</p>
+            </article>
+            <article class="tdf-layer-panel" data-td-layer="define">
+              <div class="tdf-preview-head"><small>SHARED TYPE</small><strong>Define은 여러 계층이 공유하는 타입 기준</strong></div>
+              <img src="assets/[TD]강다영/images/Define_Script_Enum.png" alt="Define 계층의 Enum 코드">
+              <p>진영 · 아이템 · 범위 · 효과 대상의 공통 정의</p>
+            </article>
           </div>
+        </div>
+        <div class="tdf-rule-strip">
+          <div><b>ASMDEF</b><span>허용된 참조 방향을 물리적으로 제한</span></div>
+          <div><b>SRP</b><span>수정 이유가 같은 코드만 한 책임에 배치</span></div>
+          <div><b>FOLDER RULE</b><span>파일 위치만으로 역할을 예측</span></div>
         </div>
       </section>
 
       <!-- ========================================= -->
 
       <!-- CHAPTER 09 / SCENE 03 -->
-      <!-- TD Scene 3: 데이터 구조화 -->
-
       <section class="scene" data-chapter="09" data-scene="03" data-type="CORE" data-presenter="강다영 TD"
-        data-title="데이터 구조화 — 변경 성격에 맞춰 나눈다" data-time="40초"
-        data-notes="[CONTENT] 모든 데이터를 한 방식으로 저장하지 않고, 코드 전반이 공유하는 원형 정의는 Define과 Enum에, 에디터에서 반복 사용하는 설정은 ScriptableObject에, 외부에서 갱신 가능한 콘텐츠 데이터는 JSON에 배치하는 기준을 세웠습니다.">
+        data-title="데이터 구조화 — 원본에서 게임 화면까지" data-time="45초"
+        data-notes="[CONTENT] 데이터가 실제 화면에 도달하는 경로를 두 갈래로 확인합니다. 대사 데이터는 Excel에서 JSON으로 변환되어 게임 화면에 출력되고, 이미지 에셋은 Addressables 주소를 통해 로드됩니다.">
         <div class="scene-header">
           <div>
-            <h1>데이터 구조화 — 변경 성격에 맞춰 나눈다</h1>
-            <div class="subtitle">DEFINE · SCRIPTABLEOBJECT · JSON DATA PIPELINE</div>
+            <h1>데이터 구조화 — <span>원본에서 게임 화면까지</span></h1>
+            <div class="subtitle">EXCEL → JSON → RUNTIME · ADDRESSABLES → ASSET LOAD</div>
           </div>
         </div>
-        <div class="td-data-layout">
-          <button class="td-code-image pm-anim" type="button" onclick="openPdImage(this.querySelector('img'))">
-            <div class="td-image-head">
-              <span>DEFINE LAYER</span>
-              <strong>타입과 규칙의 공통 기준</strong>
+        <div class="tdf-data-deck pm-anim">
+          <nav class="tdf-data-modes" aria-label="데이터 흐름 선택">
+            <button class="active" type="button" onclick="setTdDataMode(event, 'content')"><b>01</b><span>콘텐츠 데이터</span></button>
+            <button type="button" onclick="setTdDataMode(event, 'asset')"><b>02</b><span>에셋 로딩</span></button>
+          </nav>
+          <article class="tdf-data-panel active" data-td-data-mode="content">
+            <div class="tdf-data-steps">
+              <button class="active" type="button" onclick="setTdDataStage(event, 'excel')"><small>SOURCE</small><strong>Excel</strong><span>기획 데이터 원본</span></button>
+              <i>→</i>
+              <button type="button" onclick="setTdDataStage(event, 'json')"><small>SERIALIZE</small><strong>JSON</strong><span>런타임 데이터</span></button>
+              <i>→</i>
+              <button type="button" onclick="setTdDataStage(event, 'output')"><small>RESULT</small><strong>Game UI</strong><span>대사 화면 출력</span></button>
             </div>
-            <img src="assets/[TD]강다영/images/Define_Script_Enum.png" alt="UserType, Faction, ItemCategory 등 Define Enum 코드"
-              data-caption="Define Script — UserType, Faction, ItemCategory, AreaType, EffectTarget">
+            <div class="tdf-data-preview">
+              <figure class="active" data-td-data-stage="excel"><img src="assets/[TD]강다영/images/Data_Log_Excel.png" alt="Excel 대사 데이터 원본"><figcaption>CharacterTID · Situation · RequiredLevel · DialogID · Text</figcaption></figure>
+              <figure data-td-data-stage="json"><img src="assets/[TD]강다영/images/Data_Log_JSON.png" alt="JSON으로 직렬화된 대사 데이터"><figcaption>동일한 필드 구조를 JSON으로 직렬화</figcaption></figure>
+              <figure data-td-data-stage="output"><img src="assets/[TD]강다영/images/Data_Log_Print.png" alt="게임 화면에 출력된 유안 대사"><figcaption>DialogID 조회 결과를 실제 대사 UI에 출력</figcaption></figure>
+            </div>
+          </article>
+          <article class="tdf-data-panel" data-td-data-mode="asset">
+            <div class="tdf-data-steps tdf-data-steps--two">
+              <button class="active" type="button" onclick="setTdDataStage(event, 'address')"><small>ADDRESS</small><strong>Addressables</strong><span>에셋 주소 등록</span></button>
+              <i>→</i>
+              <button type="button" onclick="setTdDataStage(event, 'loaded')"><small>RESULT</small><strong>Runtime Asset</strong><span>게임 UI 적용</span></button>
+            </div>
+            <div class="tdf-data-preview">
+              <figure class="active" data-td-data-stage="address"><img src="assets/[TD]강다영/images/Addressible_List.png" alt="Unity Addressables Groups의 등록 에셋 목록"><figcaption>프리팹 · UI 아이콘 · 기록 이미지의 주소 등록</figcaption></figure>
+              <figure data-td-data-stage="loaded"><img src="assets/[TD]강다영/images/Addressible_Image.png" alt="Addressables로 로드된 인벤토리 아이콘"><figcaption>주소를 통해 로드된 인벤토리 아이콘</figcaption></figure>
+            </div>
+          </article>
+        </div>
+        <div class="tdf-data-rule"><span>분리 기준</span><strong>데이터 원본 · 직렬화 형식 · 런타임 사용처</strong></div>
+      </section>
+
+      <!-- ========================================= -->
+
+      <!-- CHAPTER 09 / SCENE 04 -->
+      <section class="scene" data-chapter="09" data-scene="04" data-type="CORE" data-presenter="강다영 TD"
+        data-title="Git Branch 전략 — 구조를 유지하는 작업 흐름" data-time="35초"
+        data-notes="[CONTENT] 코드 구조를 유지하는 협업 장치로 Git Branch 전략을 설명합니다. 작업은 Feature에서 분리되고 Develop에서 통합·검토되며 Release를 거쳐 Master에 반영됩니다.">
+        <div class="scene-header">
+          <div>
+            <h1>Git Branch 전략 — <span>구조를 유지하는 작업 흐름</span></h1>
+            <div class="subtitle">FEATURE ISOLATION · REVIEW · INTEGRATION · RELEASE</div>
+          </div>
+        </div>
+        <div class="tdf-branch-layout">
+          <button class="tdf-branch-image pm-anim" type="button" onclick="openPdImage(this.querySelector('img'))">
+            <span class="tdf-kicker">BRANCH STRATEGY</span>
+            <img src="assets/[TD]강다영/images/BranchStrategy.png" alt="Master, Develop, Feature, Release 브랜치 전략"
+              data-caption="Git Branch Strategy — 기능 분리, 통합 검토, 릴리스 반영">
+            <span class="tdf-image-hint">클릭하여 브랜치 구조 확대</span>
           </button>
-          <div class="td-data-system">
-            <div class="td-data-card td-data-card--define pm-anim">
-              <span class="td-data-index">01</span>
-              <div>
-                <small>DEFINE · ENUM</small>
-                <strong>코드 전반이 공유하는 원형</strong>
-                <p>진영·아이템 분류·범위·효과 대상을 하나의 타입 기준으로 통일</p>
-              </div>
+          <div class="tdf-branch-control pm-anim" data-stage="feature">
+            <div class="tdf-branch-flow">
+              <button class="active" type="button" onclick="setTdBranchStage(event, 'feature')"><b>01</b><strong>Feature</strong><span>기능별 작업 분리</span></button>
+              <i>→</i>
+              <button type="button" onclick="setTdBranchStage(event, 'develop')"><b>02</b><strong>Develop</strong><span>통합 · 리뷰</span></button>
+              <i>→</i>
+              <button type="button" onclick="setTdBranchStage(event, 'release')"><b>03</b><strong>Release</strong><span>QA 버전 태깅</span></button>
+              <i>→</i>
+              <button type="button" onclick="setTdBranchStage(event, 'master')"><b>04</b><strong>Master</strong><span>상용 배포 기준</span></button>
             </div>
-            <div class="td-data-card td-data-card--so pm-anim">
-              <span class="td-data-index">02</span>
-              <div>
-                <small>SCRIPTABLEOBJECT</small>
-                <strong>에디터에서 재사용하는 설정</strong>
-                <p>프리팹과 시스템이 공유하는 설정을 에셋 단위로 분리</p>
-              </div>
-            </div>
-            <div class="td-data-card td-data-card--json pm-anim">
-              <span class="td-data-index">03</span>
-              <div>
-                <small>JSON</small>
-                <strong>외부에서 갱신 가능한 콘텐츠</strong>
-                <p>코드 수정 없이 읽고 교체할 수 있는 런타임 데이터 경로</p>
-              </div>
-            </div>
-            <div class="td-data-flow pm-anim">
-              <span>DATA SOURCE</span><i>→</i>
-              <span>DATA MANAGER</span><i>→</i>
-              <span>SYSTEM / UI</span>
+            <div class="tdf-branch-detail">
+              <div class="active" data-td-branch="feature"><small>ISOLATE</small><strong>플레이어 · 에너미 작업을 서로 다른 브랜치에서 진행</strong><span>기능 단위 변경 범위 분리</span></div>
+              <div data-td-branch="develop"><small>INTEGRATE</small><strong>리뷰 후 Develop에서 기능을 함께 검증</strong><span>충돌 지점과 참조 변경 확인</span></div>
+              <div data-td-branch="release"><small>VERIFY</small><strong>QA 대상 버전을 Release로 고정</strong><span>검증 기준과 수정 범위 공유</span></div>
+              <div data-td-branch="master"><small>STABLE</small><strong>검증이 끝난 버전만 Master에 반영</strong><span>배포 기준선 유지</span></div>
             </div>
           </div>
         </div>
@@ -2278,53 +2368,94 @@
 
       <!-- ========================================= -->
 
-      <!-- CHAPTER 09 / SCENE 04 -->
-      <!-- TD Scene 4: UI 모듈화와 결과 -->
-
-      <section class="scene" data-chapter="09" data-scene="04" data-type="CORE" data-presenter="강다영 TD"
-        data-title="UI 모듈화 — 화면과 규칙을 분리한다" data-time="45초"
-        data-notes="[CONTENT] UI를 시스템 로직에 직접 결합하지 않고 개별 모듈로 취급했습니다. UIManager가 화면 생명주기를 관리하고 Presenter가 입력과 데이터를 중재해, 로비와 인게임처럼 성격이 다른 화면도 같은 책임 분리 규칙 위에서 동작합니다.">
+      <!-- CHAPTER 09 / SCENE 05 -->
+      <section class="scene" data-chapter="09" data-scene="05" data-type="CORE" data-presenter="강다영 TD"
+        data-title="마무리 — 구조가 유지되는 조건" data-time="25초"
+        data-notes="[CONTENT] TD 파트를 하나의 통합 구조로 정리합니다. 데이터는 외부 원본에서 분리되고, 기능은 계층의 책임을 따르며, 변경은 Git 브랜치에서 검토된 뒤 프로젝트에 통합됩니다.">
         <div class="scene-header">
           <div>
-            <h1>UI 모듈화 — 화면과 규칙을 분리한다</h1>
-            <div class="subtitle">UI MANAGER · PRESENTER · SYSTEM RESPONSIBILITY</div>
+            <h1>마무리 — <span>구조가 유지되는 조건</span></h1>
+            <div class="subtitle">DATA · ARCHITECTURE · VERSION CONTROL</div>
           </div>
         </div>
-        <div class="td-ui-layout">
-          <div class="td-ui-evidence">
-            <button class="td-ui-shot pm-anim" type="button" onclick="openPdImage(this.querySelector('img'))">
-              <img src="assets/[TD]강다영/images/UI_Image_Lobby.png" alt="UI 모듈 구조가 적용된 로비 화면"
-                data-caption="UI 모듈 적용 결과 — 로비 화면">
-              <span>LOBBY UI</span>
+        <div class="tdf-final-map pm-anim" data-stage="data">
+          <div class="tdf-final-source">
+            <button class="active" type="button" onclick="setTdFinalStage(event, 'data')">
+              <img src="assets/[TD]강다영/images/Icon_Excel.png" alt=""><span><small>DATA SOURCE</small><strong>Excel · JSON</strong></span>
             </button>
-            <button class="td-ui-shot pm-anim" type="button" onclick="openPdImage(this.querySelector('img'))">
-              <img src="assets/[TD]강다영/images/UI_Image_InGameUI.png" alt="UI 모듈 구조가 적용된 인게임 화면"
-                data-caption="UI 모듈 적용 결과 — 인게임 HUD">
-              <span>IN-GAME UI</span>
+            <button type="button" onclick="setTdFinalStage(event, 'asset')">
+              <span class="tdf-final-symbol">⌁</span><span><small>ASSET SOURCE</small><strong>Addressables</strong></span>
             </button>
           </div>
-          <div class="td-ui-logic">
-            <div class="td-ui-chain pm-anim">
-              <div><small>VIEW</small><strong>UI</strong><span>표시 · 입력</span></div>
-              <i>→</i>
-              <div><small>MEDIATOR</small><strong>Presenter</strong><span>데이터 변환 · 전달</span></div>
-              <i>→</i>
-              <div><small>LOGIC</small><strong>System</strong><span>상태 · 규칙</span></div>
+          <i class="tdf-final-wire tdf-final-wire--left"><span></span><b>›</b></i>
+          <div class="tdf-final-core">
+            <div class="tdf-core-brand"><img src="assets/[TD]강다영/images/Icon_Unity.png" alt=""><span><small>CLIENT FOUNDATION</small><strong>Unity Project</strong></span></div>
+            <div class="tdf-core-layers">
+              <span>Manager & Presenter</span>
+              <span>UI · System</span>
+              <span>Utils</span>
+              <span>Define</span>
             </div>
-            <button class="td-inspector-strip pm-anim" type="button" onclick="openPdImage(this.querySelector('img'))">
-              <img src="assets/[TD]강다영/images/Manager_Inspector.png" alt="UIManager와 Presenter가 분리된 Unity Inspector"
-                data-caption="UIManager와 Presenter가 분리된 Unity Inspector 구성">
-              <span>UIManager · ResultManager · Presenter 책임 분리</span>
+            <div class="tdf-final-detail">
+              <p class="active" data-td-final="data"><b>데이터 경로</b><span>Excel 원본 → JSON 직렬화 → 시스템·UI 사용</span></p>
+              <p data-td-final="asset"><b>에셋 경로</b><span>Addressables 주소 → 런타임 로드 → 화면 적용</span></p>
+              <p data-td-final="version"><b>변경 경로</b><span>Feature → Develop → Release → Master</span></p>
+            </div>
+          </div>
+          <i class="tdf-final-wire tdf-final-wire--right"><span></span><b>›</b></i>
+          <div class="tdf-final-version">
+            <button type="button" onclick="setTdFinalStage(event, 'version')">
+              <img src="assets/[TD]강다영/images/Icon_Git.png" alt=""><span><small>VERSION CONTROL</small><strong>Git Branch</strong></span>
             </button>
-            <div class="td-result-list">
-              <div class="pm-anim"><b>01</b><span>새 UI를 추가할 때 기존 시스템 로직의 수정 범위 축소</span></div>
-              <div class="pm-anim"><b>02</b><span>직접 참조와 순환 의존을 줄여 디버깅 지점 명확화</span></div>
-              <div class="pm-anim"><b>03</b><span>팀원이 파일 위치와 책임만으로 기능 구조를 빠르게 파악</span></div>
+            <div class="tdf-github"><img src="assets/[TD]강다영/images/Icon_Github.png" alt=""><span><small>COLLABORATION</small><strong>GitHub</strong></span></div>
+          </div>
+        </div>
+        <div class="tdf-final-statement"><span>TD FOUNDATION</span><strong>데이터는 분리하고 · 기능은 계층을 따르며 · 변경은 검토 후 통합</strong></div>
+      </section>
+
+      <!-- ========================================= -->
+
+      <!-- CHAPTER 10 / SCENE 01 -->
+      <section class="scene" data-chapter="10" data-scene="01" data-type="CORE"
+        data-presenter="전원 / Team REMnants" data-title="전체 게임 시연" data-time="영상 길이"
+        data-notes="[CONTENT] 전체 발표 내용을 실제 플레이 흐름으로 검증하는 최종 게임 시연 영상입니다. 로비에서 출격해 탐색·전투를 거쳐 탈출 및 결과 화면까지 이어지는 전체 루프를 재생합니다.">
+        <div class="scene-header">
+          <div>
+            <h1>전체 게임 시연 — <span>완성된 플레이 루프</span></h1>
+            <div class="subtitle">FULL GAMEPLAY DEMONSTRATION · LOBBY · SORTIE · COMBAT · EXTRACTION</div>
+          </div>
+        </div>
+
+        <div class="gameplay-demo-shell pm-anim" id="gameplayDemoShell">
+          <div class="gameplay-demo-player">
+            <video id="fullGameplayDemo" controls playsinline preload="metadata"
+              aria-label="루시드 다이버 전체 게임 시연 영상">
+              <!-- 최종 영상 확정 후 아래 형식으로 소스를 연결합니다.
+              <source src="assets/공용/videos/Full_Gameplay_Demo.mp4" type="video/mp4">
+              -->
+            </video>
+            <div class="gameplay-demo-placeholder" id="gameplayDemoPlaceholder">
+              <span class="gameplay-demo-placeholder-icon" aria-hidden="true">▶</span>
+              <strong>전체 게임 시연 영상</strong>
+              <p>최종 MP4 파일 연결 대기</p>
+              <small>16:9 · 1080p · H.264 권장</small>
             </div>
-            <div class="td-conclusion pm-anim">
-              <span>RESULT</span>
-              <strong>새로운 UI와 데이터를 기존 구조를 흔들지 않고 추가할 수 있는 개발 기반</strong>
+            <div class="gameplay-demo-status">
+              <span class="gameplay-demo-status-dot"></span>
+              <b id="gameplayDemoStatusText">MEDIA SLOT · READY</b>
             </div>
+          </div>
+
+          <div class="gameplay-demo-route" aria-label="전체 게임 시연 진행 순서">
+            <div><small>01</small><strong>로비</strong><span>다이버 준비</span></div>
+            <i>→</i>
+            <div><small>02</small><strong>출격</strong><span>침몽도시 진입</span></div>
+            <i>→</i>
+            <div><small>03</small><strong>탐색 · 전투</strong><span>파편과 에너미</span></div>
+            <i>→</i>
+            <div><small>04</small><strong>탈출</strong><span>귀환 판정</span></div>
+            <i>→</i>
+            <div><small>05</small><strong>결과</strong><span>보상과 기록</span></div>
           </div>
         </div>
       </section>

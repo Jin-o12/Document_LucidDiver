@@ -51,6 +51,7 @@ window.scenes = [];
       buildChapterMenu();
       resizeViewport();
       setupCdVersionDrag();
+      setupFullGameplayDemo();
     }
     // 발표자별 파트 안에서 현재 씬 번호와 총 장수를 자동 표기
     function buildPresenterSequenceBadges() {
@@ -58,7 +59,8 @@ window.scenes = [];
         { role: 'CP', chapters: ['00', '01', '02', '03', '04', '05'] },
         { role: 'CD', chapters: ['06'] },
         { role: 'PM', chapters: ['07'] },
-        { role: 'TD', chapters: ['09'] }
+        { role: 'TD', chapters: ['09'] },
+        { role: 'DEMO', chapters: ['10'] }
       ];
 
       document.querySelectorAll('.section-scene-index').forEach(badge => badge.remove());
@@ -107,6 +109,9 @@ window.scenes = [];
         prepareStaggerEntrance(nextActive);
         // 현재 씬 활성화
         nextActive.classList.add('active');
+        if (nextActive.querySelector('#pmFinalVideo')) {
+          resetPmAiPlayer();
+        }
         // 활성화된 장면에 자동 재생 비디오가 있다면 재생
         nextActive.querySelectorAll('video[autoplay]').forEach(video => {
           video.play().catch(() => {});
@@ -306,9 +311,32 @@ window.scenes = [];
         '07': 'PM 송예찬 — 꿈식자 AI · 튜토리얼',
         '08': 'PD 김남해 — 아트 레벨 · 셰이더 · 손전등',
         '09': 'TD 강다영 — 클라이언트 구조 · UI 모듈화',
+        '10': 'Full Gameplay Demonstration',
         '12': 'Ending & Q&A'
       };
       return names[ch] || 'Others';
+    }
+
+    function setupFullGameplayDemo() {
+      const video = document.getElementById('fullGameplayDemo');
+      const shell = document.getElementById('gameplayDemoShell');
+      const status = document.getElementById('gameplayDemoStatusText');
+      if (!video || !shell) return;
+
+      const markReady = () => {
+        shell.classList.add('has-video');
+        shell.classList.remove('has-video-error');
+        if (status) status.textContent = 'VIDEO LOADED · READY TO PLAY';
+      };
+      const markError = () => {
+        shell.classList.remove('has-video');
+        shell.classList.add('has-video-error');
+        if (status) status.textContent = 'VIDEO LOAD ERROR';
+      };
+
+      video.addEventListener('loadedmetadata', markReady);
+      video.addEventListener('error', markError);
+      if (video.readyState >= 1) markReady();
     }
 
     function setCdMacroTab(event, deckName, panelName) {
@@ -321,10 +349,16 @@ window.scenes = [];
       deck.querySelectorAll(`.cd-macro-panel[data-cd-deck="${deckName}"]`).forEach(panel => {
         panel.classList.toggle('active', panel.dataset.cdPanel === panelName);
       });
-    }
-
-    function setCdCompare(input) {
-      input.closest('.cd-before-after')?.style.setProperty('--split', `${input.value}%`);
+      const activePanel = deck.querySelector(`.cd-macro-panel[data-cd-deck="${deckName}"][data-cd-panel="${panelName}"]`);
+      if (activePanel && activePanel.classList.contains('cd-macro-panel--architecture')) {
+        activePanel.querySelectorAll('.audio-arch-wire').forEach(wire => {
+          wire.style.animation = 'none';
+        });
+        void activePanel.offsetWidth;
+        activePanel.querySelectorAll('.audio-arch-wire').forEach(wire => {
+          wire.style.removeProperty('animation');
+        });
+      }
     }
 
     function toggleCdLoopDemo(button) {
@@ -384,13 +418,124 @@ window.scenes = [];
         buttons.forEach((button, index) => button.classList.toggle('active', index === 0));
         deck.querySelectorAll('.cd-macro-panel').forEach((panel, index) => panel.classList.toggle('active', index === 0));
       });
-      scene.querySelectorAll('.cd-before-after').forEach(compare => {
-        compare.style.setProperty('--split', '50%');
-        const input = compare.querySelector('input[type="range"]');
-        if (input) input.value = 50;
-      });
+      scene.querySelectorAll('.unified-comparison-frame').forEach(resetUnifiedComparison);
       scene.querySelectorAll('.cd-loop-demo').forEach(resetCdLoopDemo);
     }
+
+    function setCdFinaleStage(event, stage) {
+      event.stopPropagation();
+      const finale = event.currentTarget.closest('.cd-finale-interactive');
+      if (!finale) return;
+      finale.dataset.stage = String(stage);
+      finale.querySelectorAll('.cd-finale-node').forEach((node, index) => {
+        node.setAttribute('aria-pressed', String(index + 1 === stage));
+      });
+    }
+
+    function resetCdFinale(scene) {
+      const finale = scene.querySelector('.cd-finale-interactive');
+      if (!finale) return;
+      finale.dataset.stage = '1';
+      finale.querySelectorAll('.cd-finale-node').forEach((node, index) => {
+        node.setAttribute('aria-pressed', String(index === 0));
+      });
+    }
+
+    // ── [CH 09] TD 최종 발표 인터랙션 ──
+    function setTdLayer(event, layerName) {
+      event.stopPropagation();
+      const explorer = event.currentTarget.closest('.tdf-layer-explorer');
+      if (!explorer) return;
+      explorer.querySelectorAll('.tdf-layer-nav button').forEach(button => {
+        button.classList.toggle('active', button === event.currentTarget);
+      });
+      explorer.querySelectorAll('.tdf-layer-panel').forEach(panel => {
+        panel.classList.toggle('active', panel.dataset.tdLayer === layerName);
+      });
+    }
+
+    function setTdDataMode(event, modeName) {
+      event.stopPropagation();
+      const deck = event.currentTarget.closest('.tdf-data-deck');
+      if (!deck) return;
+      deck.querySelectorAll('.tdf-data-modes button').forEach(button => {
+        button.classList.toggle('active', button === event.currentTarget);
+      });
+      deck.querySelectorAll('.tdf-data-panel').forEach(panel => {
+        panel.classList.toggle('active', panel.dataset.tdDataMode === modeName);
+      });
+    }
+
+    function setTdDataStage(event, stageName) {
+      event.stopPropagation();
+      const panel = event.currentTarget.closest('.tdf-data-panel');
+      if (!panel) return;
+      panel.querySelectorAll('.tdf-data-steps button').forEach(button => {
+        button.classList.toggle('active', button === event.currentTarget);
+      });
+      panel.querySelectorAll('.tdf-data-preview figure').forEach(figure => {
+        figure.classList.toggle('active', figure.dataset.tdDataStage === stageName);
+      });
+    }
+
+    function setTdBranchStage(event, stageName) {
+      event.stopPropagation();
+      const control = event.currentTarget.closest('.tdf-branch-control');
+      if (!control) return;
+      control.dataset.stage = stageName;
+      control.querySelectorAll('.tdf-branch-flow button').forEach(button => {
+        button.classList.toggle('active', button === event.currentTarget);
+      });
+      control.querySelectorAll('.tdf-branch-detail > div').forEach(detail => {
+        detail.classList.toggle('active', detail.dataset.tdBranch === stageName);
+      });
+    }
+
+    function setTdFinalStage(event, stageName) {
+      event.stopPropagation();
+      const map = event.currentTarget.closest('.tdf-final-map');
+      if (!map) return;
+      map.dataset.stage = stageName;
+      map.querySelectorAll('.tdf-final-source button, .tdf-final-version button').forEach(button => {
+        button.classList.toggle('active', button === event.currentTarget);
+      });
+      map.querySelectorAll('.tdf-final-detail p').forEach(detail => {
+        detail.classList.toggle('active', detail.dataset.tdFinal === stageName);
+      });
+    }
+
+    function resetTdScene(scene) {
+      const explorer = scene.querySelector('.tdf-layer-explorer');
+      if (explorer) {
+        explorer.querySelectorAll('.tdf-layer-nav button').forEach((button, index) => button.classList.toggle('active', index === 0));
+        explorer.querySelectorAll('.tdf-layer-panel').forEach((panel, index) => panel.classList.toggle('active', index === 0));
+      }
+
+      const dataDeck = scene.querySelector('.tdf-data-deck');
+      if (dataDeck) {
+        dataDeck.querySelectorAll('.tdf-data-modes button').forEach((button, index) => button.classList.toggle('active', index === 0));
+        dataDeck.querySelectorAll('.tdf-data-panel').forEach((panel, panelIndex) => {
+          panel.classList.toggle('active', panelIndex === 0);
+          panel.querySelectorAll('.tdf-data-steps button').forEach((button, index) => button.classList.toggle('active', index === 0));
+          panel.querySelectorAll('.tdf-data-preview figure').forEach((figure, index) => figure.classList.toggle('active', index === 0));
+        });
+      }
+
+      const branch = scene.querySelector('.tdf-branch-control');
+      if (branch) {
+        branch.dataset.stage = 'feature';
+        branch.querySelectorAll('.tdf-branch-flow button').forEach((button, index) => button.classList.toggle('active', index === 0));
+        branch.querySelectorAll('.tdf-branch-detail > div').forEach((detail, index) => detail.classList.toggle('active', index === 0));
+      }
+
+      const finalMap = scene.querySelector('.tdf-final-map');
+      if (finalMap) {
+        finalMap.dataset.stage = 'data';
+        finalMap.querySelectorAll('.tdf-final-source button, .tdf-final-version button').forEach((button, index) => button.classList.toggle('active', index === 0));
+        finalMap.querySelectorAll('.tdf-final-detail p').forEach((detail, index) => detail.classList.toggle('active', index === 0));
+      }
+    }
+
     // 전체 화면 전환
     function toggleFullscreen() {
       if (!document.fullscreenElement) {
@@ -710,9 +855,9 @@ window.scenes = [];
         }, 180);
       }
     }
-    // ── [CH 05 / SC 01] UI 비교 슬라이더 연출 ──
-    function handleComparisonMove(e) {
-      const frame = document.getElementById('compFrame');
+    // ── 공통 Before/After 비교 슬라이더 ──
+    function handleUnifiedComparisonMove(e) {
+      const frame = e.currentTarget;
       if (!frame) return;
       if (e.cancelable) e.preventDefault();
       const point = e.touches ? e.touches[0] : e;
@@ -725,8 +870,8 @@ window.scenes = [];
         frame._comparisonRaf = 0;
       });
     }
-    function resetComparisonSlider() {
-      const frame = document.getElementById('compFrame');
+    function resetUnifiedComparison(target) {
+      const frame = typeof target === 'string' ? document.getElementById(target) : target;
       if (!frame) return;
       if (frame._comparisonRaf) {
         cancelAnimationFrame(frame._comparisonRaf);
@@ -735,25 +880,10 @@ window.scenes = [];
       frame._comparisonPct = 50;
       frame.style.setProperty('--comparison-position', '50%');
     }
-    // ── [CH 08] PD Before/After 비교 및 이미지 확대 ──
-    function handlePdComparisonMove(e, prefix) {
-      const frame = document.getElementById(`${prefix}Frame`);
-      const afterImg = document.getElementById(`${prefix}After`);
-      const slider = document.getElementById(`${prefix}Slider`);
-      if (!frame || !afterImg || !slider) return;
-      const point = e.touches ? e.touches[0] : e;
-      const rect = frame.getBoundingClientRect();
-      const x = Math.max(0, Math.min(rect.width, point.clientX - rect.left));
-      const pct = (x / rect.width) * 100;
-      afterImg.style.clipPath = `polygon(0 0, ${pct}% 0, ${pct}% 100%, 0 100%)`;
-      slider.style.left = `${pct}%`;
+    function resetComparisonSlider() {
+      resetUnifiedComparison('cpUiFrame');
     }
-    function resetPdComparison(prefix) {
-      const afterImg = document.getElementById(`${prefix}After`);
-      const slider = document.getElementById(`${prefix}Slider`);
-      if (afterImg) afterImg.style.clipPath = 'polygon(0 0, 50% 0, 50% 100%, 0 100%)';
-      if (slider) slider.style.left = '50%';
-    }
+    // ── [CH 08] PD 이미지 확대 ──
     function openPdImage(image) {
       if (!image) return;
       const lightbox = document.getElementById('pdImageLightbox');
@@ -863,6 +993,92 @@ window.scenes = [];
     };
     const fsmKeyOrder = ['spawn','patrol','detect','investigate','chase','attack','search','return'];
     let currentFsmKey = null;
+
+    function syncPmAiFullLoop(player, options = {}) {
+      if (!player || player.dataset.clip !== 'all') return false;
+      const video = player.querySelector('#pmFinalVideo');
+      const placeholder = player.querySelector('#pmVideoPlaceholder');
+      if (!video) return false;
+
+      const isReady = video.readyState >= 1;
+      video.style.display = isReady ? 'block' : 'none';
+      if (placeholder) placeholder.style.display = isReady ? 'none' : 'flex';
+
+      if (!isReady) {
+        if (video.networkState === HTMLMediaElement.NETWORK_EMPTY) {
+          video.load();
+        }
+        return false;
+      }
+
+      if (options.restart) {
+        try { video.currentTime = 0; } catch (err) {}
+      }
+      if (options.play) {
+        video.play().catch(() => {});
+      }
+      return true;
+    }
+
+    function showPmAiClip(event, key) {
+      event.stopPropagation();
+      const player = event.currentTarget.closest('.pm-ai-demo');
+      if (!player) return;
+      const video = player.querySelector('#pmFinalVideo');
+      const gif = player.querySelector('#pmStateGif');
+      const placeholder = player.querySelector('#pmVideoPlaceholder');
+      const label = player.querySelector('#pmAiMediaLabel');
+
+      player.dataset.clip = key;
+      player.querySelectorAll('.pm-ai-clip-nav button').forEach(button => {
+        button.classList.toggle('active', button === event.currentTarget);
+      });
+
+      if (key === 'all') {
+        if (gif) {
+          gif.style.display = 'none';
+          gif.removeAttribute('src');
+        }
+        if (label) label.textContent = 'FULL LOOP · 전체 행동 순환';
+        syncPmAiFullLoop(player, { restart: true, play: true });
+        return;
+      }
+
+      const state = fsmStates[key];
+      if (!state || !gif) return;
+      if (video) {
+        video.pause();
+        video.style.display = 'none';
+      }
+      if (placeholder) placeholder.style.display = 'none';
+      gif.style.display = 'block';
+      gif.alt = `${state.title} 실행 GIF`;
+      gif.removeAttribute('src');
+      requestAnimationFrame(() => { gif.src = state.gif; });
+      if (label) label.textContent = `${state.index} · ${state.title}`;
+    }
+
+    function resetPmAiPlayer() {
+      const player = document.querySelector('.pm-ai-demo');
+      if (!player) return;
+      player.dataset.clip = 'all';
+      player.querySelectorAll('.pm-ai-clip-nav button').forEach((button, index) => button.classList.toggle('active', index === 0));
+      const gif = player.querySelector('#pmStateGif');
+      if (gif) {
+        gif.style.display = 'none';
+        gif.removeAttribute('src');
+      }
+      const video = player.querySelector('#pmFinalVideo');
+      const placeholder = player.querySelector('#pmVideoPlaceholder');
+      if (video) {
+        video.pause();
+        try { video.currentTime = 0; } catch (err) {}
+      }
+      syncPmAiFullLoop(player);
+      const label = player.querySelector('#pmAiMediaLabel');
+      if (label) label.textContent = 'FULL LOOP · 전체 행동 순환';
+    }
+
     function openFsmModal(key) {
       const s = fsmStates[key];
       if (!s) return;
@@ -944,12 +1160,11 @@ window.scenes = [];
     // PM Scene 1 비디오 자동 감지
     (function() {
       const video = document.getElementById('pmFinalVideo');
-      const placeholder = document.getElementById('pmVideoPlaceholder');
-      if (!video || !placeholder) return;
-      video.addEventListener('canplay', () => {
-        video.style.display = 'block';
-        placeholder.style.display = 'none';
-      }, { once: true });
+      if (!video) return;
+      const syncWhenReady = () => syncPmAiFullLoop(video.closest('.pm-ai-demo'));
+      video.addEventListener('loadedmetadata', syncWhenReady);
+      video.addEventListener('loadeddata', syncWhenReady);
+      video.addEventListener('canplay', syncWhenReady);
       video.load();
     })();
 
@@ -1106,6 +1321,7 @@ window.scenes = [];
       // CD 워크플로우 리셋
       if (typeof resetCdWorkflow === 'function') resetCdWorkflow();
       resetCdMacroDeck(scene);
+      resetCdFinale(scene);
       const ch = scene.getAttribute('data-chapter');
       const sc = scene.getAttribute('data-scene');
       if (ch === '01' && sc === '01') {
@@ -1162,11 +1378,17 @@ window.scenes = [];
       else if (ch === '05' && sc === '01') {
         resetComparisonSlider();
       }
+      else if (ch === '07' && sc === '01') {
+        resetPmAiPlayer();
+      }
       else if (ch === '08' && sc === '04') {
-        resetPdComparison('pdVfx');
+        resetUnifiedComparison('pdVfxFrame');
       }
       else if (ch === '08' && sc === '05') {
-        resetPdComparison('pdShader');
+        resetUnifiedComparison('pdShaderFrame');
+      }
+      else if (ch === '09') {
+        resetTdScene(scene);
       }
 
     }
