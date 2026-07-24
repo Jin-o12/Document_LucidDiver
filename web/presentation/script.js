@@ -50,15 +50,14 @@ window.scenes = [];
       showScene(startIdx);
       buildChapterMenu();
       resizeViewport();
-      // 오프닝 첫 슬라이드 터미널 타이핑 작동
-      startBootTerminal();
     }
     // 발표자별 파트 안에서 현재 씬 번호와 총 장수를 자동 표기
     function buildPresenterSequenceBadges() {
       const presenterBlocks = [
         { role: 'CP', chapters: ['00', '01', '02', '03', '04', '05'] },
         { role: 'CD', chapters: ['06'] },
-        { role: 'PM', chapters: ['07'] }
+        { role: 'PM', chapters: ['07'] },
+        { role: 'TD', chapters: ['09'] }
       ];
 
       document.querySelectorAll('.section-scene-index').forEach(badge => badge.remove());
@@ -244,24 +243,24 @@ window.scenes = [];
       const grid = document.querySelector('.chapter-menu-grid');
       grid.innerHTML = '';
       // 챕터별 그룹화
-      const chapters = {};
+      const chapters = new Map();
       scenes.forEach((s, idx) => {
         const ch = s.getAttribute('data-chapter');
         const title = s.getAttribute('data-title');
-        if (!chapters[ch]) {
-          chapters[ch] = [];
+        if (!chapters.has(ch)) {
+          chapters.set(ch, []);
         }
-        chapters[ch].push({ idx, title, sc: s.getAttribute('data-scene') });
+        chapters.get(ch).push({ idx, title, sc: s.getAttribute('data-scene') });
       });
-      // HTML 빌드
-      for (const ch in chapters) {
+      // 실제 슬라이드 DOM 순서대로 HTML 빌드
+      chapters.forEach((chapterScenes, ch) => {
         const group = document.createElement('div');
         group.className = 'chapter-menu-group';
         const chTitle = getChapterName(ch);
         group.innerHTML = `<h3>CH ${ch}. ${chTitle}</h3>`;
         const list = document.createElement('div');
         list.className = 'chapter-menu-list';
-        chapters[ch].forEach(scene => {
+        chapterScenes.forEach(scene => {
           const btn = document.createElement('button');
           btn.className = `btn-menu-jump ${scene.idx === currentIdx ? 'active' : ''}`;
           btn.textContent = `Sc ${scene.sc} - ${scene.title}`;
@@ -273,7 +272,7 @@ window.scenes = [];
         });
         group.appendChild(list);
         grid.appendChild(group);
-      }
+      });
     }
     function toggleChapterMenu() {
       if (isMenuOpen) {
@@ -298,13 +297,15 @@ window.scenes = [];
       const names = {
         '00': 'Opening Cinematic',
         '01': 'Project Overview',
-        '02': 'CP 장수영 (세계관 · AnyPortrait · SFX)',
-        '03': 'CD 우성혁 (시스템 명세 · FSM AI · 3D오디오)',
-        '04': 'PM 송예찬 (일정 WBS · 튜토리얼 · 체스트)',
-        '05': 'PD 김남해 (마트 레벨 · 툰 셰이더 · 손전등)',
-        '06': 'TD 강다영 (클라이언트 · 인벤토리 · VFX풀링)',
-        '07': 'Full Gameplay Demo',
-        '08': 'Ending & Q&A'
+        '02': 'CP 장수영 — 장르 모순과 해법',
+        '03': 'CP 장수영 — 인터랙티브 플레이 루프',
+        '04': 'CP 장수영 — 세계관과 내러티브',
+        '05': 'CP 장수영 — UI · AnyPortrait · Audio · Prototyping',
+        '06': 'CD 우성혁 — 기획 명세 · AudioManager',
+        '07': 'PM 송예찬 — 꿈식자 AI · 튜토리얼',
+        '08': 'PD 김남해 — 아트 레벨 · 셰이더 · 손전등',
+        '09': 'TD 강다영 — 클라이언트 구조 · UI 모듈화',
+        '12': 'Ending & Q&A'
       };
       return names[ch] || 'Others';
     }
@@ -448,40 +449,6 @@ window.scenes = [];
     //  장면별 개별 연출 및 인터랙션 스크립트
 
     // ══════════════════════════════════════════════════════════
-    // ── [CH 00 / SC 01] 오프닝 부팅 터미널 연출 ──
-    const terminalLines = [
-      "ESTABLISHING CONTEXT COGNITIVE BRIDGE...",
-      "TARGET DOMAIN: DEEP DREAM SYSTEM [LUCID_DIVER]",
-      "CREW ON-DECK: REMnants",
-      "CHECKING DIVER INTEGRITY... SUCCESS",
-      "CHECKING TACTICAL LINK... SUCCESS",
-      "ESTABLISHED MIND LINK STAGE P-0.5",
-      "CRITICAL: SLEEP DISEASE DETECTION RATIO 100%",
-      "CONNECTING..."
-    ];
-    function startBootTerminal() {
-      const output = document.getElementById('bootTerminalOutput');
-      if (!output) return;
-      output.innerHTML = '';
-      let lineIdx = 0;
-      function printLine() {
-        if (lineIdx < terminalLines.length) {
-          const div = document.createElement('div');
-          div.className = 'log-line show';
-          div.innerHTML = `<span style="color:#00ffcc">></span> ${terminalLines[lineIdx]}`;
-          output.appendChild(div);
-          lineIdx++;
-          setTimeout(printLine, 350);
-        } else {
-          // 커서 깜빡임과 버튼 활성화
-          const cursorDiv = document.createElement('div');
-          cursorDiv.innerHTML = `<span class="terminal-cursor"></span>`;
-          output.appendChild(cursorDiv);
-          document.getElementById('bootActionContainer').style.opacity = '1';
-        }
-      }
-      setTimeout(printLine, 500);
-    }
     // ── [CH 01 / SC 01] 개요 순차 텔레메트리 ──
     function triggerOverviewAnimation() {
       const lines = document.querySelectorAll('#overviewLogTerminal .log-line');
@@ -1058,10 +1025,7 @@ window.scenes = [];
       if (typeof resetCdWorkflow === 'function') resetCdWorkflow();
       const ch = scene.getAttribute('data-chapter');
       const sc = scene.getAttribute('data-scene');
-      if (ch === '00' && sc === '01') {
-        startBootTerminal();
-      }
-      else if (ch === '01' && sc === '01') {
+      if (ch === '01' && sc === '01') {
         const lines = document.querySelectorAll('#overviewLogTerminal .log-line');
         lines.forEach(line => line.classList.remove('show'));
         const p1 = document.getElementById('pillar1');
