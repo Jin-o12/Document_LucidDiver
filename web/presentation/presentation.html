@@ -1060,12 +1060,93 @@
       <!-- CD Scene 2: 기획 명세 워크플로우 (인터랙티브 탭) -->
 
       <section class="scene" data-chapter="06" data-scene="02" data-type="CORE" data-presenter="우성혁 CD"
-        data-title="기획 명세 워크플로우" data-time="1분 30초" data-notes="[CONTENT] 클릭마다 2-1~2-4 카드 순차 등장." id="cdWorkflowScene"
-        onclick="advanceCdWorkflow()">
+        data-title="시스템 기획 명세 — 판단과 검증" data-time="55초"
+        data-notes="[CONTENT] 소개·목표·판단·결과 탭을 통해 시스템 명세가 실제 구현 기준이 되는 과정을 설명합니다." id="cdWorkflowScene">
         <div class="scene-header">
           <div>
             <h1>시스템 기획 명세 워크플로우</h1>
             <div class="subtitle">SPECIFICATION WORKFLOW — INTRODUCTION · GOAL · PROGRESS · RESULT</div>
+          </div>
+        </div>
+        <div class="cd-macro-deck">
+          <nav class="cd-macro-tabs" aria-label="시스템 기획 명세 발표 단계">
+            <button class="active" type="button" onclick="setCdMacroTab(event, 'spec', 'intro')"><b>01</b><span>소개</span></button>
+            <button type="button" onclick="setCdMacroTab(event, 'spec', 'goal')"><b>02</b><span>목표</span></button>
+            <button type="button" onclick="setCdMacroTab(event, 'spec', 'decision')"><b>03</b><span>판단</span></button>
+            <button type="button" onclick="setCdMacroTab(event, 'spec', 'result')"><b>04</b><span>결과</span></button>
+          </nav>
+          <div class="cd-macro-stage">
+            <article class="cd-macro-panel active" data-cd-deck="spec" data-cd-panel="intro">
+              <div class="cd-panel-heading">
+                <span>INTRODUCTION</span>
+                <h2>추상적인 원안을 개발 가능한 규칙으로 바꾼다</h2>
+                <p>기능 설명에 그치지 않고 범위, 상태 변화, 예외 처리와 검증 기준을 한 문서 안에 고정했습니다.</p>
+              </div>
+              <div class="cd-spec-process">
+                <div><b>01</b><strong>원안 분석</strong><span>플레이 경험과 필수 기능 추출</span></div>
+                <i>→</i>
+                <div><b>02</b><strong>범위 설정</strong><span>시간·인력 안에서 포함과 제외 판단</span></div>
+                <i>→</i>
+                <div><b>03</b><strong>명세화</strong><span>수치·데이터·예외 규칙 정의</span></div>
+                <i>→</i>
+                <div><b>04</b><strong>공유 기준</strong><span>개발과 QA가 같은 SSOT 참조</span></div>
+              </div>
+              <div class="cd-panel-callout"><b>핵심 역할</b><strong>“무엇을 만들 것인가”를 구현 가능한 단위로 결정</strong></div>
+            </article>
+
+            <article class="cd-macro-panel" data-cd-deck="spec" data-cd-panel="goal">
+              <div class="cd-panel-copy">
+                <span>GOAL & CONSTRAINT</span>
+                <h2>어디까지 구체화할 것인가</h2>
+                <p>프로젝트의 시간과 인력 안에서 구현할 범위를 조절하고, 명세에 포함·구체화·제외할 기준을 버전별로 갱신했습니다.</p>
+                <div class="cd-decision-triad">
+                  <div><b>INCLUDE</b><span>반드시 구현할 핵심 규칙</span></div>
+                  <div><b>DETAIL</b><span>개발 판단이 필요한 수치와 예외</span></div>
+                  <div><b>EXCLUDE</b><span>일정 대비 효용이 낮은 범위</span></div>
+                </div>
+              </div>
+              <div class="cd-version-window" aria-label="시스템 명세 버전 변화 이미지. 마우스 휠 또는 드래그로 탐색">
+                <div class="cd-version-track">
+                  <figure><img src="assets/[CD]우성혁/images/GameDesign_SystemVersion_v0.01.png" alt="시스템 명세 최초 버전"><figcaption>v0.01 — 최초 범위</figcaption></figure>
+                  <figure><img src="assets/[CD]우성혁/images/GameDesign_SystemVersion_v1.00.png" alt="시스템 명세 1.00 버전"><figcaption>v1.00 — 규칙 구체화</figcaption></figure>
+                  <figure><img src="assets/[CD]우성혁/images/GameDesign_SystemVersion_v1.03.png" alt="시스템 명세 1.03 버전"><figcaption>v1.03 — 예외 보강</figcaption></figure>
+                  <figure><img src="assets/[CD]우성혁/images/GameDesign_SystemVersion_P0.01.png" alt="P0 시스템 명세"><figcaption>P0 — 구현 범위 확정</figcaption></figure>
+                  <figure><img src="assets/[CD]우성혁/images/GameDesign_SystemVersion_P0.02.png" alt="P0 시스템 명세 수정"><figcaption>P0 — 개발 피드백 반영</figcaption></figure>
+                </div>
+              </div>
+            </article>
+
+            <article class="cd-macro-panel" data-cd-deck="spec" data-cd-panel="decision">
+              <div class="cd-panel-heading">
+                <span>TECHNICAL DECISION</span>
+                <h2>기능 설명을 데이터 구조와 예외 규칙까지 내린다</h2>
+                <p>변수·함수·구조체·열거형을 명세하여 구현자가 같은 의미를 다른 방식으로 해석하지 않도록 했습니다.</p>
+              </div>
+              <div class="cd-data-evidence">
+                <figure><img src="assets/[CD]우성혁/images/GameDesign_SkillData_01.png" alt="스킬 데이터 명세 첫 번째 표"></figure>
+                <figure><img src="assets/[CD]우성혁/images/GameDesign_SkillData_02.png" alt="스킬 데이터 명세 두 번째 표"></figure>
+                <div class="cd-data-tooltip">
+                  <button type="button"><b>AreaType · AreaWidth</b><span>마우스를 올려 판정 범위 규칙 확인</span></button>
+                  <figure><img src="assets/[CD]우성혁/images/GameDesign_AreaType_Guide.png" alt="AreaType 판정 범위 설명"><figcaption>공격 판정 형태와 폭을 데이터 규격으로 전달</figcaption></figure>
+                </div>
+              </div>
+            </article>
+
+            <article class="cd-macro-panel" data-cd-deck="spec" data-cd-panel="result">
+              <div class="cd-panel-heading cd-panel-heading--compact">
+                <span>RESULT & VALIDATION</span>
+                <h2>기획서의 규칙이 실제 디코이 스킬로 이어졌다</h2>
+              </div>
+              <div class="cd-before-after" style="--split:50%;">
+                <img class="cd-after-image" src="assets/[CD]우성혁/images/GameDesign_InGame_Skill_Decoy.png" alt="명세 이후 구현된 인게임 디코이 스킬">
+                <div class="cd-before-layer"><img src="assets/[CD]우성혁/images/GameDesign_Doc_Skill_Decoy.png" alt="디코이 스킬 기획 명세"></div>
+                <span class="cd-compare-label cd-compare-label--before">BEFORE · 기획 명세</span>
+                <span class="cd-compare-label cd-compare-label--after">AFTER · 인게임 구현</span>
+                <i class="cd-compare-divider"></i>
+                <input type="range" min="8" max="92" value="50" aria-label="기획 명세와 구현 결과 비교" oninput="setCdCompare(this)">
+              </div>
+              <div class="cd-panel-callout"><b>검증</b><strong>문서의 입력·범위·지속시간 규칙을 실제 동작과 대조</strong></div>
+            </article>
           </div>
         </div>
         <div class="cd-wf-stage">
@@ -1140,11 +1221,89 @@
       <!-- CD Scene 3-1: 오디오 코드 구조 소개 -->
 
       <section class="scene" data-chapter="06" data-scene="03" data-type="CORE" data-presenter="우성혁 CD"
-        data-title="AudioManager 코드 구조" data-time="20초" data-notes="[CONTENT] AudioManager.cs 전체 region 구조 소개.">
+        data-title="오디오 시스템 — 명세에서 구현까지" data-time="1분 15초"
+        data-notes="[CONTENT] Unity 내장 AudioSource·AudioMixer와 Repository 구조를 선택해 2D/3D/루프 사운드를 통합한 과정을 탭으로 설명합니다." id="cdAudioScene">
         <div class="scene-header">
           <div>
-            <h1>AudioManager 코드 구조</h1>
-            <div class="subtitle">CENTRALIZED AUDIO ARCHITECTURE — CODE OVERVIEW</div>
+            <h1>오디오 시스템 — 명세에서 구현까지</h1>
+            <div class="subtitle">LOCAL JSON REPOSITORY · AUDIO MANAGER · UNITY AUDIO PIPELINE</div>
+          </div>
+        </div>
+        <div class="cd-macro-deck">
+          <nav class="cd-macro-tabs cd-macro-tabs--audio" aria-label="오디오 시스템 발표 단계">
+            <button class="active" type="button" onclick="setCdMacroTab(event, 'audio', 'intro')"><b>01</b><span>소개</span></button>
+            <button type="button" onclick="setCdMacroTab(event, 'audio', 'goal')"><b>02</b><span>구조</span></button>
+            <button type="button" onclick="setCdMacroTab(event, 'audio', 'decision')"><b>03</b><span>판단</span></button>
+            <button type="button" onclick="setCdMacroTab(event, 'audio', 'result')"><b>04</b><span>결과</span></button>
+          </nav>
+          <div class="cd-macro-stage">
+            <article class="cd-macro-panel active" data-cd-deck="audio" data-cd-panel="intro">
+              <div class="cd-audio-intro-grid">
+                <figure class="cd-code-overview"><img src="assets/[CD]우성혁/images/AudioManager_Snippet_Regions.png" alt="AudioManager 코드 Region 구조"><figcaption>AudioManager.cs — 단일 재생 진입점</figcaption></figure>
+                <div class="cd-audio-repository">
+                  <div class="cd-choice-badge"><span>FINAL CHOICE</span><strong>Unity Native Audio Pipeline</strong><small>FMOD는 일정·환경 리스크를 고려해 구현 범위에서 제외</small></div>
+                  <div class="cd-repo-flow">
+                    <div><small>DATA</small><strong>Sound.xlsx → JSON</strong></div><i>→</i>
+                    <div><small>IMPLEMENTATION</small><strong>LocalJsonAudioRepository</strong></div><i>→</i>
+                    <div><small>CONTRACT</small><strong>IAudioRepository</strong></div><i>→</i>
+                    <div><small>SERVICE</small><strong>AudioManager</strong></div>
+                  </div>
+                  <p>데이터 저장 방식과 재생 서비스를 분리하여 오디오 메타데이터를 코드 수정 없이 교체·확장할 수 있는 경로를 만들었습니다.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="cd-macro-panel" data-cd-deck="audio" data-cd-panel="goal">
+              <div class="cd-panel-heading cd-panel-heading--compact">
+                <span>ARCHITECTURE</span>
+                <h2>모든 사운드 요청은 하나의 진입점에서 종류와 수명을 판단한다</h2>
+              </div>
+              <div class="cd-audio-system-map">
+                <div class="cd-map-input"><small>REQUEST</small><strong>GlobalEventBus</strong><span>audioID · position</span></div>
+                <i>→</i>
+                <div class="cd-map-manager"><small>SERVICE</small><strong>AudioManager</strong><span>조회 · 분기 · 수명 관리</span></div>
+                <i>→</i>
+                <div class="cd-map-branches">
+                  <div><b>BGM · AMBIENT</b><span>clip 비교 후 루프 유지</span></div>
+                  <div><b>UI · 2D SFX</b><span>PlayOneShot 동시 재생</span></div>
+                  <div><b>3D SFX</b><span>위치 기반 임시 AudioSource</span></div>
+                  <div><b>3D LOOP</b><span>반환 객체로 종료 시점 제어</span></div>
+                </div>
+              </div>
+              <div class="cd-mixer-row">
+                <span>AudioMixer</span><b>MASTER</b><b>BGM</b><b>AMBIENT</b><b>SFX</b><b>UI</b>
+              </div>
+            </article>
+
+            <article class="cd-macro-panel" data-cd-deck="audio" data-cd-panel="decision">
+              <div class="cd-audio-methods">
+                <section>
+                  <header><span>2D</span><div><strong>Play2DSound</strong><small>UI · 탈출 성공 판정</small></div></header>
+                  <div class="cd-method-media"><img src="assets/[CD]우성혁/images/EscapeSuccess_Play2dSound.png" alt="탈출 성공 시 2D 사운드 호출"><img src="assets/[CD]우성혁/images/AudioManager_Snippet_Play2DSound.png" alt="Play2DSound 코드"></div>
+                  <p><code>PlayOneShot()</code>으로 하나의 채널에서도 단발 사운드를 겹쳐 재생하고, 루프 클립은 동일 클립 재시작을 차단합니다.</p>
+                </section>
+                <section>
+                  <header><span>3D</span><div><strong>Play3DSound</strong><small>기본 공격 발사 위치</small></div></header>
+                  <div class="cd-method-media"><img src="assets/[CD]우성혁/images/Weapon_Play3dSound.png" alt="기본 공격 위치에서 3D 사운드 호출"><img src="assets/[CD]우성혁/images/AudioManager_Snippet_Play3DSound.png" alt="Play3DSound 코드"></div>
+                  <p>발생 위치에 임시 <code>AudioSource</code>를 만들고 거리 감쇄와 Mixer Group을 설정한 뒤, 단발음은 재생 길이에 맞춰 제거합니다.</p>
+                </section>
+              </div>
+            </article>
+
+            <article class="cd-macro-panel" data-cd-deck="audio" data-cd-panel="result">
+              <div class="cd-panel-heading cd-panel-heading--compact">
+                <span>RESULT</span>
+                <h2>루프 사운드의 생성부터 종료까지 호출자가 수명을 제어한다</h2>
+              </div>
+              <button class="cd-loop-demo" type="button" onclick="toggleCdLoopDemo(this)">
+                <img src="assets/[CD]우성혁/images/AudioManager_Snippet_Play3DSoundAndReturn.png" alt="Play3DSoundAndReturn 코드">
+                <video preload="metadata" onended="resetCdLoopDemo(this.parentElement)">
+                  <source src="assets/[CD]우성혁/videos/Grenade_Play3DSoundAndReturn.mp4" type="video/mp4">
+                </video>
+                <span><b>▶ 클릭하여 실행 결과 확인</b><small>디코이 생성 → 위치 기반 루프 SFX → 지속시간 종료 → 오브젝트 제거</small></span>
+              </button>
+              <div class="cd-stop-row"><img src="assets/[CD]우성혁/images/AudioManager_Snippet_Stop3DSound.png" alt="Stop3DSound 코드"><p><b>Stop3DSound</b><span>반환된 임시 소스의 GameObject를 제거해 루프를 종료</span></p></div>
+            </article>
           </div>
         </div>
         <div style="display:grid; grid-template-columns:auto 1fr; gap:30px; flex:1; align-items:center; width:100%;">
@@ -1179,7 +1338,7 @@
       <!-- CHAPTER 06 / SCENE 04 -->
       <!-- CD Scene 3-2: AudioManager 아키텍처 구조도 (인터랙티브) -->
 
-      <section class="scene" data-chapter="06" data-scene="04" data-type="CORE" data-presenter="우성혁 CD"
+      <section class="scene" data-exclude-presentation="true" data-chapter="06" data-scene="04" data-type="CORE" data-presenter="우성혁 CD"
         data-title="AudioManager 아키텍처" data-time="30초" data-notes="[CONTENT] AudioManager 구조도. 사운드 종류별 분기 흐름.">
         <div class="scene-header">
           <div>
@@ -1277,7 +1436,7 @@
       <!-- CHAPTER 06 / SCENE 05 -->
       <!-- CD Scene 3-3: 2D/3D 사운드 기술 비교 -->
 
-      <section class="scene" data-chapter="06" data-scene="05" data-type="CORE" data-presenter="우성혁 CD"
+      <section class="scene" data-exclude-presentation="true" data-chapter="06" data-scene="05" data-type="CORE" data-presenter="우성혁 CD"
         data-title="2D·3D 사운드 기술" data-time="30초" data-notes="[CONTENT] Play2DSound/Play3DSound 코드 스니펫 + 실행 예시 이미지 비교.">
         <div class="scene-header">
           <div>
@@ -1325,7 +1484,7 @@
       <!-- CHAPTER 06 / SCENE 06 -->
       <!-- CD Scene 3-4: 3D 루프 사운드 + 영상 오버레이 -->
 
-      <section class="scene" data-chapter="06" data-scene="06" data-type="CORE" data-presenter="우성혁 CD"
+      <section class="scene" data-exclude-presentation="true" data-chapter="06" data-scene="06" data-type="CORE" data-presenter="우성혁 CD"
         data-title="3D 루프 사운드 및 영상" data-time="30초"
         data-notes="[CONTENT] Play3DSoundAndReturn + Stop3DSound 코드. 클릭 시 Grenade 영상 오버레이 재생.">
         <div class="scene-header">
@@ -1373,23 +1532,24 @@
       <!-- CHAPTER 06 / SCENE 07 -->
       <!-- CD Scene 7: 기획 명세 마무리 -->
 
-      <section class="scene" data-chapter="06" data-scene="07" data-type="CORE" data-presenter="우성혁 CD"
-        data-title="기획 명세 마무리" data-time="10초"
+      <section class="scene" data-chapter="06" data-scene="04" data-type="CORE" data-presenter="우성혁 CD"
+        data-title="기획이 구현되기까지" data-time="15초"
         data-notes="[CONTENT] 기획 명세가 실제 구현으로 연결되기 위해 필요한 설계 기준을 정리하며 CD 파트를 마무리합니다.">
         <div class="scene-header">
           <div>
-            <h1>기획 명세 마무리</h1>
-            <div class="subtitle">CONTENT DESIGN SPECIFICATION WRAP-UP</div>
+            <h1>기획이 구현되기까지</h1>
+            <div class="subtitle">ORIGINAL IDEA → SSOT → DATA & INTERFACE → PLAYABLE RESULT</div>
           </div>
         </div>
         <div style="flex:1; display:flex; align-items:center; justify-content:center; width:100%;">
-          <div class="glass-card pm-anim" style="padding:48px 60px; text-align:center; max-width:800px;">
+          <div class="glass-card pm-anim cd-finale-card">
             <p
               style="color:var(--accent-teal); font-size:0.85rem; font-weight:700; letter-spacing:0.1em; margin-bottom:12px;">
               기획이란</p>
             <p style="color:var(--text-primary); font-size:1.4rem; line-height:1.65; font-weight:600; margin:0;">
-              게임의 뼈대가 되는 구조를<br>안정적으로 설계하여<br><span style="color:var(--accent-purple);">실제로 구현될 수 있게 하는 것</span>
+              구현 범위를 정하고, 같은 기준으로 판단하게 하며,<br><span style="color:var(--accent-purple);">실제 결과까지 확인할 수 있게 하는 것</span>
             </p>
+            <div class="cd-finale-flow"><span>원안</span><i>→</i><span>SSOT 명세</span><i>→</i><span>데이터·인터페이스</span><i>→</i><span>실행·검증</span></div>
           </div>
         </div>
       </section>

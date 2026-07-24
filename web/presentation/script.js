@@ -26,7 +26,7 @@ window.scenes = [];
     }
     // 초기화 함수
     function initPresentation() {
-      scenes = Array.from(document.querySelectorAll('.scene'));
+      scenes = Array.from(document.querySelectorAll('.scene:not([data-exclude-presentation="true"])'));
       buildPresenterSequenceBadges();
       // 디버그 파라미터 확인 (?debug=1 or debug)
       const urlParams = new URLSearchParams(window.location.search);
@@ -50,6 +50,7 @@ window.scenes = [];
       showScene(startIdx);
       buildChapterMenu();
       resizeViewport();
+      setupCdVersionDrag();
     }
     // 발표자별 파트 안에서 현재 씬 번호와 총 장수를 자동 표기
     function buildPresenterSequenceBadges() {
@@ -308,6 +309,87 @@ window.scenes = [];
         '12': 'Ending & Q&A'
       };
       return names[ch] || 'Others';
+    }
+
+    function setCdMacroTab(event, deckName, panelName) {
+      event.stopPropagation();
+      const deck = event.currentTarget.closest('.cd-macro-deck');
+      if (!deck) return;
+      deck.querySelectorAll('.cd-macro-tabs button').forEach(button => {
+        button.classList.toggle('active', button === event.currentTarget);
+      });
+      deck.querySelectorAll(`.cd-macro-panel[data-cd-deck="${deckName}"]`).forEach(panel => {
+        panel.classList.toggle('active', panel.dataset.cdPanel === panelName);
+      });
+    }
+
+    function setCdCompare(input) {
+      input.closest('.cd-before-after')?.style.setProperty('--split', `${input.value}%`);
+    }
+
+    function toggleCdLoopDemo(button) {
+      const video = button.querySelector('video');
+      if (!video) return;
+      if (button.classList.contains('playing')) {
+        resetCdLoopDemo(button);
+        return;
+      }
+      button.classList.add('playing');
+      video.currentTime = 0;
+      video.play().catch(() => resetCdLoopDemo(button));
+    }
+
+    function resetCdLoopDemo(button) {
+      if (!button) return;
+      const video = button.querySelector('video');
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+      }
+      button.classList.remove('playing');
+    }
+
+    function setupCdVersionDrag() {
+      document.querySelectorAll('.cd-version-window').forEach(scroller => {
+        if (scroller.dataset.dragReady === 'true') return;
+        scroller.dataset.dragReady = 'true';
+        let isDragging = false;
+        let startY = 0;
+        let startScroll = 0;
+        scroller.addEventListener('pointerdown', event => {
+          isDragging = true;
+          startY = event.clientY;
+          startScroll = scroller.scrollTop;
+          scroller.setPointerCapture(event.pointerId);
+          scroller.classList.add('dragging');
+        });
+        scroller.addEventListener('pointermove', event => {
+          if (!isDragging) return;
+          scroller.scrollTop = startScroll - (event.clientY - startY);
+        });
+        const stopDragging = event => {
+          if (!isDragging) return;
+          isDragging = false;
+          scroller.classList.remove('dragging');
+          if (scroller.hasPointerCapture(event.pointerId)) scroller.releasePointerCapture(event.pointerId);
+        };
+        scroller.addEventListener('pointerup', stopDragging);
+        scroller.addEventListener('pointercancel', stopDragging);
+      });
+    }
+
+    function resetCdMacroDeck(scene) {
+      scene.querySelectorAll('.cd-macro-deck').forEach(deck => {
+        const buttons = deck.querySelectorAll('.cd-macro-tabs button');
+        buttons.forEach((button, index) => button.classList.toggle('active', index === 0));
+        deck.querySelectorAll('.cd-macro-panel').forEach((panel, index) => panel.classList.toggle('active', index === 0));
+      });
+      scene.querySelectorAll('.cd-before-after').forEach(compare => {
+        compare.style.setProperty('--split', '50%');
+        const input = compare.querySelector('input[type="range"]');
+        if (input) input.value = 50;
+      });
+      scene.querySelectorAll('.cd-loop-demo').forEach(resetCdLoopDemo);
     }
     // 전체 화면 전환
     function toggleFullscreen() {
@@ -1023,6 +1105,7 @@ window.scenes = [];
       });
       // CD 워크플로우 리셋
       if (typeof resetCdWorkflow === 'function') resetCdWorkflow();
+      resetCdMacroDeck(scene);
       const ch = scene.getAttribute('data-chapter');
       const sc = scene.getAttribute('data-scene');
       if (ch === '01' && sc === '01') {
