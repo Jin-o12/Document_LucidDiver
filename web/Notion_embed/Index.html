@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Repository Tree</title>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --panel: #0f1621;
+      --text: #e6edf3;
+      --muted: #9aa4af;
+      --border: rgba(255,255,255,.10);
+      --accent: #7aa2ff;
+      --good: #2ea043;
+      --bad: #f85149;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      background: linear-gradient(180deg, var(--bg), #070a0e);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px 16px 40px;
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .title {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 260px;
+    }
+    h1 {
+      font-size: 16px;
+      margin: 0;
+      letter-spacing: 0.2px;
+    }
+    .sub {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    button, input {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      padding: 8px 10px;
+      font-size: 12px;
+      outline: none;
+    }
+    button { cursor: pointer; }
+    button:hover { border-color: rgba(255,255,255,.18); }
+    input {
+      width: min(340px, 70vw);
+    }
+    .panel {
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .status {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .status strong { color: var(--text); font-weight: 600; }
+    .tree {
+      padding: 10px 8px 14px;
+      overflow: auto;
+      max-height: 72vh;
+    }
+
+    /* Tree UI */
+    ul { list-style: none; padding-left: 18px; margin: 0; }
+    li { margin: 2px 0; }
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 6px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+    }
+    .row:hover {
+      background: rgba(255,255,255,.04);
+      border-color: rgba(255,255,255,.08);
+    }
+    .toggle {
+      width: 18px;
+      height: 18px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      flex: 0 0 auto;
+      cursor: pointer;
+      user-select: none;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .toggle.hidden { visibility: hidden; }
+    .icon {
+      width: 16px;
+      height: 16px;
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 auto;
+      opacity: .9;
+    }
+    .name {
+      font-size: 12px;
+      color: var(--text);
+      text-decoration: none;
+      word-break: break-word;
+    }
+    .name:hover { color: var(--accent); text-decoration: underline; }
+    .meta {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+    .pill {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+    .error {
+      padding: 10px 12px;
+      color: var(--bad);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+      background: rgba(248,81,73,.06);
+      display: none;
+    }
+    .hint {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .hint code { color: var(--text); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1 id="repoTitle">Repository Tree</h1>
+        <div class="sub" id="repoSub">Loading…</div>
+      </div>
+      <div class="controls">
+        <input id="filter" placeholder="Filter (e.g. Assets, docs, .cs)" />
+        <button id="expandAll">Expand all</button>
+        <button id="collapseAll">Collapse all</button>
+        <button id="reload">Reload</button>
+      </div>
+    </header>
+    <div class="panel">
+      <div class="status">
+        <div>
+          <strong id="statusText">Fetching</strong>
+          <span id="statusDetail">repo tree via GitHub API</span>
+        </div>
+        <div class="pill" id="countPill">—</div>
+      </div>
+
+      <div class="tree" id="tree"></div>
+      <div class="error" id="errorBox"></div>
+    </div>
+  </div>
+
+<script>
+/* 설정값: 여기만 바꾸면 됩니다. */
+const CONFIG = {
+  owner: "Jin-o12",                 // TODO: 예) GitHub 아이디
+  repo:  "Document_LucidDiver",     // TODO: 예) "my-project"
+  branch: "main",                   // 최상위부터 보여주는 설정 = rootPath는 빈 문자열
+  rootPath: "",
+
+  // GitHub UI 링크 베이스
+  githubBase: (owner, repo) => `https://github.com/${owner}/${repo}`,
+};
+
+const $ = (id) => document.getElementById(id);
+
+const state = {
+  nodes: null,      // tree structure
+  flatCount: 0,
+  filter: "",
+};
+
+function setStatus(text, detail="") {
+  $("statusText").textContent = text;
+  $("statusDetail").textContent = detail;
+}
+
+function showError(msg) {
+  const box = $("errorBox");
+  box.style.display = "block";
+  box.textContent = msg;
+}
+
+function clearError() {
+  const box = $("errorBox");
+  box.style.display = "none";
+  box.textContent = "";
+}
+
+function fileIcon(type) {
+  // simple icons
+  return type === "tree" ? "📁" : "📄";
+}
+
+/**
+ * GitHub Trees API: recursive=1 로 전체 목록을 가져와 트리를 구성합니다.
+ * Public repo는 토큰 없이 호출 가능하지만,
+ * 대형 repo는 응답이 커서 시간이 걸리거나 제한에 걸릴 수 있습니다.
+ */
+async function fetchGitTree(owner, repo, branch) {
+  const url = `https://api.github.com/repos/${owner}/${repo}/git/trees/${encodeURIComponent(branch)}?recursive=1`;
+  const res = await fetch(url, {
+    headers: {
+      "Accept": "application/vnd.github+json",
+    }
+  });
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`GitHub API error (${res.status}): ${text || res.statusText}`);
+  }
+
+  const data = await res.json();
+  if (!data.tree) throw new Error("Unexpected API response: missing tree");
+  return data.tree; // [{path, type: "blob"|"tree", ...}]
+}
+
+/**
+ * flat list -> nested structure
+ */
+function buildTree(items, rootPath="") {
+  const root = { name: rootPath || "/", path: rootPath, type: "tree", children: new Map(), open: true };
+
+  const normalizedRoot = rootPath.replace(/^\/+|\/+$/g, "");
+  for (const it of items) {
+    const path = it.path;
+
+    // rootPath 아래만 포함
+    if (normalizedRoot) {
+      if (path !== normalizedRoot && !path.startsWith(normalizedRoot + "/")) continue;
+    }
+
+    const rel = normalizedRoot ? path.slice(normalizedRoot.length).replace(/^\/+/, "") : path;
+    if (!rel) continue;
+
+    const parts = rel.split("/");
+    let cur = root;
+
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i];
+      const isLast = i === parts.length - 1;
+
+      if (isLast) {
+        const nodeType = it.type === "tree" ? "tree" : "blob";
+        if (!cur.children.has(part)) {
+          cur.children.set(part, {
+            name: part,
+            path: (normalizedRoot ? normalizedRoot + "/" : "") + parts.slice(0, i + 1).join("/"),
+            type: nodeType,
+            children: new Map(),
+            open: false,
+          });
+        } else {
+          // existing node: prefer tree
+          const existing = cur.children.get(part);
+          if (existing.type !== "tree" && nodeType === "tree") existing.type = "tree";
+        }
+      } else {
+        if (!cur.children.has(part)) {
+          cur.children.set(part, {
+            name: part,
+            path: (normalizedRoot ? normalizedRoot + "/" : "") + parts.slice(0, i + 1).join("/"),
+            type: "tree",
+            children: new Map(),
+            open: false,
+          });
+        }
+        cur = cur.children.get(part);
+      }
+    }
+  }
+
+  // sort children: folders first, then files, alpha
+  function sortNode(node) {
+    const arr = Array.from(node.children.values());
+    arr.sort((a,b) => {
+      if (a.type !== b.type) return a.type === "tree" ? -1 : 1;
+      return a.name.localeCompare(b.name);
+    });
+    node.childrenSorted = arr;
+    for (const c of arr) if (c.type === "tree") sortNode(c);
+  }
+  sortNode(root);
+
+  // default: open root only, everything else collapsed
+  root.open = true;
+  return root;
+}
+
+function matchesFilter(node, filter) {
+  if (!filter) return true;
+  const f = filter.toLowerCase();
+  return node.path.toLowerCase().includes(f) || node.name.toLowerCase().includes(f);
+}
+
+/**
+ * Render tree recursively.
+ * Filtering rule: show parent folder if any descendant matches.
+ */
+function renderTree(root) {
+  const container = $("tree");
+  container.innerHTML = "";
+
+  function hasMatchingDesc(node, filter) {
+    if (matchesFilter(node, filter)) return true;
+    if (node.type !== "tree") return false;
+    for (const c of node.childrenSorted || []) {
+      if (hasMatchingDesc(c, filter)) return true;
+    }
+    return false;
+  }
+
+  function makeList(node) {
+    const ul = document.createElement("ul");
+
+    for (const child of node.childrenSorted || []) {
+      if (!hasMatchingDesc(child, state.filter)) continue;
+
+      const li = document.createElement("li");
+
+      const row = document.createElement("div");
+      row.className = "row";
+
+      const toggle = document.createElement("div");
+      toggle.className = "toggle";
+      if (child.type !== "tree") toggle.classList.add("hidden");
+      toggle.textContent = child.open ? "–" : "+";
+      toggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (child.type !== "tree") return;
+        child.open = !child.open;
+        renderTree(root);
+      });
+
+      const icon = document.createElement("div");
+      icon.className = "icon";
+      icon.textContent = fileIcon(child.type);
+
+      let label;
+      if (child.type === "tree") {
+        label = document.createElement("span");
+        label.className = "name";
+        label.textContent = child.name;
+        label.style.cursor = "pointer";
+        label.addEventListener("click", () => {
+          child.open = !child.open;
+          renderTree(root);
+        });
+      } else {
+        label = document.createElement("a");
+        label.className = "name";
+        label.textContent = child.name;
+        label.href = `${CONFIG.githubBase(CONFIG.owner, CONFIG.repo)}/blob/${CONFIG.branch}/${child.path}`;
+        label.target = "_blank";
+        label.rel = "noopener noreferrer";
+      }
+
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.textContent = child.type === "tree" ? "folder" : "file";
+
+      row.appendChild(toggle);
+      row.appendChild(icon);
+      row.appendChild(label);
+      row.appendChild(meta);
+
+      li.appendChild(row);
+
+      if (child.type === "tree" && child.open) {
+        li.appendChild(makeList(child));
+      }
+
+      ul.appendChild(li);
+    }
+
+    return ul;
+  }
+
+  container.appendChild(makeList(root));
+}
+
+function setAllOpen(node, open) {
+  if (node.type === "tree") node.open = open;
+  for (const c of node.childrenSorted || []) setAllOpen(c, open);
+}
+
+async function main() {
+  clearError();
+
+  const { owner, repo, branch, rootPath } = CONFIG;
+  $("repoTitle").textContent = `${owner}/${repo}`;
+  $("repoSub").textContent = `branch: ${branch} · root: ${rootPath || "/"}`;
+
+  setStatus("Fetching", "GitHub tree API…");
+  $("countPill").textContent = "—";
+
+  try {
+    const items = await fetchGitTree(owner, repo, branch);
+    state.flatCount = items.length;
+    $("countPill").textContent = `${state.flatCount.toLocaleString()} items`;
+
+    setStatus("Building", "tree structure…");
+    const root = buildTree(items, rootPath);
+
+    state.nodes = root;
+
+    setStatus("Ready", "click folders to expand/collapse");
+    renderTree(state.nodes);
+  } catch (e) {
+    setStatus("Failed", "could not load");
+    showError(e && e.message ? e.message : String(e));
+  }
+}
+
+$("filter").addEventListener("input", (e) => {
+  state.filter = e.target.value.trim();
+  if (state.nodes) renderTree(state.nodes);
+});
+
+$("expandAll").addEventListener("click", () => {
+  if (!state.nodes) return;
+  setAllOpen(state.nodes, true);
+  renderTree(state.nodes);
+});
+
+$("collapseAll").addEventListener("click", () => {
+  if (!state.nodes) return;
+  // keep root open so the view isn't blank
+  setAllOpen(state.nodes, false);
+  state.nodes.open = true;
+  renderTree(state.nodes);
+});
+
+$("reload").addEventListener("click", () => main());
+
+main();
+</script>
+</body>
+</html>
