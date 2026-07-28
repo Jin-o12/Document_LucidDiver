@@ -7,7 +7,6 @@ window.scenes = [];
     // ══════════════════════════════════════════════════════════
     // scenes declared globally
     let currentIdx = 0;
-    let isNotesOpen = false;
     let isMenuOpen = false;
     let isDebugMode = false;
     // 16:9 반응형 자동 스케일링 함수
@@ -126,12 +125,6 @@ window.scenes = [];
         });
         // HUD 및 정보 업데이트
         updateHUD(nextActive);
-        // 대본 업데이트 (안전 가드)
-        const notesBody = document.getElementById('notesBody');
-        if (notesBody) {
-          const notes = nextActive.getAttribute('data-notes') || '작성된 대본이 없습니다.';
-          notesBody.innerHTML = notes.replace(/\n/g, '<br>');
-        }
         // 디버그 정보 업데이트
         if (isDebugMode) {
           updateDebugInfo(nextActive);
@@ -233,24 +226,12 @@ window.scenes = [];
       const ch = scene.getAttribute('data-chapter');
       const sc = scene.getAttribute('data-scene');
       const title = scene.getAttribute('data-title');
-      const presenter = scene.getAttribute('data-presenter');
       document.getElementById('hudChapter').textContent = `CH ${ch}`;
       document.getElementById('hudSceneNum').textContent = `SCENE ${sc}`;
       document.getElementById('hudSceneTitle').textContent = title;
-      document.getElementById('hudPresenter').textContent = `발표: ${presenter}`;
       // 진행률 퍼센트 계산
       const pct = ((currentIdx + 1) / scenes.length) * 100;
       document.getElementById('progressBar').style.width = `${pct}%`;
-    }
-    // 대본 노출 토글
-    function togglePresenterNotes() {
-      const panel = document.getElementById('presenterNotesPanel');
-      isNotesOpen = !isNotesOpen;
-      if (isNotesOpen) {
-        panel.classList.add('active');
-      } else {
-        panel.classList.remove('active');
-      }
     }
     // 챕터 점프 메뉴
     function buildChapterMenu() {
@@ -622,11 +603,6 @@ window.scenes = [];
           e.preventDefault();
           toggleFullscreen();
           break;
-        case 'n':
-        case 'N':
-          e.preventDefault();
-          togglePresenterNotes();
-          break;
         case 'm':
         case 'M':
           e.preventDefault();
@@ -649,8 +625,6 @@ window.scenes = [];
             closePdImage();
           } else if (isMenuOpen) {
             closeChapterMenu();
-          } else if (isNotesOpen) {
-            togglePresenterNotes();
           } else if (document.fullscreenElement) {
             document.exitFullscreen();
           }

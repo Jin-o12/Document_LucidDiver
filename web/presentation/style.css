@@ -176,10 +176,6 @@
       align-items: center;
       gap: 30px;
     }
-    .hud-right .presenter-info {
-      font-size: 0.9rem;
-      color: var(--accent-teal);
-    }
     .hud-right .hud-buttons button {
       background: transparent;
       border: 1px solid var(--border-subtle);
@@ -1608,38 +1604,6 @@
       color: #fff;
       background: var(--accent-teal-dim);
       font-weight: bold;
-    }
-    /* 대본 슬라이드 패널 */
-    .presenter-notes-panel {
-      position: absolute;
-      bottom: 80px;
-      left: 100px;
-      right: 100px;
-      background: rgba(10, 10, 22, 0.95);
-      border: 1px solid var(--accent-purple-dim);
-      border-bottom: none;
-      border-radius: 12px 12px 0 0;
-      padding: 25px 40px;
-      box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
-      z-index: 45;
-      transform: translateY(105%);
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .presenter-notes-panel.active {
-      transform: translateY(0);
-    }
-    .notes-header {
-      font-size: 0.85rem;
-      font-weight: bold;
-      color: var(--accent-purple);
-      margin-bottom: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .notes-body {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: var(--text-secondary);
     }
     /* 디버그 오버레이 */
     .debug-overlay {
