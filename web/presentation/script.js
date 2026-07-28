@@ -99,6 +99,14 @@ window.scenes = [];
             s.querySelectorAll('video').forEach(video => {
               try { video.pause(); } catch (err) {}
             });
+            s.querySelectorAll('iframe[data-youtube-player]').forEach(player => {
+              try {
+                player.contentWindow.postMessage(
+                  JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }),
+                  'https://www.youtube.com'
+                );
+              } catch (err) {}
+            });
           }
         });
         resetSceneState(currentIdx);
@@ -318,25 +326,27 @@ window.scenes = [];
     }
 
     function setupFullGameplayDemo() {
-      const video = document.getElementById('fullGameplayDemo');
+      const player = document.getElementById('fullGameplayDemo');
       const shell = document.getElementById('gameplayDemoShell');
       const status = document.getElementById('gameplayDemoStatusText');
-      if (!video || !shell) return;
+      if (!player || !shell) return;
 
       const markReady = () => {
         shell.classList.add('has-video');
         shell.classList.remove('has-video-error');
-        if (status) status.textContent = 'VIDEO LOADED · READY TO PLAY';
+        if (status) status.textContent = 'YOUTUBE · READY TO PLAY';
       };
       const markError = () => {
         shell.classList.remove('has-video');
         shell.classList.add('has-video-error');
-        if (status) status.textContent = 'VIDEO LOAD ERROR';
+        if (status) status.textContent = 'YOUTUBE · CONNECTION ERROR';
       };
 
-      video.addEventListener('loadedmetadata', markReady);
-      video.addEventListener('error', markError);
-      if (video.readyState >= 1) markReady();
+      player.addEventListener('load', markReady);
+      player.addEventListener('error', markError);
+
+      // window.load 이전에 임베드 로드가 끝난 경우에도 준비 상태를 복구한다.
+      if (player.dataset.loaded === 'true') markReady();
     }
 
     function setCdMacroTab(event, deckName, panelName) {

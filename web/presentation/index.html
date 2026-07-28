@@ -2509,20 +2509,26 @@
 
         <div class="gameplay-demo-shell pm-anim" id="gameplayDemoShell">
           <div class="gameplay-demo-player">
-            <video id="fullGameplayDemo" controls playsinline preload="metadata" aria-label="루시드 다이버 전체 게임 시연 영상">
-              <!-- 최종 영상 확정 후 아래 형식으로 소스를 연결합니다.
-              <source src="assets/공용/videos/Full_Gameplay_Demo.mp4" type="video/mp4">
-              -->
-            </video>
+            <iframe id="fullGameplayDemo"
+              src="https://www.youtube.com/embed/H5T2-JR77X0?rel=0&amp;playsinline=1&amp;enablejsapi=1"
+              title="침몽도시: 루시드 다이버 전체 게임 시연 영상"
+              loading="lazy"
+              onload="this.dataset.loaded='true'"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+              data-youtube-player></iframe>
             <div class="gameplay-demo-placeholder" id="gameplayDemoPlaceholder">
               <span class="gameplay-demo-placeholder-icon" aria-hidden="true">▶</span>
               <strong>전체 게임 시연 영상</strong>
-              <p>최종 MP4 파일 연결 대기</p>
-              <small>16:9 · 1080p · H.264 권장</small>
+              <p>YouTube 플레이어 연결 중</p>
+              <small>H5T2-JR77X0 · 16:9</small>
             </div>
             <div class="gameplay-demo-status">
               <span class="gameplay-demo-status-dot"></span>
-              <b id="gameplayDemoStatusText">MEDIA SLOT · READY</b>
+              <b id="gameplayDemoStatusText">YOUTUBE · CONNECTING</b>
+              <a href="https://youtu.be/H5T2-JR77X0" target="_blank" rel="noopener noreferrer"
+                aria-label="전체 게임 시연 영상을 YouTube에서 열기">YOUTUBE에서 열기 ↗</a>
             </div>
           </div>
 
