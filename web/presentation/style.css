@@ -1374,17 +1374,49 @@
       border-color: var(--accent-teal);
       background: var(--accent-teal-dim);
     }
-    .ending-qr-box {
-      width: 240px;
-      height: 240px;
-      background: rgba(255,255,255,0.05);
-      border: 1px dashed var(--border-subtle);
-      border-radius: 8px;
+    .ending-qr-wrap {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 10px;
+      text-align: center;
+    }
+    .ending-qr-box {
+      width: 220px;
+      height: 220px;
+      padding: 10px;
+      background: #fff;
+      border: 1px solid rgba(64, 224, 208, 0.46);
+      border-radius: 10px;
+      box-shadow:
+        0 0 0 4px rgba(64, 224, 208, 0.06),
+        0 14px 32px rgba(0, 0, 0, 0.24);
+      overflow: hidden;
       margin: 0 auto;
+    }
+    .ending-qr-image {
+      display: block;
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+      image-rendering: crisp-edges;
+      image-rendering: pixelated;
+    }
+    .ending-qr-caption {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .ending-qr-caption strong {
+      color: var(--accent-teal);
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+    }
+    .ending-qr-caption span {
+      color: var(--text-muted);
+      font-size: 0.78rem;
     }
     /* Q&A Session Layout & Thank You Styles */
     .qa-session-grid {
